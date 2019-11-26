@@ -1,0 +1,25 @@
+serviceType: NodePort
+accessLogs:
+  enabled: true
+dashboard:
+  enabled: true
+  domain: traefik.kzh.dev
+deployment:
+  hostPort:
+    httpEnabled: true
+    httpPort: 80
+    httpsEnabled: true
+    httpsPort: 443
+ssl:
+  enabled: true
+  enforced: true
+  permanentRedirect: true
+acme:
+  enabled: true
+  challengeType: dns-01
+  resolvers:
+  - 1.1.1.1:53
+  dnsProvider:
+    name: cloudflare
+    existingSecretName: cloudflare-dns
+  email: kevinzhenng@gmail.com
