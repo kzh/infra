@@ -18,6 +18,7 @@ ssl:
   permanentRedirect: true
 acme:
   enabled: true
+  staging: false
   challengeType: dns-01
   resolvers:
   - 1.1.1.1:53
