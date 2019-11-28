@@ -1,4 +1,6 @@
 serviceType: NodePort
+rbac:
+  enabled: true
 accessLogs:
   enabled: true
 dashboard:
