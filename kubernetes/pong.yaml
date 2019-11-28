@@ -27,6 +27,20 @@ spec:
   selector:
     app: pong
   ports:
-    - protocol: TCP
+    - name: pong-http
+      protocol: TCP
       port: 80
       targetPort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pong
+spec:
+  rules:
+  - host: ping.kzh.dev
+    http:
+      paths:
+      - backend:
+          serviceName: pong
+          servicePort: pong-http
