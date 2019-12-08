@@ -32,15 +32,19 @@ spec:
       port: 80
       targetPort: 80
 ---
-apiVersion: extensions/v1beta1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: pong
 spec:
-  rules:
-  - host: ping.kzh.dev
-    http:
-      paths:
-      - backend:
-          serviceName: pong
-          servicePort: pong-http
+  entryPoints:
+    - web
+    - websecure
+  routes:
+  - match: Host(`ping.kzh.dev`)
+    kind: Rule
+    services:
+    - name: pong
+      port: 80
+  tls:
+    certResolver: letsencrypt
