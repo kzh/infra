@@ -1,7 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pong
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: pong
+  namespace: pong
   labels:
     app: pong
 spec:
@@ -23,6 +29,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: pong
+  namespace: pong
 spec:
   selector:
     app: pong
@@ -35,10 +42,28 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: pong
+  name: pong-https-redirect
+  namespace: pong
 spec:
   entryPoints:
     - web
+  routes:
+  - match: Host(`ping.kzh.dev`)
+    kind: Rule
+    middlewares:
+      - name: enforce-https
+        namespace: kube-system
+    services:
+    - name: pong
+      port: 80
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: pong
+  namespace: pong
+spec:
+  entryPoints:
     - websecure
   routes:
   - match: Host(`ping.kzh.dev`)

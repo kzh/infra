@@ -177,3 +177,13 @@ spec:
         - name: traefik-conf
           configMap:
             name: traefik-conf
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: enforce-https
+  namespace: kube-system
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
