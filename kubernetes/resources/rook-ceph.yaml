@@ -18,3 +18,57 @@ spec:
       devices:
       - name: "sda3"
       - name: "sdb3"
+      - name: "sdc"
+      - name: "sdd"
+---
+apiVersion: ceph.rook.io/v1
+kind: CephBlockPool
+metadata:
+  name:	replicapool-hdd
+  namespace: rook-ceph
+spec:
+  failureDomain: osd
+  replicated:
+    size: 2
+  deviceClass: hdd
+---
+apiVersion: ceph.rook.io/v1
+kind: CephBlockPool
+metadata:
+  name:	replicapool 
+  namespace: rook-ceph
+spec:
+  failureDomain: osd
+  replicated:
+    size: 2
+  deviceClass: ssd
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+   name: rook-ceph-block
+provisioner: rook-ceph.rbd.csi.ceph.com
+parameters:
+    clusterID: rook-ceph
+    pool: replicapool
+    csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+    csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
+    csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+    csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
+    csi.storage.k8s.io/fstype: xfs
+reclaimPolicy: Delete
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+   name: rook-ceph-block-hdd
+provisioner: rook-ceph.rbd.csi.ceph.com
+parameters:
+    clusterID: rook-ceph
+    pool: replicapool-hdd
+    csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+    csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
+    csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+    csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
+    csi.storage.k8s.io/fstype: xfs
+reclaimPolicy: Delete
