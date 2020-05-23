@@ -24,7 +24,7 @@ spec:
 apiVersion: ceph.rook.io/v1
 kind: CephBlockPool
 metadata:
-  name:	replicapool-hdd
+  name: replicapool-hdd
   namespace: rook-ceph
 spec:
   failureDomain: osd
@@ -57,6 +57,7 @@ parameters:
     csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
     csi.storage.k8s.io/fstype: xfs
 reclaimPolicy: Delete
+allowVolumeExpansion: true
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -72,3 +73,4 @@ parameters:
     csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
     csi.storage.k8s.io/fstype: xfs
 reclaimPolicy: Delete
+allowVolumeExpansion: true
