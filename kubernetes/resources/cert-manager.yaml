@@ -14,4 +14,4 @@ spec:
           email: kevinzhenng@gmail.com
           apiKeySecretRef:
             name: cloudflare-dns
-            key: CLOUDFLARE_API_KEY
+          key: CLOUDFLARE_API_KEY

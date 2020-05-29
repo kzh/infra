@@ -1,35 +1,32 @@
 image:
   name: traefik
-  tag: 2.2.0
+  tag: 2.2.1
 
-env:
-  - name: CLOUDFLARE_EMAIL
-    valueFrom:
-      secretKeyRef:
-        name: cloudflare-dns
-        key: CLOUDFLARE_EMAIL
-  - name: CLOUDFLARE_API_KEY
-    valueFrom:
-      secretKeyRef:
-        name: cloudflare-dns
-        key: CLOUDFLARE_API_KEY
-
-volumes:
-  - name: traefik-conf
-    mountPath: "/etc/traefik"
-    type: configMap
+ingressRoute:
+  dashboard:
+    enabled: false
 
 service:
   enabled: false
 
 ports:
   web:
-    port: 80
+    port: 8000
     hostPort: 80
     expose: false
   websecure:
-    port: 443
+    port: 8443
     hostPort: 443
     expose: false
+
+additionalArguments:
+  - "--entryPoints.web.address=:8000"
+  - "--entryPoints.websecure.address=:8443"
+  - "--entryPoints.web.http.redirections.entryPoint.to=:443"
+  - "--api.dashboard"
+  - "--api.insecure"
+  - "--providers.kubernetesingress"
+  - "--providers.kubernetescrd"
+  - "--log.level=DEBUG"
 
 globalArguments: []
