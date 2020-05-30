@@ -23,10 +23,10 @@ additionalArguments:
   - "--entryPoints.web.address=:8000"
   - "--entryPoints.websecure.address=:8443"
   - "--entryPoints.web.http.redirections.entryPoint.to=:443"
+  - "--accesslog"
   - "--api.dashboard"
   - "--api.insecure"
   - "--providers.kubernetesingress"
   - "--providers.kubernetescrd"
-  - "--log.level=DEBUG"
 
 globalArguments: []
