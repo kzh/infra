@@ -43,6 +43,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
     cert-manager.io/cluster-issuer: letsencrypt-prod
   name: pong
   namespace: pong
@@ -51,10 +52,10 @@ spec:
   - host: ping.kzh.dev
     http:
       paths:
-      - backend:
+      - path: /
+        backend:
           serviceName: pong
-          servicePort: 80
-        path: /
+          servicePort: pong-http
   tls:
   - hosts:
     - ping.kzh.dev

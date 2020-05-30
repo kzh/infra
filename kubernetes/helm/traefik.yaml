@@ -21,8 +21,9 @@ ports:
 
 additionalArguments:
   - "--entryPoints.web.address=:8000"
-  - "--entryPoints.websecure.address=:8443"
   - "--entryPoints.web.http.redirections.entryPoint.to=:443"
+  - "--entryPoints.websecure.address=:8443"
+  - "--entryPoints.websecure.http.tls"
   - "--accesslog"
   - "--api.dashboard"
   - "--api.insecure"
