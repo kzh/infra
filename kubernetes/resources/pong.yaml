@@ -39,37 +39,23 @@ spec:
       port: 80
       targetPort: 80
 ---
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+apiVersion: extensions/v1beta1
+kind: Ingress
 metadata:
-  name: pong-https-redirect
-  namespace: pong
-spec:
-  entryPoints:
-    - web
-  routes:
-  - match: Host(`ping.kzh.dev`)
-    kind: Rule
-    middlewares:
-      - name: enforce-https
-        namespace: kube-system
-    services:
-    - name: pong
-      port: 80
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
   name: pong
   namespace: pong
 spec:
-  entryPoints:
-    - websecure
-  routes:
-  - match: Host(`ping.kzh.dev`)
-    kind: Rule
-    services:
-    - name: pong
-      port: 80
+  rules:
+  - host: ping.kzh.dev
+    http:
+      paths:
+      - backend:
+          serviceName: pong
+          servicePort: 80
+        path: /
   tls:
-    certResolver: letsencrypt
+  - hosts:
+    - ping.kzh.dev
+    secretName: pong-cert
