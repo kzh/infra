@@ -7,17 +7,19 @@ ingressRoute:
     enabled: false
 
 service:
-  enabled: false
+  type: ClusterIP
+  spec:
+    clusterIP: None
 
 ports:
+  traefik:
+    expose: true
   web:
     port: 8000
     hostPort: 80
-    expose: false
   websecure:
     port: 8443
     hostPort: 443
-    expose: false
 
 additionalArguments:
   - "--entryPoints.web.address=:8000"
@@ -29,5 +31,6 @@ additionalArguments:
   - "--api.insecure"
   - "--providers.kubernetesingress"
   - "--providers.kubernetescrd"
+  - "--metrics.prometheus"
 
 globalArguments: []
