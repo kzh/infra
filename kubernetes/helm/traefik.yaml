@@ -6,21 +6,6 @@ ingressRoute:
   dashboard:
     enabled: false
 
-service:
-  type: ClusterIP
-  spec:
-    clusterIP: None
-
-ports:
-  traefik:
-    expose: true
-  web:
-    port: 8000
-    hostPort: 80
-  websecure:
-    port: 8443
-    hostPort: 443
-
 additionalArguments:
   - "--entryPoints.web.address=:8000"
   - "--entryPoints.web.http.redirections.entryPoint.to=:443"
