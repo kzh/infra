@@ -2,12 +2,12 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: TLSOption
 metadata:
   name: internal-mtls
-  namespace: kube-system 
+  namespace: kube-system
 spec:
   clientAuth:
     secretNames:
     - internal-ca
-    clientAuthType: RequireAndVerifyClientCert 
+    clientAuthType: RequireAndVerifyClientCert
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -32,3 +32,24 @@ spec:
     secretName: internal-crt
     options:
       name: internal-mtls
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - kind: Rule
+    match: Host(`grafana.faust.dev`)
+    services:
+    - kind: Service
+      name: prometheus-operator-grafana
+      port: 80
+  tls:
+    secretName: internal-crt
+    options:
+      name: internal-mtls
+      namespace: kube-system
