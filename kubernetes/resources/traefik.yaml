@@ -36,7 +36,7 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: grafana
+  name: prometheus-operator
   namespace: monitoring
 spec:
   entryPoints:
@@ -48,6 +48,12 @@ spec:
     - kind: Service
       name: prometheus-operator-grafana
       port: 80
+  - kind: Rule
+    match: Host(`prometheus.faust.dev`)
+    services:
+    - kind: Service
+      name: prometheus-operator-prometheus
+      port: 9090
   tls:
     secretName: internal-crt
     options:
