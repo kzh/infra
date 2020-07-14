@@ -1,0 +1,34 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: TLSOption
+metadata:
+  name: internal-mtls
+  namespace: kube-system 
+spec:
+  clientAuth:
+    secretNames:
+    - internal-ca
+    clientAuthType: RequireAndVerifyClientCert 
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard
+  namespace: kube-system
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - kind: Rule
+    match: Host(`traefik.faust.dev`)
+    services:
+    - kind: TraefikService
+      name: dashboard@internal
+  - kind: Rule
+    match: Host(`traefik.faust.dev`) && PathPrefix(`/api`)
+    services:
+    - kind: TraefikService
+      name: api@internal
+  tls:
+    secretName: internal-crt
+    options:
+      name: internal-mtls
