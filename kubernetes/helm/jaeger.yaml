@@ -1,0 +1,10 @@
+provisionDataStore:
+  cassandra: false
+  elasticsearch: true
+
+storage:
+  type: elasticsearch
+
+elasticsearch:
+  replicas: 1
+  minimumMasterNodes: 1
