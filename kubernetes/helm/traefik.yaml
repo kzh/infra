@@ -13,7 +13,6 @@ additionalArguments:
   - "--entryPoints.websecure.http.tls"
   - "--accesslog"
   - "--api.dashboard"
-  - "--api.insecure"
   - "--providers.kubernetesingress"
   - "--providers.kubernetescrd"
   - "--metrics.prometheus"
