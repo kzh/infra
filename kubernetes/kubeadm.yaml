@@ -3,24 +3,27 @@ kind: InitConfiguration
 nodeRegistration:
   taints: []
   kubeletExtraArgs:
-    node-ip: 192.168.0.2
+    node-ip: 192.168.99.0
+localAPIEndpoint:
+  advertiseAddress: 192.168.99.0
 ---
 apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
-address: 192.168.0.2
+address: 192.168.99.0
+serverTLSBootstrap: true
 ---
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 controllerManager:
   extraArgs:
-    address: 192.168.0.2
+    port: "10252"
 scheduler:
   extraArgs:
-    address: 192.168.0.2  
+    port: "10251"
 ---
 apiVersion: kubeproxy.config.k8s.io/v1alpha1
 kind: KubeProxyConfiguration
 nodePortAddresses:
 - ::1/128
 - 127.0.0.1/32
-metricsBindAddress: 192.168.0.2
+metricsBindAddress: 192.168.99.0
