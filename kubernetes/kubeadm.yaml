@@ -10,7 +10,6 @@ localAPIEndpoint:
 apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
 address: 192.168.99.0
-serverTLSBootstrap: true
 ---
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
