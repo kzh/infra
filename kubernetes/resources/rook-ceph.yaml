@@ -7,6 +7,8 @@ spec:
   cephVersion:
     image: ceph/ceph:v14.2.9
   dataDirHostPath: /var/lib/rook
+  dashboard:
+    enabled: true
   mon:
     count: 1
     allowMultiplePerNode: true
