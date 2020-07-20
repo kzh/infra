@@ -59,3 +59,24 @@ spec:
     options:
       name: internal-mtls
       namespace: kube-system
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: elastic
+  namespace: observability
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - kind: Rule
+    match: Host(`kibana.faust.dev`)
+    services:
+    - kind: Service
+      name: kibana-kibana
+      port: 5601
+  tls:
+    secretName: internal-crt
+    options:
+      name: internal-mtls
+      namespace: kube-system
