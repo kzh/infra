@@ -75,6 +75,12 @@ spec:
     - kind: Service
       name: kibana-kibana
       port: 5601
+  - kind: Rule
+    match: Host(`jaeger.faust.dev`)
+    services:
+    - kind: Service
+      name: jaeger-query
+      port: 80
   tls:
     secretName: internal-crt
     options:
