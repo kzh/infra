@@ -6,7 +6,7 @@ metadata:
   labels:
     release: prometheus-operator
 spec:
-  jobLabel: jobLabel
+  jobLabel: traefik
   podMetricsEndpoints:
   - port: traefik
   namespaceSelector:
@@ -15,3 +15,42 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: traefik
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: rook-ceph-mgr
+  namespace: monitoring
+  labels:
+    release: prometheus-operator
+spec:
+  jobLabel: rook-ceph
+  namespaceSelector:
+    matchNames:
+    - rook-ceph
+  selector:
+    matchLabels:
+      app: rook-ceph-mgr
+      rook_cluster: rook-ceph
+  endpoints:
+  - port: http-metrics
+    interval: 5s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: csi-metrics
+  namespace: monitoring
+  labels:
+    release: prometheus-operator
+spec:
+  jobLabel: rook-ceph
+  namespaceSelector:
+    matchNames:
+    - rook-ceph
+  selector:
+    matchLabels:
+      app: csi-metrics
+  endpoints:
+  - port: csi-grpc-metrics
+    interval: 5s
