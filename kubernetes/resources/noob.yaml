@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  name: noob
+  namespace: noob
+spec:
+  rules:
+  - host: noob.kzh.dev
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: noob-frontend
+          servicePort: 8080
+      - path: /api/auth/
+        backend:
+          serviceName: noob-auth
+          servicePort: 8080
+      - path: /api/problems/
+        backend:
+          serviceName: noob-problems
+          servicePort: 8080
+      - path: /api/submissions/
+        backend:
+          serviceName: noob-submissions
+          servicePort: 8080
+  tls:
+  - hosts:
+    - noob.kzh.dev
+    secretName: noob-cert
