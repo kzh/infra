@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: traefik
-  namespace: monitoring
+  namespace: observability
   labels:
     release: prometheus-operator
 spec:
@@ -20,7 +20,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: rook-ceph-mgr
-  namespace: monitoring
+  namespace: observability
   labels:
     release: prometheus-operator
 spec:
@@ -40,7 +40,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: csi-metrics
-  namespace: monitoring
+  namespace: observability
   labels:
     release: prometheus-operator
 spec:

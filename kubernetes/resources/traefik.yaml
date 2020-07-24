@@ -37,7 +37,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: prometheus-operator
-  namespace: monitoring
+  namespace: observability
 spec:
   entryPoints:
   - websecure
