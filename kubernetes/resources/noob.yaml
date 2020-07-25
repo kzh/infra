@@ -1,8 +1,21 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-api-prefix
+  namespace: noob
+spec:
+  stripPrefix:
+    prefixes:
+      - /api/auth/
+      - /api/problems/
+      - /api/submissions/
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: noob-strip-api-prefix@kubernetescrd
     cert-manager.io/cluster-issuer: letsencrypt-prod
   name: noob
   namespace: noob
