@@ -22,6 +22,12 @@ spec:
       - name: "sdb3"
       - name: "sdc"
       - name: "sdd"
+    - name: "faust2"
+      devices:
+      - name: "sda3"
+      - name: "sdb3"
+      - name: "sdc"
+      - name: "sdd"
 ---
 apiVersion: ceph.rook.io/v1
 kind: CephBlockPool
