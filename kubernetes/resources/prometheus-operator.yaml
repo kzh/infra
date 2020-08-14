@@ -1,26 +1,8 @@
 apiVersion: monitoring.coreos.com/v1
-kind: PodMonitor
-metadata:
-  name: traefik
-  namespace: observability
-  labels:
-    release: prometheus-operator
-spec:
-  jobLabel: traefik
-  podMetricsEndpoints:
-  - port: traefik
-  namespaceSelector:
-    matchNames:
-    - kube-system
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: traefik
----
-apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: rook-ceph-mgr
-  namespace: observability
+  namespace: telemetry
   labels:
     release: prometheus-operator
 spec:
@@ -40,7 +22,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: csi-metrics
-  namespace: observability
+  namespace: telemetry
   labels:
     release: prometheus-operator
 spec:
