@@ -10,3 +10,4 @@ data:
       protocol: layer2
       addresses:
       - 147.135.71.219/32
+      - 51.81.47.227/32
