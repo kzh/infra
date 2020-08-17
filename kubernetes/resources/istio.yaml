@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: https-redirect
+  namespace: istio-system
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      name: web
+      number: 80
+      protocol: HTTP2
+    hosts:
+    - "*"
+    tls:
+      httpsRedirect: true
