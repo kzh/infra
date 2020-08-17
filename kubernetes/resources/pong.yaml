@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: pong
+  labels:
+    istio-injection: enabled
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -34,29 +36,59 @@ spec:
   selector:
     app: pong
   ports:
-    - name: pong-http
+    - name: http
       protocol: TCP
       port: 80
       targetPort: 80
 ---
-apiVersion: extensions/v1beta1
-kind: Ingress
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
 metadata:
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+  name: pong-cert
+  namespace: pong
+spec:
+  secretName: pong-cert
+  dnsNames:
+  - ping.kzh.dev
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: pong-gateway
+  namespace: pong
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    hosts:
+    - "ping.kzh.dev"
+    tls:
+      mode: SIMPLE
+      credentialName: pong-cert
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
   name: pong
   namespace: pong
 spec:
-  rules:
-  - host: ping.kzh.dev
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: pong
-          servicePort: pong-http
-  tls:
-  - hosts:
-    - ping.kzh.dev
-    secretName: pong-cert
+  gateways:
+  - pong-gateway
+  hosts:
+  - "ping.kzh.dev"
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: 80
+        host: pong
