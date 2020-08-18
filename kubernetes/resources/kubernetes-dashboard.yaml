@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: kubernetes-dashboard
+  namespace: telemetry
+spec:
+  gateways:
+  - istio-system/internal
+  hosts:
+  - "k8s.faust.dev"
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: 80
+        host: kubernetes-dashboard

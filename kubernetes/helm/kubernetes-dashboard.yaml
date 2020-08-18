@@ -1,2 +1,10 @@
 metricsScraper:
   enabled: true
+
+protocolHttp: true
+
+service:
+  externalPort: 80
+
+rbac:
+  clusterReadOnlyRole: true

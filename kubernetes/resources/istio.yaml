@@ -15,3 +15,22 @@ spec:
     - "*"
     tls:
       httpsRedirect: true
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: internal
+  namespace: istio-system
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    tls:
+      mode: MUTUAL
+      credentialName: mtls
+    hosts:
+    - "*.faust.dev"
