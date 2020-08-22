@@ -3,6 +3,12 @@ prometheus:
     secrets:
     - etcd
 
+prometheusOperator:
+  admissionWebhooks:
+    patch:
+      podAnnotations:
+        sidecar.istio.io/inject: "false"
+
 kubeEtcd:
   serviceMonitor:
     scheme: https
