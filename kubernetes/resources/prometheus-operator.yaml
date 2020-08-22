@@ -36,3 +36,43 @@ spec:
   endpoints:
   - port: csi-grpc-metrics
     interval: 5s
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: grafana
+  namespace: telemetry
+spec:
+  gateways:
+  - istio-system/internal
+  hosts:
+  - "grafana.faust.dev"
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: 80
+        host: prometheus-operator-grafana
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: prometheus
+  namespace: telemetry
+spec:
+  gateways:
+  - istio-system/internal
+  hosts:
+  - "prometheus.faust.dev"
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: 9090
+        host: prometheus-operator-prometheus
