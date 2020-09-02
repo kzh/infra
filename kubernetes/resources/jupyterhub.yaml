@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: jhub
+  namespace: jhub
+spec:
+  gateways:
+  - istio-system/internal
+  hosts:
+  - "jh.faust.dev"
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: 80
+        host: proxy-public
