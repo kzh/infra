@@ -3,35 +3,35 @@
 ### Node setup
 > Note: This manual is geared towards the machines (BV2) I rent from OVH.
 
-**Housecleaning:**
+**Housecleaning**
 ```
 $ sudo apt update
 $ sudo apt upgrade
 ```
 
-**Disabling Swap:**
+**Disabling Swap**
 ```
 $ sudo swapoff -a
 # Remove swap mounts from /etc/fstab
 $ sudo vim /etc/fstab
 ```
 
-**Creating Partitions for Ceph:**  
+**Creating Partitions for Ceph**  
 This step requires the machine to be booted in rescue mode.
 ```
 # Use fdisk to remove the swap partitions and create new ones.
 $ sudo fdisk /dev/sda
 $ sudo fdisk /dev/sdb 
 ```
-
-**Removing Snapd:**
+ 
+**Removing Snapd**
 ```
 $ sudo snap remove lxd core18 snapd
 $ sudo apt purge snapd
 $ sudo rm -rf /snap
 ```
 
-**Tidy DNS:**
+**Tidy DNS**
 ```
 # Remove `nameserver: 127.0.0.1` from /etc/resolv.conf
 $ sudo vim /etc/resolv.conf
@@ -77,7 +77,7 @@ $ sudo tailscale up
 
 ```
 
-**Installing Docker:**
+**Installing Docker**
 ```
 $ sudo apt-get install \
     apt-transport-https \
@@ -105,7 +105,7 @@ $ sudo systemctl daemon-reload
 $ sudo systemctl restart docker
 ```
 
-**Installing Kubeadm:**
+**Installing Kubeadm**
 ```
 $ sudo modprobe br_netfilter
 $ sudo echo "br_netfilter" >> /etc/modules 
@@ -135,9 +135,29 @@ $ sudo systemctl restart kubelet
 $ kubeadm init --config kubernetes/kubeadm/init.yaml
 ```
 
-**Calico CNI**
+**Calico CNI*
 ```
 $ kubectl apply -f kubernetes/resources/calico.yaml
+```
+
+**Installing Helm**
+```
+$ curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
+$ sudo apt-get install apt-transport-https --yes
+$ echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+$ sudo apt-get update
+$ sudo apt-get install helm
+```
+
+**Rook Ceph cluster**
+```
+$ helm repo add rook-release https://charts.rook.io/release
+$ helm repo update
+$ kubectl create ns rook-ceph
+$ helm install --namespace rook-ceph rook-ceph rook-release/rook-ceph
+
+$ kubectl apply -f kubernetes/resources/rook-ceph.yaml
+$ kubectl patch storageclass rook-ceph-block -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ```
 
 #### Joining a Node
