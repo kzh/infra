@@ -135,7 +135,7 @@ $ sudo systemctl restart kubelet
 $ kubeadm init --config kubernetes/kubeadm/init.yaml
 ```
 
-**Calico CNI*
+**Calico CNI**
 ```
 $ kubectl apply -f kubernetes/resources/calico.yaml
 ```
@@ -157,7 +157,17 @@ $ kubectl create ns rook-ceph
 $ helm install --namespace rook-ceph rook-ceph rook-release/rook-ceph
 
 $ kubectl apply -f kubernetes/resources/rook-ceph.yaml
+
+# Set default storage class
 $ kubectl patch storageclass rook-ceph-block -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+```
+
+**MetalLB**
+```
+$ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml
+$ kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
+$ kubectl apply -f kubernetes/resources/metallb.yaml
 ```
 
 #### Joining a Node
