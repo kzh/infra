@@ -133,7 +133,11 @@ $ sudo systemctl restart kubelet
 ### Cluster Bootstrap
 ```
 $ kubeadm init --config kubernetes/kubeadm/init.yaml
-$ kubectl taint nodes --all node-role.kubernetes.io/master-
+```
+
+**Calico CNI**
+```
+$ kubectl apply -f kubernetes/resources/calico.yaml
 ```
 
 #### Joining a Node
