@@ -170,7 +170,7 @@ $ kubectl create secret generic -n metallb-system memberlist --from-literal=secr
 $ kubectl apply -f kubernetes/resources/metallb.yaml
 ```
 
-#### Joining a Node
+### Joining a Node
 ```
 # Run this command on a connected node. It will generate
 # a bash command that you can then run on an unconnected node

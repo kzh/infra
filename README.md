@@ -22,6 +22,7 @@ I'm most definitely leaking money from overprovisioning resources haha.
 #### Kubernetes
 * [Node setup](docs/kubernetes.md#node-setup)
 * [Cluster bootstrap](docs/kubernetes.md#cluster-bootstrap)
+* [Joining a Node](docs/kubernetes.md#joining-a-node)
 
 #### Misc
 * PKI (Certificates)
