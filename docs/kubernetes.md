@@ -167,7 +167,32 @@ $ kubectl patch storageclass rook-ceph-block -p '{"metadata": {"annotations":{"s
 $ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml
 $ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml
 $ kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
+
+# Configure the address pool
 $ kubectl apply -f kubernetes/resources/metallb.yaml
+```
+
+**cert-manager**
+```
+$ kubectl create namespace cert-manager
+$ helm repo add jetstack https://charts.jetstack.io
+$ helm repo update
+$ helm install \
+  cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --version v1.0.4 \
+  --set installCRDs=true
+
+# Create letsencrypt cluster cert issuer
+$ kubectl apply -f kubernetes/secrets/cloudflare-dns.yaml
+$ kubectl apply -f kubernetes/resources/cert-manager.yaml
+```
+
+**Istio**
+```
+$ curl -L https://istio.io/downloadIstio | sh -
+$ cd istio-*
+$ ./bin/istioctl install
 ```
 
 ### Joining a Node

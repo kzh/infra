@@ -18,11 +18,11 @@ Tailscale is used to remotely `kubectl` into the cluster. Administrative interna
 > **Note:** This setup is nothing more than to deploy my hobby projects. It's more than likely overkill.
 I'm most definitely leaking money from overprovisioning resources haha.
 
-## Docs 
+## Docs
 #### Kubernetes
 * [Node setup](docs/kubernetes.md#node-setup)
 * [Cluster bootstrap](docs/kubernetes.md#cluster-bootstrap)
 * [Joining a Node](docs/kubernetes.md#joining-a-node)
 
 #### Misc
-* PKI (Certificates)
+* [PKI (Certificates)](docs/pki.md)
