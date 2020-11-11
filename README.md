@@ -16,7 +16,7 @@ network.
 Tailscale is used to remotely `kubectl` into the cluster. Administrative internal services are exposed behind mTLS.
 
 > **Note:** This setup is nothing more than to deploy my hobby projects. It's more than likely overkill.
-I'm most definitely leaking money from overprovisioning resources haha.
+I'm most definitely hemorrhaging money from overprovisioning resources haha.
 
 ## Docs
 #### Kubernetes
