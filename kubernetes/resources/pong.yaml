@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: pong
-        image: docker.pkg.github.com/kzh/pong/pong:2.0
+        image: ghcr.io/kzh/pong:1.0
         ports:
         - containerPort: 80
 ---
@@ -45,7 +45,7 @@ apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
 metadata:
   name: pong-cert
-  namespace: pong
+  namespace: istio-system
 spec:
   secretName: pong-cert
   dnsNames:
