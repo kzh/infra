@@ -22,12 +22,34 @@ spec:
       - name: "sdb3"
       - name: "sdc"
       - name: "sdd"
+      - name: "sde"
     - name: "faust2"
       devices:
       - name: "sda3"
       - name: "sdb3"
       - name: "sdc"
       - name: "sdd"
+      - name: "sde"
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: rook-ceph-dashboard
+  namespace: rook-ceph
+spec:
+  gateways:
+  - istio-system/internal
+  hosts:
+  - "ceph.faust.dev"
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: 7000
+        host: rook-ceph-mgr-dashboard
 ---
 apiVersion: ceph.rook.io/v1
 kind: CephBlockPool
@@ -43,7 +65,7 @@ spec:
 apiVersion: ceph.rook.io/v1
 kind: CephBlockPool
 metadata:
-  name:	replicapool 
+  name:	replicapool
   namespace: rook-ceph
 spec:
   failureDomain: osd
@@ -80,5 +102,42 @@ parameters:
     csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
     csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
     csi.storage.k8s.io/fstype: xfs
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+---
+apiVersion: ceph.rook.io/v1
+kind: CephObjectStore
+metadata:
+  name: objectstore-hdd
+  namespace: rook-ceph
+spec:
+  metadataPool:
+    failureDomain: osd
+    replicated:
+      size: 2
+    deviceClass: hdd
+  dataPool:
+    failureDomain: osd
+    replicated:
+      size: 2
+    deviceClass: hdd
+  gateway:
+    type: s3
+    port: 80
+    instances: 1
+  healthCheck:
+    bucket:
+      disabled: false
+      interval: 60s
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+   name: rook-ceph-bucket-hdd
+provisioner: rook-ceph.ceph.rook.io/bucket
+parameters:
+  objectStoreName: objectstore-hdd
+  objectStoreNamespace: rook-ceph
+  region: us-east-1
 reclaimPolicy: Delete
 allowVolumeExpansion: true
