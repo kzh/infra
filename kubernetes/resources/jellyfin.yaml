@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: jellyfin
+  namespace: storage
+spec:
+  gateways:
+  - istio-system/internal
+  hosts:
+  - "jellyfin.faust.dev"
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: 80
+        host: jellyfin
