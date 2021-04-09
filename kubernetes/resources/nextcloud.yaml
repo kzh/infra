@@ -1,3 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextcloud-ts
+  namespace: storage
+  annotations:
+    metallb.universe.tf/allow-shared-ip: m1-ts
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 100.126.227.31
+  selector:
+    app: nextcloud
+  ports:
+  - protocol: TCP
+    name: http
+    port: 3080
+    targetPort: 80
+---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:

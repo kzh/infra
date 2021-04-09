@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: iperf3s 
+  labels:
+    app: iperf3s
+spec:
+  containers:
+    - name: ubuntu
+      image: ubuntu
+      command: ["tail"]
+      args: ["-f", "/dev/null"]
+      ports:
+       - containerPort: 5201  
+  nodeSelector:
+    kubernetes.io/hostname: m2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iperf3s
+spec:
+  selector:
+    app: iperf3s
+  ports:
+    - name: tcp
+      protocol: TCP
+      port: 5201
+      targetPort: 5201
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: iperf3c
+spec:
+  containers:
+    - name: ubuntu
+      image: ubuntu
+      command: ["tail"]
+      args: ["-f", "/dev/null"]
+  nodeSelector:
+    kubernetes.io/hostname: m1

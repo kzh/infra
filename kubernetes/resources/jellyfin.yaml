@@ -8,6 +8,7 @@ spec:
   - istio-system/internal
   hosts:
   - "jellyfin.faust.dev"
+  - "jf.faust.dev"
   http:
   - match:
     - uri:
@@ -17,3 +18,19 @@ spec:
         port:
           number: 80
         host: jellyfin
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jellyfin-lb
+  namespace: storage
+spec:
+  selector:
+    app: jellyfin
+  loadBalancerIP: 100.95.136.59
+  type: LoadBalancer
+  ports:
+    - name: http
+      protocol: TCP
+      port: 3080
+      targetPort: 8096
