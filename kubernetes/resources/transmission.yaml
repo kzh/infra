@@ -1,3 +1,11 @@
+apiVersion: onepassword.com/v1
+kind: OnePasswordItem
+metadata:
+  name: pia
+  namespace: storage
+spec:
+  itemPath: "vaults/M/items/PIA"
+---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
