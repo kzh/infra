@@ -9,7 +9,7 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: rook-ceph-block-hdd
+          storageClassName: rook-ceph-block
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:

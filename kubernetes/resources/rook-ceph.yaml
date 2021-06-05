@@ -15,7 +15,7 @@ metadata:
   namespace: rook-ceph
 spec:
   cephVersion:
-    image: ceph/ceph:v15.2.7
+    image: ceph/ceph:v16.2.3
   dataDirHostPath: /var/lib/rook
   dashboard:
     enabled: true
@@ -26,14 +26,16 @@ spec:
     useAllNodes: false
     useAllDevices: false
     nodes:
-    - name: "m1"
+    - name: "mx1"
       devices:
-      - name: "nvme0n1p3"
-      - name: "nvme1n1p3"
-    - name: "m2"
+      - name: "nvme0n1p4"
+      - name: "nvme1n1p4"
+    - name: "mx2"
       devices:
-      - name: "nvme0n1p3"
-      - name: "nvme1n1p3"
+      - name: "nvme0n1p4"
+      - name: "nvme1n1p4"
+    config:
+      osdsPerDevice: "3"
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
@@ -71,15 +73,18 @@ metadata:
    name: rook-ceph-block
 provisioner: rook-ceph.rbd.csi.ceph.com
 parameters:
-    clusterID: rook-ceph
-    pool: replicapool
-    csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
-    csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
-    csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
-    csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
-    csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
-    csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
-    csi.storage.k8s.io/fstype: xfs
+  clusterID: rook-ceph
+  pool: replicapool
+
+  imageFeatures: layering
+
+  csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+  csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
+  csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+  csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
+  csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+  csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
+  csi.storage.k8s.io/fstype: xfs
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 ---

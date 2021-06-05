@@ -7,7 +7,7 @@ metadata:
     metallb.universe.tf/allow-shared-ip: m1-ts
 spec:
   type: LoadBalancer
-  loadBalancerIP: 100.126.227.31
+  loadBalancerIP: 100.111.164.99
   selector:
     app: nextcloud
   ports:

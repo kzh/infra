@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: jellyfin-lb
+  name: jellyfin-ts
   namespace: storage
   annotations:
     metallb.universe.tf/allow-shared-ip: m1-ts
 spec:
   selector:
     app: jellyfin
-  loadBalancerIP: 100.126.227.31 
+  loadBalancerIP: 100.111.164.99
   type: LoadBalancer
   ports:
     - name: http

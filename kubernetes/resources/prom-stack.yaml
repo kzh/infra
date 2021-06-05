@@ -4,9 +4,8 @@ metadata:
   name: rook-ceph-mgr
   namespace: telemetry
   labels:
-    release: prometheus-operator
+    release: prometheus-stack
 spec:
-  jobLabel: rook-ceph
   namespaceSelector:
     matchNames:
     - rook-ceph
@@ -16,6 +15,7 @@ spec:
       rook_cluster: rook-ceph
   endpoints:
   - port: http-metrics
+    path: /metrics
     interval: 5s
 ---
 apiVersion: monitoring.coreos.com/v1
@@ -24,9 +24,8 @@ metadata:
   name: csi-metrics
   namespace: telemetry
   labels:
-    release: prometheus-operator
+    release: prometheus-stack
 spec:
-  jobLabel: rook-ceph
   namespaceSelector:
     matchNames:
     - rook-ceph
@@ -34,8 +33,9 @@ spec:
     matchLabels:
       app: csi-metrics
   endpoints:
-  - port: csi-grpc-metrics
-    interval: 5s
+    - port: csi-http-metrics
+      path: /metrics
+      interval: 5s
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
@@ -55,7 +55,7 @@ spec:
     - destination:
         port:
           number: 80
-        host: prometheus-operator-grafana
+        host: prometheus-stack-grafana
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
@@ -75,4 +75,4 @@ spec:
     - destination:
         port:
           number: 9090
-        host: prometheus-operator-prometheus
+        host: prometheus-stack-kube-prom-prometheus
