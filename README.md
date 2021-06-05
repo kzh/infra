@@ -1,17 +1,17 @@
 # infra-faust
 This repository contains configuration and tooling for my personal cloud infrastructure.
 At the moment, this primarily consist of a two node kubernetes cluster running on bare metal
-dedicated machines hosted at an OVH datacenter. The nodes are connected on a private OVH vlan 
-network.
+dedicated machines hosted at a Hetzner datacenter. The nodes are connected on a private
+virtual L2 network.
 
-**Spec:** 512 GB Memory, 64 CPU, 16TB disk, 500 Mbps  
+**Spec:** 256GB DDR4 Memory, 64 CPU, 8TB NVMe disk, 10 Gbps
 **Components:**
 * **Package Manager:** Helm
 * **Networking:** Calico, Istio, MetalLB
 * **Storage:** Rook Ceph
 * **Observability:** Prometheus, Loki, Jaeger, Promtail, Grafana
 * **Database:** CockroachDB
-* **PKI:** cert-manager
+* **PKI:** Step CA, cert-manager
 
 Tailscale is used to remotely `kubectl` into the cluster. Administrative internal services are exposed behind mTLS.
 
