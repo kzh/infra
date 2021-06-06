@@ -4,7 +4,7 @@ At the moment, this primarily consist of a two node kubernetes cluster running o
 dedicated machines hosted at a Hetzner datacenter. The nodes are connected on a private
 virtual L2 network.
 
-**Spec:** 256GB DDR4 Memory, 64 CPU, 8TB NVMe disk, 10 Gbps
+**Spec:** 256GB DDR4 Memory, 64 CPU, 8TB NVMe disk, 10 Gbps  
 **Components:**
 * **Package Manager:** Helm
 * **Networking:** Calico, Istio, MetalLB
