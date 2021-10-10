@@ -1,13 +1,13 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: transmission
-  namespace: storage
+  name: vault
+  namespace: vault
 spec:
   gateways:
   - istio-system/internal
   hosts:
-  - "tsm.faust.dev"
+  - "vault.faust.dev"
   http:
   - match:
     - uri:
@@ -15,5 +15,5 @@ spec:
     route:
     - destination:
         port:
-          number: 80
-        host: tsm
+          number: 8200
+        host: vault

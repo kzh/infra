@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: rook-ceph-mgr
-  namespace: telemetry
+  namespace: obs
   labels:
     release: prometheus-stack
 spec:
@@ -22,7 +22,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: csi-metrics
-  namespace: telemetry
+  namespace: obs
   labels:
     release: prometheus-stack
 spec:
@@ -41,7 +41,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: grafana
-  namespace: telemetry
+  namespace: obs
 spec:
   gateways:
   - istio-system/internal
@@ -55,13 +55,13 @@ spec:
     - destination:
         port:
           number: 80
-        host: prometheus-stack-grafana
+        host: kube-prometheus-stack-grafana
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: prometheus
-  namespace: telemetry
+  namespace: obs
 spec:
   gateways:
   - istio-system/internal
@@ -75,4 +75,4 @@ spec:
     - destination:
         port:
           number: 9090
-        host: prometheus-stack-kube-prom-prometheus
+        host: kube-prometheus-stack-prometheus

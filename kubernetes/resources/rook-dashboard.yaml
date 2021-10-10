@@ -1,13 +1,13 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: transmission
-  namespace: storage
+  name: rook-ceph-dashboard
+  namespace: rook-ceph
 spec:
   gateways:
   - istio-system/internal
   hosts:
-  - "tsm.faust.dev"
+  - "ceph.faust.dev"
   http:
   - match:
     - uri:
@@ -15,5 +15,6 @@ spec:
     route:
     - destination:
         port:
-          number: 80
-        host: tsm
+          number: 7000
+        host: rook-ceph-mgr-dashboard
+
