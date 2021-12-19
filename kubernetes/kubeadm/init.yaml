@@ -9,6 +9,7 @@ apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 networking:
   podSubnet: 10.250.0.0/16
+serverTLSBootstrap: true
 ---
 apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
