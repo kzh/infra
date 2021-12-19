@@ -5,5 +5,18 @@ import (
 )
 
 func main() {
-	pulumi.Run(NewMetricsServer)
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		runFuncs := []pulumi.RunFunc{
+			NewMetricsServer,
+			NewKubernetesDashboard,
+		}
+
+		for _, fn := range runFuncs {
+			if err := fn(ctx); err != nil {
+				return err
+			}
+		}
+
+		return nil
+	})
 }
