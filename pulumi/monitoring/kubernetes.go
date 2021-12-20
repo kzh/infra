@@ -8,7 +8,17 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func NewMetricsServer(ctx *pulumi.Context) error {
+func DeployKubernetesMonitoring(ctx *pulumi.Context) error {
+	if err := NewKubernetesMetricsServer(ctx); err != nil {
+		return err
+	}
+	if err := NewKubernetesDashboard(ctx); err != nil {
+		return err
+	}
+	return nil
+}
+
+func NewKubernetesMetricsServer(ctx *pulumi.Context) error {
 	const (
 		ResourceName = "metrics-server"
 		Repository   = "https://kubernetes-sigs.github.io/metrics-server/"

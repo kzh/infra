@@ -7,8 +7,8 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		runFuncs := []pulumi.RunFunc{
-			NewMetricsServer,
-			NewKubernetesDashboard,
+			DeployKubernetesMonitoring,
+			DeployPrometheusStack,
 		}
 
 		for _, fn := range runFuncs {
