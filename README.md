@@ -4,14 +4,15 @@ At the moment, this primarily consist of a two node kubernetes cluster running o
 dedicated machines hosted at a Hetzner datacenter. The nodes are connected on a private
 virtual L2 network.
 
-**Spec:** 256GB DDR4 Memory, 64 CPU, 8TB NVMe disk, 10 Gbps  
+**Spec:** 256GB DDR4 RAM, 64 CPU (2x AMD Radeon 9 5950X), 8TB NVMe disk, 10 Gbps  
 **Components:**
+* **IaC:** Pulumi
 * **Package Manager:** Helm
-* **Networking:** Calico, Istio, MetalLB
+* **Networking:** Calico, MetalLB, Istio
 * **Storage:** Rook Ceph
-* **Observability:** Prometheus, Loki, Jaeger, Promtail, Grafana
+* **Monitoring:** Prometheus, Grafana, Jaeger, OpenTelemetry Collector, Fluent Bit, Elasticsearch, Kibana
 * **Database:** CockroachDB
-* **PKI:** Step CA, cert-manager
+* **PKI:** Vault, Secrets Store CSI, cert-manager
 
 Tailscale is used to remotely `kubectl` into the cluster. Administrative internal services are exposed behind mTLS.
 
