@@ -6,12 +6,12 @@ import (
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		runFuncs := []pulumi.RunFunc{
+		deployFuncs := []pulumi.RunFunc{
 			DeployKubernetesMonitoring,
-			DeployPrometheusStack,
+			DeployEFKStack,
 		}
 
-		for _, fn := range runFuncs {
+		for _, fn := range deployFuncs {
 			if err := fn(ctx); err != nil {
 				return err
 			}
