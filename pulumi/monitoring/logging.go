@@ -142,6 +142,12 @@ func NewFluentBit(ctx *pulumi.Context) error {
     Tag kube.*
     Mem_Buf_Limit 5MB
     Skip_Long_Lines On
+
+[INPUT]
+    Name systemd
+    Tag host.*
+    Systemd_Filter _SYSTEMD_UNIT=kubelet.service
+    Read_From_Tail On
 `
 
 	outputs := `
@@ -151,8 +157,18 @@ func NewFluentBit(ctx *pulumi.Context) error {
     Host elasticsearch-master-headless
     Index kubernetes
     Logstash_Format On
+    Logstash_Prefix kubernetes
     Retry_Limit False
     Replace_Dots On
+    Trace_Error On
+
+[OUTPUT]
+    Name es
+    Match host.*
+    Host elasticsearch-master-headless
+    Logstash_Format On
+    Logstash_Prefix node
+    Retry_Limit False
     Trace_Error On
 	`
 
