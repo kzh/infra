@@ -3,25 +3,34 @@ package main
 import (
 	"github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes"
 	"github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/apiextensions"
+	batchv1 "github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/batch/v1"
+	corev1 "github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/core/v1"
 	"github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/helm/v3"
 	metav1 "github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/meta/v1"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func DeployEFKStack(ctx *pulumi.Context) error {
-	if err := NewElasticsearch(ctx); err != nil {
+	es, err := NewElasticsearch(ctx)
+	if err != nil {
 		return nil
 	}
-	if err := NewKibana(ctx); err != nil {
+
+	bootstrap, err := BootstrapElasticsearch(ctx, es)
+	if err != nil {
+		return nil
+	}
+
+	if err := NewFluentBit(ctx, bootstrap); err != nil {
 		return err
 	}
-	if err := NewFluentBit(ctx); err != nil {
+	if err := NewKibana(ctx, bootstrap); err != nil {
 		return err
 	}
 	return nil
 }
 
-func NewElasticsearch(ctx *pulumi.Context) error {
+func NewElasticsearch(ctx *pulumi.Context) (*helm.Chart, error) {
 	const (
 		ResourceName = "elasticsearch"
 		Repository   = "https://helm.elastic.co/"
@@ -31,7 +40,7 @@ func NewElasticsearch(ctx *pulumi.Context) error {
 		Namespace = "monitoring"
 	)
 
-	_, err := helm.NewChart(ctx, ResourceName, helm.ChartArgs{
+	return helm.NewChart(ctx, ResourceName, helm.ChartArgs{
 		Namespace: pulumi.String(Namespace),
 		Chart:     pulumi.String(Chart),
 		Version:   pulumi.String(ChartVersion),
@@ -41,6 +50,17 @@ func NewElasticsearch(ctx *pulumi.Context) error {
 		Values: pulumi.Map{
 			"replicas":           pulumi.Int(1),
 			"minimumMasterNodes": pulumi.Int(1),
+
+			"extraEnvs": pulumi.MapArray{
+				pulumi.Map{
+					"name":  pulumi.String("discovery.type"),
+					"value": pulumi.String("single-node"),
+				},
+				pulumi.Map{
+					"name":  pulumi.String("cluster.initial_master_nodes"),
+					"value": nil,
+				},
+			},
 
 			"resources": pulumi.Map{
 				"requests": pulumi.Map{
@@ -54,10 +74,57 @@ func NewElasticsearch(ctx *pulumi.Context) error {
 			},
 		},
 	})
-	return err
 }
 
-func NewKibana(ctx *pulumi.Context) error {
+func BootstrapElasticsearch(ctx *pulumi.Context, es *helm.Chart) (pulumi.Resource, error) {
+	const (
+		JobName = "elasticsearch-bootstrap"
+		Image   = "ubuntu:21.10"
+
+		Namespace = "monitoring"
+	)
+
+	bootstrap := `
+apt update && apt install -y curl
+curl -H 'Content-Type: application/json' -X PUT http://elasticsearch-master-headless:9200/_index_template/mx_logs -d '
+{
+   "index_patterns": ["kubernetes*", "node*"],
+   "template": {
+	   "settings": {
+		   "number_of_replicas": 0,
+           "index.lifecycle.name": "7-days-default"
+	   }
+   }
+}'
+`
+
+	return batchv1.NewJob(ctx, JobName, &batchv1.JobArgs{
+		Metadata: &metav1.ObjectMetaArgs{
+			Name:      pulumi.String(JobName),
+			Namespace: pulumi.String(Namespace),
+		},
+		Spec: batchv1.JobSpecArgs{
+			Template: corev1.PodTemplateSpecArgs{
+				Spec: corev1.PodSpecArgs{
+					Containers: corev1.ContainerArray{
+						&corev1.ContainerArgs{
+							Name:  pulumi.String(JobName),
+							Image: pulumi.String(Image),
+							Command: pulumi.StringArray{
+								pulumi.String("/bin/bash"),
+								pulumi.String("-c"),
+								pulumi.String(bootstrap),
+							},
+						},
+					},
+					RestartPolicy: pulumi.String("Never"),
+				},
+			},
+		},
+	}, pulumi.DependsOnInputs(es.Ready))
+}
+
+func NewKibana(ctx *pulumi.Context, bootstrap pulumi.Resource) error {
 	const (
 		ResourceName = "kibana"
 		Repository   = "https://helm.elastic.co/"
@@ -84,7 +151,7 @@ func NewKibana(ctx *pulumi.Context) error {
 				},
 			},
 		},
-	})
+	}, pulumi.DependsOn([]pulumi.Resource{bootstrap}))
 	if err != nil {
 		return err
 	}
@@ -124,7 +191,7 @@ func NewKibana(ctx *pulumi.Context) error {
 	return err
 }
 
-func NewFluentBit(ctx *pulumi.Context) error {
+func NewFluentBit(ctx *pulumi.Context, bootstrap pulumi.Resource) error {
 	const (
 		ResourceName = "fluent-bit"
 		Repository   = "https://fluent.github.io/helm-charts/"
@@ -170,7 +237,7 @@ func NewFluentBit(ctx *pulumi.Context) error {
     Logstash_Prefix node
     Retry_Limit False
     Trace_Error On
-	`
+`
 
 	_, err := helm.NewChart(ctx, ResourceName, helm.ChartArgs{
 		Namespace: pulumi.String(Namespace),
@@ -187,6 +254,6 @@ func NewFluentBit(ctx *pulumi.Context) error {
 				"outputs": pulumi.String(outputs),
 			},
 		},
-	})
+	}, pulumi.DependsOn([]pulumi.Resource{bootstrap}))
 	return err
 }
