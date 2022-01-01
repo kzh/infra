@@ -8,7 +8,7 @@ func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		deployFuncs := []pulumi.RunFunc{
 			DeployKubernetesMonitoring,
-			DeployEFKStack,
+			DeployPrometheusStack,
 		}
 
 		for _, fn := range deployFuncs {

@@ -10,6 +10,10 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
+func main() {
+	pulumi.Run(DeployEFKStack)
+}
+
 func DeployEFKStack(ctx *pulumi.Context) error {
 	es, err := NewElasticsearch(ctx)
 	if err != nil {
@@ -86,16 +90,10 @@ func BootstrapElasticsearch(ctx *pulumi.Context, es *helm.Chart) (pulumi.Resourc
 
 	bootstrap := `
 apt update && apt install -y curl
+curl -H 'Content-Type: application/json' -X PUT http://elasticsearch-master-headless:9200/_ilm/policy/mx -d '
+{"policy":{"phases":{"delete":{"min_age":"10d","actions":{"delete":{}}}}}}'
 curl -H 'Content-Type: application/json' -X PUT http://elasticsearch-master-headless:9200/_index_template/mx_logs -d '
-{
-   "index_patterns": ["kubernetes*", "node*"],
-   "template": {
-	   "settings": {
-		   "number_of_replicas": 0,
-           "index.lifecycle.name": "7-days-default"
-	   }
-   }
-}'
+{"index_patterns":["kubernetes*","node*"],"template":{"settings":{"number_of_replicas":0,"index.lifecycle.name":"mx"}}}'
 `
 
 	return batchv1.NewJob(ctx, JobName, &batchv1.JobArgs{

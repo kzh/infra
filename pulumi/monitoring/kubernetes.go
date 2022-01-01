@@ -28,15 +28,13 @@ func NewKubernetesMetricsServer(ctx *pulumi.Context) error {
 		Namespace = "kube-system"
 	)
 
-	_, err := helm.NewRelease(ctx, ResourceName, &helm.ReleaseArgs{
+	_, err := helm.NewChart(ctx, ResourceName, helm.ChartArgs{
 		Namespace: pulumi.String(Namespace),
-		Name:      pulumi.String(Chart),
 		Chart:     pulumi.String(Chart),
 		Version:   pulumi.String(ChartVersion),
-		RepositoryOpts: helm.RepositoryOptsArgs{
+		FetchArgs: helm.FetchArgs{
 			Repo: pulumi.String(Repository),
 		},
-		Atomic: pulumi.Bool(true),
 	})
 	return err
 }
@@ -51,30 +49,26 @@ func NewKubernetesDashboard(ctx *pulumi.Context) error {
 		Namespace = "monitoring"
 	)
 
-	_, err := helm.NewRelease(ctx, ResourceName,
-		&helm.ReleaseArgs{
-			CreateNamespace: pulumi.Bool(true),
-			Namespace:       pulumi.String(Namespace),
-			Name:            pulumi.String(Chart),
-			Chart:           pulumi.String(Chart),
-			Version:         pulumi.String(ChartVersion),
-			RepositoryOpts: helm.RepositoryOptsArgs{
-				Repo: pulumi.String(Repository),
+	_, err := helm.NewChart(ctx, ResourceName, helm.ChartArgs{
+		Namespace: pulumi.String(Namespace),
+		Chart:     pulumi.String(Chart),
+		Version:   pulumi.String(ChartVersion),
+		FetchArgs: helm.FetchArgs{
+			Repo: pulumi.String(Repository),
+		},
+		Values: pulumi.Map{
+			"rbac": pulumi.Map{
+				"clusterReadOnlyRole": pulumi.Bool(true),
 			},
-			Atomic: pulumi.Bool(true),
-			Values: pulumi.Map{
-				"rbac": pulumi.Map{
-					"clusterReadOnlyRole": pulumi.Bool(true),
-				},
-				"service": pulumi.Map{
-					"externalPort": pulumi.Int(80),
-				},
-				"protocolHttp": pulumi.Bool(true),
-				"metricsScraper": pulumi.Map{
-					"enabled": pulumi.Bool(true),
-				},
+			"service": pulumi.Map{
+				"externalPort": pulumi.Int(80),
 			},
-		})
+			"protocolHttp": pulumi.Bool(true),
+			"metricsScraper": pulumi.Map{
+				"enabled": pulumi.Bool(true),
+			},
+		},
+	})
 	if err != nil {
 		return err
 	}
