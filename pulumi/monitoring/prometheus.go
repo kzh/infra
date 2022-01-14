@@ -13,7 +13,7 @@ func DeployPrometheusStack(ctx *pulumi.Context) error {
 		ResourceName = "kube-prometheus-stack"
 		Repository   = "https://prometheus-community.github.io/helm-charts"
 		Chart        = "kube-prometheus-stack"
-		ChartVersion = "27.0.1"
+		ChartVersion = "30.0.1"
 
 		Namespace = "monitoring"
 	)
