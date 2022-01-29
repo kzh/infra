@@ -1,4 +1,4 @@
-package k8s
+package infra
 
 import (
 	"k8s.io/client-go/kubernetes"
@@ -8,15 +8,15 @@ import (
 	"path/filepath"
 )
 
-func Config() (*rest.Config, error) {
+func K8SConfig() (*rest.Config, error) {
 	home := homedir.HomeDir()
 	path := filepath.Join(home, ".kube", "config")
 
 	return clientcmd.BuildConfigFromFlags("", path)
 }
 
-func Clientset() (*kubernetes.Clientset, error) {
-	config, err := Config()
+func K8SClientset() (*kubernetes.Clientset, error) {
+	config, err := K8SConfig()
 	if err != nil {
 		return nil, err
 	}
@@ -24,8 +24,8 @@ func Clientset() (*kubernetes.Clientset, error) {
 	return kubernetes.NewForConfig(config)
 }
 
-func CA() []byte {
-	config, err := Config()
+func K8SCA() []byte {
+	config, err := K8SConfig()
 	if err != nil {
 		return nil
 	}

@@ -3,7 +3,8 @@ package main
 import (
 	"context"
 	"encoding/base64"
-	"github.com/kzh/infra-faust/pkg/k8s"
+	"errors"
+	"github.com/kzh/infra-faust/pkg/infra"
 	certificates "github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/certificates/v1"
 	corev1 "github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/core/v1"
 	"github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/helm/v3"
@@ -92,12 +93,13 @@ func main() {
 			return err
 		}
 
-		cert := csr.Metadata.ApplyT(func(o *metav1.ObjectMeta) string {
+		cert := csr.ID().ApplyT(func(id pulumi.ID) (string, error) {
 			if cert, err := ApproveCSR(ResourceName); cert != "" && err == nil {
-				return cert
+				return cert, nil
+			} else if cert := FetchSecretCert(ResourceName, Namespace); cert != "" {
+				return cert, nil
 			}
-
-			return FetchSecretCert(ResourceName, Namespace)
+			return "", errors.New("missing vault certificate")
 		}).(pulumi.StringOutput)
 
 		secret, err := corev1.NewSecret(ctx, "vault-certs", &corev1.SecretArgs{
@@ -108,7 +110,7 @@ func main() {
 			StringData: pulumi.StringMap{
 				"vault.key": key.PrivateKeyPem,
 				"vault.crt": cert,
-				"vault.ca":  pulumi.String(k8s.CA()),
+				"vault.ca":  pulumi.String(infra.K8SCA()),
 			},
 		}, pulumi.DependsOn([]pulumi.Resource{csr}))
 		if err != nil {
@@ -176,7 +178,7 @@ func main() {
 }
 
 func ApproveCSR(name string) (string, error) {
-	clientset, err := k8s.Clientset()
+	clientset, err := infra.K8SClientset()
 	if err != nil {
 		return "", err
 	}
@@ -211,7 +213,7 @@ func ApproveCSR(name string) (string, error) {
 }
 
 func FetchSecretCert(name, namespace string) string {
-	clientset, err := k8s.Clientset()
+	clientset, err := infra.K8SClientset()
 	if err != nil {
 		return ""
 	}
@@ -226,4 +228,8 @@ func FetchSecretCert(name, namespace string) string {
 	}
 
 	return string(secret.Data["vault.crt"])
+}
+
+func InitVault(name, namespace string) {
+
 }
