@@ -56,8 +56,6 @@ func SetupTLS(ctx *pulumi.Context, namespace *corev1.Namespace) (*corev1.Secret,
 		return base64.StdEncoding.EncodeToString([]byte(input))
 	}).(pulumi.StringOutput)
 
-	ctx.Export("certificate", req)
-
 	// CertificateSigningRequest
 	csr, err := certificates.NewCertificateSigningRequest(ctx, "vault-csr", &certificates.CertificateSigningRequestArgs{
 		Metadata: metav1.ObjectMetaArgs{
