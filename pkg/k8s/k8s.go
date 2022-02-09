@@ -2,6 +2,11 @@ package k8s
 
 import (
 	"context"
+	"net/http"
+	"path/filepath"
+	"sort"
+	"time"
+
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -12,10 +17,6 @@ import (
 	"k8s.io/client-go/util/homedir"
 	"k8s.io/kubectl/pkg/polymorphichelpers"
 	"k8s.io/kubectl/pkg/util/podutils"
-	"net/http"
-	"path/filepath"
-	"sort"
-	"time"
 )
 
 func Config() (*rest.Config, error) {
