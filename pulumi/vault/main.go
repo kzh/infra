@@ -54,6 +54,8 @@ func NewVaultChart(ctx *pulumi.Context, secret *corev1.Secret) (*helm.Chart, err
 	)
 
 	config := `
+  ui = true
+
   listener "tcp" {
 	address = "[::]:8200"
 	cluster_address = "[::]:8201"
