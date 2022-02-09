@@ -89,6 +89,36 @@ func SaveVaultCredentials(init *vault.InitResponse) error {
 	}
 }
 
+func FetchVaultCredentials() (*vault.InitResponse, error) {
+	opc, err := NewOPClient()
+	if err != nil {
+		return nil, err
+	}
+
+	vaults, err := opc.GetVaultsByTitle("mx")
+	if err != nil {
+		return nil, err
+	}
+	if len(vaults) == 0 {
+		return nil, errors.New("missing onepassword vault")
+	}
+	opvault := vaults[0]
+
+	item, err := opc.GetItemByTitle("Vault Credentials", opvault.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	resp := &vault.InitResponse{
+		RootToken: item.GetValue("Root Token"),
+	}
+	for _, field := range item.Fields[2:] {
+		resp.Keys = append(resp.Keys, field.Value)
+	}
+
+	return resp, nil
+}
+
 func NewOPClient() (connect.Client, error) {
 	return connect.NewClientFromEnvironment()
 }

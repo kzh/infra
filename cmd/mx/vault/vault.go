@@ -19,6 +19,7 @@ func Cmd() *cobra.Command {
 	cmd.AddCommand(
 		up,
 		destroy,
+		unseal,
 	)
 	return cmd
 }
@@ -78,6 +79,42 @@ var destroy = &cobra.Command{
 		_, err = stack.Destroy(ctx, stdout)
 		if err != nil {
 			panic(err)
+		}
+	},
+}
+
+var unseal = &cobra.Command{
+	Use: "unseal",
+	Run: func(cmd *cobra.Command, args []string) {
+		vc, err := NewVaultClient()
+		if err != nil {
+			panic(err)
+		}
+
+		status, err := vc.Sys().SealStatus()
+		if err != nil {
+			panic(err)
+		}
+
+		if !status.Initialized {
+			fmt.Println("vault is not initialized")
+			return
+		}
+
+		if !status.Sealed {
+			return
+		}
+
+		resp, err := FetchVaultCredentials()
+		if err != nil {
+			panic(err)
+		}
+
+		for _, key := range resp.Keys[:status.T] {
+			_, err := vc.Sys().Unseal(key)
+			if err != nil {
+				panic(err)
+			}
 		}
 	},
 }
