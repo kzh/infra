@@ -4,6 +4,7 @@ go 1.17
 
 require (
 	github.com/1Password/connect-sdk-go v1.2.0
+	github.com/cockroachdb/errors v1.8.6
 	github.com/hashicorp/vault/api v1.3.1
 	github.com/pulumi/pulumi-kubernetes/sdk/v3 v3.14.1
 	github.com/pulumi/pulumi-tls/sdk/v4 v4.1.0
@@ -26,7 +27,6 @@ require (
 	github.com/cenkalti/backoff/v3 v3.2.2 // indirect
 	github.com/chai2010/gettext-go v0.0.0-20160711120539-c6fed771bfd5 // indirect
 	github.com/cheggaaa/pb v1.0.18 // indirect
-	github.com/cockroachdb/errors v1.8.6 // indirect
 	github.com/cockroachdb/logtags v0.0.0-20211118104740-dabe8e521a4f // indirect
 	github.com/cockroachdb/redact v1.1.3 // indirect
 	github.com/cockroachdb/sentry-go v0.6.1-cockroachdb.2 // indirect
