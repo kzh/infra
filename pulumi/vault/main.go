@@ -34,13 +34,17 @@ func main() {
 			return err
 		}
 
-		chart.GetResource("v1/Service", "vault", "vault").ApplyT(
-			func(arg interface{}) error {
-				service := arg.(*corev1.Service)
-				services.NewTailscaleProxy(ctx, service)
-				return nil
+		output := chart.GetResource("v1/Service", "vault", "vault").ApplyT(
+			func(arg interface{}) pulumi.StringPtrOutput {
+				return arg.(*corev1.Service).Spec.ClusterIP()
 			},
-		)
+		).(pulumi.AnyOutput)
+		clusterIP := pulumi.StringPtrOutput{OutputState: output.OutputState}
+
+		_, err = services.NewTailscaleProxy(ctx, "vault", "vault", clusterIP)
+		if err != nil {
+			return err
+		}
 
 		return nil
 	})

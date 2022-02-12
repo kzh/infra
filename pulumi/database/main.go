@@ -17,8 +17,13 @@ func main() {
 		if err != nil {
 			return err
 		}
-		services.NewTailscaleProxy(ctx, service)
-
-		return nil
+		
+		_, err = services.NewTailscaleProxy(
+			ctx,
+			"cockroachdb-public",
+			"crdb",
+			service.Spec.ClusterIP(),
+		)
+		return err
 	})
 }
