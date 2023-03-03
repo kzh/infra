@@ -1,2 +1,4 @@
 kubernetes/secrets/
 **/Pulumi.*.yaml
+**/.envrc
+.idea

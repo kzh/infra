@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/kzh/infra-faust/pkg/k8s"
+
 	vault "github.com/hashicorp/vault/api"
 	"github.com/pulumi/pulumi/sdk/v3/go/auto"
 	"github.com/pulumi/pulumi/sdk/v3/go/auto/optdestroy"
@@ -28,7 +30,8 @@ var up = &cobra.Command{
 	Use: "up",
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx := context.Background()
-		stack, err := auto.UpsertStackLocalSource(ctx, "vault", "/home/kevin/Code/Repos/github.com/kzh/infra-faust/pulumi/vault")
+
+		stack, err := auto.UpsertStackLocalSource(ctx, "vault", "/root/Code/Repos/infra-faust/pulumi/vault")
 		if err != nil {
 			panic(err)
 		}
@@ -38,6 +41,27 @@ var up = &cobra.Command{
 		if err != nil {
 			panic(err)
 		}
+
+		stop := make(chan struct{})
+		ready := make(chan struct{})
+
+		go func() {
+			err = k8s.PortForward(
+				"vault",
+				"vault",
+				[]string{"8200:8200"},
+				stop,
+				ready,
+			)
+			if err != nil {
+				panic(err)
+			}
+		}()
+		defer func() {
+			stop <- struct{}{}
+		}()
+
+		<-ready
 
 		vc, err := NewVaultClient()
 		if err != nil {
@@ -70,7 +94,7 @@ var destroy = &cobra.Command{
 	Use: "destroy",
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx := context.Background()
-		stack, err := auto.UpsertStackLocalSource(ctx, "vault", "/home/kevin/Code/Repos/github.com/kzh/infra-faust/pulumi/vault")
+		stack, err := auto.UpsertStackLocalSource(ctx, "vault", "/root/Code/Repos/infra-faust/pulumi/vault")
 		if err != nil {
 			panic(err)
 		}
@@ -86,6 +110,27 @@ var destroy = &cobra.Command{
 var unseal = &cobra.Command{
 	Use: "unseal",
 	Run: func(cmd *cobra.Command, args []string) {
+        stop := make(chan struct{})
+        ready := make(chan struct{})
+
+        go func() {
+            err := k8s.PortForward(
+                "vault",
+                "vault",
+                []string{"8200:8200"},
+                stop,
+                ready,
+                )
+            if err != nil {
+                panic(err)
+            }
+        }()
+        defer func() {
+            stop <- struct{}{}
+        }()
+
+        <-ready
+
 		vc, err := NewVaultClient()
 		if err != nil {
 			panic(err)
