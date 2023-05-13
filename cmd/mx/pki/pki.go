@@ -44,24 +44,7 @@ var up = &cobra.Command{
 		<-ready
 
 		ctx := context.Background()
-
 		stack, err := auto.UpsertStackLocalSource(ctx, "pki", "/root/Code/Repos/infra-faust/pulumi/pki")
-		if err != nil {
-			panic(err)
-		}
-
-		tmp, err := os.CreateTemp("", "*")
-		if err != nil {
-			panic(err)
-		}
-		defer os.Remove(tmp.Name())
-
-		_, err = tmp.Write(k8s.CA())
-		if err != nil {
-			panic(err)
-		}
-
-		err = stack.SetConfig(ctx, "vault:ca_cert_file", auto.ConfigValue{Value: tmp.Name()})
 		if err != nil {
 			panic(err)
 		}
@@ -99,24 +82,7 @@ var destroy = &cobra.Command{
 		<-ready
 
 		ctx := context.Background()
-
 		stack, err := auto.UpsertStackLocalSource(ctx, "pki", "/root/Code/Repos/infra-faust/pulumi/pki")
-		if err != nil {
-			panic(err)
-		}
-
-		tmp, err := os.CreateTemp("", "*")
-		if err != nil {
-			panic(err)
-		}
-		defer os.Remove(tmp.Name())
-
-		_, err = tmp.Write(k8s.CA())
-		if err != nil {
-			panic(err)
-		}
-
-		err = stack.SetConfig(ctx, "vault:ca_cert_file", auto.ConfigValue{Value: tmp.Name()})
 		if err != nil {
 			panic(err)
 		}
