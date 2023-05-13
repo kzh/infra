@@ -110,26 +110,26 @@ var destroy = &cobra.Command{
 var unseal = &cobra.Command{
 	Use: "unseal",
 	Run: func(cmd *cobra.Command, args []string) {
-        stop := make(chan struct{})
-        ready := make(chan struct{})
+		stop := make(chan struct{})
+		ready := make(chan struct{})
 
-        go func() {
-            err := k8s.PortForward(
-                "vault",
-                "vault",
-                []string{"8200:8200"},
-                stop,
-                ready,
-                )
-            if err != nil {
-                panic(err)
-            }
-        }()
-        defer func() {
-            stop <- struct{}{}
-        }()
+		go func() {
+			err := k8s.PortForward(
+				"vault",
+				"vault",
+				[]string{"8200:8200"},
+				stop,
+				ready,
+			)
+			if err != nil {
+				panic(err)
+			}
+		}()
+		defer func() {
+			stop <- struct{}{}
+		}()
 
-        <-ready
+		<-ready
 
 		vc, err := NewVaultClient()
 		if err != nil {
