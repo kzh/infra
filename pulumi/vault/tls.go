@@ -30,13 +30,10 @@ func SetupTLS(ctx *pulumi.Context, namespace *corev1.Namespace) (*corev1.Secret,
 
 	// CertRequest
 	cr, err := tls.NewCertRequest(ctx, "vault-cr", &tls.CertRequestArgs{
-		KeyAlgorithm:  key.Algorithm,
 		PrivateKeyPem: key.PrivateKeyPem,
-		Subjects: tls.CertRequestSubjectArray{
-			tls.CertRequestSubjectArgs{
-				CommonName:   pulumi.String("system:node:" + ResourceName + "." + Namespace + ".svc"),
-				Organization: pulumi.String("system:nodes"),
-			},
+		Subject: tls.CertRequestSubjectArgs{
+			CommonName:   pulumi.String("system:node:" + ResourceName + "." + Namespace + ".svc"),
+			Organization: pulumi.String("system:nodes"),
 		},
 		DnsNames: pulumi.StringArray{
 			pulumi.String(ResourceName),

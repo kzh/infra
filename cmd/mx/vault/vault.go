@@ -86,6 +86,11 @@ var up = &cobra.Command{
 			}
 		}
 
+		status, err = vc.Sys().SealStatus()
+		if err != nil {
+			panic(err)
+		}
+
 		fmt.Printf("%#v\n", status)
 	},
 }
@@ -161,5 +166,11 @@ var unseal = &cobra.Command{
 				panic(err)
 			}
 		}
+
+		status, err = vc.Sys().SealStatus()
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%#v\n", status)
 	},
 }

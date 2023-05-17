@@ -53,7 +53,7 @@ func NewVaultChart(ctx *pulumi.Context, secret *corev1.Secret) (*helm.Chart, err
 	const (
 		Repository   = "https://helm.releases.hashicorp.com"
 		Chart        = "vault"
-		ChartVersion = "0.18.0"
+		ChartVersion = "0.24.1"
 	)
 
 	config := `
@@ -71,6 +71,9 @@ func NewVaultChart(ctx *pulumi.Context, secret *corev1.Secret) (*helm.Chart, err
 	path = "/vault/data"
   }
 `
+	await := pulumi.Map{
+		"pulumi.com/skipAwait": pulumi.String("true"),
+	}
 
 	return helm.NewChart(ctx, ResourceName, helm.ChartArgs{
 		Namespace: pulumi.String(Namespace),
@@ -90,11 +93,9 @@ func NewVaultChart(ctx *pulumi.Context, secret *corev1.Secret) (*helm.Chart, err
 				"extraEnvironmentVars": pulumi.Map{
 					"VAULT_CACERT": pulumi.String("/etc/pki/vault/vault.ca"),
 				},
-				"statefulSet": pulumi.Map{
-					"annotations": pulumi.Map{
-						"pulumi.com/skipAwait": pulumi.String("true"),
-					},
-				},
+				"annotations": await,
+				"service":     pulumi.Map{"annotations": await},
+				"statefulSet": pulumi.Map{"annotations": await},
 				"extraVolumes": pulumi.MapArray{
 					pulumi.Map{
 						"type": pulumi.String("secret"),
