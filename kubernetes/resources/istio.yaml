@@ -1,56 +1,21 @@
-apiVersion: networking.istio.io/v1beta1
-kind: Gateway
-metadata:
-  name: https-redirect
-  namespace: istio-system
-spec:
-  selector:
-    istio: ingressgateway
-  servers:
-  - port:
-      name: web
-      number: 80
-      protocol: HTTP2
-    hosts:
-    - "*"
-    tls:
-      httpsRedirect: true
----
-apiVersion: networking.istio.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1beta1
 kind: Gateway
 metadata:
   name: internal
   namespace: istio-system
 spec:
-  selector:
-    istio: ingressgateway
-  servers:
-  - port:
-      name: https
-      number: 443
+  gatewayClassName: istio
+  listeners:
+    - name: default
+      hostname: "*.faust.dev"
+      port: 443
       protocol: HTTPS
-    tls:
-      mode: MUTUAL
-      credentialName: mtls
-    hosts:
-    - "*.faust.dev"
----
-apiVersion: networking.istio.io/v1beta1
-kind: VirtualService
-metadata:
-  name: kiali
-  namespace: istio-system
-spec:
-  gateways:
-  - istio-system/internal
-  hosts:
-  - "kiali.faust.dev"
-  http:
-  - match:
-    - uri:
-        prefix: /
-    route:
-    - destination:
-        port:
-          number: 20001
-        host: kiali
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: mtls
+        options:
+          gateway.istio.io/tls-terminate-mode: MUTUAL
+      allowedRoutes:
+        namespaces:
+          from: All
