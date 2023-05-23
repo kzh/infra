@@ -16,6 +16,9 @@ func Cmd() *cobra.Command {
 	}
 	cmd.AddCommand(up)
 	cmd.AddCommand(destroy)
+	cmd.AddCommand(genClientCert)
+	cmd.AddCommand(genServerCert)
+	cmd.AddCommand(rootCa)
 	return cmd
 }
 
@@ -44,7 +47,7 @@ var up = &cobra.Command{
 		<-ready
 
 		ctx := context.Background()
-		stack, err := auto.UpsertStackLocalSource(ctx, "pki", "/root/Code/Repos/infra-faust/pulumi/pki")
+		stack, err := auto.UpsertStackLocalSource(ctx, "pki", "/Users/kevin/Code/Repos/github.com/kzh/infra-faust/pulumi/pki")
 		if err != nil {
 			panic(err)
 		}
@@ -82,7 +85,7 @@ var destroy = &cobra.Command{
 		<-ready
 
 		ctx := context.Background()
-		stack, err := auto.UpsertStackLocalSource(ctx, "pki", "/root/Code/Repos/infra-faust/pulumi/pki")
+		stack, err := auto.UpsertStackLocalSource(ctx, "pki", "/Users/kevin/Code/Repos/github.com/kzh/infra-faust/pulumi/pki")
 		if err != nil {
 			panic(err)
 		}

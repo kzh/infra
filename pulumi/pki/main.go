@@ -82,6 +82,26 @@ func main() {
 			return err
 		}
 
+		_, err = pkisecret.NewSecretBackendRole(ctx, "internal", &pkisecret.SecretBackendRoleArgs{
+			Name:            pulumi.String("internal"),
+			Backend:         intermediate.Path,
+			AllowSubdomains: pulumi.Bool(true),
+			AllowedDomains:  pulumi.StringArray{pulumi.String("faust.dev")},
+		})
+		if err != nil {
+			return err
+		}
+
+		_, err = pkisecret.NewSecretBackendRole(ctx, "kevin", &pkisecret.SecretBackendRoleArgs{
+			Name:             pulumi.String("kevin"),
+			Backend:          intermediate.Path,
+			AllowBareDomains: pulumi.Bool(true),
+			AllowedDomains:   pulumi.StringArray{pulumi.String("kevin")},
+		})
+		if err != nil {
+			return err
+		}
+
 		return nil
 	})
 }
