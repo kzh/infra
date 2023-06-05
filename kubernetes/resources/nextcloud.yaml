@@ -16,22 +16,21 @@ spec:
     port: 3080
     targetPort: 80
 ---
-apiVersion: networking.istio.io/v1beta1
-kind: VirtualService
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
 metadata:
   name: nextcloud
   namespace: storage
 spec:
-  gateways:
-  - istio-system/internal
-  hosts:
-  - "nc.faust.dev"
-  http:
-  - match:
-    - uri:
-        prefix: /
-    route:
-    - destination:
-        port:
-          number: 80
-        host: nextcloud
+  parentRefs:
+    - name: internal
+      namespace: istio-system
+  hostnames: ["nc.faust.dev"]
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: nextcloud
+          port: 80

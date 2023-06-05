@@ -1,78 +1,96 @@
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: rook-ceph-mgr
-  namespace: obs
-  labels:
-    release: prometheus-stack
-spec:
-  namespaceSelector:
-    matchNames:
-    - rook-ceph
-  selector:
-    matchLabels:
-      app: rook-ceph-mgr
-      rook_cluster: rook-ceph
-  endpoints:
-  - port: http-metrics
-    path: /metrics
-    interval: 5s
+#apiVersion: monitoring.coreos.com/v1
+#kind: ServiceMonitor
+#metadata:
+#  name: rook-ceph-mgr
+#  namespace: obs
+#  labels:
+#    release: prometheus-stack
+#spec:
+#  namespaceSelector:
+#    matchNames:
+#    - rook-ceph
+#  selector:
+#    matchLabels:
+#      app: rook-ceph-mgr
+#      rook_cluster: rook-ceph
+#  endpoints:
+#  - port: http-metrics
+#    path: /metrics
+#    interval: 5s
+#---
+#apiVersion: monitoring.coreos.com/v1
+#kind: ServiceMonitor
+#metadata:
+#  name: csi-metrics
+#  namespace: obs
+#  labels:
+#    release: prometheus-stack
+#spec:
+#  namespaceSelector:
+#    matchNames:
+#    - rook-ceph
+#  selector:
+#    matchLabels:
+#      app: csi-metrics
+#  endpoints:
+#    - port: csi-http-metrics
+#      path: /metrics
+#      interval: 5s
+#apiVersion: networking.istio.io/v1beta1
+#kind: VirtualService
+#metadata:
+#  name: grafana
+#  namespace: obs
+#spec:
+#  gateways:
+#  - istio-system/internal
+#  hosts:
+#  - "grafana.faust.dev"
+#  http:
+#  - match:
+#    - uri:
+#        prefix: /
+#    route:
+#    - destination:
+#        port:
+#          number: 80
+#        host: kube-prometheus-stack-grafana
+#---
+#apiVersion: networking.istio.io/v1beta1
+#kind: VirtualService
+#metadata:
+#  name: prometheus
+#  namespace: obs
+#spec:
+#  gateways:
+#  - istio-system/internal
+#  hosts:
+#  - "prometheus.faust.dev"
+#  http:
+#  - match:
+#    - uri:
+#        prefix: /
+#    route:
+#    - destination:
+#        port:
+#          number: 9090
+#        host: kube-prometheus-stack-prometheus
 ---
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: csi-metrics
-  namespace: obs
-  labels:
-    release: prometheus-stack
-spec:
-  namespaceSelector:
-    matchNames:
-    - rook-ceph
-  selector:
-    matchLabels:
-      app: csi-metrics
-  endpoints:
-    - port: csi-http-metrics
-      path: /metrics
-      interval: 5s
----
-apiVersion: networking.istio.io/v1beta1
-kind: VirtualService
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
 metadata:
   name: grafana
-  namespace: obs
+  namespace: monitoring
 spec:
-  gateways:
-  - istio-system/internal
-  hosts:
-  - "grafana.faust.dev"
-  http:
-  - match:
-    - uri:
-        prefix: /
-    route:
-    - destination:
-        port:
-          number: 80
-        host: kube-prometheus-stack-grafana
----
-apiVersion: networking.istio.io/v1beta1
-kind: VirtualService
-metadata:
-  name: prometheus
-  namespace: obs
-spec:
-  gateways:
-  - istio-system/internal
-  hosts:
-  - "prometheus.faust.dev"
-  http:
-  - match:
-    - uri:
-        prefix: /
-    route:
-    - destination:
-        port:
-          number: 9090
-        host: kube-prometheus-stack-prometheus
+  parentRefs:
+    - name: internal
+      namespace: istio-system
+  hostnames: ["grafana.faust.dev"]
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: kube-prometheus-stack-grafana
+          port: 80

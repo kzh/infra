@@ -1,0 +1,19 @@
+tls:
+  certs:
+    certManager: true
+    useCertManagerV1CRDs: true
+    certManagerIssuer:
+      name: crdb-issuer
+      nodeCertDuration: 4380h
+    selfSigner:
+      enabled: false
+
+storage:
+  persistentVolume:
+    size: 30Gi
+
+statefulset:
+  resources:
+    requests:
+      memory: 8Gi
+      cpu: 400m

@@ -1,51 +1,24 @@
-apiVersion: crdb.cockroachlabs.com/v1alpha1
-kind: CrdbCluster
-metadata:
-  name: cockroachdb
-  namespace: crdb
-spec:
-  dataStore:
-    pvc:
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: "20Gi"
-        volumeMode: Filesystem
-  resources:
-    requests:
-      cpu: 500m
-      memory: 2Gi
-    limits:
-      cpu: 2
-      memory: 8Gi
-  tlsEnabled: true
-  image:
-    name: cockroachdb/cockroach:v21.1.9
-  nodes: 3
----
 apiVersion: v1
 kind: Pod
 metadata:
   name: cockroachdb-client-secure
   namespace: crdb
 spec:
-  serviceAccountName: cockroach-operator-sa
+  serviceAccountName: cockroachdb
   containers:
-  - name: cockroachdb-client-secure
-    image: cockroachdb/cockroach:v21.1.9
-    imagePullPolicy: IfNotPresent
-    volumeMounts:
-    - name: client-certs
-      mountPath: /cockroach/cockroach-certs/
-    command:
-    - sleep
-    - "2147483648"
+    - name: cockroachdb-client-secure
+      image: cockroachdb/cockroach:v22.2.2
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: client-certs
+          mountPath: /cockroach/cockroach-certs/
+      command:
+        - sleep
+        - "2147483648" # 2^31
   terminationGracePeriodSeconds: 0
   volumes:
-  - name: client-certs
-    projected:
+    - name: client-certs
+      projected:
         sources:
           - secret:
               name: cockroachdb-node
@@ -61,7 +34,7 @@ spec:
                   path: client.root.key
         defaultMode: 256
 ---
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
   name: crdb
@@ -71,22 +44,21 @@ spec:
     tls:
       mode: SIMPLE
 ---
-apiVersion: networking.istio.io/v1beta1
-kind: VirtualService
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
 metadata:
   name: crdb
-  namespace: crdb 
+  namespace: crdb
 spec:
-  gateways:
-  - istio-system/internal
-  hosts:
-  - "crdb.faust.dev"
-  http:
-  - match:
-    - uri:
-        prefix: /
-    route:
-    - destination:
-        port:
-          number: 8080
-        host: cockroachdb-public
+  parentRefs:
+    - name: internal
+      namespace: istio-system
+  hostnames: ["crdb.faust.dev"]
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: cockroachdb-public
+          port: 8080
