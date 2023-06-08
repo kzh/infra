@@ -2,7 +2,11 @@ provisionDataStore:
   cassandra: false
 
 storage:
-  type: elasticsearch
-  elasticsearch:
-    host: elasticsearch-master
-    port: 9200
+  cassandra:
+    host: cassandra
+    port: 9042
+    user: cassandra
+    password: cassandra
+
+agent:
+  enabled: false

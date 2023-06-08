@@ -1,0 +1,53 @@
+mode: daemonset
+
+service:
+  enabled: true
+
+ports:
+  otlp-http:
+    enabled: false
+  jaeger-compact:
+    enabled: false
+  jaeger-thrift:
+    enabled: false
+  jaeger-grpc:
+    enabled: false
+  zipkin:
+    enabled: false
+
+config:
+  exporters:
+    logging: {}
+    jaeger:
+      endpoint: jaeger-collector:14250
+      tls:
+        insecure: true
+  processors:
+    batch: {}
+    memory_limiter: null
+  receivers:
+    jaeger: null
+    prometheus: null
+    zipkin: null
+    otlp:
+      protocols:
+        grpc:
+          endpoint: ${env:MY_POD_IP}:4317
+        http: null
+  service:
+    extensions:
+      - health_check
+      - memory_ballast
+    telemetry: null
+    pipelines:
+      logs: null
+      metrics: null
+      traces:
+        receivers:
+          - otlp
+        processors:
+          - memory_limiter
+          - batch
+        exporters:
+          - logging
+          - jaeger

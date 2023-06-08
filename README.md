@@ -12,7 +12,7 @@ virtual L2 network.
 * **Storage:** Rook Ceph
 * **Monitoring:** Prometheus, Grafana, Jaeger, OpenTelemetry Collector, Fluent Bit, Elasticsearch, Kibana
 * **Database:** CockroachDB
-* **PKI:** Vault, Secrets Store CSI, cert-manager
+* **PKI:** OnePassword, Vault, cert-manager
 
 Tailscale is used to remotely `kubectl` into the cluster. Administrative internal services are exposed behind mTLS.
 

@@ -1,8 +1,0 @@
-minimumMasterNodes: 1
-replicas: 1
-
-rbac:
-  create: true
-
-podSecurityPolicy:
-  create: true
