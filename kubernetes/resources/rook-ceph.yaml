@@ -15,7 +15,7 @@ metadata:
   namespace: rook-ceph
 spec:
   cephVersion:
-    image: quay.io/ceph/ceph:v16.2.7
+    image: quay.io/ceph/ceph:v17.2.6
   dataDirHostPath: /var/lib/rook
   dashboard:
     enabled: true
@@ -126,3 +126,32 @@ parameters:
 
 reclaimPolicy: Retain
 allowVolumeExpansion: true
+---
+apiVersion: ceph.rook.io/v1
+kind: CephObjectStore
+metadata:
+  name: objectstore
+  namespace: rook-ceph
+spec:
+  metadataPool:
+    failureDomain: host
+    replicated:
+      size: 2
+  dataPool:
+    failureDomain: host
+    replicated:
+      size: 2
+  preservePoolsOnDelete: true
+  gateway:
+    port: 80
+    instances: 1
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+   name: rook-ceph-bucket
+provisioner: rook-ceph.ceph.rook.io/bucket
+reclaimPolicy: Delete
+parameters:
+  objectStoreName: objectstore
+  objectStoreNamespace: rook-ceph

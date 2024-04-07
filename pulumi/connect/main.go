@@ -45,12 +45,10 @@ func main() {
 			return err
 		}
 
-		output := chart.GetResource("v1/Service", "onepassword-connect", Namespace).ApplyT(
+		clusterIP := chart.GetResource("v1/Service", "onepassword-connect", Namespace).ApplyT(
 			func(r interface{}) (pulumi.StringPtrOutput, error) {
 				return r.(*corev1.Service).Spec.ClusterIP(), nil
-			},
-		).(pulumi.AnyOutput)
-		clusterIP := pulumi.StringPtrOutput{OutputState: output.OutputState}
+			}).(pulumi.StringPtrOutput)
 
 		_, err = services.NewTailscaleProxy(ctx, "onepassword-connect", "connect", clusterIP)
 		if err != nil {
