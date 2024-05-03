@@ -12,9 +12,9 @@ func DeployKubernetesMonitoring(ctx *pulumi.Context) error {
 	if err := NewKubernetesMetricsServer(ctx); err != nil {
 		return err
 	}
-	if err := NewKubernetesDashboard(ctx); err != nil {
-		return err
-	}
+//	if err := NewKubernetesDashboard(ctx); err != nil {
+//		return err
+//	}
 	return nil
 }
 
@@ -44,7 +44,7 @@ func NewKubernetesDashboard(ctx *pulumi.Context) error {
 		ResourceName = "kubernetes-dashboard"
 		Repository   = "https://kubernetes.github.io/dashboard/"
 		Chart        = "kubernetes-dashboard"
-		ChartVersion = "5.0.5"
+		ChartVersion = "7.3.2"
 
 		Namespace = "monitoring"
 	)

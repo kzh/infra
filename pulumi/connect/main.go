@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/kzh/infra-faust/pkg/services"
 	corev1 "github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/core/v1"
 	"github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/helm/v3"
 	metav1 "github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/meta/v1"
@@ -17,7 +16,7 @@ func main() {
 
 			Repository   = "https://1password.github.io/connect-helm-charts"
 			Chart        = "connect"
-			ChartVersion = "1.7.0"
+			ChartVersion = "1.15.0"
 		)
 
 		namespace, err := corev1.NewNamespace(ctx, Namespace, &corev1.NamespaceArgs{
@@ -27,7 +26,7 @@ func main() {
 		})
 
 		cfg := config.New(ctx, "")
-		chart, err := helm.NewChart(ctx, ResourceName, helm.ChartArgs{
+		_, err = helm.NewChart(ctx, ResourceName, helm.ChartArgs{
 			Namespace: pulumi.String(Namespace),
 			Chart:     pulumi.String(Chart),
 			Version:   pulumi.String(ChartVersion),
@@ -38,19 +37,13 @@ func main() {
 				"connect": pulumi.Map{
 					"serviceType": pulumi.String("ClusterIP"),
 					"credentials": cfg.RequireSecret("CONNECT_CREDENTIALS"),
+					"serviceAnnotations": pulumi.Map{
+						"tailscale.com/expose":   pulumi.String("true"),
+						"tailscale.com/hostname": pulumi.String("onepassword-connect"),
+					},
 				},
 			},
 		}, pulumi.DependsOn([]pulumi.Resource{namespace}))
-		if err != nil {
-			return err
-		}
-
-		clusterIP := chart.GetResource("v1/Service", "onepassword-connect", Namespace).ApplyT(
-			func(r interface{}) (pulumi.StringPtrOutput, error) {
-				return r.(*corev1.Service).Spec.ClusterIP(), nil
-			}).(pulumi.StringPtrOutput)
-
-		_, err = services.NewTailscaleProxy(ctx, "onepassword-connect", "connect", clusterIP)
 		if err != nil {
 			return err
 		}

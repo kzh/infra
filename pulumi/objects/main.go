@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/kzh/infra-faust/pkg/services"
 	corev1 "github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/core/v1"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+
+	"github.com/kzh/infra-faust/pkg/services"
 )
 
 func main() {
@@ -13,7 +14,7 @@ func main() {
 			"rook-ceph-rgw-objectstore",
 			pulumi.ID("rook-ceph/rook-ceph-rgw-objectstore"),
 			nil,
-			)
+		)
 		if err != nil {
 			return err
 		}
@@ -23,7 +24,7 @@ func main() {
 			"rook-ceph-rgw-objectstore",
 			"rook-ceph",
 			service.Spec.ClusterIP(),
-			)
+		)
 		return err
 	})
 }

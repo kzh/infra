@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/kzh/infra-faust/pkg/services"
 	corev1 "github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/core/v1"
 	"github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/helm/v3"
 	metav1 "github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/meta/v1"
@@ -29,23 +28,8 @@ func main() {
 			return err
 		}
 
-		chart, err := NewVaultChart(ctx, secret)
-		if err != nil {
-			return err
-		}
-
-		clusterIP := chart.GetResource("v1/Service", "vault", "vault").ApplyT(
-			func(arg interface{}) pulumi.StringPtrOutput {
-				return arg.(*corev1.Service).Spec.ClusterIP()
-			},
-		).(pulumi.StringPtrOutput)
-
-		_, err = services.NewTailscaleProxy(ctx, "vault", "vault", clusterIP)
-		if err != nil {
-			return err
-		}
-
-		return nil
+		_, err = NewVaultChart(ctx, secret)
+		return err
 	})
 }
 
@@ -53,7 +37,7 @@ func NewVaultChart(ctx *pulumi.Context, secret *corev1.Secret) (*helm.Chart, err
 	const (
 		Repository   = "https://helm.releases.hashicorp.com"
 		Chart        = "vault"
-		ChartVersion = "0.24.1"
+		ChartVersion = "0.28.0"
 	)
 
 	config := `
@@ -94,7 +78,11 @@ func NewVaultChart(ctx *pulumi.Context, secret *corev1.Secret) (*helm.Chart, err
 					"VAULT_CACERT": pulumi.String("/etc/pki/vault/vault.ca"),
 				},
 				"annotations": await,
-				"service":     pulumi.Map{"annotations": await},
+				"service": pulumi.Map{"annotations": pulumi.Map{
+					"pulumi.com/skipAwait":   pulumi.String("true"),
+					"tailscale.com/expose":   pulumi.String("true"),
+					"tailscale.com/hostname": pulumi.String("vault"),
+				}},
 				"statefulSet": pulumi.Map{"annotations": await},
 				"extraVolumes": pulumi.MapArray{
 					pulumi.Map{

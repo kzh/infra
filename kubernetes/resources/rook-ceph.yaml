@@ -22,6 +22,10 @@ spec:
   mon:
     count: 3
     allowMultiplePerNode: true
+  resources:
+    osd:
+      requests:
+          memory: "4Gi"
   storage:
     useAllNodes: false
     useAllDevices: false
@@ -145,6 +149,10 @@ spec:
   gateway:
     port: 80
     instances: 1
+    service:
+      annotations:
+        tailscale.com/expose: "true"
+        tailscale.com/hostname: rook-ceph-rgw-objectstore
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass

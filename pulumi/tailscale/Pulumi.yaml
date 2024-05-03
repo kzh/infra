@@ -1,6 +1,6 @@
-name: logging
+name: tailscale
 runtime: nodejs
-description: logging
+description: tailscale operator
 config:
   pulumi:tags:
     value:
