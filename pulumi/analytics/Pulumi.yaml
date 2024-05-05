@@ -1,0 +1,7 @@
+name: analytics
+runtime: nodejs
+description: analytics
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: ""

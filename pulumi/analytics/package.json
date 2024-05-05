@@ -1,0 +1,12 @@
+{
+    "name": "test",
+    "devDependencies": {
+        "@types/node": "^18"
+    },
+    "dependencies": {
+        "@pulumi/cloudflare": "^5.27.0",
+        "@pulumi/kubernetes": "^4.0.0",
+        "@pulumi/pulumi": "^3.113.0",
+        "typescript": "^5.0.0"
+    }
+}
