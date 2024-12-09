@@ -11,7 +11,7 @@ const config = new pulumi.Config();
 const operator = new k8s.helm.v3.Chart("tailscale-operator", {
     chart: "tailscale-operator",
     namespace: "tailscale",
-    version: "1.64.2",
+    version: "1.76.6",
     fetchOpts: {
         repo: "https://pkgs.tailscale.com/helmcharts",
     },
@@ -21,4 +21,4 @@ const operator = new k8s.helm.v3.Chart("tailscale-operator", {
             clientSecret: config.requireSecret("TS_CLIENT_SECRET"),
         }
     }
-}, {dependsOn: [namespace]});
+}, { dependsOn: [namespace] });

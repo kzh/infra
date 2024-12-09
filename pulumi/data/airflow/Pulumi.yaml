@@ -1,0 +1,7 @@
+name: airflow
+runtime: go
+description: airflow
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: https://www.pulumi.com/ai/api/project/2d23c1d2-677d-4dc2-b8b7-b5ae904eaec8.zip

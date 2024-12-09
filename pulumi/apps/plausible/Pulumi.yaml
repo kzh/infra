@@ -1,0 +1,7 @@
+name: plausible
+runtime: nodejs
+description: plausible
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: ""

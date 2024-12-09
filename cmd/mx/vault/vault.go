@@ -31,7 +31,7 @@ var up = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx := context.Background()
 
-		stack, err := auto.UpsertStackLocalSource(ctx, "vault", "/root/Code/Repos/infra-faust/pulumi/vault")
+		stack, err := auto.UpsertStackLocalSource(ctx, "vault", "/Users/kevin/Code/Repos/github.com/kzh/infra/pulumi/vault")
 		if err != nil {
 			panic(err)
 		}

@@ -1,0 +1,6 @@
+socketLB:
+  hostNamespaceOnly: true
+cni:
+  exclusive: false
+envoy:
+  enabled: false

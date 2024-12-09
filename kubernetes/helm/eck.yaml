@@ -1,9 +1,0 @@
-eck-elasticsearch:
-    enabled: true
-    annotations:
-        eck.k8s.elastic.co/license: basic
-
-eck-kibana:
-    enabled: true
-    annotations:
-        eck.k8s.elastic.co/license: basic
