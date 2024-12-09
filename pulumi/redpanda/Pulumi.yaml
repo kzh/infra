@@ -1,0 +1,7 @@
+name: redpanda
+description: redpanda
+runtime: go
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: helm-kubernetes-go

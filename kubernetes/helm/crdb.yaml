@@ -1,26 +1,24 @@
 image:
   repository: cockroachdb/cockroach
-  tag: v23.1.11
+  tag: v24.3.0
+
+conf:
+  single-node: true
+  max-sql-memory: 8G
+  cache: 8G
+
+statefulset:
+  replicas: 1
 
 tls:
-  certs:
-    certManager: true
-    useCertManagerV1CRDs: true
-    certManagerIssuer:
-      name: crdb-issuer
-      kind: ClusterIssuer
-      nodeCertDuration: 4380h
-      isSelfSignedIssuer: false
-    tlsSecret: true
-    selfSigner:
-      enabled: false
+  enabled: false
+
+service:
+  public:
+    annotations:
+      tailscale.com/expose: "true"
+      tailscale.com/hostname: cockroachdb-public
 
 storage:
   persistentVolume:
-    size: 200Gi
-
-statefulset:
-  resources:
-    requests:
-      memory: 6Gi
-      cpu: 400m
+    size: 100Gi

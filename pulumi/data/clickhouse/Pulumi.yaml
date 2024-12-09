@@ -1,0 +1,7 @@
+name: clickhouse
+runtime: nodejs
+description: clickhouse
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: ""

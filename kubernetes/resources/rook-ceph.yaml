@@ -6,7 +6,7 @@ metadata:
 data:
   config: |
     [global]
-    osd pool default size = 2
+    osd pool default size = 1
 ---
 apiVersion: ceph.rook.io/v1
 kind: CephCluster
@@ -15,7 +15,7 @@ metadata:
   namespace: rook-ceph
 spec:
   cephVersion:
-    image: quay.io/ceph/ceph:v17.2.6
+    image: quay.io/ceph/ceph:v19
   dataDirHostPath: /var/lib/rook
   dashboard:
     enabled: true
@@ -25,7 +25,7 @@ spec:
   resources:
     osd:
       requests:
-          memory: "4Gi"
+          memory: "24Gi"
   storage:
     useAllNodes: false
     useAllDevices: false
@@ -34,32 +34,6 @@ spec:
       devices:
       - name: "nvme0n1p4"
       - name: "nvme1n1p4"
-    - name: "mx2"
-      devices:
-      - name: "nvme0n1p4"
-      - name: "nvme1n1p4"
-    config:
-      osdsPerDevice: "3"
----
-apiVersion: networking.istio.io/v1beta1
-kind: VirtualService
-metadata:
-  name: rook-ceph-dashboard
-  namespace: rook-ceph
-spec:
-  gateways:
-  - istio-system/internal
-  hosts:
-  - "ceph.faust.dev"
-  http:
-  - match:
-    - uri:
-        prefix: /
-    route:
-    - destination:
-        port:
-          number: 7000
-        host: rook-ceph-mgr-dashboard
 ---
 apiVersion: ceph.rook.io/v1
 kind: CephBlockPool
@@ -69,7 +43,7 @@ metadata:
 spec:
   failureDomain: osd
   replicated:
-    size: 2
+    size: 1
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -101,15 +75,15 @@ spec:
   metadataPool:
     failureDomain: osd
     replicated:
-      size: 2
+      size: 1
   dataPools:
     - failureDomain: osd
       replicated:
-        size: 2
+        size: 1
   preserveFilesystemOnDelete: true
   metadataServer:
     activeCount: 1
-    activeStandby: true
+    activeStandby: false
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -140,11 +114,11 @@ spec:
   metadataPool:
     failureDomain: host
     replicated:
-      size: 2
+      size: 1
   dataPool:
     failureDomain: host
     replicated:
-      size: 2
+      size: 1
   preservePoolsOnDelete: true
   gateway:
     port: 80
@@ -163,3 +137,19 @@ reclaimPolicy: Delete
 parameters:
   objectStoreName: objectstore
   objectStoreNamespace: rook-ceph
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ceph 
+  namespace: rook-ceph
+spec:
+  defaultBackend:
+    service:
+      name: rook-ceph-mgr-dashboard
+      port:
+        number: 7000 
+  ingressClassName: tailscale
+  tls:
+    - hosts:
+      - ceph
