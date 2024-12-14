@@ -50,12 +50,27 @@ manager = k8s.helm.v3.Release(
     },
 )
 
+
+def annotate_scylla_cluster(args: pulumi.ResourceTransformArgs):
+    if args.type_ == "kubernetes:scylla.scylladb.com/v1:ScyllaCluster":
+        args.props["metadata"]["annotations"] = {
+            "pulumi.com/waitFor": r"jsonpath={.status.readyMembers}=1"
+        }
+    return pulumi.ResourceTransformResult(args.props, args.opts)
+
+
 config = pulumi.Config()
-scylla = k8s.helm.v3.Release(
+namespace = k8s.core.v1.Namespace(
+    "namespace",
+    metadata=k8s.meta.v1.ObjectMetaArgs(
+        name=config.require("namespace"),
+    ),
+)
+
+scylla = k8s.helm.v4.Chart(
     "scylla",
     chart="scylla",
-    namespace=config.require("namespace"),
-    create_namespace=True,
+    namespace=namespace.metadata.name,
     repository_opts=k8s.helm.v3.RepositoryOptsArgs(
         repo="https://scylla-operator-charts.storage.googleapis.com/stable"
     ),
@@ -83,4 +98,5 @@ scylla = k8s.helm.v3.Release(
             }
         ],
     },
+    opts=pulumi.ResourceOptions(transforms=[annotate_scylla_cluster]),
 )
