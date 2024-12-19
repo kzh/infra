@@ -23,7 +23,13 @@ postgres = k8s.helm.v4.Chart(
                     "password": "nocodb",
                 },
             },
-        }
+        },
+        "primary": {
+            "resourcesPreset": "none",
+            "persistence": {
+                "size": "40Gi",
+            },
+        },
     },
     namespace=namespace.metadata.name,
 )
