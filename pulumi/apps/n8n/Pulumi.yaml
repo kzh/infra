@@ -1,0 +1,10 @@
+name: n8n
+description: n8n
+runtime:
+  name: python
+  options:
+    toolchain: uv
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: kubernetes-python
