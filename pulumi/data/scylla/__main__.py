@@ -31,17 +31,17 @@ manager = k8s.helm.v3.Release(
                     "name": "rack",
                     "members": 1,
                     "storage": {
-                        "capacity": "5Gi",
+                        "capacity": "20Gi",
                         "storageClassName": "rook-ceph-block",
                     },
                     "resources": {
                         "limits": {
-                            "cpu": "1",
-                            "memory": "200Mi",
+                            "cpu": "2",
+                            "memory": "2Gi",
                         },
                         "requests": {
-                            "cpu": "1",
-                            "memory": "200Mi",
+                            "cpu": "2",
+                            "memory": "2Gi",
                         },
                     },
                 }
@@ -87,11 +87,11 @@ scylla = k8s.helm.v4.Chart(
                 },
                 "resources": {
                     "limits": {
-                        "cpu": "1",
+                        "cpu": "2",
                         "memory": "4Gi",
                     },
                     "requests": {
-                        "cpu": "1",
+                        "cpu": "2",
                         "memory": "4Gi",
                     },
                 },
