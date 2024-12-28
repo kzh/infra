@@ -53,7 +53,13 @@ chart = k8s.helm.v4.Chart(
         "services": {
             "neo4j": {
                 "enabled": False,
-            }
+            },
+            "default": {
+                "annotations": {
+                    "tailscale.com/expose": "true",
+                    "tailscale.com/hostname": "neo4j",
+                },
+            },
         },
     },
     namespace=ns.metadata.name,
