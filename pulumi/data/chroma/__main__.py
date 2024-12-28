@@ -52,7 +52,7 @@ sts = k8s.apps.v1.StatefulSet(
                 containers=[
                     k8s.core.v1.ContainerArgs(
                         name="chroma",
-                        image="ghcr.io/chroma-core/chroma:0.5.13",
+                        image="ghcr.io/chroma-core/chroma:0.5.23",
                         ports=[
                             k8s.core.v1.ContainerPortArgs(
                                 container_port=8000,
