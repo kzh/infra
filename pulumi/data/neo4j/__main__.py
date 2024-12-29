@@ -14,7 +14,7 @@ password = random.RandomPassword(
     "password",
     length=32,
     special=False,
-).result.apply(lambda password: f"neo4j/{password}")
+).result
 
 pulumi.export("password", password)
 
@@ -25,7 +25,7 @@ secret = k8s.core.v1.Secret(
         namespace=ns.metadata.name,
     ),
     string_data={
-        "NEO4J_AUTH": password,
+        "NEO4J_AUTH": password.apply(lambda password: f"neo4j/{password}"),
     },
 )
 
