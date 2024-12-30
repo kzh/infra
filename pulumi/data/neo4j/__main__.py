@@ -19,7 +19,7 @@ password = random.RandomPassword(
 pulumi.export("password", password)
 
 secret = k8s.core.v1.Secret(
-    "password",
+    "auth",
     metadata=k8s.meta.v1.ObjectMetaArgs(
         name="neo4j-auth",
         namespace=ns.metadata.name,
@@ -48,7 +48,7 @@ chart = k8s.helm.v4.Chart(
                 "dynamic": {
                     "storageClassName": "rook-ceph-block",
                 },
-            }
+            },
         },
         "services": {
             "neo4j": {
@@ -60,6 +60,19 @@ chart = k8s.helm.v4.Chart(
                     "tailscale.com/hostname": "neo4j",
                 },
             },
+        },
+        "env": {
+            "NEO4J_PLUGINS": '["apoc"]',
+        },
+        "config": {
+            "dbms.directories.plugins": "/plugins",
+            "dbms.security.procedures.unrestricted": "jwt.security.*,apoc.*,gds.*,n10s.*",
+            "dbms.security.procedures.allowlist": "jwt.security.*,apoc.*,gds.*,n10s.*",
+            "dbms.config.strict_validation.enabled": "false",
+        },
+        "apoc_config": {
+            "apoc.export.file.enabled": "true",
+            "apoc.import.file.enabled": "true",
         },
     },
     namespace=ns.metadata.name,
