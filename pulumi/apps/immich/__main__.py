@@ -66,9 +66,7 @@ postgres = k8s.helm.v4.Chart(
 )
 
 secret = postgres.resources[0].apply(
-    lambda cluster: k8s.core.v1.Secret.get(
-        "postgres-secret", f"{cluster}-superuser"
-    )
+    lambda cluster: k8s.core.v1.Secret.get("postgres-secret", f"{cluster}-superuser")
 )
 
 
@@ -105,6 +103,9 @@ immich = k8s.helm.v4.Chart(
     values={
         "redis": {
             "enabled": True,
+        },
+        "image": {
+            "tag": "v1.124.2",
         },
         "immich": {
             "persistence": {
