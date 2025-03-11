@@ -1,1 +1,1 @@
-my_hosts = ["pop-os"]
+my_hosts = ["mx0"]
