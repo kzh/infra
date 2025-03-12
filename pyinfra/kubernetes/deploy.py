@@ -1,8 +1,10 @@
+from io import StringIO
 import os
 
 from pyinfra import host
 from pyinfra.facts.files import Link
-from pyinfra.operations import apt, server
+from pyinfra.facts.hardware import Ipv4Addrs
+from pyinfra.operations import apt, server, files
 
 server.shell(
     name="Install tailscale",
@@ -37,7 +39,7 @@ if not link_info:
 apt.ppa(name="Add PPA for fastfetch", src="ppa:zhangsongcui3371/fastfetch")
 
 apt.packages(
-    name="Install APT packages",
+    name="Install apt packages",
     packages=["vim", "htop", "fastfetch", "fzf", "ripgrep"],
     update=True,
     _sudo=True,
@@ -52,6 +54,9 @@ server.shell(
         "ufw default allow outgoing",
         "ufw allow in on tailscale0",
         "ufw allow in 22/tcp",
+        "ufw allow 6443/tcp",
+        "ufw allow from 10.42.0.0/16 to any",
+        "ufw allow from 10.43.0.0/16 to any",
     ],
     _sudo=True,
 )
@@ -59,6 +64,38 @@ server.shell(
 server.shell(
     name="Install k3s",
     commands=[
-        "curl -sfL https://get.k3s.io | sh -s - --disable=traefik,servicelb",
+        "curl -sfL https://get.k3s.io | sh -s - --disable-kube-proxy --disable=traefik,servicelb --flannel-backend=none --disable-network-policy",
+    ],
+)
+
+ipv4_addresses = host.get_fact(Ipv4Addrs)
+print(ipv4_addresses)
+
+files.put(
+    name="Copy Cilium helm config",
+    src=StringIO(f"""
+kubeProxyReplacement: true
+ipam.operator.clusterPoolIPv4PodCIDRList: "10.42.0.0/16"
+k8sServiceHost: {ipv4_addresses["eth0"][0]}
+k8sServicePort: 6443
+securityContext.privileged: true
+"""),
+    dest="cilium-config.yaml",
+)
+
+server.shell(
+    name="Install Cilium",
+    commands=[
+        """
+CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
+CLI_ARCH=amd64
+if [ "$(uname -m)" = "aarch64" ]; then CLI_ARCH=arm64; fi
+curl -L --fail --remote-name-all https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
+sha256sum --check cilium-linux-${CLI_ARCH}.tar.gz.sha256sum
+sudo tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin
+rm cilium-linux-${CLI_ARCH}.tar.gz cilium-linux-${CLI_ARCH}.tar.gz.sha256sum
+""",
+        "KUBECONFIG=/etc/rancher/k3s/k3s.yaml cilium install --values cilium-config.yaml --wait",
+        "rm cilium-config.yaml",
     ],
 )
