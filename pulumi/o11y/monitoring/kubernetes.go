@@ -6,9 +6,9 @@ import (
 )
 
 func DeployKubernetesMonitoring(ctx *pulumi.Context) error {
-	if err := NewKubernetesMetricsServer(ctx); err != nil {
-		return err
-	}
+	// if err := NewKubernetesMetricsServer(ctx); err != nil {
+	// 	return err
+	// }
 	//	if err := NewKubernetesDashboard(ctx); err != nil {
 	//		return err
 	//	}
