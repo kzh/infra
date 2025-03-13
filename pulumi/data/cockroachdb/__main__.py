@@ -16,10 +16,10 @@ chart = k8s.helm.v4.Chart(
         repo="https://charts.cockroachdb.com",
     ),
     namespace=namespace.metadata.name,
-    version="15.0.1",
+    version="16.0.1",
     values={
-        "image": {"repository": "cockroachdb/cockroach", "tag": "v24.3.1"},
-        "conf": {"single-node": True, "max-sql-memory": "8G", "cache": "8G"},
+        "image": {"repository": "cockroachdb/cockroach", "tag": "v25.1.1"},
+        "conf": {"single-node": True, "max-sql-memory": "6G", "cache": "6G"},
         "statefulset": {"replicas": 1},
         "tls": {"enabled": False},
         "service": {
