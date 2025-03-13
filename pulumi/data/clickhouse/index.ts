@@ -8,7 +8,7 @@ const namespace = new kubernetes.core.v1.Namespace("namespace", {
 
 const clickhouse = new kubernetes.helm.v3.Release("clickhouse", {
     chart: "oci://registry-1.docker.io/bitnamicharts/clickhouse",
-    version: "7.0.2",
+    version: "8.0.5",
     namespace: namespace.metadata.name,
     values: {
         auth: {
@@ -27,7 +27,7 @@ const clickhouse = new kubernetes.helm.v3.Release("clickhouse", {
             }
         },
         persistence: {
-            storageClass: "rook-ceph-block",
+            storageClass: "local-path",
             size: "100Gi",
         },
         resourcesPreset: "none",
