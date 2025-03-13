@@ -40,7 +40,7 @@ apt.ppa(name="Add PPA for fastfetch", src="ppa:zhangsongcui3371/fastfetch")
 
 apt.packages(
     name="Install apt packages",
-    packages=["vim", "htop", "fastfetch", "fzf", "ripgrep"],
+    packages=["vim", "htop", "fastfetch", "ripgrep"],
     update=True,
     _sudo=True,
 )
@@ -75,10 +75,14 @@ files.put(
     name="Copy Cilium helm config",
     src=StringIO(f"""
 kubeProxyReplacement: true
-ipam.operator.clusterPoolIPv4PodCIDRList: "10.42.0.0/16"
+ipam:
+    operator:
+        clusterPoolIPv4PodCIDRList: "10.42.0.0/16"
 k8sServiceHost: {ipv4_addresses["eth0"][0]}
 k8sServicePort: 6443
 securityContext.privileged: true
+socketLB:
+    hostNamespaceOnly: true
 """),
     dest="cilium-config.yaml",
 )
