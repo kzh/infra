@@ -5,17 +5,17 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func DeployPrometheusStackCRDs(ctx *pulumi.Context) error {
+func DeployPrometheusStackCRDs(ctx *pulumi.Context) (*helm.Chart, error) {
 	const (
 		ResourceName = "prometheus-operator-crds"
 		Repository   = "https://prometheus-community.github.io/helm-charts"
 		Chart        = "prometheus-operator-crds"
-		ChartVersion = "16.0.0"
+		ChartVersion = "18.0.1"
 
 		Namespace = "monitoring"
 	)
 
-	_, err := helm.NewChart(ctx, ResourceName, helm.ChartArgs{
+	chart, err := helm.NewChart(ctx, ResourceName, helm.ChartArgs{
 		Namespace: pulumi.String(Namespace),
 		Chart:     pulumi.String(Chart),
 		Version:   pulumi.String(ChartVersion),
@@ -23,15 +23,15 @@ func DeployPrometheusStackCRDs(ctx *pulumi.Context) error {
 			Repo: pulumi.String(Repository),
 		},
 	})
-	return err
+	return chart, err
 }
 
-func DeployPrometheusStack(ctx *pulumi.Context) error {
+func DeployPrometheusStack(ctx *pulumi.Context, chart *helm.Chart) error {
 	const (
 		ResourceName = "kube-prometheus-stack"
 		Repository   = "https://prometheus-community.github.io/helm-charts"
 		Chart        = "kube-prometheus-stack"
-		ChartVersion = "66.2.1"
+		ChartVersion = "69.8.2"
 
 		Namespace = "monitoring"
 	)
@@ -42,17 +42,17 @@ func DeployPrometheusStack(ctx *pulumi.Context) error {
 				"storageSpec": pulumi.Map{
 					"volumeClaimTemplate": pulumi.Map{
 						"spec": pulumi.Map{
-							"storageClassName": pulumi.String("rook-ceph-block"),
+							"storageClassName": pulumi.String("local-path"),
 							"accessModes":      pulumi.StringArray{pulumi.String("ReadWriteOnce")},
 							"resources": pulumi.Map{
 								"requests": pulumi.Map{
-									"storage": pulumi.String("200Gi"),
+									"storage": pulumi.String("100Gi"),
 								},
 							},
 						},
 					},
 				},
-				"retention":      pulumi.String("180d"),
+				"retention":      pulumi.String("90d"),
 				"enableAdminAPI": pulumi.Bool(true),
 			},
 		},
@@ -84,6 +84,6 @@ func DeployPrometheusStack(ctx *pulumi.Context) error {
 			Repo: pulumi.String(Repository),
 		},
 		Values: values,
-	})
+	}, pulumi.DependsOn([]pulumi.Resource{chart}))
 	return err
 }
