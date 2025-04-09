@@ -13,7 +13,7 @@ const operator = new k8s.helm.v3.Chart(
 	{
 		chart: "tailscale-operator",
 		namespace: "tailscale",
-		version: "1.80.3",
+		version: "1.82.0",
 		fetchOpts: {
 			repo: "https://pkgs.tailscale.com/helmcharts",
 		},
