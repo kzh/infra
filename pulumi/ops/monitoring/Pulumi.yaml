@@ -1,0 +1,3 @@
+name: monitoring
+runtime: python
+description: o11y infrastructure
