@@ -22,11 +22,11 @@ wheels = [
 
 [[package]]
 name = "certifi"
-version = "2025.6.15"
+version = "2025.7.9"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/73/f7/f14b46d4bcd21092d7d3ccef689615220d8a08fb25e564b65d20738e672e/certifi-2025.6.15.tar.gz", hash = "sha256:d747aa5a8b9bbbb1bb8c22bb13e22bd1f18e9796defa16bab421f7f7a317323b", size = 158753, upload-time = "2025-06-15T02:45:51.329Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/de/8a/c729b6b60c66a38f590c4e774decc4b2ec7b0576be8f1aa984a53ffa812a/certifi-2025.7.9.tar.gz", hash = "sha256:c1d2ec05395148ee10cf672ffc28cd37ea0ab0d99f9cc74c43e588cbd111b079", size = 160386, upload-time = "2025-07-09T02:13:58.874Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/84/ae/320161bd181fc06471eed047ecce67b693fd7515b16d495d8932db763426/certifi-2025.6.15-py3-none-any.whl", hash = "sha256:2e0c7ce7cb5d8f8634ca55d2ba7e6ec2689a2fd6537d8dec1296a477a4910057", size = 157650, upload-time = "2025-06-15T02:45:49.977Z" },
+    { url = "https://files.pythonhosted.org/packages/66/f3/80a3f974c8b535d394ff960a11ac20368e06b736da395b551a49ce950cce/certifi-2025.7.9-py3-none-any.whl", hash = "sha256:d842783a14f8fdd646895ac26f719a061408834473cfc10203f6a575beb15d39", size = 159230, upload-time = "2025-07-09T02:13:57.007Z" },
 ]
 
 [[package]]
@@ -179,20 +179,6 @@ wheels = [
 ]
 
 [[package]]
-name = "pulumi-command"
-version = "1.1.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "parver" },
-    { name = "pulumi" },
-    { name = "semver" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/96/b4/03d37a61e49b636b7cd5ba72a28996f07a18d815e6ba2343f6071b77fc51/pulumi_command-1.1.0.tar.gz", hash = "sha256:509b2709938aacfb13717b7b537d728375cd90b409093bf24dacab17d9294a4a", size = 33072, upload-time = "2025-05-27T18:25:11.671Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/99/f4/c89295ca63e2555cda4b4e16069200cf04262ac87ae263c48562f8297cc8/pulumi_command-1.1.0-py3-none-any.whl", hash = "sha256:d6a62444a1a9a26ded354b668a9cf88c0becd4faacabe4adafbc8dbb65af96c4", size = 36859, upload-time = "2025-05-27T18:25:10.401Z" },
-]
-
-[[package]]
 name = "pulumi-kubernetes"
 version = "4.23.0"
 source = { registry = "https://pypi.org/simple" }
@@ -205,34 +191,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/7b/9f/23dc36a2982faf8bc66e48e55f5cb44a6580a3e81e1849e0732462982531/pulumi_kubernetes-4.23.0.tar.gz", hash = "sha256:6b697146039d7367f397db77dc1d2b23d918202f4276071bfa105652bb5e5fd4", size = 1775394, upload-time = "2025-05-02T17:34:12.813Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/cc/00/983975f1bcf02601f12b4afb60a4dfdf9f81ab11cbf2493aa349781684ae/pulumi_kubernetes-4.23.0-py3-none-any.whl", hash = "sha256:4866c00259170e5e1604c0a3335063036e80c29000bf9b88a380cd600fe44c4e", size = 2794243, upload-time = "2025-05-02T17:34:10.082Z" },
-]
-
-[[package]]
-name = "pulumi-postgresql"
-version = "3.15.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "parver" },
-    { name = "pulumi" },
-    { name = "semver" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/5e/42/1f7bb5d21635f771054e29a82782db902ab88192f828dd45601ae2d8091d/pulumi_postgresql-3.15.2.tar.gz", hash = "sha256:d66f263484e102a83abbc1de471f9c71a60d09c4263782441437c2b8b2ad45fd", size = 47343, upload-time = "2025-06-02T23:13:10.277Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/da/bf/ddc8a6766fe9bbf1225b3af73dc781c39a212e69006e99f1ceaad70818d4/pulumi_postgresql-3.15.2-py3-none-any.whl", hash = "sha256:f21c0ea1b48a43c7188207a5ee6d8ed0092de8925c518f0c804cb3d56d426181", size = 73238, upload-time = "2025-06-02T23:13:08.224Z" },
-]
-
-[[package]]
-name = "pulumi-random"
-version = "4.18.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "parver" },
-    { name = "pulumi" },
-    { name = "semver" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/1c/d3/b162d6852160ff3837995b45bd71fa00af74aea59d5315a6a2ebef290c25/pulumi_random-4.18.2.tar.gz", hash = "sha256:b63f810c9adb6150b55fca1159c8804f961e928365b02cc54775d31c16185148", size = 21436, upload-time = "2025-04-30T22:08:34.256Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/fe/94/cfcf1fff9d5818a4ed5958ca07bcb464c9670929473a8d969a33c30fb823/pulumi_random-4.18.2-py3-none-any.whl", hash = "sha256:67cef99633d2bdf839324882d779503900b8d81f8f5fb73007d5f3794a5e859b", size = 31226, upload-time = "2025-04-30T22:08:32.326Z" },
 ]
 
 [[package]]
@@ -286,24 +244,18 @@ wheels = [
 ]
 
 [[package]]
-name = "stitch"
+name = "tailscale"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "pulumi" },
-    { name = "pulumi-command" },
     { name = "pulumi-kubernetes" },
-    { name = "pulumi-postgresql" },
-    { name = "pulumi-random" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "pulumi", specifier = ">=3.0.0,<4.0.0" },
-    { name = "pulumi-command", specifier = ">=1.1.0" },
     { name = "pulumi-kubernetes", specifier = ">=4.0.0,<5.0.0" },
-    { name = "pulumi-postgresql", specifier = ">=3.15.2" },
-    { name = "pulumi-random", specifier = ">=4.18.2" },
 ]
 
 [[package]]

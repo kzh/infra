@@ -1,5 +1,5 @@
 name: clickhouse
-runtime: nodejs
+runtime: python
 description: clickhouse
 config:
   pulumi:tags:
