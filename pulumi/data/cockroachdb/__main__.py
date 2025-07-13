@@ -15,10 +15,10 @@ chart = k8s.helm.v4.Chart(
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://charts.cockroachdb.com",
     ),
-    namespace=namespace.metadata.name,
+    namespace=namespace.metadata.apply(lambda m: m["name"]),
     version="16.0.1",
     values={
-        "image": {"repository": "cockroachdb/cockroach", "tag": "v25.1.1"},
+        "image": {"repository": "cockroachdb/cockroach", "tag": "v25.2.0"},
         "conf": {"single-node": True, "max-sql-memory": "6G", "cache": "6G"},
         "statefulset": {"replicas": 1},
         "tls": {"enabled": False},
@@ -38,7 +38,7 @@ ingress = k8s.networking.v1.Ingress(
     "ingress",
     metadata={
         "name": "cockroachdb",
-        "namespace": namespace.metadata["name"],
+        "namespace": namespace.metadata.apply(lambda m: m["name"]),
     },
     spec=k8s.networking.v1.IngressSpecArgs(
         ingress_class_name="tailscale",

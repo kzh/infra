@@ -14,7 +14,7 @@ namespace = k8s.core.v1.Namespace(
 cloudnative_pg = k8s.helm.v4.Chart(
     "cloudnative-pg",
     chart="cloudnative-pg",
-    namespace=namespace.metadata.name,
+    namespace=namespace.metadata.apply(lambda m: m["name"]),
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://cloudnative-pg.github.io/charts",
     ),
@@ -28,15 +28,14 @@ cloudnative_pg = k8s.helm.v4.Chart(
 postgres = k8s.helm.v4.Chart(
     "postgres",
     chart="cluster",
-    namespace=namespace.metadata.name,
+    namespace=namespace.metadata.apply(lambda m: m["name"]),
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://cloudnative-pg.github.io/charts",
     ),
     values={
         "cluster": {
-            "imageName": "ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0@sha256:be3f025d79aa1b747817f478e07e71be43236e14d00d8a9eb3914146245035ba",
+            "imageName": "ghcr.io/cloudnative-pg/postgresql:17.5-202506300806-standard-bookworm",
             "instances": 1,
-            "postgresql": {"shared_preload_libraries": ["vectors.so"]},
             "annotations": {
                 "pulumi.com/waitFor": "jsonpath={.status.readyInstances}=1"
             },
@@ -51,22 +50,26 @@ postgres = k8s.helm.v4.Chart(
                 "database": "immich",
                 "owner": "immich",
                 "postInitSQL": [
-                    'CREATE EXTENSION IF NOT EXISTS "vectors";',
+                    'CREATE EXTENSION IF NOT EXISTS "vector";',
                     'CREATE EXTENSION IF NOT EXISTS "cube" CASCADE;',
                     'CREATE EXTENSION IF NOT EXISTS "earthdistance" CASCADE;',
                 ],
             },
             "storage": {
                 "size": "20Gi",
-                "storageClassName": "rook-ceph-block",
             },
         }
     },
     opts=pulumi.ResourceOptions(depends_on=[cloudnative_pg]),
 )
 
-secret = postgres.resources[0].apply(
-    lambda cluster: k8s.core.v1.Secret.get("postgres-secret", f"{cluster}-superuser")
+secret = postgres.resources.apply(
+    lambda resources: k8s.core.v1.Secret.get(
+        "postgres-secret",
+        pulumi.Output.from_input(namespace.metadata["name"]).apply(
+            lambda ns: f"{ns}/postgres-superuser"
+        ),
+    )
 )
 
 
@@ -82,21 +85,20 @@ pvc = k8s.core.v1.PersistentVolumeClaim(
     "immich-pvc",
     metadata=k8s.meta.v1.ObjectMetaArgs(
         name="immich-pvc",
-        namespace=namespace.metadata.name,
+        namespace=namespace.metadata.apply(lambda m: m["name"]),
     ),
     spec=k8s.core.v1.PersistentVolumeClaimSpecArgs(
         access_modes=["ReadWriteOnce"],
-        resources=k8s.core.v1.ResourceRequirementsArgs(
-            requests={"storage": "200Gi"},
+        resources=k8s.core.v1.VolumeResourceRequirementsArgs(
+            requests={"storage": "200Gi"}
         ),
-        storage_class_name="rook-ceph-block",
     ),
 )
 
 immich = k8s.helm.v4.Chart(
     "immich",
     chart="immich",
-    namespace=namespace.metadata.name,
+    namespace=namespace.metadata.apply(lambda m: m["name"]),
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://immich-app.github.io/immich-charts",
     ),
@@ -110,7 +112,7 @@ immich = k8s.helm.v4.Chart(
         "immich": {
             "persistence": {
                 "library": {
-                    "existingClaim": pvc.metadata.name,
+                    "existingClaim": pvc.metadata.apply(lambda m: m["name"]),
                 }
             }
         },
@@ -131,12 +133,13 @@ ingress = k8s.networking.v1.Ingress(
     "ingress",
     metadata={
         "name": "immich",
-        "namespace": namespace.metadata["name"],
+        "namespace": namespace.metadata.apply(lambda m: m["name"]),
     },
     spec=k8s.networking.v1.IngressSpecArgs(
         ingress_class_name="tailscale",
         rules=[
             k8s.networking.v1.IngressRuleArgs(
+                host="immich",
                 http=k8s.networking.v1.HTTPIngressRuleValueArgs(
                     paths=[
                         k8s.networking.v1.HTTPIngressPathArgs(
