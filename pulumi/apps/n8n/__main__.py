@@ -29,7 +29,7 @@ postgres = k8s.helm.v4.Chart(
             },
         },
     },
-    namespace=namespace.metadata.name,
+    namespace=namespace.metadata.apply(lambda m: m["name"]),
 )
 
 labels = {
@@ -39,7 +39,7 @@ labels = {
 pvc = k8s.core.v1.PersistentVolumeClaim(
     "storage",
     metadata=k8s.meta.v1.ObjectMetaArgs(
-        namespace=namespace.metadata.name,
+        namespace=namespace.metadata.apply(lambda m: m["name"]),
         name="n8n",
         labels=labels,
     ),
@@ -48,14 +48,13 @@ pvc = k8s.core.v1.PersistentVolumeClaim(
         resources=k8s.core.v1.ResourceRequirementsArgs(
             requests={"storage": "4Gi"},
         ),
-        storage_class_name="rook-ceph-block",
     ),
 )
 
 deployment = k8s.apps.v1.Deployment(
     "deployment",
     metadata=k8s.meta.v1.ObjectMetaArgs(
-        namespace=namespace.metadata.name,
+        namespace=namespace.metadata.apply(lambda m: m["name"]),
         name="n8n",
         labels=labels,
     ),
@@ -142,7 +141,7 @@ deployment = k8s.apps.v1.Deployment(
                     k8s.core.v1.VolumeArgs(
                         name="n8n",
                         persistent_volume_claim=k8s.core.v1.PersistentVolumeClaimVolumeSourceArgs(
-                            claim_name=pvc.metadata.name,
+                            claim_name=pvc.metadata.apply(lambda m: m["name"]),
                         ),
                     ),
                 ],
@@ -154,7 +153,7 @@ deployment = k8s.apps.v1.Deployment(
 service = k8s.core.v1.Service(
     "service",
     metadata=k8s.meta.v1.ObjectMetaArgs(
-        namespace=namespace.metadata.name,
+        namespace=namespace.metadata.apply(lambda m: m["name"]),
         name="n8n",
         labels=labels,
     ),
@@ -174,13 +173,14 @@ ingress = k8s.networking.v1.Ingress(
     "ingress",
     metadata={
         "name": "n8n",
-        "namespace": namespace.metadata["name"],
+        "namespace": namespace.metadata.apply(lambda m: m["name"]),
         "labels": labels,
     },
     spec=k8s.networking.v1.IngressSpecArgs(
         ingress_class_name="tailscale",
         rules=[
             k8s.networking.v1.IngressRuleArgs(
+                host="n8n",
                 http=k8s.networking.v1.HTTPIngressRuleValueArgs(
                     paths=[
                         k8s.networking.v1.HTTPIngressPathArgs(
