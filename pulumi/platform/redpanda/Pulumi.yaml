@@ -1,0 +1,7 @@
+name: redpanda
+description: redpanda
+runtime: python
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: kubernetes-python
