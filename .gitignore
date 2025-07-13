@@ -3,12 +3,9 @@ kubernetes/secrets/
 **/.envrc
 .idea
 **/__pycache__/
-
-# Python
 **/.python-version
-
-# Node.js
 **/node_modules/
-
-# macOS
+**/.venv/
+**/venv/
+**/.env
 .DS_Store
