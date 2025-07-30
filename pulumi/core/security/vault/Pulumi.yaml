@@ -1,6 +1,6 @@
-name: monitoring
+name: vault
 runtime:
   name: python
   options:
     toolchain: uv
-description: o11y infrastructure
+description: vault

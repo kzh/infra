@@ -3,15 +3,18 @@ import pulumi_kubernetes as k8s
 import pulumi_random as random
 
 config = pulumi.Config()
-namespace = k8s.core.v1.Namespace(
-    "namespace", metadata={"name": config.require("namespace")}
+superset_namespace = k8s.core.v1.Namespace(
+    "superset-namespace", 
+    metadata=k8s.meta.v1.ObjectMetaArgs(
+        name=config.require("namespace")
+    )
 )
 
 secret = random.RandomBytes("secret", length=42)
 
-superset = k8s.helm.v3.Release(
-    "chart",
-    namespace=namespace.metadata["name"],
+superset_chart = k8s.helm.v4.Chart(
+    "superset",
+    namespace=superset_namespace.metadata.name,
     chart="superset",
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://apache.github.io/superset"

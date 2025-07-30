@@ -1,7 +1,0 @@
-name: airflow
-runtime: python
-description: airflow
-config:
-  pulumi:tags:
-    value:
-      pulumi:template: kubernetes-python

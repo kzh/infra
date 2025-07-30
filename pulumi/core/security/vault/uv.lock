@@ -126,21 +126,6 @@ wheels = [
 ]
 
 [[package]]
-name = "monitoring"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "pulumi" },
-    { name = "pulumi-kubernetes" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "pulumi", specifier = ">=3.0.0,<4.0.0" },
-    { name = "pulumi-kubernetes", specifier = ">=4.23.0" },
-]
-
-[[package]]
 name = "parver"
 version = "0.5"
 source = { registry = "https://pypi.org/simple" }
@@ -209,6 +194,20 @@ wheels = [
 ]
 
 [[package]]
+name = "pulumi-tls"
+version = "5.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "parver" },
+    { name = "pulumi" },
+    { name = "semver" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ba/82/fc4d7042e7f04c8c0b1784ba84fae9dae4e93adecaa217f8e7f1fd916e94/pulumi_tls-5.2.0.tar.gz", hash = "sha256:03fe04214acefc2714b8b4b4d50580876ec467f0f34d9db25e4a474a43d57727", size = 26251, upload-time = "2025-04-24T12:56:11.657Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/03/b7/c4a38fc1b60052148317d439e2ed3e29084e5c179b448a37d8ab5aa40626/pulumi_tls-5.2.0-py3-none-any.whl", hash = "sha256:6177513c311b61fdfe64bab34fe844e079e0557f00590465d9290b13da65cae2", size = 34749, upload-time = "2025-04-24T12:56:09.985Z" },
+]
+
+[[package]]
 name = "pyyaml"
 version = "6.0.2"
 source = { registry = "https://pypi.org/simple" }
@@ -265,4 +264,21 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/15/22/9ee70a2574a4f4599c47dd506532914ce044817c7752a79b6a51286319bc/urllib3-2.5.0.tar.gz", hash = "sha256:3fc47733c7e419d4bc3f6b3dc2b4f890bb743906a30d56ba4a5bfa4bbff92760", size = 393185, upload-time = "2025-06-18T14:07:41.644Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a7/c2/fe1e52489ae3122415c51f387e221dd0773709bad6c6cdaa599e8a2c5185/urllib3-2.5.0-py3-none-any.whl", hash = "sha256:e6b01673c0fa6a13e374b50871808eb3bf7046c4b125b216f6bf1cc604cff0dc", size = 129795, upload-time = "2025-06-18T14:07:40.39Z" },
+]
+
+[[package]]
+name = "vault"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "pulumi" },
+    { name = "pulumi-kubernetes" },
+    { name = "pulumi-tls" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pulumi", specifier = ">=3.0.0,<4.0.0" },
+    { name = "pulumi-kubernetes", specifier = ">=4.23.0" },
+    { name = "pulumi-tls", specifier = ">=5.2.0" },
 ]

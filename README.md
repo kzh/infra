@@ -8,30 +8,22 @@ Personal infrastructure-as-code repository containing deployments for various se
   - `golink/` - URL shortening service
 
 - **`pulumi/`** - Kubernetes infrastructure deployments
-  - `apps/` - Applications organized by category
-    - `ai/` - AI/ML applications (OpenWebUI)
-    - `data/` - Data applications (JupyterHub, n8n, NocoDB, Plausible)
-    - `media/` - Media applications (Immich, Penpot)
-    - `tools/` - Utility applications (Glance, Stitch)
-  - `data/` - Data infrastructure
-    - `analytics/` - Analytics stack (ClickHouse, Spark, Superset)
-    - `db/` - Databases (CockroachDB, Neo4j, PostgreSQL)
+  - `apps/` - End-user applications
+    - `dev/` - Development tools (Stitch)
+    - `media/` - Media applications (Immich)
+    - `web/` - Web applications (Glance, Plausible)
+  - `core/` - Core infrastructure components
+    - `networking/` - Network infrastructure (Cloudflare Tunnel, Tailscale)
+    - `operators/` - Kubernetes operators (CloudNativePG)
+    - `security/` - Security infrastructure (cert-manager, Vault)
+  - `data/` - All data infrastructure
+    - `analytics/` - Analytics stack (Airbyte, ClickHouse, JupyterHub, Spark, Superset)
+    - `databases/` - Databases (CockroachDB, PostgreSQL)
     - `ml/` - Machine learning (Chroma)
-    - `streaming/` - Data streaming (Airbyte, Scylla)
-    - `workflow/` - Workflow orchestration (Airflow)
-  - `operators/` - Kubernetes operators
-    - `cf-tunnel/` - Cloudflare Tunnel operator
-    - `cnpg/` - CloudNativePG operator
-    - `tailscale/` - Tailscale operator
+    - `streaming/` - Data streaming (Redpanda)
+    - `workflow/` - Workflow orchestration (n8n, Temporal)
   - `ops/` - Operations and monitoring
     - `monitoring/` - Monitoring stack
-  - `platform/` - Platform services
-    - `redpanda/` - Redpanda streaming platform
-    - `temporal/` - Temporal workflow engine
-  - `security/` - Security services
-    - `certs/` - Certificate management
-    - `connect/` - Tailscale Connect
-    - `vault/` - HashiCorp Vault
 
 ## Usage
 

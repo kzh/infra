@@ -189,20 +189,6 @@ wheels = [
 ]
 
 [[package]]
-name = "pulumi-random"
-version = "4.16.7"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "parver" },
-    { name = "pulumi" },
-    { name = "semver" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/60/a7/310825ebed49d9c78f3f02b876c4ff02079592132041001b77f2b7d60224/pulumi_random-4.16.7.tar.gz", hash = "sha256:d7d6a23fdfc06dad1c087eadf084005acda1c6935be260bc99dae8d03e5627d7", size = 21177, upload-time = "2024-10-16T18:33:14.301Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/f7/f9/386a6bcbe6dd7f05a16aa2337fb2504e1ac56aae355f347f18cfc22912a4/pulumi_random-4.16.7-py3-none-any.whl", hash = "sha256:bcb3e81c3d56cfd21dd6b14629430224e8d32197d489b567027f0782d0086359", size = 30811, upload-time = "2024-10-16T18:33:12.217Z" },
-]
-
-[[package]]
 name = "pyyaml"
 version = "6.0.2"
 source = { registry = "https://pypi.org/simple" }
@@ -262,20 +248,18 @@ wheels = [
 ]
 
 [[package]]
-name = "superset"
+name = "temporal"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "pulumi" },
     { name = "pulumi-kubernetes" },
-    { name = "pulumi-random" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "pulumi", specifier = ">=3.0.0,<4.0.0" },
     { name = "pulumi-kubernetes", specifier = ">=4.19.0" },
-    { name = "pulumi-random", specifier = ">=4.16.7" },
 ]
 
 [[package]]

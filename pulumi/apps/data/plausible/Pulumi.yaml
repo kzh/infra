@@ -1,7 +1,0 @@
-name: plausible
-description: plausible
-runtime: python
-config:
-  pulumi:tags:
-    value:
-      pulumi:template: kubernetes-python
