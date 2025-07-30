@@ -1,20 +1,20 @@
 import pulumi
-import pulumi_kubernetes as kubernetes
+import pulumi_kubernetes as k8s
 
 # Create namespace
-namespace = kubernetes.core.v1.Namespace(
-    "namespace",
-    metadata=kubernetes.meta.v1.ObjectMetaArgs(
+clickhouse_namespace = k8s.core.v1.Namespace(
+    "clickhouse-namespace",
+    metadata=k8s.meta.v1.ObjectMetaArgs(
         name="clickhouse"
     )
 )
 
 # Deploy ClickHouse using Helm
-clickhouse = kubernetes.helm.v3.Release(
+clickhouse_chart = k8s.helm.v4.Chart(
     "clickhouse",
     chart="oci://registry-1.docker.io/bitnamicharts/clickhouse",
+    namespace=clickhouse_namespace.metadata.name,
     version="8.0.5",
-    namespace=namespace.metadata.name,
     values={
         "auth": {
             "username": "admin"

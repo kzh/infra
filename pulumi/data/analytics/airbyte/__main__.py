@@ -2,36 +2,30 @@ import pulumi
 import pulumi_kubernetes as k8s
 
 config = pulumi.Config()
-spark_namespace = k8s.core.v1.Namespace(
-    "spark-namespace", 
+
+airbyte_namespace = k8s.core.v1.Namespace(
+    "airbyte-namespace",
     metadata=k8s.meta.v1.ObjectMetaArgs(
-        name=config.require("namespace")
-    )
+        name=config.require("namespace"),
+    ),
 )
 
-spark_chart = k8s.helm.v4.Chart(
-    "spark",
-    namespace=spark_namespace.metadata.name,
-    chart="oci://registry-1.docker.io/bitnamicharts/spark",
-    version="9.3.0",
-    values={
-        "worker": {
-            "replicaCount": 1,
-        },
-        "service": {
-            "annotations": {
-                "tailscale.com/expose": "true",
-                "tailscale.com/hostname": "spark-external",
-            }
-        },
-    },
+airbyte_chart = k8s.helm.v4.Chart(
+    "airbyte",
+    chart="airbyte",
+    namespace=airbyte_namespace.metadata.name,
+    repository_opts=k8s.helm.v4.RepositoryOptsArgs(
+        repo="https://airbytehq.github.io/helm-charts",
+    ),
+    version="1.3.0",
+    opts=pulumi.ResourceOptions(depends_on=[airbyte_namespace]),
 )
 
-spark_ingress = k8s.networking.v1.Ingress(
-    "spark-ingress",
+airbyte_ingress = k8s.networking.v1.Ingress(
+    "airbyte-ingress",
     metadata=k8s.meta.v1.ObjectMetaArgs(
-        name="spark",
-        namespace=spark_namespace.metadata.name,
+        name="airbyte",
+        namespace=config.require("namespace"),
     ),
     spec=k8s.networking.v1.IngressSpecArgs(
         ingress_class_name="tailscale",
@@ -44,7 +38,7 @@ spark_ingress = k8s.networking.v1.Ingress(
                             path_type="Prefix",
                             backend=k8s.networking.v1.IngressBackendArgs(
                                 service=k8s.networking.v1.IngressServiceBackendArgs(
-                                    name="spark-spark-master-svc",
+                                    name="airbyte-airbyte-webapp-svc",
                                     port=k8s.networking.v1.ServiceBackendPortArgs(
                                         number=80,
                                     ),
@@ -57,8 +51,9 @@ spark_ingress = k8s.networking.v1.Ingress(
         ],
         tls=[
             k8s.networking.v1.IngressTLSArgs(
-                hosts=["spark"],
+                hosts=["airbyte"],
             ),
         ],
     ),
+    opts=pulumi.ResourceOptions(depends_on=[airbyte_chart]),
 )

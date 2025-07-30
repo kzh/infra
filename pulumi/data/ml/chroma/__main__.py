@@ -2,8 +2,8 @@ import pulumi
 import pulumi_kubernetes as k8s
 
 config = pulumi.Config()
-ns = k8s.core.v1.Namespace(
-    "namespace",
+chroma_namespace = k8s.core.v1.Namespace(
+    "chroma-namespace",
     metadata=k8s.meta.v1.ObjectMetaArgs(
         name=config.require("namespace"),
     ),
@@ -12,10 +12,10 @@ ns = k8s.core.v1.Namespace(
 labels = {"app": "chroma"}
 
 svc = k8s.core.v1.Service(
-    "service",
+    "chroma-service",
     metadata=k8s.meta.v1.ObjectMetaArgs(
         name="chroma",
-        namespace=ns.metadata.name,
+        namespace=chroma_namespace.metadata.name,
         annotations={
             "tailscale.com/expose": "true",
             "tailscale.com/hostname": "chroma",
@@ -34,10 +34,10 @@ svc = k8s.core.v1.Service(
 )
 
 sts = k8s.apps.v1.StatefulSet(
-    "statefulset",
+    "chroma-statefulset",
     metadata=k8s.meta.v1.ObjectMetaArgs(
         name="chroma",
-        namespace=ns.metadata.name,
+        namespace=chroma_namespace.metadata.name,
     ),
     spec=k8s.apps.v1.StatefulSetSpecArgs(
         service_name=svc.metadata.name,

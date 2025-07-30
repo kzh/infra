@@ -1,9 +1,10 @@
-name: clickhouse
+name: tailscale
 runtime:
   name: python
   options:
     toolchain: uv
-description: clickhouse
+    virtualenv: .venv
+description: tailscale operator
 config:
   pulumi:tags:
     value:

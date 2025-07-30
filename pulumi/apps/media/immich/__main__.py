@@ -4,8 +4,8 @@ import pulumi
 import pulumi_kubernetes as k8s
 
 config = pulumi.Config()
-namespace = k8s.core.v1.Namespace(
-    "namespace",
+immich_namespace = k8s.core.v1.Namespace(
+    "immich-namespace",
     metadata=k8s.meta.v1.ObjectMetaArgs(
         name=config.require("namespace"),
     ),
@@ -14,7 +14,7 @@ namespace = k8s.core.v1.Namespace(
 cloudnative_pg = k8s.helm.v4.Chart(
     "cloudnative-pg",
     chart="cloudnative-pg",
-    namespace=namespace.metadata.apply(lambda m: m["name"]),
+    namespace=immich_namespace.metadata.name,
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://cloudnative-pg.github.io/charts",
     ),
@@ -28,7 +28,7 @@ cloudnative_pg = k8s.helm.v4.Chart(
 postgres = k8s.helm.v4.Chart(
     "postgres",
     chart="cluster",
-    namespace=namespace.metadata.apply(lambda m: m["name"]),
+    namespace=immich_namespace.metadata.name,
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://cloudnative-pg.github.io/charts",
     ),
@@ -66,7 +66,7 @@ postgres = k8s.helm.v4.Chart(
 secret = postgres.resources.apply(
     lambda resources: k8s.core.v1.Secret.get(
         "postgres-secret",
-        pulumi.Output.from_input(namespace.metadata["name"]).apply(
+        pulumi.Output.from_input(immich_namespace.metadata["name"]).apply(
             lambda ns: f"{ns}/postgres-superuser"
         ),
     )
@@ -85,7 +85,7 @@ pvc = k8s.core.v1.PersistentVolumeClaim(
     "immich-pvc",
     metadata=k8s.meta.v1.ObjectMetaArgs(
         name="immich-pvc",
-        namespace=namespace.metadata.apply(lambda m: m["name"]),
+        namespace=immich_namespace.metadata.name,
     ),
     spec=k8s.core.v1.PersistentVolumeClaimSpecArgs(
         access_modes=["ReadWriteOnce"],
@@ -98,7 +98,7 @@ pvc = k8s.core.v1.PersistentVolumeClaim(
 immich = k8s.helm.v4.Chart(
     "immich",
     chart="immich",
-    namespace=namespace.metadata.apply(lambda m: m["name"]),
+    namespace=immich_namespace.metadata.name,
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://immich-app.github.io/immich-charts",
     ),
@@ -112,7 +112,7 @@ immich = k8s.helm.v4.Chart(
         "immich": {
             "persistence": {
                 "library": {
-                    "existingClaim": pvc.metadata.apply(lambda m: m["name"]),
+                    "existingClaim": pvc.metadata.name,
                 }
             }
         },
@@ -129,12 +129,12 @@ immich = k8s.helm.v4.Chart(
     opts=pulumi.ResourceOptions(depends_on=[postgres]),
 )
 
-ingress = k8s.networking.v1.Ingress(
-    "ingress",
-    metadata={
-        "name": "immich",
-        "namespace": namespace.metadata.apply(lambda m: m["name"]),
-    },
+immich_ingress = k8s.networking.v1.Ingress(
+    "immich-ingress",
+    metadata=k8s.meta.v1.ObjectMetaArgs(
+        name="immich",
+        namespace=immich_namespace.metadata.name,
+    ),
     spec=k8s.networking.v1.IngressSpecArgs(
         ingress_class_name="tailscale",
         rules=[
