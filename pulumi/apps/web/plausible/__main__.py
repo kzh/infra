@@ -46,8 +46,8 @@ postgres = k8s.helm.v4.Chart(
 
 # TODO: Properly extract connection details from Helm chart outputs
 # For now, these values need to be configured via pulumi config
-database_url = config.require("databaseUrl")
-clickhouse_url = config.require("clickhouseUrl")
+database_url = config.require_secret("databaseUrl")
+clickhouse_url = config.require_secret("clickhouseUrl")
 
 secret_key = random.RandomPassword(
     "password",
@@ -143,6 +143,3 @@ plausible_service = k8s.core.v1.Service(
         selector=labels,
     ),
 )
-
-# Note: CloudflaredService is from custom package, needs to be implemented separately
-# or replaced with appropriate Python equivalent
