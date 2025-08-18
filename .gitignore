@@ -1,11 +1,5 @@
-kubernetes/secrets/
-**/Pulumi.*.yaml
-**/.envrc
-.idea
-**/__pycache__/
-**/.python-version
-**/node_modules/
-**/.venv/
-**/venv/
-**/.env
+.venv/
+__pycache__/
 .DS_Store
+Pulumi.*.json
+Pulumi.*.yaml

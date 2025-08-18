@@ -19,7 +19,7 @@ cloudflare_tunnel_chart = k8s.helm.v4.Chart(
     ),
     values={
         "cloudflare": {
-            "apiToken": config.require("cloudflareTunnelApiToken"),
+            "apiToken": config.require_secret("cloudflareTunnelApiToken"),
             "accountId": config.require("cloudflareAccountId"),
             "tunnelName": config.get("tunnelName", "mx0"),
         },

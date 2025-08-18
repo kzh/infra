@@ -70,16 +70,16 @@ stitch_chart = k8s.helm.v4.Chart(
                 },
                 "twitch": {
                     "clientId": config.require("TWITCH_CLIENT_ID"),
-                    "clientSecret": config.require("TWITCH_CLIENT_SECRET"),
+                    "clientSecret": config.require_secret("TWITCH_CLIENT_SECRET"),
                     "webhookUrl": config.require("WEBHOOK_URL"),
                 },
                 "webhook": {
-                    "secret": config.require("WEBHOOK_SECRET"),
+                    "secret": config.require_secret("WEBHOOK_SECRET"),
                     "port": config.require("WEBHOOK_PORT"),
                     "url": config.require("WEBHOOK_URL"),
                 },
                 "discord": {
-                    "token": config.require("DISCORD_TOKEN"),
+                    "token": config.require_secret("DISCORD_TOKEN"),
                     "channel": config.require("DISCORD_CHANNEL"),
                 },
             },
