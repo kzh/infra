@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.12"
 
 [[package]]
@@ -279,6 +279,6 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "pulumi", specifier = ">=3.0.0,<4.0.0" },
-    { name = "pulumi-kubernetes", specifier = ">=4.23.0" },
+    { name = "pulumi-kubernetes", specifier = ">=4.0.0,<5.0.0" },
     { name = "pulumi-tls", specifier = ">=5.2.0" },
 ]
