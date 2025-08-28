@@ -1,85 +1,36 @@
-import base64
+import pulumi_kubernetes as k8s
+from infra_lib.k8s import add_skip_await_annotation, ensure_namespace
 
 import pulumi
-import pulumi_kubernetes as k8s
 
 config = pulumi.Config()
-immich_namespace = k8s.core.v1.Namespace(
-    "immich-namespace",
-    metadata=k8s.meta.v1.ObjectMetaArgs(
-        name=config.require("namespace"),
-    ),
-)
+immich_namespace = ensure_namespace(config.require("namespace"))
 
-cloudnative_pg = k8s.helm.v4.Chart(
-    "cloudnative-pg",
-    chart="cloudnative-pg",
-    namespace=immich_namespace.metadata.name,
-    repository_opts=k8s.helm.v4.RepositoryOptsArgs(
-        repo="https://cloudnative-pg.github.io/charts",
-    ),
-    values={
-        "config": {
-            "clusterWide": False,
-        }
-    },
-)
+# Postgres connection via required StackReference
+pgref = pulumi.StackReference(config.require("postgres_stack"))
 
-postgres = k8s.helm.v4.Chart(
-    "postgres",
-    chart="cluster",
-    namespace=immich_namespace.metadata.name,
-    repository_opts=k8s.helm.v4.RepositoryOptsArgs(
-        repo="https://cloudnative-pg.github.io/charts",
-    ),
-    values={
-        "cluster": {
-            "imageName": "ghcr.io/cloudnative-pg/postgresql:17.5-202506300806-standard-bookworm",
-            "instances": 1,
-            "annotations": {
-                "pulumi.com/waitFor": "jsonpath={.status.readyInstances}=1"
-            },
-            "roles": [
-                {
-                    "name": "immich",
-                    "superuser": True,
-                    "login": True,
-                }
-            ],
-            "initdb": {
-                "database": "immich",
-                "owner": "immich",
-                "postInitSQL": [
-                    'CREATE EXTENSION IF NOT EXISTS "vector";',
-                    'CREATE EXTENSION IF NOT EXISTS "cube" CASCADE;',
-                    'CREATE EXTENSION IF NOT EXISTS "earthdistance" CASCADE;',
-                ],
-            },
-            "storage": {
-                "size": "20Gi",
-            },
-        }
-    },
-    opts=pulumi.ResourceOptions(depends_on=[cloudnative_pg]),
-)
+# Provider (runs locally) prefers Tailscale hostname; app (in‑cluster) uses Service DNS
+_ts = pgref.get_output("ts_hostname")      # e.g., "postgresql" (tailscale L4)
+_host = pgref.get_output("host")            # internal service host from producer
+_ns = pgref.get_output("k8s_namespace")     # e.g., "postgresql"
 
-secret = postgres.resources.apply(
-    lambda resources: k8s.core.v1.Secret.get(
-        "postgres-secret",
-        pulumi.Output.from_input(immich_namespace.metadata["name"]).apply(
-            lambda ns: f"{ns}/postgres-superuser"
-        ),
-    )
-)
+pg_app_host = _ns.apply(lambda ns: f"postgresql-cluster-rw.{ns}.svc.cluster.local")
+pg_provider_host = pulumi.Output.all(_ts, _host).apply(lambda t: t[0] or t[1])
+pg_port = pgref.get_output("port")
+pg_admin_user = pgref.get_output("username")
+pg_admin_password = pgref.get_output("password")
 
+immich_db_name = config.get("db_name") or "immich"
 
-def from_secret(key: str):
-    return secret.data.apply(lambda data: base64.b64decode(data[key]).decode("utf-8"))
+db_hostname = pg_app_host
+db_port = pg_port
+db_username = pg_admin_user
+db_password = pg_admin_password
 
+library_size = config.get("library_storage_size") or "200Gi"
 
-db_hostname = from_secret("host")
-db_username = from_secret("username")
-db_password = from_secret("password")
+# Image tag chosen via config (use bootstrap manually if needed)
+image_tag = pulumi.Output.from_input(config.get("image_tag") or "v1.139.4")
 
 pvc = k8s.core.v1.PersistentVolumeClaim(
     "immich-pvc",
@@ -89,11 +40,10 @@ pvc = k8s.core.v1.PersistentVolumeClaim(
     ),
     spec=k8s.core.v1.PersistentVolumeClaimSpecArgs(
         access_modes=["ReadWriteOnce"],
-        resources=k8s.core.v1.VolumeResourceRequirementsArgs(
-            requests={"storage": "200Gi"}
-        ),
+        resources=k8s.core.v1.VolumeResourceRequirementsArgs(requests={"storage": library_size}),
     ),
 )
+
 
 immich = k8s.helm.v4.Chart(
     "immich",
@@ -107,7 +57,7 @@ immich = k8s.helm.v4.Chart(
             "enabled": True,
         },
         "image": {
-            "tag": "v1.124.2",
+            "tag": image_tag,
         },
         "immich": {
             "persistence": {
@@ -118,15 +68,20 @@ immich = k8s.helm.v4.Chart(
         },
         "env": {
             "DB_HOSTNAME": db_hostname,
+            "DB_PORT": pulumi.Output.format("{}", db_port),
             "DB_USERNAME": db_username,
             "DB_PASSWORD": db_password,
-            "DB_DATABASE_NAME": "immich",
+            "DB_DATABASE_NAME": immich_db_name,
+            "DB_VECTOR_EXTENSION": "pgvector",
         },
         "machine-learning": {
             "enabled": False,
         },
     },
-    opts=pulumi.ResourceOptions(depends_on=[postgres]),
+    opts=pulumi.ResourceOptions(
+        depends_on=[immich_namespace],
+        transformations=[add_skip_await_annotation],
+    ),
 )
 
 immich_ingress = k8s.networking.v1.Ingress(
