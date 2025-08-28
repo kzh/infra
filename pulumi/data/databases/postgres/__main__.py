@@ -1,50 +1,31 @@
-import pulumi
-import pulumi_kubernetes as k8s
 import base64
 
+import pulumi_kubernetes as k8s
+import pulumi_postgresql as pg
+from infra_lib.k8s import add_wait_annotation, ensure_namespace, helm_chart
 
-from typing import Any, cast
-
-
-def add_cluster_wait(
-    args: pulumi.ResourceTransformationArgs,
-) -> pulumi.ResourceTransformationResult | None:
-    if args.type_ == "kubernetes:postgresql.cnpg.io/v1:Cluster":
-        props_input = args.props or {}
-        if not isinstance(props_input, dict):
-            return None
-        props = cast(dict[str, Any], props_input)
-        metadata = cast(dict[str, Any], props.setdefault("metadata", {}))
-        annotations = cast(dict[str, Any], metadata.setdefault("annotations", {}))
-        annotations["pulumi.com/waitFor"] = "condition=Ready"
-        return pulumi.ResourceTransformationResult(props, args.opts)
-    return None
-
+import pulumi
 
 config = pulumi.Config()
 
-ns_value = config.get(
-    "namespace", "postgresql"
-)  # plain string to avoid Output warnings
+ns_value = config.get("namespace", "postgresql")  # plain string to avoid Output warnings
 
+# Manage the Namespace with a stable Pulumi name to avoid replacement
 postgres_namespace = k8s.core.v1.Namespace(
     "postgresql",
     metadata=k8s.meta.v1.ObjectMetaArgs(name=ns_value),
 )
-pulumi.export("k8s_namespace", postgres_namespace.metadata.name)
+pulumi.export("k8s_namespace", ns_value)
 
 
 ts_hostname = config.get("ts_hostname", "postgresql")
 pulumi.export("ts_hostname", ts_hostname)
 
-pg_chart = k8s.helm.v4.Chart(
+pg_chart = helm_chart(
     "postgresql",
     chart="cluster",
-    name="postgresql",
     namespace=ns_value,
-    repository_opts=k8s.helm.v4.RepositoryOptsArgs(
-        repo="https://cloudnative-pg.github.io/charts",
-    ),
+    repo="https://cloudnative-pg.github.io/charts",
     version="0.3.1",
     values={
         "version": {
@@ -82,7 +63,8 @@ pg_chart = k8s.helm.v4.Chart(
             },
         },
     },
-    opts=pulumi.ResourceOptions(transformations=[add_cluster_wait]),
+    depends_on=[postgres_namespace],
+    transformations=[add_wait_annotation],
 )
 
 secret_id = f"{ns_value}/postgresql-cluster-superuser"
@@ -107,7 +89,49 @@ field_map = {
 }
 
 for key, field in field_map.items():
-    value = pg_secret.data.apply(
-        lambda d, f=field: base64.b64decode(d.get(f, "")).decode()
-    )
+    value = pg_secret.data.apply(lambda d, f=field: base64.b64decode(d.get(f, "")).decode())
     pulumi.export(key, pulumi.Output.secret(value))
+
+# Optional: create application databases and ensure extensions
+app_dbs = config.get_object("app_databases") or []  # e.g., ["immich", "stitch"]
+extensions = config.get_object("extensions") or ["vector", "cube", "earthdistance"]
+
+# Admin provider (connects to maintenance DB 'postgres') using tailscale hostname
+admin_provider = pg.Provider(
+    "pg-admin",
+    host=ts_hostname,
+    port=5432,
+    username=pulumi.Output.secret(
+        pg_secret.data.apply(lambda d: base64.b64decode(d.get("username", "")).decode())
+    ),
+    password=pulumi.Output.secret(
+        pg_secret.data.apply(lambda d: base64.b64decode(d.get("password", "")).decode())
+    ),
+    database="postgres",
+    sslmode="disable",
+)
+
+for db_name in app_dbs:
+    # Provider scoped to the application database (database must already exist)
+    app_provider = pg.Provider(
+        f"pg-{db_name}",
+        host=ts_hostname,
+        port=5432,
+        username=pulumi.Output.secret(
+            pg_secret.data.apply(lambda d: base64.b64decode(d.get("username", "")).decode())
+        ),
+        password=pulumi.Output.secret(
+            pg_secret.data.apply(lambda d: base64.b64decode(d.get("password", "")).decode())
+        ),
+        database=db_name,
+        sslmode="disable",
+    )
+
+    # Ensure requested extensions in the app database
+    for ext in extensions:
+        pg.Extension(
+            f"ext-{db_name}-{ext}",
+            name=ext,
+            schema="public",
+            opts=pulumi.ResourceOptions(provider=app_provider, depends_on=[pg_chart]),
+        )
