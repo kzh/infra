@@ -1,0 +1,17 @@
+set shell := ["bash", "-lc"]
+arch := "linux/amd64"
+
+# Build locally for amd64 (useful to validate on Apple Silicon via emulation).
+build:
+	docker buildx build --platform {{arch}} \
+		-f Dockerfile.singleuser \
+		-t ghcr.io/kzh/jupyter:py312-amd64 \
+		--output=type=docker .
+
+# Build and push amd64-only image to GHCR.
+push:
+	docker buildx build --platform {{arch}} \
+		-f Dockerfile.singleuser \
+		-t ghcr.io/kzh/jupyter:py312-amd64 \
+		--output=type=docker . \
+	&& docker push ghcr.io/kzh/jupyter:py312-amd64

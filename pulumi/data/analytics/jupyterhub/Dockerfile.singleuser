@@ -1,0 +1,49 @@
+# syntax=docker/dockerfile:1.4
+# Jupyter Docker Stacks singleuser base (Ubuntu 24.04, Python 3.12).
+# For strict reproducibility, swap the tag for a digest:
+# FROM quay.io/jupyter/minimal-notebook:python-3.12@sha256:<digest>
+FROM quay.io/jupyter/minimal-notebook:python-3.12
+
+# Torch wheels: override at build time for CUDA/XPU/ROCm or the test channel.
+# Examples:
+#   --build-arg PYTORCH_INDEX_URL=https://download.pytorch.org/whl/cu126      # CUDA 12.6
+#   --build-arg PYTORCH_INDEX_URL=https://download.pytorch.org/whl/rocm6.4    # ROCm 6.4
+#   --build-arg PYTORCH_INDEX_URL=https://download.pytorch.org/whl/test/cu126 # RCs
+ARG PYTORCH_INDEX_URL=https://download.pytorch.org/whl/cpu
+# Latest GA as of 2025-11-16.
+ARG PYTORCH_VERSION=2.9.1
+ARG TORCHVISION_VERSION=0.24.1
+ARG TORCHAUDIO_VERSION=2.9.1
+
+# Pin uv for reproducibility (latest GA as of 2025-11-16).
+ARG UV_VERSION=0.9.9
+
+# Optional: keep singleuser JupyterHub package in sync with hub.
+ARG JUPYTERHUB_VERSION=5.4.2
+
+USER root
+
+# Install uv (fast Python package manager) as a global binary.
+RUN curl -LsSf https://astral.sh/uv/${UV_VERSION}/install.sh | \
+      env UV_INSTALL_DIR=/usr/local/bin sh \
+    && uv --version
+
+# Prevent ~/.local site-packages from shadowing image-installed libs.
+ENV PYTHONNOUSERSITE=1
+
+# Add PyTorch + friends first (respecting the chosen wheel index), then LSP bits using uv for speed.
+RUN uv pip install --python "${CONDA_DIR}/bin/python" --index-url "${PYTORCH_INDEX_URL}" \
+        "torch==${PYTORCH_VERSION}" \
+        "torchvision==${TORCHVISION_VERSION}" \
+        "torchaudio==${TORCHAUDIO_VERSION}" \
+    && uv pip install --python "${CONDA_DIR}/bin/python" \
+        "python-lsp-server==1.13.1" \
+        "jupyter-lsp==2.3.0" \
+        "jupyterlab-lsp==5.2.0" \
+        "jupyterhub==${JUPYTERHUB_VERSION}"
+
+# Reset ownership/permissions for the bundled non-root user.
+RUN fix-permissions "${CONDA_DIR}" \
+    && fix-permissions "/home/${NB_USER}"
+
+USER ${NB_UID}
