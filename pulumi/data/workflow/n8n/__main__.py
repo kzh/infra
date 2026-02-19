@@ -1,36 +1,21 @@
 import pulumi
 import pulumi_kubernetes as k8s
 
-config = pulumi.Config()
+config = pulumi.Config("n8n")
+image = config.get("image") or "n8nio/n8n:2.8.3"
 n8n_namespace = k8s.core.v1.Namespace(
     "n8n-namespace",
     metadata=k8s.meta.v1.ObjectMetaArgs(
         name=config.require("namespace"),
     ),
 )
-postgres = k8s.helm.v4.Chart(
-    "postgresql",
-    chart="oci://registry-1.docker.io/bitnamicharts/postgresql",
-    version="16.3.2",
-    values={
-        "global": {
-            "postgresql": {
-                "auth": {
-                    "database": "n8n",
-                    "username": "n8n",
-                    "password": config.get("postgresPassword", "n8n"),
-                },
-            },
-        },
-        "primary": {
-            "resourcesPreset": "none",
-            "persistence": {
-                "size": "20Gi",
-            },
-        },
-    },
-    namespace=n8n_namespace.metadata.name,
-)
+pgref = pulumi.StackReference(config.require("postgres_stack"))
+pg_namespace = pgref.get_output("k8s_namespace")
+pg_host = pg_namespace.apply(lambda ns: f"postgresql-cluster-rw.{ns}.svc.cluster.local")
+pg_port = pgref.get_output("port")
+pg_user = pgref.get_output("username")
+pg_password = pgref.get_output("password")
+db_name = config.get("db_name") or "n8n"
 
 labels = {
     "app": "n8n",
@@ -84,8 +69,8 @@ deployment = k8s.apps.v1.Deployment(
                 containers=[
                     k8s.core.v1.ContainerArgs(
                         name="n8n",
-                        image="n8nio/n8n:latest",
-                        image_pull_policy="Always",
+                        image=image,
+                        image_pull_policy="IfNotPresent",
                         env=[
                             k8s.core.v1.EnvVarArgs(
                                 name="DB_TYPE",
@@ -93,23 +78,23 @@ deployment = k8s.apps.v1.Deployment(
                             ),
                             k8s.core.v1.EnvVarArgs(
                                 name="DB_POSTGRESDB_HOST",
-                                value="postgresql-hl",
+                                value=pg_host,
                             ),
                             k8s.core.v1.EnvVarArgs(
                                 name="DB_POSTGRESDB_PORT",
-                                value="5432",
+                                value=pulumi.Output.format("{}", pg_port),
                             ),
                             k8s.core.v1.EnvVarArgs(
                                 name="DB_POSTGRESDB_DATABASE",
-                                value="n8n",
+                                value=db_name,
                             ),
                             k8s.core.v1.EnvVarArgs(
                                 name="DB_POSTGRESDB_USER",
-                                value="n8n",
+                                value=pg_user,
                             ),
                             k8s.core.v1.EnvVarArgs(
                                 name="DB_POSTGRESDB_PASSWORD",
-                                value=config.get("postgresPassword", "n8n"),
+                                value=pg_password,
                             ),
                             k8s.core.v1.EnvVarArgs(
                                 name="N8N_PROTOCOL",
