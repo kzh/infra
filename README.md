@@ -115,6 +115,11 @@ pulumi config set namespace immich
 # wire to Postgres via StackReference (required)
 pulumi config set immich:postgres_stack <org>/postgresql/<stack>
 # optional: pulumi config set immich:library_storage_size 500Gi
+# optional: explicit Redis image pinning (recommended for long-lived clusters)
+pulumi config set immich:redis_image_registry docker.io
+pulumi config set immich:redis_image_repository bitnami/redis
+pulumi config set immich:redis_image_tag latest
+pulumi config set immich:redis_image_digest sha256:1c41e7028ac48d7a9d79d855a432eef368aa440f37c8073ae1651879b02c72f4
 pulumi preview && pulumi up
 
 # How Immich connects to Postgres
@@ -181,6 +186,7 @@ pulumi preview && pulumi up
 - Namespaces missing: many projects create their own `Namespace`; if a Helm chart installs into a new namespace, ensure `depends_on` is set (this repo does so for critical stacks)
 - Ingress routing: verify ingress classes exist and are reconciling (`kubectl get ingressclass`), check `tailscale.com/*` annotations when exposing services
 - Postgres consumers: prefer consuming outputs from the Postgres stack rather than re‑deriving values; update stacks if needed
+- Immich Redis pull failures: if chart defaults reference a removed upstream tag, set explicit `immich:redis_image_*` config values (including digest) and run `pulumi up` to roll the StatefulSet
 
 ## Commit & PR Guidelines
 

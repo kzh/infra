@@ -1,7 +1,27 @@
 import pulumi_kubernetes as k8s
-from infra_lib.k8s import add_skip_await_annotation, ensure_namespace
 
 import pulumi
+
+
+def ensure_namespace(name: str):
+    return k8s.core.v1.Namespace(
+        f"{name}-namespace",
+        metadata=k8s.meta.v1.ObjectMetaArgs(name=name),
+    )
+
+
+def add_skip_await_annotation(*args):
+    if not args:
+        return
+
+    obj = args[0].props if hasattr(args[0], "props") else args[0]
+    if not isinstance(obj, dict):
+        return
+
+    metadata = obj.setdefault("metadata", {})
+    annotations = metadata.setdefault("annotations", {})
+    annotations["pulumi.com/skipAwait"] = "true"
+
 
 config = pulumi.Config()
 immich_namespace = ensure_namespace(config.require("namespace"))
@@ -31,6 +51,11 @@ library_size = config.get("library_storage_size") or "200Gi"
 
 # Image tag chosen via config (use bootstrap manually if needed)
 image_tag = pulumi.Output.from_input(config.get("image_tag") or "v1.139.4")
+redis_image_registry = config.get("redis_image_registry") or "docker.io"
+redis_image_repository = config.get("redis_image_repository") or "bitnami/redis"
+redis_image_tag = config.get("redis_image_tag") or "latest"
+# Pin digest because redis chart default tag was removed upstream.
+redis_image_digest = config.get("redis_image_digest") or "sha256:1c41e7028ac48d7a9d79d855a432eef368aa440f37c8073ae1651879b02c72f4"
 
 pvc = k8s.core.v1.PersistentVolumeClaim(
     "immich-pvc",
@@ -48,6 +73,7 @@ pvc = k8s.core.v1.PersistentVolumeClaim(
 immich = k8s.helm.v4.Chart(
     "immich",
     chart="immich",
+    version="0.9.3",
     namespace=immich_namespace.metadata.name,
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://immich-app.github.io/immich-charts",
@@ -55,6 +81,20 @@ immich = k8s.helm.v4.Chart(
     values={
         "redis": {
             "enabled": True,
+            "image": {
+                "registry": redis_image_registry,
+                "repository": redis_image_repository,
+                "tag": redis_image_tag,
+                "digest": redis_image_digest,
+            },
+            "master": {
+                "updateStrategy": {
+                    "type": "RollingUpdate",
+                    "rollingUpdate": {
+                        "partition": 0,
+                    },
+                },
+            },
         },
         "image": {
             "tag": image_tag,
