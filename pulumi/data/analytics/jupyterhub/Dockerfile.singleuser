@@ -19,9 +19,26 @@ ARG TORCHAUDIO_VERSION=2.9.1
 ARG UV_VERSION=0.9.9
 
 # Optional: keep singleuser JupyterHub package in sync with hub.
-ARG JUPYTERHUB_VERSION=5.4.2
+ARG JUPYTERHUB_VERSION=5.4.3
+# Pin JupyterLab to avoid in-app "newer version available" banner drift.
+ARG JUPYTERLAB_VERSION=4.5.4
 
 USER root
+
+# Minimal native toolchain + Manim (Cairo/Pango) headers + LaTeX for MathTex.
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+      build-essential \
+      pkg-config \
+      libcairo2-dev \
+      libpango1.0-dev \
+      texlive-latex-base \
+      texlive-latex-extra \
+      texlive-fonts-recommended \
+      texlive-fonts-extra \
+      texlive-science \
+      dvisvgm \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install uv (fast Python package manager) as a global binary.
 RUN curl -LsSf https://astral.sh/uv/${UV_VERSION}/install.sh | \
@@ -38,9 +55,12 @@ RUN uv pip install --python "${CONDA_DIR}/bin/python" --index-url "${PYTORCH_IND
         "torchaudio==${TORCHAUDIO_VERSION}" \
     && uv pip install --python "${CONDA_DIR}/bin/python" \
         "python-lsp-server==1.13.1" \
+        "jupyterlab==${JUPYTERLAB_VERSION}" \
         "jupyter-lsp==2.3.0" \
         "jupyterlab-lsp==5.2.0" \
-        "jupyterhub==${JUPYTERHUB_VERSION}"
+        "jupyterhub==${JUPYTERHUB_VERSION}" \
+    && uv cache prune \
+    && rm -rf /home/${NB_USER}/.cache/uv
 
 # Reset ownership/permissions for the bundled non-root user.
 RUN fix-permissions "${CONDA_DIR}" \

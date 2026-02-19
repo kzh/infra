@@ -9,11 +9,28 @@ namespace = k8s.core.v1.Namespace(
     metadata=k8s.meta.v1.ObjectMetaArgs(name=NAMESPACE),
 )
 
+
+def ignore_hub_db_pvc_metadata_drift(
+    args: pulumi.ResourceTransformArgs,
+) -> pulumi.ResourceTransformResult | None:
+    if (
+        args.type_ == "kubernetes:core/v1:PersistentVolumeClaim"
+        and isinstance(args.props, dict)
+        and (args.props.get("metadata") or {}).get("name") == "hub-db-dir"
+    ):
+        opts = pulumi.ResourceOptions.merge(pulumi.ResourceOptions(), args.opts)
+        ignore_changes = list(opts.ignore_changes or [])
+        if "metadata" not in ignore_changes:
+            ignore_changes.append("metadata")
+        opts.ignore_changes = ignore_changes
+        return pulumi.ResourceTransformResult(props=args.props, opts=opts)
+    return None
+
 jupyterhub_chart = k8s.helm.v4.Chart(
     "jupyterhub",
     chart="jupyterhub",
     namespace=NAMESPACE,
-    version="4.3.1",
+    version="4.3.2",
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://hub.jupyter.org/helm-chart/",
     ),
@@ -65,5 +82,8 @@ jupyterhub_chart = k8s.helm.v4.Chart(
             "userPods": {"nodeAffinity": {"matchNodePurpose": "ignore"}},
         },
     },
-    opts=pulumi.ResourceOptions(depends_on=[namespace]),
+    opts=pulumi.ResourceOptions(
+        depends_on=[namespace],
+        transforms=[ignore_hub_db_pvc_metadata_drift],
+    ),
 )
