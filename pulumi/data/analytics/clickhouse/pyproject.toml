@@ -5,7 +5,8 @@ description = "ClickHouse analytics database deployment"
 requires-python = ">=3.12"
 dependencies = [
     "pulumi>=3.0.0,<4.0.0",
-    "pulumi-kubernetes>=4.0.0,<5.0.0"
+    "pulumi-kubernetes>=4.0.0,<5.0.0",
+    "pulumi-random>=4.19.1",
 ]
 
 [build-system]

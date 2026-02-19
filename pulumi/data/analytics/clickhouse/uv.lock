@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.12"
 
 [[package]]
@@ -71,12 +71,14 @@ source = { editable = "." }
 dependencies = [
     { name = "pulumi" },
     { name = "pulumi-kubernetes" },
+    { name = "pulumi-random" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "pulumi", specifier = ">=3.0.0,<4.0.0" },
     { name = "pulumi-kubernetes", specifier = ">=4.0.0,<5.0.0" },
+    { name = "pulumi-random", specifier = ">=4.19.1" },
 ]
 
 [[package]]
@@ -206,6 +208,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/7b/9f/23dc36a2982faf8bc66e48e55f5cb44a6580a3e81e1849e0732462982531/pulumi_kubernetes-4.23.0.tar.gz", hash = "sha256:6b697146039d7367f397db77dc1d2b23d918202f4276071bfa105652bb5e5fd4", size = 1775394, upload-time = "2025-05-02T17:34:12.813Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/cc/00/983975f1bcf02601f12b4afb60a4dfdf9f81ab11cbf2493aa349781684ae/pulumi_kubernetes-4.23.0-py3-none-any.whl", hash = "sha256:4866c00259170e5e1604c0a3335063036e80c29000bf9b88a380cd600fe44c4e", size = 2794243, upload-time = "2025-05-02T17:34:10.082Z" },
+]
+
+[[package]]
+name = "pulumi-random"
+version = "4.19.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "parver" },
+    { name = "pulumi" },
+    { name = "semver" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d7/14/98757312e8fbbb576e27a318ed50136c571268c9076f84db878d4cf4ed48/pulumi_random-4.19.1.tar.gz", hash = "sha256:c19c38ac78ba586fc4a96704c9e0b51edb0e52b290d8a42edd11ccea908fae7d", size = 22397, upload-time = "2026-01-28T04:09:22.358Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f5/5d/ea5b5312e61f2224d6cd5c6da9a5f1f9f7a50a9d8798e152233437ebc9f0/pulumi_random-4.19.1-py3-none-any.whl", hash = "sha256:20a7b078919e1e324dd6ffc58c3dbc0bec556fb0e852fc44e79371435b743ce3", size = 35761, upload-time = "2026-01-28T04:09:21.378Z" },
 ]
 
 [[package]]
