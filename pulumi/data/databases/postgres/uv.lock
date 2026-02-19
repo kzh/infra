@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.12"
 
 [[package]]
@@ -154,12 +154,14 @@ source = { virtual = "." }
 dependencies = [
     { name = "pulumi" },
     { name = "pulumi-kubernetes" },
+    { name = "pulumi-postgresql" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "pulumi", specifier = ">=3.0.0,<4.0.0" },
     { name = "pulumi-kubernetes", specifier = ">=4.0.0,<5.0.0" },
+    { name = "pulumi-postgresql", specifier = ">=3.15.2" },
 ]
 
 [[package]]
@@ -206,6 +208,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/7b/9f/23dc36a2982faf8bc66e48e55f5cb44a6580a3e81e1849e0732462982531/pulumi_kubernetes-4.23.0.tar.gz", hash = "sha256:6b697146039d7367f397db77dc1d2b23d918202f4276071bfa105652bb5e5fd4", size = 1775394, upload-time = "2025-05-02T17:34:12.813Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/cc/00/983975f1bcf02601f12b4afb60a4dfdf9f81ab11cbf2493aa349781684ae/pulumi_kubernetes-4.23.0-py3-none-any.whl", hash = "sha256:4866c00259170e5e1604c0a3335063036e80c29000bf9b88a380cd600fe44c4e", size = 2794243, upload-time = "2025-05-02T17:34:10.082Z" },
+]
+
+[[package]]
+name = "pulumi-postgresql"
+version = "3.16.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "parver" },
+    { name = "pulumi" },
+    { name = "semver" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/14/1a/eae8fe799b904c4604aa303363ad7b5e46f6f5806c27b9ccb3dfa48faf90/pulumi_postgresql-3.16.2.tar.gz", hash = "sha256:244e32e058448e6a38a4425620a1a622b26f1f4e182bdcdf80647e24e0b29376", size = 48337, upload-time = "2026-02-03T22:33:09.32Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/09/80/01a2c51ccc6c9367ff5de0e917f65a4d0f2dab472240a619cb57ded1c63e/pulumi_postgresql-3.16.2-py3-none-any.whl", hash = "sha256:53a86274e2f885e1fc75ae67fdfacc62b6f581913cfd4d1b96339d52f385041a", size = 74189, upload-time = "2026-02-03T22:33:07.686Z" },
 ]
 
 [[package]]
