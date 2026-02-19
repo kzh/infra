@@ -3,7 +3,8 @@ import pulumi_kubernetes as k8s
 
 config = pulumi.Config()
 
-image_version = config.get("image_version") or "1.0.15"
+image_version = config.get("image_version") or "1.5.0"
+selector_version = config.get("selector_version") or "1.0.15"
 storage_size = config.get("storage_size") or "100Gi"
 storage_class = config.get("storage_class")
 replicas = config.get_int("replicas") or 1
@@ -22,7 +23,12 @@ chroma_namespace = k8s.core.v1.Namespace(
 labels = {
     "app": "chroma",
     "component": "vector-database",
-    "version": image_version.replace(".", "-"),
+    "version": selector_version.replace(".", "-"),
+}
+
+pod_labels = {
+    **labels,
+    "image-version": image_version.replace(".", "-"),
 }
 
 svc = k8s.core.v1.Service(
@@ -61,7 +67,7 @@ sts = k8s.apps.v1.StatefulSet(
         ),
         template=k8s.core.v1.PodTemplateSpecArgs(
             metadata=k8s.meta.v1.ObjectMetaArgs(
-                labels=labels,
+                labels=pod_labels,
             ),
             spec=k8s.core.v1.PodSpecArgs(
                 containers=[
