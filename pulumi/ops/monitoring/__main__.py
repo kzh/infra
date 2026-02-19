@@ -93,6 +93,14 @@ def deploy_prometheus_stack(crds_chart):
                     },
                 ],
             },
+            "sidecar": {
+                "dashboards": {
+                    "skipReload": True,
+                },
+                "datasources": {
+                    "skipReload": True,
+                },
+            },
         },
         "crds": {
             "enabled": False,
