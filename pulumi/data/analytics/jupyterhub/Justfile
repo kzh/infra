@@ -13,5 +13,4 @@ push:
 	docker buildx build --platform {{arch}} \
 		-f Dockerfile.singleuser \
 		-t ghcr.io/kzh/jupyter:py312-amd64 \
-		--output=type=docker . \
-	&& docker push ghcr.io/kzh/jupyter:py312-amd64
+		--push .
