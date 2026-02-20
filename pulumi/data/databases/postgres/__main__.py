@@ -51,14 +51,14 @@ pg_chart = k8s.helm.v4.Chart(
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://cloudnative-pg.github.io/charts",
     ),
-    version="0.3.1",
+    version="0.5.0",
     values={
         "version": {
-            "postgresql": "17",
+            "postgresql": "18",
         },
         "cluster": {
             "instances": 1,
-            "imageName": "ghcr.io/tensorchord/cloudnative-vectorchord:17.5-0.4.3",
+            "imageName": "tensorchord/cloudnative-vectorchord:18.2-1.1.0",
             "imagePullPolicy": "IfNotPresent",
             "postgresql": {
                 "shared_preload_libraries": ["vchord.so"],
@@ -164,7 +164,7 @@ for key, field in field_map.items():
 
 # Optional: create application databases and ensure extensions
 app_dbs = config.get_object("app_databases") or []  # e.g., ["immich", "stitch"]
-extensions = config.get_object("extensions") or ["vector", "cube", "earthdistance"]
+extensions = config.get_object("extensions") or ["vector", "cube", "earthdistance", "vchord"]
 
 # Admin provider (connects to maintenance DB 'postgres') using tailscale hostname
 admin_provider = pg.Provider(
@@ -204,10 +204,17 @@ for db_name in app_dbs:
     )
 
     # Ensure requested extensions in the app database
-    for ext in extensions:
-        pg.Extension(
+    ordered_extensions = list(dict.fromkeys(extensions))
+    if "vchord" in ordered_extensions and "vector" in ordered_extensions:
+        ordered_extensions.remove("vchord")
+        ordered_extensions.insert(ordered_extensions.index("vector") + 1, "vchord")
+
+    prev_extension: pulumi.Resource = app_db
+    for ext in ordered_extensions:
+        ext_resource = pg.Extension(
             f"ext-{db_name}-{ext}",
             name=ext,
             schema="public",
-            opts=pulumi.ResourceOptions(provider=app_provider, depends_on=[app_db]),
+            opts=pulumi.ResourceOptions(provider=app_provider, depends_on=[prev_extension]),
         )
+        prev_extension = ext_resource
