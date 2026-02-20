@@ -1,0 +1,11 @@
+config:
+  penpot:namespace: penpot
+  penpot:postgres_stack: kzh/postgresql/mx
+  penpot:db_name: penpot
+  penpot:create_database: true
+  penpot:ingress_host: penpot
+  penpot:public_uri: https://penpot
+  penpot:penpot_chart_version: 0.35.0
+  penpot:valkey_chart_version: 0.9.3
+  penpot:valkey_service_name: penpot-valkey
+  penpot:valkey_persistence_size: 8Gi
