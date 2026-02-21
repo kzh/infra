@@ -1,0 +1,63 @@
+set shell := ["bash", "-lc"]
+
+arch := "linux/amd64"
+repo := "ghcr.io/kzh"
+tag := "mcp-prod-manual"
+penpot_ref := "mcp-prod"
+plugin_ws_uri := "wss://penpot-mcp-ws.tail1c114.ts.net"
+
+build-mcp-server:
+	docker buildx build --platform {{arch}} \
+		-f Dockerfile.mcp-server \
+		--build-arg PENPOT_REF={{penpot_ref}} \
+		-t {{repo}}/penpot-mcp-server:{{tag}} \
+		--output=type=docker .
+
+push-mcp-server:
+	docker buildx build --platform {{arch}} \
+		-f Dockerfile.mcp-server \
+		--build-arg PENPOT_REF={{penpot_ref}} \
+		-t {{repo}}/penpot-mcp-server:{{tag}} \
+		--push .
+
+build-mcp-plugin:
+	docker buildx build --platform {{arch}} \
+		-f Dockerfile.mcp-plugin \
+		--build-arg PENPOT_REF={{penpot_ref}} \
+		--build-arg WS_URI={{plugin_ws_uri}} \
+		-t {{repo}}/penpot-mcp-plugin:{{tag}} \
+		--output=type=docker .
+
+push-mcp-plugin:
+	docker buildx build --platform {{arch}} \
+		-f Dockerfile.mcp-plugin \
+		--build-arg PENPOT_REF={{penpot_ref}} \
+		--build-arg WS_URI={{plugin_ws_uri}} \
+		-t {{repo}}/penpot-mcp-plugin:{{tag}} \
+		--push .
+
+push-all: push-mcp-server push-mcp-plugin
+
+auto-tag:
+	@echo "mcp-prod-$(date -u +%Y%m%d-%H%M%S)-$(git rev-parse --short=8 HEAD)"
+
+push-all-auto:
+	@set -euo pipefail; \
+	TAG="mcp-prod-$(date -u +%Y%m%d-%H%M%S)-$(git rev-parse --short=8 HEAD)"; \
+	echo "Using tag: $$TAG"; \
+	just tag="$$TAG" push-all; \
+	echo "Pushed:"; \
+	echo "  {{repo}}/penpot-mcp-server:$$TAG"; \
+	echo "  {{repo}}/penpot-mcp-plugin:$$TAG"
+
+deploy-mcp stack="mx":
+	@set -euo pipefail; \
+	TAG="mcp-prod-$(date -u +%Y%m%d-%H%M%S)-$(git rev-parse --short=8 HEAD)"; \
+	echo "Using tag: $$TAG"; \
+	just tag="$$TAG" push-all; \
+	pulumi config set --stack {{stack}} penpot:mcp_server_image "{{repo}}/penpot-mcp-server:$$TAG"; \
+	pulumi config set --stack {{stack}} penpot:mcp_plugin_image "{{repo}}/penpot-mcp-plugin:$$TAG"; \
+	pulumi up --stack {{stack}} --yes; \
+	echo "Deployed images:"; \
+	echo "  {{repo}}/penpot-mcp-server:$$TAG"; \
+	echo "  {{repo}}/penpot-mcp-plugin:$$TAG"
