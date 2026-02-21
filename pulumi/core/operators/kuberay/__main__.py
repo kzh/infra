@@ -33,7 +33,8 @@ ray_dashboard_files = [
     "data_grafana_dashboard.json",
     "train_grafana_dashboard.json",
 ]
-ray_dashboards_dir = Path(__file__).parent / "dashboards"
+pulumi_dir = Path(__file__).resolve().parents[3]
+ray_dashboards_dir = pulumi_dir / "ops" / "dashboards" / "kuberay"
 
 kuberay_namespace = k8s.core.v1.Namespace(
     "kuberay-namespace",

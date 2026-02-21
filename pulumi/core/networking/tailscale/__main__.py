@@ -8,7 +8,8 @@ tailscale_namespace_name = config.get("namespace", "tailscale")
 monitoring_namespace_name = config.get("monitoringNamespace", tailscale_namespace_name)
 monitoring_release_label = config.get("monitoringReleaseLabel", "kube-prometheus-stack")
 chart_version = config.get("chartVersion", "1.94.2")
-dashboards_dir = Path(__file__).parent / "dashboards"
+pulumi_dir = Path(__file__).resolve().parents[3]
+dashboards_dir = pulumi_dir / "ops" / "dashboards" / "tailscale"
 dashboard_files = [
     "tailscale-operator-overview.json",
     "tailscale-proxy-metrics.json",

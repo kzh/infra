@@ -28,7 +28,8 @@ clickhouse_hostname = config.get("hostname", "clickhouse")
 tailscale_domain = config.get("tailscaleDomain", "tail1c114.ts.net")
 clickhouse_host = f"{clickhouse_hostname}.{tailscale_domain}"
 clickhouse_port = 9000
-dashboards_dir = Path(__file__).parent / "dashboards"
+pulumi_dir = Path(__file__).resolve().parents[3]
+dashboards_dir = pulumi_dir / "ops" / "dashboards" / "clickhouse"
 dashboard_files = [
     "altinity-clickhouse-operator.json",
     "clickhouse-queries.json",

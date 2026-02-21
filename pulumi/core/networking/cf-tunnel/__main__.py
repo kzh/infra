@@ -5,7 +5,8 @@ from pathlib import Path
 config = pulumi.Config()
 cf_tunnel_namespace_name = "cloudflare-tunnel"
 monitoring_release_label = config.get("monitoringReleaseLabel", "kube-prometheus-stack")
-dashboards_dir = Path(__file__).parent / "dashboards"
+pulumi_dir = Path(__file__).resolve().parents[3]
+dashboards_dir = pulumi_dir / "ops" / "dashboards" / "cf-tunnel"
 
 cf_tunnel_namespace = k8s.core.v1.Namespace(
     "cloudflare-tunnel",
