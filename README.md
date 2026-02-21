@@ -41,7 +41,6 @@ modal deploy
     - `databases/` — Postgres, CockroachDB
     - `analytics/` — ClickHouse, JupyterHub, Spark, Superset
     - `streaming/` — Redpanda
-    - `ml/` — Chroma
     - `workflow/` — n8n, Temporal
   - `apps/` — end‑user applications
     - `media/` — Immich
