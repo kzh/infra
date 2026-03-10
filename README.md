@@ -10,7 +10,7 @@ Pulumi + Python infrastructure monorepo for a Kubernetes cluster.
 |               | Workloads: Ray, Spark, Temporal                             |
 |               | Security: cert-manager, Vault                               |
 | Data          | Postgres (with `vchord`), CockroachDB, ClickHouse, Redpanda |
-| Apps          | Immich, code-server, Penpot, n8n                            |
+| Apps          | Coder, Immich, Penpot, n8n                                  |
 
 ## Layout
 

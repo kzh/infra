@@ -1,5 +1,5 @@
-name: code-server
-description: code-server
+name: coder
+description: coder
 runtime:
   name: python
   options:
@@ -7,4 +7,4 @@ runtime:
 config:
   pulumi:tags:
     value:
-      pulumi:template: kubernetes-python
+      pulumi:template: helm-kubernetes-python
