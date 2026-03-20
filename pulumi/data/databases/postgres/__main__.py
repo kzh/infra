@@ -24,6 +24,13 @@ ts_hostname = config.get("ts_hostname", "postgresql")
 pulumi.export("ts_hostname", ts_hostname)
 pulumi.export("cnpg_cluster_name", cnpg_cluster_name)
 pulumi.export("monitoring_release_label", monitoring_release_label)
+rw_service_name = f"{cnpg_cluster_name}-rw"
+rw_service_fqdn = f"{rw_service_name}.{ns_value}.svc.cluster.local"
+ca_secret_name = f"{cnpg_cluster_name}-ca"
+
+pulumi.export("rw_service_name", rw_service_name)
+pulumi.export("rw_service_fqdn", rw_service_fqdn)
+pulumi.export("ca_secret_name", ca_secret_name)
 
 def add_wait_annotation(
     args: pulumi.ResourceTransformationArgs,
@@ -145,6 +152,12 @@ pg_secret = k8s.core.v1.Secret.get(
     opts=pulumi.ResourceOptions(depends_on=[pg_chart]),
 )
 
+ca_secret = k8s.core.v1.Secret.get(
+    "ca-secret",
+    f"{ns_value}/{ca_secret_name}",
+    opts=pulumi.ResourceOptions(depends_on=[pg_chart]),
+)
+
 
 field_map = {
     "dbname": "dbname",
@@ -161,6 +174,9 @@ field_map = {
 for key, field in field_map.items():
     value = pg_secret.data.apply(lambda d, f=field: base64.b64decode(d.get(f, "")).decode())
     pulumi.export(key, pulumi.Output.secret(value))
+
+ca_cert_pem = ca_secret.data.apply(lambda d: base64.b64decode(d.get("ca.crt", "")).decode())
+pulumi.export("ca_cert_pem", pulumi.Output.secret(ca_cert_pem))
 
 # Optional: create application databases and ensure extensions
 app_dbs = config.get_object("app_databases") or []  # e.g., ["immich", "stitch"]
