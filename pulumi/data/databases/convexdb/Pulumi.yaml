@@ -1,0 +1,10 @@
+name: convexdb
+description: Self-hosted Convex backend and dashboard on Kubernetes
+runtime:
+  name: python
+  options:
+    toolchain: uv
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: kubernetes-python
