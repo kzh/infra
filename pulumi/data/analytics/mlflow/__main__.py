@@ -1,7 +1,8 @@
-import pulumi
 import pulumi_kubernetes as k8s
 import pulumi_postgresql as pg
 import pulumi_random as random
+
+import pulumi
 
 CHART_VERSION = "1.8.1"
 MLFLOW_IMAGE_VERSION = "3.7.0"
@@ -59,7 +60,9 @@ namespace = k8s.core.v1.Namespace(
 def force_mlflow_deployment_apply(
     args: pulumi.ResourceTransformationArgs,
 ) -> pulumi.ResourceTransformationResult | None:
-    if args.type_ != "kubernetes:apps/v1:Deployment" or not isinstance(args.props, dict):
+    if args.type_ != "kubernetes:apps/v1:Deployment" or not isinstance(
+        args.props, dict
+    ):
         return None
 
     props = dict(args.props)
@@ -69,6 +72,7 @@ def force_mlflow_deployment_apply(
     metadata["annotations"] = annotations
     props["metadata"] = metadata
     return pulumi.ResourceTransformationResult(props=props, opts=args.opts)
+
 
 admin_provider = pg.Provider(
     "pg-admin",

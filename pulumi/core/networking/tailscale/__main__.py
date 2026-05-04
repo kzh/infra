@@ -1,15 +1,17 @@
 from pathlib import Path
 
-import pulumi
 import pulumi_kubernetes as k8s
+from pulumi_monitoring_crds.monitoring.v1 import ServiceMonitor
+from pulumi_tailscale_crds.tailscale.v1alpha1 import ProxyClass
+
+import pulumi
 
 config = pulumi.Config()
 tailscale_namespace_name = config.get("namespace", "tailscale")
 monitoring_namespace_name = config.get("monitoringNamespace", tailscale_namespace_name)
 monitoring_release_label = config.get("monitoringReleaseLabel", "kube-prometheus-stack")
-chart_version = config.get("chartVersion", "1.94.2")
-pulumi_dir = Path(__file__).resolve().parents[3]
-dashboards_dir = pulumi_dir / "ops" / "dashboards" / "tailscale"
+chart_version = config.get("chartVersion", "1.96.5")
+dashboards_dir = Path(__file__).resolve().parent / "dashboards"
 dashboard_files = [
     "tailscale-operator-overview.json",
     "tailscale-proxy-metrics.json",
@@ -67,10 +69,8 @@ tailscale_operator_metrics_service = k8s.core.v1.Service(
     opts=pulumi.ResourceOptions(depends_on=[tailscale_operator]),
 )
 
-tailscale_operator_servicemonitor = k8s.apiextensions.CustomResource(
+tailscale_operator_servicemonitor = ServiceMonitor(
     "tailscale-operator-servicemonitor",
-    api_version="monitoring.coreos.com/v1",
-    kind="ServiceMonitor",
     metadata={
         "name": "tailscale-operator",
         "namespace": tailscale_namespace_name,
@@ -100,10 +100,8 @@ tailscale_operator_servicemonitor = k8s.apiextensions.CustomResource(
     opts=pulumi.ResourceOptions(depends_on=[tailscale_operator_metrics_service]),
 )
 
-tailscale_default_metrics_proxyclass = k8s.apiextensions.CustomResource(
+tailscale_default_metrics_proxyclass = ProxyClass(
     "tailscale-default-metrics-proxyclass",
-    api_version="tailscale.com/v1alpha1",
-    kind="ProxyClass",
     metadata={
         "name": "tailscale-default-metrics",
     },

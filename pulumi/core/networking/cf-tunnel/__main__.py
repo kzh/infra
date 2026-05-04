@@ -1,12 +1,14 @@
-import pulumi
-import pulumi_kubernetes as k8s
 from pathlib import Path
 
+import pulumi_kubernetes as k8s
+from pulumi_monitoring_crds.monitoring.v1 import ServiceMonitor
+
+import pulumi
+
 config = pulumi.Config()
-cf_tunnel_namespace_name = "cloudflare-tunnel"
+cf_tunnel_namespace_name = config.get("namespace", "cloudflare-tunnel")
 monitoring_release_label = config.get("monitoringReleaseLabel", "kube-prometheus-stack")
-pulumi_dir = Path(__file__).resolve().parents[3]
-dashboards_dir = pulumi_dir / "ops" / "dashboards" / "cf-tunnel"
+dashboards_dir = Path(__file__).resolve().parent / "dashboards"
 
 cf_tunnel_namespace = k8s.core.v1.Namespace(
     "cloudflare-tunnel",
@@ -19,7 +21,7 @@ cloudflare_tunnel_chart = k8s.helm.v3.Release(
     "cloudflare-tunnel",
     chart="cloudflare-tunnel-ingress-controller",
     name="cloudflare-tunnel-b6e117c1",
-    version="0.0.22",
+    version="0.0.23",
     namespace=cf_tunnel_namespace.metadata.name,
     repository_opts=k8s.helm.v3.RepositoryOptsArgs(
         repo="https://helm.strrl.dev",
@@ -33,10 +35,8 @@ cloudflare_tunnel_chart = k8s.helm.v3.Release(
     },
 )
 
-cloudflare_tunnel_servicemonitor = k8s.apiextensions.CustomResource(
+cloudflare_tunnel_servicemonitor = ServiceMonitor(
     "cloudflare-tunnel-servicemonitor",
-    api_version="monitoring.coreos.com/v1",
-    kind="ServiceMonitor",
     metadata={
         "name": "cloudflare-tunnel",
         "namespace": cf_tunnel_namespace_name,

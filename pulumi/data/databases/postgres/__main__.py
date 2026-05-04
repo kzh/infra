@@ -3,12 +3,15 @@ from typing import Any
 
 import pulumi_kubernetes as k8s
 import pulumi_postgresql as pg
+from pulumi_monitoring_crds.monitoring.v1 import PodMonitor
 
 import pulumi
 
 config = pulumi.Config()
 
-ns_value = config.get("namespace", "postgresql")  # plain string to avoid Output warnings
+ns_value = config.get(
+    "namespace", "postgresql"
+)  # plain string to avoid Output warnings
 monitoring_release_label = config.get("monitoringReleaseLabel", "kube-prometheus-stack")
 cnpg_cluster_name = config.get("clusterName", "postgresql-cluster")
 
@@ -32,6 +35,7 @@ pulumi.export("rw_service_name", rw_service_name)
 pulumi.export("rw_service_fqdn", rw_service_fqdn)
 pulumi.export("ca_secret_name", ca_secret_name)
 
+
 def add_wait_annotation(
     args: pulumi.ResourceTransformationArgs,
 ) -> pulumi.ResourceTransformationResult | None:
@@ -44,7 +48,9 @@ def add_wait_annotation(
         props: dict[str, Any] = dict(args.props)
         metadata = dict(props.get("metadata") or {})
         annotations = dict(metadata.get("annotations") or {})
-        annotations["pulumi.com/waitFor"] = "jsonpath={.status.phase}=Cluster in healthy state"
+        annotations["pulumi.com/waitFor"] = (
+            "jsonpath={.status.phase}=Cluster in healthy state"
+        )
         metadata["annotations"] = annotations
         props["metadata"] = metadata
         return pulumi.ResourceTransformationResult(props=props, opts=args.opts)
@@ -58,14 +64,14 @@ pg_chart = k8s.helm.v4.Chart(
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://cloudnative-pg.github.io/charts",
     ),
-    version="0.5.0",
+    version="0.6.0",
     values={
         "version": {
             "postgresql": "18",
         },
         "cluster": {
             "instances": 1,
-            "imageName": "tensorchord/cloudnative-vectorchord:18.2-1.1.0",
+            "imageName": "tensorchord/cloudnative-vectorchord:18.3-1.1.1",
             "imagePullPolicy": "IfNotPresent",
             "postgresql": {
                 "shared_preload_libraries": ["vchord.so"],
@@ -103,6 +109,17 @@ pg_chart = k8s.helm.v4.Chart(
                 },
                 "prometheusRule": {
                     "enabled": True,
+                    "excludeRules": [
+                        "CNPGClusterLogicalReplicationErrorsCritical",
+                        "CNPGClusterLogicalReplicationErrors",
+                        "CNPGClusterLogicalReplicationLaggingCritical",
+                        "CNPGClusterLogicalReplicationLagging",
+                        "CNPGClusterLogicalReplicationStoppedCritical",
+                        "CNPGClusterLogicalReplicationStopped",
+                    ],
+                },
+                "instrumentation": {
+                    "logicalReplication": False,
                 },
             },
         },
@@ -113,10 +130,8 @@ pg_chart = k8s.helm.v4.Chart(
     ),
 )
 
-cluster_podmonitor = k8s.apiextensions.CustomResource(
+cluster_podmonitor = PodMonitor(
     "postgresql-cluster-podmonitor",
-    api_version="monitoring.coreos.com/v1",
-    kind="PodMonitor",
     metadata={
         "name": "postgresql-cluster",
         "namespace": ns_value,
@@ -159,6 +174,16 @@ ca_secret = k8s.core.v1.Secret.get(
 )
 
 
+def decoded_secret_field(secret: k8s.core.v1.Secret, field: str):
+    return secret.data.apply(
+        lambda data, field=field: base64.b64decode(data.get(field, "")).decode()
+    )
+
+
+def secret_decoded_secret_field(secret: k8s.core.v1.Secret, field: str):
+    return pulumi.Output.secret(decoded_secret_field(secret, field))
+
+
 field_map = {
     "dbname": "dbname",
     "jdbc_uri": "jdbc-uri",
@@ -172,27 +197,34 @@ field_map = {
 }
 
 for key, field in field_map.items():
-    value = pg_secret.data.apply(lambda d, f=field: base64.b64decode(d.get(f, "")).decode())
-    pulumi.export(key, pulumi.Output.secret(value))
+    pulumi.export(key, secret_decoded_secret_field(pg_secret, field))
 
-ca_cert_pem = ca_secret.data.apply(lambda d: base64.b64decode(d.get("ca.crt", "")).decode())
-pulumi.export("ca_cert_pem", pulumi.Output.secret(ca_cert_pem))
+ca_cert_pem = secret_decoded_secret_field(ca_secret, "ca.crt")
+pulumi.export("ca_cert_pem", ca_cert_pem)
 
 # Optional: create application databases and ensure extensions
 app_dbs = config.get_object("app_databases") or []  # e.g., ["immich", "stitch"]
-extensions = config.get_object("extensions") or ["vector", "cube", "earthdistance", "vchord"]
+extensions = config.get_object("extensions") or [
+    "vector",
+    "cube",
+    "earthdistance",
+    "vchord",
+]
+ordered_extensions = list(dict.fromkeys(extensions))
+if "vchord" in ordered_extensions and "vector" in ordered_extensions:
+    ordered_extensions.remove("vchord")
+    ordered_extensions.insert(ordered_extensions.index("vector") + 1, "vchord")
+
+pg_username = secret_decoded_secret_field(pg_secret, "username")
+pg_password = secret_decoded_secret_field(pg_secret, "password")
 
 # Admin provider (connects to maintenance DB 'postgres') using tailscale hostname
 admin_provider = pg.Provider(
     "pg-admin",
     host=ts_hostname,
     port=5432,
-    username=pulumi.Output.secret(
-        pg_secret.data.apply(lambda d: base64.b64decode(d.get("username", "")).decode())
-    ),
-    password=pulumi.Output.secret(
-        pg_secret.data.apply(lambda d: base64.b64decode(d.get("password", "")).decode())
-    ),
+    username=pg_username,
+    password=pg_password,
     database="postgres",
     sslmode="disable",
 )
@@ -209,21 +241,11 @@ for db_name in app_dbs:
         f"pg-{db_name}",
         host=ts_hostname,
         port=5432,
-        username=pulumi.Output.secret(
-            pg_secret.data.apply(lambda d: base64.b64decode(d.get("username", "")).decode())
-        ),
-        password=pulumi.Output.secret(
-            pg_secret.data.apply(lambda d: base64.b64decode(d.get("password", "")).decode())
-        ),
+        username=pg_username,
+        password=pg_password,
         database=db_name,
         sslmode="disable",
     )
-
-    # Ensure requested extensions in the app database
-    ordered_extensions = list(dict.fromkeys(extensions))
-    if "vchord" in ordered_extensions and "vector" in ordered_extensions:
-        ordered_extensions.remove("vchord")
-        ordered_extensions.insert(ordered_extensions.index("vector") + 1, "vchord")
 
     prev_extension: pulumi.Resource = app_db
     for ext in ordered_extensions:
@@ -231,6 +253,8 @@ for db_name in app_dbs:
             f"ext-{db_name}-{ext}",
             name=ext,
             schema="public",
-            opts=pulumi.ResourceOptions(provider=app_provider, depends_on=[prev_extension]),
+            opts=pulumi.ResourceOptions(
+                provider=app_provider, depends_on=[prev_extension]
+            ),
         )
         prev_extension = ext_resource

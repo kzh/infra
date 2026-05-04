@@ -10,35 +10,80 @@ def ensure_namespace(name: str):
     )
 
 
-def add_skip_await_annotation(*args):
-    if not args:
-        return
+def add_skip_await_annotation(
+    args: pulumi.ResourceTransformArgs,
+) -> pulumi.ResourceTransformResult | None:
+    if not isinstance(args.props, dict):
+        return None
 
-    obj = args[0].props if hasattr(args[0], "props") else args[0]
-    if not isinstance(obj, dict):
-        return
-
-    metadata = obj.setdefault("metadata", {})
-    annotations = metadata.setdefault("annotations", {})
+    props = dict(args.props)
+    metadata = dict(props.get("metadata") or {})
+    annotations = dict(metadata.get("annotations") or {})
     annotations["pulumi.com/skipAwait"] = "true"
+    metadata["annotations"] = annotations
+    props["metadata"] = metadata
+    return pulumi.ResourceTransformResult(props=props, opts=args.opts)
+
+
+def preserve_immich_server_selector(
+    args: pulumi.ResourceTransformArgs,
+) -> pulumi.ResourceTransformResult | None:
+    if not isinstance(args.props, dict):
+        return None
+
+    props = dict(args.props)
+    metadata = props.get("metadata") or {}
+    if metadata.get("name") != "immich-server":
+        return None
+
+    kind = props.get("kind")
+    spec = dict(props.get("spec") or {})
+    changed = False
+    if kind == "Service":
+        selector = dict(spec.get("selector") or {})
+        changed = selector.pop("app.kubernetes.io/controller", None) is not None
+        spec["selector"] = selector
+    elif kind == "Deployment":
+        selector = dict(spec.get("selector") or {})
+        match_labels = dict(selector.get("matchLabels") or {})
+        changed = match_labels.pop("app.kubernetes.io/controller", None) is not None
+        selector["matchLabels"] = match_labels
+        spec["selector"] = selector
+
+        template = dict(spec.get("template") or {})
+        template_metadata = dict(template.get("metadata") or {})
+        pod_labels = dict(template_metadata.get("labels") or {})
+        changed = (
+            pod_labels.pop("app.kubernetes.io/controller", None) is not None or changed
+        )
+        template_metadata["labels"] = pod_labels
+        template["metadata"] = template_metadata
+        spec["template"] = template
+
+    if not changed:
+        return None
+
+    props["spec"] = spec
+    return pulumi.ResourceTransformResult(props=props, opts=args.opts)
 
 
 config = pulumi.Config()
 immich_namespace = ensure_namespace(config.require("namespace"))
 
-# Postgres connection via required StackReference
-pgref = pulumi.StackReference(config.require("postgres_stack"))
-
-# Provider (runs locally) prefers Tailscale hostname; app (in‑cluster) uses Service DNS
-_ts = pgref.get_output("ts_hostname")      # e.g., "postgresql" (tailscale L4)
-_host = pgref.get_output("host")            # internal service host from producer
-_ns = pgref.get_output("k8s_namespace")     # e.g., "postgresql"
-
-pg_app_host = _ns.apply(lambda ns: f"postgresql-cluster-rw.{ns}.svc.cluster.local")
-pg_provider_host = pulumi.Output.all(_ts, _host).apply(lambda t: t[0] or t[1])
-pg_port = pgref.get_output("port")
-pg_admin_user = pgref.get_output("username")
-pg_admin_password = pgref.get_output("password")
+# Production uses the Postgres stack outputs; dev-preview can still pass explicit
+# connection config without needing a separate Postgres stack.
+postgres_stack = config.get("postgres_stack")
+if postgres_stack:
+    pgref = pulumi.StackReference(postgres_stack)
+    pg_app_host = pgref.require_output("rw_service_fqdn")
+    pg_port = pgref.require_output("port")
+    pg_admin_user = pgref.require_output("username")
+    pg_admin_password = pgref.require_output("password")
+else:
+    pg_app_host = pulumi.Output.from_input(config.require("pg_host"))
+    pg_port = pulumi.Output.from_input(config.require("pg_port"))
+    pg_admin_user = pulumi.Output.from_input(config.require("pg_admin_user"))
+    pg_admin_password = config.require_secret("pg_admin_password")
 
 immich_db_name = config.get("db_name") or "immich"
 
@@ -49,13 +94,7 @@ db_password = pg_admin_password
 
 library_size = config.get("library_storage_size") or "200Gi"
 
-# Image tag chosen via config (use bootstrap manually if needed)
-image_tag = pulumi.Output.from_input(config.get("image_tag") or "v1.139.4")
-redis_image_registry = config.get("redis_image_registry") or "docker.io"
-redis_image_repository = config.get("redis_image_repository") or "bitnami/redis"
-redis_image_tag = config.get("redis_image_tag") or "latest"
-# Pin digest because redis chart default tag was removed upstream.
-redis_image_digest = config.get("redis_image_digest") or "sha256:1c41e7028ac48d7a9d79d855a432eef368aa440f37c8073ae1651879b02c72f4"
+image_tag = pulumi.Output.from_input(config.get("image_tag") or "v2.7.5")
 
 pvc = k8s.core.v1.PersistentVolumeClaim(
     "immich-pvc",
@@ -65,39 +104,70 @@ pvc = k8s.core.v1.PersistentVolumeClaim(
     ),
     spec=k8s.core.v1.PersistentVolumeClaimSpecArgs(
         access_modes=["ReadWriteOnce"],
-        resources=k8s.core.v1.VolumeResourceRequirementsArgs(requests={"storage": library_size}),
+        resources=k8s.core.v1.VolumeResourceRequirementsArgs(
+            requests={"storage": library_size}
+        ),
     ),
 )
 
+db_secret = k8s.core.v1.Secret(
+    "immich-db-credentials",
+    metadata=k8s.meta.v1.ObjectMetaArgs(
+        name="immich-db-credentials",
+        namespace=immich_namespace.metadata.name,
+    ),
+    string_data={
+        "DB_PASSWORD": db_password,
+    },
+    type="Opaque",
+    opts=pulumi.ResourceOptions(depends_on=[immich_namespace]),
+)
 
 immich = k8s.helm.v4.Chart(
     "immich",
     chart="immich",
-    version="0.9.3",
+    version="0.11.1",
     namespace=immich_namespace.metadata.name,
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://immich-app.github.io/immich-charts",
     ),
     values={
-        "redis": {
-            "enabled": True,
-            "image": {
-                "registry": redis_image_registry,
-                "repository": redis_image_repository,
-                "tag": redis_image_tag,
-                "digest": redis_image_digest,
-            },
-            "master": {
-                "updateStrategy": {
-                    "type": "RollingUpdate",
-                    "rollingUpdate": {
-                        "partition": 0,
+        "controllers": {
+            "main": {
+                "containers": {
+                    "main": {
+                        "image": {
+                            "tag": image_tag,
+                        },
+                        "env": {
+                            "DB_HOSTNAME": db_hostname,
+                            "DB_PORT": pulumi.Output.format("{}", db_port),
+                            "DB_USERNAME": db_username,
+                            "DB_PASSWORD": {
+                                "valueFrom": {
+                                    "secretKeyRef": {
+                                        "name": db_secret.metadata.name,
+                                        "key": "DB_PASSWORD",
+                                    },
+                                },
+                            },
+                            "DB_DATABASE_NAME": immich_db_name,
+                            "DB_VECTOR_EXTENSION": "pgvector",
+                        },
                     },
                 },
             },
         },
-        "image": {
-            "tag": image_tag,
+        "valkey": {
+            "enabled": True,
+            "persistence": {
+                "data": {
+                    "enabled": True,
+                    "size": "8Gi",
+                    "type": "persistentVolumeClaim",
+                    "accessMode": "ReadWriteOnce",
+                },
+            },
         },
         "immich": {
             "persistence": {
@@ -106,21 +176,13 @@ immich = k8s.helm.v4.Chart(
                 }
             }
         },
-        "env": {
-            "DB_HOSTNAME": db_hostname,
-            "DB_PORT": pulumi.Output.format("{}", db_port),
-            "DB_USERNAME": db_username,
-            "DB_PASSWORD": db_password,
-            "DB_DATABASE_NAME": immich_db_name,
-            "DB_VECTOR_EXTENSION": "pgvector",
-        },
         "machine-learning": {
             "enabled": False,
         },
     },
     opts=pulumi.ResourceOptions(
-        depends_on=[immich_namespace],
-        transformations=[add_skip_await_annotation],
+        depends_on=[immich_namespace, db_secret],
+        transforms=[add_skip_await_annotation, preserve_immich_server_selector],
     ),
 )
 

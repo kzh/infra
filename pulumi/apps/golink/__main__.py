@@ -1,5 +1,9 @@
-import pulumi
+import base64
+
 import pulumi_kubernetes as k8s
+import pulumi_tailscale as tailscale
+
+import pulumi
 
 config = pulumi.Config()
 
@@ -7,10 +11,42 @@ namespace_name = config.get("namespace") or "golink"
 image = config.get("image") or "ghcr.io/tailscale/golink:main"
 storage_size = config.get("storage_size") or "1Gi"
 storage_class = config.get("storage_class")
+tailnet_key_tags = config.get_object("tailnet_key_tags") or ["tag:golink"]
+tailnet_key_expiry_seconds = (
+    config.get_int("tailnet_key_expiry_seconds") or 60 * 60 * 24 * 90
+)
+tailnet_key_reusable = config.get_bool("tailnet_key_reusable")
+tailnet_key_ephemeral = config.get_bool("tailnet_key_ephemeral")
+tailnet_key_preauthorized = config.get_bool("tailnet_key_preauthorized")
+
+if tailnet_key_reusable is None:
+    tailnet_key_reusable = True
+if tailnet_key_ephemeral is None:
+    tailnet_key_ephemeral = False
+if tailnet_key_preauthorized is None:
+    tailnet_key_preauthorized = True
+if not isinstance(tailnet_key_tags, list) or not all(
+    isinstance(tag, str) for tag in tailnet_key_tags
+):
+    raise ValueError("golink:tailnet_key_tags must be a list of tag strings")
 
 labels = {
     "app": "golink",
 }
+
+tailnet_key = tailscale.TailnetKey(
+    "golink-tailnet-key",
+    reusable=tailnet_key_reusable,
+    ephemeral=tailnet_key_ephemeral,
+    preauthorized=tailnet_key_preauthorized,
+    expiry=tailnet_key_expiry_seconds,
+    recreate_if_invalid="always",
+    description="golink",
+    tags=tailnet_key_tags,
+)
+tailnet_auth_key = pulumi.Output.secret(tailnet_key.key).apply(
+    lambda key: base64.b64encode(key.encode()).decode()
+)
 
 golink_namespace = k8s.core.v1.Namespace(
     "golink-namespace",
@@ -27,9 +63,10 @@ auth_secret = k8s.core.v1.Secret(
         namespace=golink_namespace.metadata.name,
         labels=labels,
     ),
-    string_data={
-        "TS_AUTHKEY": config.require_secret("TS_AUTHKEY"),
+    data={
+        "TS_AUTHKEY": tailnet_auth_key,
     },
+    opts=pulumi.ResourceOptions(delete_before_replace=True),
 )
 
 pvc = k8s.core.v1.PersistentVolumeClaim(
@@ -68,6 +105,9 @@ deployment = k8s.apps.v1.Deployment(
                 labels=labels,
             ),
             spec=k8s.core.v1.PodSpecArgs(
+                security_context=k8s.core.v1.PodSecurityContextArgs(
+                    fs_group=65532,
+                ),
                 containers=[
                     k8s.core.v1.ContainerArgs(
                         name="golink",
@@ -123,7 +163,10 @@ deployment = k8s.apps.v1.Deployment(
             ),
         ),
     ),
-    opts=pulumi.ResourceOptions(depends_on=[golink_namespace, auth_secret, pvc]),
+    opts=pulumi.ResourceOptions(
+        delete_before_replace=True,
+        depends_on=[golink_namespace, auth_secret, pvc],
+    ),
 )
 
 pulumi.export("namespace", golink_namespace.metadata.name)
@@ -131,3 +174,6 @@ pulumi.export("deployment", deployment.metadata.name)
 pulumi.export("pvc", pvc.metadata.name)
 pulumi.export("sqlitedb_path", "/home/nonroot/golink.db")
 pulumi.export("tailscale_config_dir", "/home/nonroot/tsnet-golink")
+pulumi.export("tailnet_key_id", tailnet_key.id)
+pulumi.export("tailnet_key_expires_at", tailnet_key.expires_at)
+pulumi.export("tailnet_key_tags", tailnet_key.tags)

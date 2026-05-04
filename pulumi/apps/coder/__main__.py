@@ -1,41 +1,49 @@
 from urllib.parse import quote
 
-import pulumi
 import pulumi_kubernetes as k8s
 import pulumi_postgresql as pg
 
+import pulumi
+
 config = pulumi.Config()
+
+
+def get_bool_config(name: str, default: bool) -> bool:
+    value = config.get_bool(name)
+    return default if value is None else value
+
+
+def get_string_map_config(name: str) -> dict[str, str]:
+    raw_value = config.get_object(name)
+    if not isinstance(raw_value, dict):
+        return {}
+    return {str(key): str(value) for key, value in raw_value.items()}
+
+
+def first_present(values: list[object]) -> object:
+    primary, fallback = values
+    return primary or fallback
+
 
 namespace_name = config.get("namespace") or "coder"
 postgres_stack = config.require("postgres_stack")
 db_name = config.get("db_name") or "coder"
-create_database = config.get_bool("create_database")
+create_database = get_bool_config("create_database", True)
 postgres_admin_db = config.get("postgres_admin_db") or "postgres"
 postgres_sslmode = config.get("postgres_sslmode") or "disable"
 
-coder_chart_version = config.get("coder_chart_version") or "2.30.0"
+coder_chart_version = config.get("coder_chart_version") or "2.32.1"
 service_type = config.get("service_type") or "ClusterIP"
 workspace_namespace = config.get("workspace_namespace") or "coder-workspaces"
-workspace_create_namespace = config.get_bool("workspace_create_namespace")
-if workspace_create_namespace is None:
-    workspace_create_namespace = True
-workspace_enable_perms = config.get_bool("workspace_enable_perms")
-if workspace_enable_perms is None:
-    workspace_enable_perms = True
-workspace_enable_deployments = config.get_bool("workspace_enable_deployments")
-if workspace_enable_deployments is None:
-    workspace_enable_deployments = True
+workspace_create_namespace = get_bool_config("workspace_create_namespace", True)
+workspace_enable_perms = get_bool_config("workspace_enable_perms", True)
+workspace_enable_deployments = get_bool_config("workspace_enable_deployments", True)
 
-ingress_enabled = config.get_bool("ingress_enabled")
-if ingress_enabled is None:
-    ingress_enabled = True
-
+ingress_enabled = get_bool_config("ingress_enabled", True)
 ingress_class_name = config.get("ingress_class_name") or "tailscale"
 ingress_host = config.get("ingress_host") or "coder"
 ingress_wildcard_host = config.get("ingress_wildcard_host") or ""
-ingress_tls_enabled = config.get_bool("ingress_tls_enabled")
-if ingress_tls_enabled is None:
-    ingress_tls_enabled = False
+ingress_tls_enabled = get_bool_config("ingress_tls_enabled", False)
 ingress_tls_secret_name = config.get("ingress_tls_secret_name") or ""
 ingress_tls_wildcard_secret_name = config.get("ingress_tls_wildcard_secret_name") or ""
 
@@ -43,25 +51,9 @@ access_url = config.get("access_url")
 if not access_url and ingress_enabled and ingress_host:
     access_url = f"https://{ingress_host}"
 
-disable_default_github_auth = config.get_bool("disable_default_github_auth")
-if disable_default_github_auth is None:
-    disable_default_github_auth = True
-
-service_annotations_raw = config.get_object("service_annotations")
-if isinstance(service_annotations_raw, dict):
-    service_annotations: dict[str, str] = {
-        str(key): str(value) for key, value in service_annotations_raw.items()
-    }
-else:
-    service_annotations = {}
-
-ingress_annotations_raw = config.get_object("ingress_annotations")
-if isinstance(ingress_annotations_raw, dict):
-    ingress_annotations: dict[str, str] = {
-        str(key): str(value) for key, value in ingress_annotations_raw.items()
-    }
-else:
-    ingress_annotations = {}
+disable_default_github_auth = get_bool_config("disable_default_github_auth", True)
+service_annotations = get_string_map_config("service_annotations")
+ingress_annotations = get_string_map_config("ingress_annotations")
 
 labels = {
     "app": "coder",
@@ -77,18 +69,13 @@ coder_namespace = k8s.core.v1.Namespace(
 )
 
 pgref = pulumi.StackReference(postgres_stack)
-pg_namespace = pgref.get_output("k8s_namespace")
-pg_host = pg_namespace.apply(lambda ns: f"postgresql-cluster-rw.{ns}.svc.cluster.local")
-pg_port = pgref.get_output("port").apply(lambda p: int(p) if p else 5432)
-pg_username = pgref.get_output("username")
-pg_password = pgref.get_output("password")
-pg_ts_hostname = pgref.get_output("ts_hostname")
-pg_provider_host = pulumi.Output.all(pg_ts_hostname, pgref.get_output("host")).apply(
-    lambda t: t[0] or t[1]
-)
-
-if create_database is None:
-    create_database = True
+pg_host = pgref.require_output("rw_service_fqdn")
+pg_port = pgref.require_output("port").apply(lambda p: int(p) if p else 5432)
+pg_username = pgref.require_output("username")
+pg_password = pgref.require_output("password")
+pg_provider_host = pulumi.Output.all(
+    pgref.require_output("ts_hostname"), pgref.require_output("host")
+).apply(first_present)
 
 coder_database = None
 if create_database:
@@ -174,7 +161,11 @@ if service_annotations:
     service_values["annotations"] = service_annotations
 
 workspace_namespaces_values: list[dict[str, object]] = []
-if workspace_enable_perms and workspace_namespace and workspace_namespace != namespace_name:
+if (
+    workspace_enable_perms
+    and workspace_namespace
+    and workspace_namespace != namespace_name
+):
     workspace_namespaces_values.append(
         {
             "name": workspace_namespace,
@@ -208,17 +199,20 @@ dependencies: list[pulumi.Resource] = [coder_namespace, coder_db_url_secret]
 if coder_database:
     dependencies.append(coder_database)
 
-workspace_ns_resource = None
-if workspace_create_namespace and workspace_enable_perms and workspace_namespace:
-    if workspace_namespace != namespace_name:
-        workspace_ns_resource = k8s.core.v1.Namespace(
-            "coder-workspaces-namespace",
-            metadata=k8s.meta.v1.ObjectMetaArgs(
-                name=workspace_namespace,
-                labels={"app": "coder-workspaces"},
-            ),
-        )
-        dependencies.append(workspace_ns_resource)
+if (
+    workspace_create_namespace
+    and workspace_enable_perms
+    and workspace_namespace
+    and workspace_namespace != namespace_name
+):
+    workspace_ns_resource = k8s.core.v1.Namespace(
+        "coder-workspaces-namespace",
+        metadata=k8s.meta.v1.ObjectMetaArgs(
+            name=workspace_namespace,
+            labels={"app": "coder-workspaces"},
+        ),
+    )
+    dependencies.append(workspace_ns_resource)
 
 coder_chart = k8s.helm.v4.Chart(
     "coder",
@@ -268,7 +262,9 @@ if ingress_enabled:
                             backend=k8s.networking.v1.IngressBackendArgs(
                                 service=k8s.networking.v1.IngressServiceBackendArgs(
                                     name="coder",
-                                    port=k8s.networking.v1.ServiceBackendPortArgs(number=80),
+                                    port=k8s.networking.v1.ServiceBackendPortArgs(
+                                        number=80
+                                    ),
                                 )
                             ),
                         )
@@ -289,7 +285,9 @@ if ingress_enabled:
                                 backend=k8s.networking.v1.IngressBackendArgs(
                                     service=k8s.networking.v1.IngressServiceBackendArgs(
                                         name="coder",
-                                        port=k8s.networking.v1.ServiceBackendPortArgs(number=80),
+                                        port=k8s.networking.v1.ServiceBackendPortArgs(
+                                            number=80
+                                        ),
                                     )
                                 ),
                             )
@@ -306,7 +304,11 @@ if ingress_enabled:
                     secret_name=ingress_tls_secret_name,
                 )
             )
-        if ingress_tls_enabled and ingress_wildcard_host and ingress_tls_wildcard_secret_name:
+        if (
+            ingress_tls_enabled
+            and ingress_wildcard_host
+            and ingress_tls_wildcard_secret_name
+        ):
             ingress_tls.append(
                 k8s.networking.v1.IngressTLSArgs(
                     hosts=[ingress_wildcard_host],

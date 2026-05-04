@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:1.4
-# Jupyter Docker Stacks singleuser base (Ubuntu 24.04, Python 3.12).
+# Jupyter Docker Stacks singleuser base (Ubuntu 24.04, Python 3.13).
 # For strict reproducibility, swap the tag for a digest:
-# FROM quay.io/jupyter/minimal-notebook:python-3.12@sha256:<digest>
-FROM quay.io/jupyter/minimal-notebook:python-3.12
+# FROM quay.io/jupyter/minimal-notebook:python-3.13@sha256:<digest>
+FROM quay.io/jupyter/minimal-notebook:python-3.13
 
 # Torch wheels: override at build time for CUDA/XPU/ROCm or the test channel.
 # Examples:
@@ -19,7 +19,7 @@ ARG TORCHAUDIO_VERSION=2.9.1
 ARG UV_VERSION=0.9.9
 
 # Optional: keep singleuser JupyterHub package in sync with hub.
-ARG JUPYTERHUB_VERSION=5.4.3
+ARG JUPYTERHUB_VERSION=5.4.5
 # Pin JupyterLab to avoid in-app "newer version available" banner drift.
 ARG JUPYTERLAB_VERSION=4.5.4
 

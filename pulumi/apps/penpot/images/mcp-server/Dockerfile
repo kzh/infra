@@ -1,7 +1,8 @@
-FROM node:22-bookworm-slim AS build
+FROM node:25-bookworm-slim AS build
 
-ARG PENPOT_REF=mcp-prod
+ARG PENPOT_REF=mcp-prod-2.14.1
 ARG PENPOT_REPO=https://github.com/penpot/penpot.git
+ARG PNPM_VERSION=10.28.2
 
 WORKDIR /src
 
@@ -13,12 +14,12 @@ RUN git clone --depth 1 --branch "${PENPOT_REF}" "${PENPOT_REPO}" penpot
 
 WORKDIR /src/penpot/mcp
 
-RUN corepack enable \
+RUN npm install --global "pnpm@${PNPM_VERSION}" \
     && pnpm -r install \
     && pnpm --filter mcp-server run build
 
 
-FROM node:22-bookworm-slim
+FROM node:25-bookworm-slim
 
 WORKDIR /app
 

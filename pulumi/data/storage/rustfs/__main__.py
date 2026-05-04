@@ -1,8 +1,9 @@
-import pulumi
 import pulumi_kubernetes as k8s
 import pulumi_random as random
 
-CHART_VERSION = "0.0.85"
+import pulumi
+
+CHART_VERSION = "0.1.0"
 CONSOLE_HOSTNAME = "rustfs"
 S3_HOSTNAME = "rustfs-s3"
 

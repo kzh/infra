@@ -1,74 +1,16 @@
-import pulumi
+import base64
+
 import pulumi_kubernetes as k8s
 import pulumi_tls as tls
 
+import pulumi
+
 RESOURCE_NAME = "vault"
 NAMESPACE = "vault"
-
-namespace = k8s.core.v1.Namespace(
-    NAMESPACE,
-    metadata=k8s.meta.v1.ObjectMetaArgs(
-        name=NAMESPACE,
-    ),
-)
-
-def setup_tls(namespace_resource):
-    """
-    Note: This is a simplified version of the TLS setup.
-    The original Go code includes complex CSR approval logic that would need
-    to be implemented separately using the kubernetes client-go equivalent in Python.
-    """
-    
-    # Private Key
-    key = tls.PrivateKey(
-        "vault-private-key",
-        algorithm="ECDSA",
-        ecdsa_curve="P256",
-    )
-    
-    # Certificate Request
-    cert_request = tls.CertRequest(
-        "vault-cr",
-        private_key_pem=key.private_key_pem,
-        subject=tls.CertRequestSubjectArgs(
-            common_name=f"system:node:{RESOURCE_NAME}.{NAMESPACE}.svc",
-            organization="system:nodes",
-        ),
-        dns_names=[
-            RESOURCE_NAME,
-            f"{RESOURCE_NAME}.{NAMESPACE}",
-            f"{RESOURCE_NAME}.{NAMESPACE}.svc",
-            f"{RESOURCE_NAME}.{NAMESPACE}.svc.cluster.local",
-        ],
-        ip_addresses=[
-            "127.0.0.1",
-        ],
-    )
-    
-    # Note: The original Go code includes CSR approval logic that requires
-    # direct Kubernetes API access. This would need to be implemented using
-    # the Kubernetes Python client or a custom Pulumi dynamic provider.
-    
-    # For now, we'll create a placeholder secret that would need to be populated
-    # with the actual certificates after CSR approval
-    return k8s.core.v1.Secret(
-        "vault-certs",
-        metadata=k8s.meta.v1.ObjectMetaArgs(
-            name=RESOURCE_NAME,
-            namespace=NAMESPACE,
-        ),
-        string_data={
-            "vault.key": key.private_key_pem,
-            # Note: These would need to be populated after CSR approval
-            "vault.crt": "# TODO: Populate after CSR approval",
-            "vault.ca": "# TODO: Populate with cluster CA",
-        },
-        opts=pulumi.ResourceOptions(depends_on=[namespace_resource]),
-    )
-
-def new_vault_chart(secret):
-    """Deploy Vault Chart"""
-    config = """
+SKIP_AWAIT_ANNOTATION = {
+    "pulumi.com/skipAwait": "true",
+}
+VAULT_CONFIG = """
   ui = true
 
   listener "tcp" {
@@ -83,19 +25,104 @@ def new_vault_chart(secret):
     path = "/vault/data"
   }
 """
-    
-    await_annotation = {
-        "pulumi.com/skipAwait": "true",
-    }
-    
+
+namespace = k8s.core.v1.Namespace(
+    NAMESPACE,
+    metadata=k8s.meta.v1.ObjectMetaArgs(
+        name=NAMESPACE,
+    ),
+)
+
+
+def base64_pem(value: pulumi.Output[str]) -> pulumi.Output[str]:
+    return value.apply(lambda pem: base64.b64encode(pem.encode()).decode())
+
+
+def setup_tls(namespace_resource: pulumi.Resource) -> k8s.core.v1.Secret:
+    ca_key = tls.PrivateKey(
+        "vault-ca-private-key",
+        algorithm="ECDSA",
+        ecdsa_curve="P256",
+    )
+    ca_cert = tls.SelfSignedCert(
+        "vault-ca",
+        private_key_pem=ca_key.private_key_pem,
+        is_ca_certificate=True,
+        validity_period_hours=87600,
+        early_renewal_hours=720,
+        allowed_uses=[
+            "cert_signing",
+            "crl_signing",
+        ],
+        subject=tls.SelfSignedCertSubjectArgs(
+            common_name=f"{RESOURCE_NAME}-ca",
+            organization="kzh",
+        ),
+    )
+
+    key = tls.PrivateKey(
+        "vault-private-key",
+        algorithm="ECDSA",
+        ecdsa_curve="P256",
+    )
+
+    cert_request = tls.CertRequest(
+        "vault-cr",
+        private_key_pem=key.private_key_pem,
+        subject=tls.CertRequestSubjectArgs(
+            common_name=f"{RESOURCE_NAME}.{NAMESPACE}.svc",
+            organization="kzh",
+        ),
+        dns_names=[
+            RESOURCE_NAME,
+            f"{RESOURCE_NAME}.{NAMESPACE}",
+            f"{RESOURCE_NAME}.{NAMESPACE}.svc",
+            f"{RESOURCE_NAME}.{NAMESPACE}.svc.cluster.local",
+        ],
+        ip_addresses=[
+            "127.0.0.1",
+        ],
+    )
+
+    cert = tls.LocallySignedCert(
+        "vault-cert",
+        cert_request_pem=cert_request.cert_request_pem,
+        ca_private_key_pem=ca_key.private_key_pem,
+        ca_cert_pem=ca_cert.cert_pem,
+        validity_period_hours=8760,
+        early_renewal_hours=720,
+        allowed_uses=[
+            "digital_signature",
+            "key_encipherment",
+            "server_auth",
+        ],
+    )
+
+    return k8s.core.v1.Secret(
+        "vault-certs",
+        metadata=k8s.meta.v1.ObjectMetaArgs(
+            name=RESOURCE_NAME,
+            namespace=NAMESPACE,
+        ),
+        data={
+            "vault.key": base64_pem(key.private_key_pem),
+            "vault.crt": base64_pem(cert.cert_pem),
+            "vault.ca": base64_pem(ca_cert.cert_pem),
+        },
+        opts=pulumi.ResourceOptions(depends_on=[namespace_resource]),
+    )
+
+
+def new_vault_chart(secret: pulumi.Resource) -> k8s.helm.v4.Chart:
     return k8s.helm.v4.Chart(
         RESOURCE_NAME,
         chart="vault",
+        resource_prefix="",
         namespace=NAMESPACE,
         repository_opts=k8s.helm.v4.RepositoryOptsArgs(
             repo="https://helm.releases.hashicorp.com",
         ),
-        version="0.30.0",
+        version="0.32.0",
         values={
             "global": {
                 "tlsDisable": False,
@@ -107,7 +134,7 @@ def new_vault_chart(secret):
                 "extraEnvironmentVars": {
                     "VAULT_CACERT": "/etc/pki/vault/vault.ca",
                 },
-                "annotations": await_annotation,
+                "annotations": SKIP_AWAIT_ANNOTATION,
                 "service": {
                     "annotations": {
                         "pulumi.com/skipAwait": "true",
@@ -116,7 +143,7 @@ def new_vault_chart(secret):
                     },
                 },
                 "statefulSet": {
-                    "annotations": await_annotation,
+                    "annotations": SKIP_AWAIT_ANNOTATION,
                 },
                 "extraVolumes": [
                     {
@@ -127,12 +154,16 @@ def new_vault_chart(secret):
                 ],
                 "standalone": {
                     "enabled": True,
-                    "config": config,
+                    "config": VAULT_CONFIG,
                 },
             },
         },
-        opts=pulumi.ResourceOptions(depends_on=[secret]),
+        opts=pulumi.ResourceOptions(
+            depends_on=[secret],
+            aliases=[pulumi.Alias(type_="kubernetes:helm.sh/v3:Chart")],
+        ),
     )
+
 
 # Main execution
 secret = setup_tls(namespace)

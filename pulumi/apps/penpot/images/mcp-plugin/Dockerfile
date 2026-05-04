@@ -1,7 +1,8 @@
-FROM node:22-bookworm-slim AS build
+FROM node:25-bookworm-slim AS build
 
-ARG PENPOT_REF=mcp-prod
+ARG PENPOT_REF=mcp-prod-2.14.1
 ARG PENPOT_REPO=https://github.com/penpot/penpot.git
+ARG PNPM_VERSION=10.28.2
 ARG WS_URI=wss://penpot-mcp-ws
 
 WORKDIR /src
@@ -14,15 +15,15 @@ RUN git clone --depth 1 --branch "${PENPOT_REF}" "${PENPOT_REPO}" penpot
 
 WORKDIR /src/penpot/mcp
 
-RUN corepack enable \
+RUN npm install --global "pnpm@${PNPM_VERSION}" \
     && pnpm -r install
 
 RUN WS_URI="${WS_URI}" pnpm --filter mcp-plugin run build
 
 
-FROM nginx:1.27-alpine
+FROM nginx:1.30.0-alpine
 
 COPY --from=build /src/penpot/mcp/packages/plugin/dist/ /usr/share/nginx/html/
-COPY nginx.mcp-plugin.conf /etc/nginx/conf.d/default.conf
+COPY images/mcp-plugin/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80

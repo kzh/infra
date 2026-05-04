@@ -1,5 +1,6 @@
-import pulumi
 import pulumi_kubernetes as k8s
+
+import pulumi
 
 config = pulumi.Config()
 cnpg_namespace_name = config.get("namespace", "cloudnative-pg")
@@ -20,7 +21,7 @@ cloudnative_pg = k8s.helm.v4.Chart(
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://cloudnative-pg.github.io/charts",
     ),
-    version="0.27.1",
+    version="0.28.0",
     values={
         "monitoring": {
             "podMonitorEnabled": True,

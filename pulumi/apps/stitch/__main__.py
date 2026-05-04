@@ -1,7 +1,8 @@
-import pulumi
 import pulumi_kubernetes as k8s
 import pulumi_postgresql as pg
 import pulumi_random as random
+
+import pulumi
 
 config = pulumi.Config()
 pg_config = pulumi.Config("postgresql")

@@ -1,12 +1,24 @@
-import pulumi
+from urllib.parse import quote
+
 import pulumi_kubernetes as k8s
 import pulumi_postgresql as pg
 import pulumi_random as random
-from urllib.parse import quote
+
+import pulumi
 
 
 def bool_string(value: bool) -> str:
     return "true" if value else "false"
+
+
+def get_bool_config(name: str, default: bool) -> bool:
+    value = config.get_bool(name)
+    return default if value is None else value
+
+
+def first_present(values: list[object]) -> object:
+    primary, fallback = values
+    return primary or fallback
 
 
 def build_postgres_url(values: list[object]) -> str:
@@ -17,7 +29,9 @@ def build_postgres_url(values: list[object]) -> str:
     )
 
 
-def tailscale_ingress_opts(*deps: pulumi.Input[pulumi.Resource]):
+def tailscale_ingress_opts(
+    *deps: pulumi.Input[pulumi.Resource],
+) -> pulumi.ResourceOptions:
     return pulumi.ResourceOptions(
         depends_on=list(deps),
         delete_before_replace=True,
@@ -27,28 +41,40 @@ def tailscale_ingress_opts(*deps: pulumi.Input[pulumi.Resource]):
 
 config = pulumi.Config()
 
+DEFAULT_BACKEND_IMAGE = (
+    "ghcr.io/get-convex/convex-backend@"
+    "sha256:f452b899806e76c7ab2876f3a7f18b21746c628bce0416eed03ad1e0d25ed0dd"
+)
+DEFAULT_DASHBOARD_IMAGE = (
+    "ghcr.io/get-convex/convex-dashboard@"
+    "sha256:8d0c08bf1207ffe7a883f199cc8ff8da35135e67b661b786e3a3f4bf44e20000"
+)
+
 namespace_name = config.get("namespace") or "convexdb"
 storage_class_name = config.get("storage_class_name") or "local-path"
 storage_size = config.get("storage_size") or "10Gi"
 instance_name = config.get("instance_name") or "convexdb"
 postgres_stack_ref = config.get("postgres_stack_ref") or "kzh/postgresql/mx"
-postgres_service_host = config.get("postgres_service_host")
+configured_postgres_service_host = config.get("postgres_service_host")
 postgres_db_name = config.get("postgres_db_name") or instance_name.replace("-", "_")
 postgres_db_user = config.get("postgres_db_user") or instance_name.replace("-", "_")
 postgres_sslmode = config.get("postgres_sslmode") or "disable"
 postgres_ca_cert = config.require_secret("postgres_ca_cert")
 configured_image_tag = config.get("image_tag")
-image_tag = configured_image_tag or "6d7b35510d3501705b637964aab201d076893e72"
-backend_image = config.get("backend_image") or f"ghcr.io/get-convex/convex-backend:{image_tag}"
-dashboard_image = config.get("dashboard_image") or f"ghcr.io/get-convex/convex-dashboard:{image_tag}"
+backend_image = config.get("backend_image") or (
+    f"ghcr.io/get-convex/convex-backend:{configured_image_tag}"
+    if configured_image_tag
+    else DEFAULT_BACKEND_IMAGE
+)
+dashboard_image = config.get("dashboard_image") or (
+    f"ghcr.io/get-convex/convex-dashboard:{configured_image_tag}"
+    if configured_image_tag
+    else DEFAULT_DASHBOARD_IMAGE
+)
 api_ingress_host = config.get("api_ingress_host") or "convexdb-api"
 dashboard_ingress_host = config.get("dashboard_ingress_host") or "convexdb"
-disable_metrics_endpoint = config.get_bool("disable_metrics_endpoint")
-if disable_metrics_endpoint is None:
-    disable_metrics_endpoint = True
-load_monaco_internally = config.get_bool("load_monaco_internally")
-if load_monaco_internally is None:
-    load_monaco_internally = False
+disable_metrics_endpoint = get_bool_config("disable_metrics_endpoint", True)
+load_monaco_internally = get_bool_config("load_monaco_internally", False)
 
 api_url = f"https://{api_ingress_host}"
 site_url = f"{api_url}/http"
@@ -75,12 +101,16 @@ namespace = k8s.core.v1.Namespace(
 )
 
 postgres_stack = pulumi.StackReference(postgres_stack_ref)
-postgres_service_host = postgres_service_host or postgres_stack.require_output("rw_service_fqdn")
+postgres_service_host = (
+    configured_postgres_service_host or postgres_stack.require_output("rw_service_fqdn")
+)
 postgres_provider_host = pulumi.Output.all(
     postgres_stack.require_output("ts_hostname"),
     postgres_stack.require_output("host"),
-).apply(lambda values: values[0] or values[1])
-postgres_port = postgres_stack.require_output("port").apply(lambda value: int(value) if value else 5432)
+).apply(first_present)
+postgres_port = postgres_stack.require_output("port").apply(
+    lambda value: int(value) if value else 5432
+)
 
 postgres_admin_provider = pg.Provider(
     "convexdb-postgres-admin",
@@ -110,7 +140,9 @@ postgres_database = pg.Database(
     "convexdb-postgres-database",
     name=postgres_db_name,
     owner=postgres_role.name,
-    opts=pulumi.ResourceOptions(provider=postgres_admin_provider, depends_on=[postgres_role]),
+    opts=pulumi.ResourceOptions(
+        provider=postgres_admin_provider, depends_on=[postgres_role]
+    ),
 )
 
 postgres_ca_secret = k8s.core.v1.Secret(
@@ -309,7 +341,9 @@ backend_deployment = k8s.apps.v1.Deployment(
             ),
         ),
     ),
-    opts=pulumi.ResourceOptions(depends_on=[storage, postgres_secret, postgres_ca_secret]),
+    opts=pulumi.ResourceOptions(
+        depends_on=[storage, postgres_secret, postgres_ca_secret]
+    ),
 )
 
 backend_service = k8s.core.v1.Service(

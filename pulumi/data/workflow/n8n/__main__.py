@@ -1,8 +1,9 @@
-import pulumi
 import pulumi_kubernetes as k8s
 
+import pulumi
+
 config = pulumi.Config("n8n")
-image = config.get("image") or "n8nio/n8n:2.8.3"
+image = config.get("image") or "n8nio/n8n:2.19.2"
 n8n_namespace = k8s.core.v1.Namespace(
     "n8n-namespace",
     metadata=k8s.meta.v1.ObjectMetaArgs(
@@ -10,11 +11,10 @@ n8n_namespace = k8s.core.v1.Namespace(
     ),
 )
 pgref = pulumi.StackReference(config.require("postgres_stack"))
-pg_namespace = pgref.get_output("k8s_namespace")
-pg_host = pg_namespace.apply(lambda ns: f"postgresql-cluster-rw.{ns}.svc.cluster.local")
-pg_port = pgref.get_output("port")
-pg_user = pgref.get_output("username")
-pg_password = pgref.get_output("password")
+pg_host = pgref.require_output("rw_service_fqdn")
+pg_port = pgref.require_output("port")
+pg_user = pgref.require_output("username")
+pg_password = pgref.require_output("password")
 db_name = config.get("db_name") or "n8n"
 
 labels = {
@@ -34,6 +34,20 @@ pvc = k8s.core.v1.PersistentVolumeClaim(
             requests={"storage": "4Gi"},
         ),
     ),
+)
+
+db_secret = k8s.core.v1.Secret(
+    "n8n-db-credentials",
+    metadata=k8s.meta.v1.ObjectMetaArgs(
+        namespace=n8n_namespace.metadata.name,
+        name="n8n-db-credentials",
+        labels=labels,
+    ),
+    string_data={
+        "DB_POSTGRESDB_PASSWORD": pg_password,
+    },
+    type="Opaque",
+    opts=pulumi.ResourceOptions(depends_on=[n8n_namespace]),
 )
 
 deployment = k8s.apps.v1.Deployment(
@@ -56,7 +70,7 @@ deployment = k8s.apps.v1.Deployment(
                 init_containers=[
                     k8s.core.v1.ContainerArgs(
                         name="init",
-                        image="busybox",
+                        image="busybox:1.37.0",
                         command=["sh", "-c", "chown 1000:1000 /data"],
                         volume_mounts=[
                             k8s.core.v1.VolumeMountArgs(
@@ -94,7 +108,12 @@ deployment = k8s.apps.v1.Deployment(
                             ),
                             k8s.core.v1.EnvVarArgs(
                                 name="DB_POSTGRESDB_PASSWORD",
-                                value=pg_password,
+                                value_from=k8s.core.v1.EnvVarSourceArgs(
+                                    secret_key_ref=k8s.core.v1.SecretKeySelectorArgs(
+                                        name=db_secret.metadata.name,
+                                        key="DB_POSTGRESDB_PASSWORD",
+                                    ),
+                                ),
                             ),
                             k8s.core.v1.EnvVarArgs(
                                 name="N8N_PROTOCOL",
@@ -134,6 +153,7 @@ deployment = k8s.apps.v1.Deployment(
             ),
         ),
     ),
+    opts=pulumi.ResourceOptions(depends_on=[pvc, db_secret]),
 )
 
 service = k8s.core.v1.Service(

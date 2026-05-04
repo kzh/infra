@@ -1,5 +1,6 @@
-import pulumi
 import pulumi_kubernetes as k8s
+
+import pulumi
 
 config = pulumi.Config()
 cockroach_namespace = k8s.core.v1.Namespace(
@@ -16,9 +17,9 @@ cockroach_chart = k8s.helm.v4.Chart(
         repo="https://charts.cockroachdb.com",
     ),
     namespace=cockroach_namespace.metadata.name,
-    version="20.0.0",
+    version="20.0.4",
     values={
-        "image": {"repository": "cockroachdb/cockroach", "tag": "v26.1.0"},
+        "image": {"repository": "cockroachdb/cockroach", "tag": "v26.1.3"},
         "conf": {"single-node": True, "max-sql-memory": "6G", "cache": "6G"},
         "statefulset": {"replicas": 1},
         "tls": {"enabled": False},

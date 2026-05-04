@@ -1,13 +1,14 @@
-import pulumi
 import pulumi_kubernetes as k8s
+
+import pulumi
 
 config = pulumi.Config()
 pgref = pulumi.StackReference(config.require("postgres_stack"))
-pg_namespace = pgref.get_output("k8s_namespace")
-pg_host = pg_namespace.apply(lambda ns: f"postgresql-cluster-rw.{ns}.svc.cluster.local")
-pg_port = pulumi.Output.format("{}", pgref.get_output("port"))
-pg_user = pgref.get_output("username")
-pg_password = pgref.get_output("password")
+pg_host = pgref.require_output("rw_service_fqdn")
+pg_port = pulumi.Output.format("{}", pgref.require_output("port"))
+pg_connect_addr = pulumi.Output.format("{}:{}", pg_host, pg_port)
+pg_user = pgref.require_output("username")
+pg_password = pgref.require_output("password")
 default_db = config.get("default_db") or "temporal"
 visibility_db = config.get("visibility_db") or "temporal_visibility"
 archival_pvc_name = config.get("archival_pvc_name") or "temporal-archival"
@@ -37,13 +38,26 @@ archival_pvc = k8s.core.v1.PersistentVolumeClaim(
     ),
 )
 
+db_secret = k8s.core.v1.Secret(
+    "temporal-db-credentials",
+    metadata=k8s.meta.v1.ObjectMetaArgs(
+        name="temporal-db-credentials",
+        namespace=temporal_namespace.metadata.name,
+    ),
+    string_data={
+        "password": pg_password,
+    },
+    type="Opaque",
+    opts=pulumi.ResourceOptions(depends_on=[temporal_namespace]),
+)
+
 temporal_chart = k8s.helm.v4.Chart(
     "temporal",
     chart="temporal",
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://temporalio.github.io/helm-charts",
     ),
-    version="0.73.1",
+    version="1.2.0",
     namespace=temporal_namespace.metadata.name,
     values={
         "server": {
@@ -62,30 +76,39 @@ temporal_chart = k8s.helm.v4.Chart(
                 },
                 "persistence": {
                     "defaultStore": "default",
-                    "default": {
-                        "driver": "sql",
-                        "sql": {
-                            "driver": "postgres12",
-                            "host": pg_host,
-                            "port": pg_port,
-                            "database": default_db,
-                            "user": pg_user,
-                            "password": pg_password,
-                            "maxConns": 20,
-                            "maxConnLifetime": "1h",
+                    "visibilityStore": "visibility",
+                    "datastores": {
+                        "default": {
+                            "sql": {
+                                "createDatabase": True,
+                                "manageSchema": True,
+                                "pluginName": "postgres12",
+                                "driverName": "postgres12",
+                                "databaseName": default_db,
+                                "connectAddr": pg_connect_addr,
+                                "connectProtocol": "tcp",
+                                "user": pg_user,
+                                "existingSecret": db_secret.metadata.name,
+                                "secretKey": "password",
+                                "maxConns": 20,
+                                "maxConnLifetime": "1h",
+                            },
                         },
-                    },
-                    "visibility": {
-                        "driver": "sql",
-                        "sql": {
-                            "driver": "postgres12",
-                            "host": pg_host,
-                            "port": pg_port,
-                            "database": visibility_db,
-                            "user": pg_user,
-                            "password": pg_password,
-                            "maxConns": 20,
-                            "maxConnLifetime": "1h",
+                        "visibility": {
+                            "sql": {
+                                "createDatabase": True,
+                                "manageSchema": True,
+                                "pluginName": "postgres12",
+                                "driverName": "postgres12",
+                                "databaseName": visibility_db,
+                                "connectAddr": pg_connect_addr,
+                                "connectProtocol": "tcp",
+                                "user": pg_user,
+                                "existingSecret": db_secret.metadata.name,
+                                "secretKey": "password",
+                                "maxConns": 20,
+                                "maxConnLifetime": "1h",
+                            },
                         },
                     },
                 },
@@ -139,6 +162,9 @@ temporal_chart = k8s.helm.v4.Chart(
                 }
             ],
         },
+        "schema": {
+            "useHelmHooks": False,
+        },
         "web": {
             "ingress": {
                 "enabled": True,
@@ -151,29 +177,10 @@ temporal_chart = k8s.helm.v4.Chart(
                 ],
             }
         },
-        "cassandra": {
-            "enabled": False,
-        },
-        "elasticsearch": {
-            "enabled": False,
-        },
-        "prometheus": {
-            "enabled": False,
-        },
-        "grafana": {
-            "enabled": False,
-        },
-        "schema": {
-            "createDatabase": {
-                "enabled": True,
-            },
-            "setup": {
-                "enabled": True,
-            },
-            "update": {
-                "enabled": True,
-            },
+        "shims": {
+            "dockerize": False,
+            "elasticsearchTool": False,
         },
     },
-    opts=pulumi.ResourceOptions(depends_on=[archival_pvc]),
+    opts=pulumi.ResourceOptions(depends_on=[archival_pvc, db_secret]),
 )

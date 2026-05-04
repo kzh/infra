@@ -1,5 +1,6 @@
-import pulumi
 import pulumi_kubernetes as k8s
+
+import pulumi
 
 NAMESPACE = "jhub"
 HOSTNAME = "jupyterhub"
@@ -26,11 +27,30 @@ def ignore_hub_db_pvc_metadata_drift(
         return pulumi.ResourceTransformResult(props=args.props, opts=opts)
     return None
 
+
+def delete_before_replace_hub_rendered_config(
+    args: pulumi.ResourceTransformArgs,
+) -> pulumi.ResourceTransformResult | None:
+    if args.type_ not in {
+        "kubernetes:core/v1:ConfigMap",
+        "kubernetes:core/v1:Secret",
+    }:
+        return None
+    if not isinstance(args.props, dict):
+        return None
+    if (args.props.get("metadata") or {}).get("name") != "hub":
+        return None
+
+    opts = pulumi.ResourceOptions.merge(pulumi.ResourceOptions(), args.opts)
+    opts.delete_before_replace = True
+    return pulumi.ResourceTransformResult(props=args.props, opts=opts)
+
+
 jupyterhub_chart = k8s.helm.v4.Chart(
     "jupyterhub",
     chart="jupyterhub",
     namespace=NAMESPACE,
-    version="4.3.2",
+    version="4.3.4",
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://hub.jupyter.org/helm-chart/",
     ),
@@ -60,7 +80,7 @@ jupyterhub_chart = k8s.helm.v4.Chart(
             "startTimeout": 600,
             "image": {
                 "name": "ghcr.io/kzh/jupyter",
-                "tag": "py312-amd64",
+                "tag": "py313-amd64",
                 "pullPolicy": "Always",
             },
             "storage": {
@@ -69,7 +89,7 @@ jupyterhub_chart = k8s.helm.v4.Chart(
                 "dynamic": {
                     "storageAccessModes": ["ReadWriteOnce"],
                 },
-            }
+            },
         },
         "cull": {
             "enabled": False,
@@ -84,6 +104,9 @@ jupyterhub_chart = k8s.helm.v4.Chart(
     },
     opts=pulumi.ResourceOptions(
         depends_on=[namespace],
-        transforms=[ignore_hub_db_pvc_metadata_drift],
+        transforms=[
+            ignore_hub_db_pvc_metadata_drift,
+            delete_before_replace_hub_rendered_config,
+        ],
     ),
 )

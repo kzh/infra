@@ -1,28 +1,47 @@
-import pulumi
 import pulumi_kubernetes as k8s
 import pulumi_postgresql as pg
+import pulumi_random as random
+
+import pulumi
 
 config = pulumi.Config()
+
+
+def get_bool_config(name: str, default: bool) -> bool:
+    value = config.get_bool(name)
+    return default if value is None else value
+
+
+def first_present(values: list[object]) -> object:
+    primary, fallback = values
+    return primary or fallback
+
 
 namespace_name = config.require("namespace")
 postgres_stack = config.require("postgres_stack")
 db_name = config.get("db_name") or "penpot"
 ingress_host = config.get("ingress_host") or "penpot"
 public_uri = config.get("public_uri") or f"https://{ingress_host}"
-create_database = config.get_bool("create_database")
+create_database = get_bool_config("create_database", True)
 postgres_admin_db = config.get("postgres_admin_db") or "postgres"
 postgres_sslmode = config.get("postgres_sslmode") or "disable"
 
-penpot_chart_version = config.get("penpot_chart_version") or "0.35.0"
-valkey_chart_version = config.get("valkey_chart_version") or "0.9.3"
+penpot_chart_version = config.get("penpot_chart_version") or "0.40.0"
+valkey_chart_version = config.get("valkey_chart_version") or "0.9.4"
 valkey_service_name = config.get("valkey_service_name") or "penpot-valkey"
 valkey_port = config.get_int("valkey_port") or 6379
 valkey_persistence_size = config.get("valkey_persistence_size") or "8Gi"
 valkey_storage_class = config.get("valkey_storage_class")
 api_secret_key = config.get_secret("api_secret_key")
-mcp_enabled = config.get_bool("mcp_enabled")
-mcp_server_image = config.require("mcp_server_image")
-mcp_plugin_image = config.require("mcp_plugin_image")
+if api_secret_key is None:
+    api_secret_key = random.RandomPassword(
+        "penpot-api-secret-key",
+        length=64,
+        special=False,
+    ).result
+mcp_enabled = get_bool_config("mcp_enabled", True)
+mcp_server_image = config.require("mcp_server_image") if mcp_enabled else None
+mcp_plugin_image = config.require("mcp_plugin_image") if mcp_enabled else None
 mcp_http_host = config.get("mcp_http_host") or "penpot-mcp"
 mcp_ws_host = config.get("mcp_ws_host") or "penpot-mcp-ws"
 mcp_plugin_host = config.get("mcp_plugin_host") or "penpot-mcp-plugin"
@@ -40,15 +59,13 @@ penpot_namespace = k8s.core.v1.Namespace(
 )
 
 pgref = pulumi.StackReference(postgres_stack)
-pg_namespace = pgref.get_output("k8s_namespace")
-pg_host = pg_namespace.apply(lambda ns: f"postgresql-cluster-rw.{ns}.svc.cluster.local")
-pg_port = pgref.get_output("port").apply(lambda p: int(p) if p else 5432)
-pg_username = pgref.get_output("username")
-pg_password = pgref.get_output("password")
-pg_ts_hostname = pgref.get_output("ts_hostname")
-pg_provider_host = pulumi.Output.all(pg_ts_hostname, pgref.get_output("host")).apply(
-    lambda t: t[0] or t[1]
-)
+pg_host = pgref.require_output("rw_service_fqdn")
+pg_port = pgref.require_output("port").apply(lambda p: int(p) if p else 5432)
+pg_username = pgref.require_output("username")
+pg_password = pgref.require_output("password")
+pg_provider_host = pulumi.Output.all(
+    pgref.require_output("ts_hostname"), pgref.require_output("host")
+).apply(first_present)
 
 valkey_host = f"{valkey_service_name}.{namespace_name}.svc.cluster.local"
 
@@ -80,9 +97,6 @@ valkey_chart = k8s.helm.v4.Chart(
     opts=pulumi.ResourceOptions(depends_on=[penpot_namespace]),
 )
 
-if create_database is None:
-    create_database = True
-
 penpot_database = None
 if create_database:
     admin_provider = pg.Provider(
@@ -100,14 +114,37 @@ if create_database:
         opts=pulumi.ResourceOptions(provider=admin_provider),
     )
 
+penpot_secret = k8s.core.v1.Secret(
+    "penpot-config",
+    metadata=k8s.meta.v1.ObjectMetaArgs(
+        name="penpot-config",
+        namespace=penpot_namespace.metadata.name,
+        labels=labels,
+    ),
+    string_data={
+        "apiSecretKey": api_secret_key,
+        "postgresUsername": pg_username,
+        "postgresPassword": pg_password,
+    },
+    type="Opaque",
+    opts=pulumi.ResourceOptions(depends_on=[penpot_namespace]),
+)
+
 penpot_config = {
     "publicUri": public_uri,
+    "existingSecret": penpot_secret.metadata.name,
+    "secretKeys": {
+        "apiSecretKey": "apiSecretKey",
+    },
     "postgresql": {
         "host": pg_host,
         "port": pg_port,
         "database": db_name,
-        "username": pg_username,
-        "password": pg_password,
+        "existingSecret": penpot_secret.metadata.name,
+        "secretKeys": {
+            "usernameKey": "postgresUsername",
+            "passwordKey": "postgresPassword",
+        },
     },
     "redis": {
         "host": valkey_host,
@@ -115,10 +152,8 @@ penpot_config = {
         "database": "0",
     },
 }
-if api_secret_key is not None:
-    penpot_config["apiSecretKey"] = api_secret_key
 
-penpot_dependencies = [penpot_namespace, valkey_chart]
+penpot_dependencies = [penpot_namespace, valkey_chart, penpot_secret]
 if penpot_database:
     penpot_dependencies.append(penpot_database)
 
@@ -150,9 +185,6 @@ penpot_chart = k8s.helm.v4.Chart(
     },
     opts=pulumi.ResourceOptions(depends_on=penpot_dependencies),
 )
-
-if mcp_enabled is None:
-    mcp_enabled = True
 
 mcp_server_deployment = None
 mcp_server_service = None
@@ -195,11 +227,21 @@ if mcp_enabled:
                             image=mcp_server_image,
                             image_pull_policy="IfNotPresent",
                             env=[
-                                k8s.core.v1.EnvVarArgs(name="PENPOT_MCP_SERVER_HOST", value="0.0.0.0"),
-                                k8s.core.v1.EnvVarArgs(name="PENPOT_MCP_SERVER_PORT", value="4401"),
-                                k8s.core.v1.EnvVarArgs(name="PENPOT_MCP_WEBSOCKET_PORT", value="4402"),
-                                k8s.core.v1.EnvVarArgs(name="PENPOT_MCP_REPL_PORT", value="4403"),
-                                k8s.core.v1.EnvVarArgs(name="PENPOT_MCP_REMOTE_MODE", value="true"),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="PENPOT_MCP_SERVER_HOST", value="0.0.0.0"
+                                ),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="PENPOT_MCP_SERVER_PORT", value="4401"
+                                ),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="PENPOT_MCP_WEBSOCKET_PORT", value="4402"
+                                ),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="PENPOT_MCP_REPL_PORT", value="4403"
+                                ),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="PENPOT_MCP_REMOTE_MODE", value="true"
+                                ),
                             ],
                             ports=[
                                 k8s.core.v1.ContainerPortArgs(
