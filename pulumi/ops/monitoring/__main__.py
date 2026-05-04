@@ -1,16 +1,21 @@
-import pulumi
 import pulumi_kubernetes as k8s
+
+import pulumi
 
 config = pulumi.Config()
 grafana_admin_password = config.require_secret("grafanaAdminPassword")
 
+MONITORING_NAMESPACE = "monitoring"
+GRAFANA_RESOURCE_NAME = "kube-prometheus-stack-grafana"
+PROMETHEUS_REPO = "https://prometheus-community.github.io/helm-charts"
 
-def skip_await_for_grafana_pvc(obj, opts):
+
+def skip_await_for_grafana_pvc(obj, _opts):
     if obj.get("kind") != "PersistentVolumeClaim":
         return
 
     metadata = obj.setdefault("metadata", {})
-    if metadata.get("name") != "kube-prometheus-stack-grafana":
+    if metadata.get("name") != GRAFANA_RESOURCE_NAME:
         return
 
     annotations = metadata.setdefault("annotations", {})
@@ -22,7 +27,7 @@ def ignore_grafana_role_rule_drift(obj, opts):
         return
 
     metadata = obj.get("metadata", {})
-    if metadata.get("name") != "kube-prometheus-stack-grafana":
+    if metadata.get("name") != GRAFANA_RESOURCE_NAME:
         return
 
     ignore_changes = list(opts.ignore_changes or [])
@@ -31,19 +36,33 @@ def ignore_grafana_role_rule_drift(obj, opts):
     opts.ignore_changes = ignore_changes
 
 
+def delete_before_replace_generated_chart_resources(obj, opts):
+    metadata = obj.get("metadata", {})
+    resource = (obj.get("kind"), metadata.get("name"))
+    if resource not in {
+        ("ConfigMap", "kube-prometheus-stack-node-rsrc-use"),
+        ("Job", "kube-prometheus-stack-admission-create"),
+        ("Job", "kube-prometheus-stack-admission-patch"),
+    }:
+        return
+
+    opts.delete_before_replace = True
+
+
 def deploy_prometheus_stack_crds():
     """Deploy Prometheus Operator CRDs"""
     return k8s.helm.v3.Chart(
         "prometheus-operator-crds",
         k8s.helm.v3.ChartOpts(
             chart="prometheus-operator-crds",
-            namespace="monitoring",
+            namespace=MONITORING_NAMESPACE,
             fetch_opts=k8s.helm.v3.FetchOpts(
-                repo="https://prometheus-community.github.io/helm-charts",
+                repo=PROMETHEUS_REPO,
             ),
-            version="27.0.0",
+            version="28.0.1",
         ),
     )
+
 
 def deploy_prometheus_stack(crds_chart):
     """Deploy Prometheus Stack"""
@@ -111,24 +130,26 @@ def deploy_prometheus_stack(crds_chart):
         "kube-prometheus-stack",
         k8s.helm.v3.ChartOpts(
             chart="kube-prometheus-stack",
-            namespace="monitoring",
+            namespace=MONITORING_NAMESPACE,
             fetch_opts=k8s.helm.v3.FetchOpts(
-                repo="https://prometheus-community.github.io/helm-charts",
+                repo=PROMETHEUS_REPO,
             ),
-            version="82.1.0",
+            version="84.5.0",
             values=values,
             transformations=[
                 skip_await_for_grafana_pvc,
                 ignore_grafana_role_rule_drift,
+                delete_before_replace_generated_chart_resources,
             ],
         ),
         opts=pulumi.ResourceOptions(depends_on=[crds_chart]),
     )
 
+
 def deploy_kubernetes_monitoring():
     """Deploy Kubernetes monitoring components (currently disabled)"""
     # Components are commented out in the original Go code
-    pass
+
 
 def new_kubernetes_metrics_server():
     """Deploy Kubernetes Metrics Server (currently disabled)"""
@@ -140,9 +161,10 @@ def new_kubernetes_metrics_server():
             fetch_opts=k8s.helm.v3.FetchOpts(
                 repo="https://kubernetes-sigs.github.io/metrics-server/",
             ),
-            version="3.7.0",
+            version="3.13.0",
         ),
     )
+
 
 def new_kubernetes_dashboard():
     """Deploy Kubernetes Dashboard (currently disabled)"""
@@ -150,11 +172,11 @@ def new_kubernetes_dashboard():
         "kubernetes-dashboard",
         k8s.helm.v3.ChartOpts(
             chart="kubernetes-dashboard",
-            namespace="monitoring",
+            namespace=MONITORING_NAMESPACE,
             fetch_opts=k8s.helm.v3.FetchOpts(
-                repo="https://kubernetes.github.io/dashboard/",
+                repo="https://kubernetes-retired.github.io/dashboard",
             ),
-            version="7.3.2",
+            version="7.14.0",
             values={
                 "rbac": {
                     "clusterReadOnlyRole": True,
@@ -169,6 +191,7 @@ def new_kubernetes_dashboard():
             },
         ),
     )
+
 
 # Main execution
 crds_chart = deploy_prometheus_stack_crds()

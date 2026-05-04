@@ -1,10 +1,14 @@
-import pulumi
-import pulumi_kubernetes as k8s
 from pathlib import Path
 
+import pulumi_kubernetes as k8s
+from pulumi_kuberay_crds.ray.v1 import RayCluster
+from pulumi_monitoring_crds.monitoring.v1 import PodMonitor
+
+import pulumi
+
 config = pulumi.Config()
-namespace = config.get("namespace", "kuberay-operator")
-chart_version = config.get("chartVersion", "1.5.1")
+namespace_name = config.get("namespace", "kuberay-operator")
+chart_version = config.get("chartVersion", "1.6.1")
 ray_dev_namespace_name = config.get("rayDevNamespace", "ray-dev")
 monitoring_namespace_name = config.get("monitoringNamespace", "monitoring")
 ray_dev_cluster_name = config.get("rayDevClusterName", "ray-dev")
@@ -21,11 +25,11 @@ ray_dev_grafana_host = config.get(
 )
 ray_dev_grafana_iframe_host = config.get("rayDevGrafanaIframeHost", "https://grafana")
 ray_dev_grafana_org_id = config.get("rayDevGrafanaOrgId", "1")
-ray_dev_image = config.get("rayDevImage", "rayproject/ray:2.52.0")
-ray_dev_version = config.get("rayDevVersion", "2.52.0")
+ray_dev_image = config.get("rayDevImage", "rayproject/ray:2.55.1")
+ray_dev_version = config.get("rayDevVersion", "2.55.1")
 ray_dev_worker_replicas = int(config.get("rayDevWorkerReplicas", "1"))
 
-ray_dashboard_files = [
+RAY_DASHBOARD_FILES = [
     "default_grafana_dashboard.json",
     "serve_grafana_dashboard.json",
     "serve_deployment_grafana_dashboard.json",
@@ -33,13 +37,31 @@ ray_dashboard_files = [
     "data_grafana_dashboard.json",
     "train_grafana_dashboard.json",
 ]
-pulumi_dir = Path(__file__).resolve().parents[3]
-ray_dashboards_dir = pulumi_dir / "ops" / "dashboards" / "kuberay"
+RAY_DASHBOARDS_DIR = Path(__file__).resolve().parent / "dashboards"
+
+
+def ray_dashboard_configmap(dashboard_file: str) -> k8s.core.v1.ConfigMap:
+    dashboard_name = dashboard_file.replace("_", "-").replace(".json", "")
+    dashboard_data = (RAY_DASHBOARDS_DIR / dashboard_file).read_text(encoding="utf-8")
+    return k8s.core.v1.ConfigMap(
+        f"ray-grafana-dashboard-{dashboard_name}",
+        metadata=k8s.meta.v1.ObjectMetaArgs(
+            name=f"ray-grafana-dashboard-{dashboard_name}",
+            namespace=monitoring_namespace_name,
+            labels={
+                "grafana_dashboard": "1",
+            },
+        ),
+        data={
+            dashboard_file: dashboard_data,
+        },
+    )
+
 
 kuberay_namespace = k8s.core.v1.Namespace(
     "kuberay-namespace",
     metadata=k8s.meta.v1.ObjectMetaArgs(
-        name=namespace,
+        name=namespace_name,
     ),
 )
 
@@ -68,32 +90,12 @@ ray_dev_namespace = k8s.core.v1.Namespace(
     metadata=k8s.meta.v1.ObjectMetaArgs(name=ray_dev_namespace_name),
 )
 
-ray_grafana_dashboards = []
-for dashboard_file in ray_dashboard_files:
-    dashboard_name = dashboard_file.replace("_", "-").replace(".json", "")
-    dashboard_path = ray_dashboards_dir / dashboard_file
-    dashboard_data = dashboard_path.read_text(encoding="utf-8")
+ray_grafana_dashboards = [
+    ray_dashboard_configmap(dashboard_file) for dashboard_file in RAY_DASHBOARD_FILES
+]
 
-    ray_grafana_dashboards.append(
-        k8s.core.v1.ConfigMap(
-            f"ray-grafana-dashboard-{dashboard_name}",
-            metadata=k8s.meta.v1.ObjectMetaArgs(
-                name=f"ray-grafana-dashboard-{dashboard_name}",
-                namespace=monitoring_namespace_name,
-                labels={
-                    "grafana_dashboard": "1",
-                },
-            ),
-            data={
-                dashboard_file: dashboard_data,
-            },
-        )
-    )
-
-ray_dev_cluster = k8s.apiextensions.CustomResource(
+ray_dev_cluster = RayCluster(
     "ray-dev-cluster",
-    api_version="ray.io/v1",
-    kind="RayCluster",
     metadata={
         "name": ray_dev_cluster_name,
         "namespace": ray_dev_namespace.metadata.name,
@@ -244,7 +246,9 @@ ray_dev_dashboard_ingress = k8s.networking.v1.Ingress(
                             backend=k8s.networking.v1.IngressBackendArgs(
                                 service=k8s.networking.v1.IngressServiceBackendArgs(
                                     name=ray_dev_dashboard_service.metadata.name,
-                                    port=k8s.networking.v1.ServiceBackendPortArgs(number=8265),
+                                    port=k8s.networking.v1.ServiceBackendPortArgs(
+                                        number=8265
+                                    ),
                                 ),
                             ),
                         ),
@@ -257,10 +261,8 @@ ray_dev_dashboard_ingress = k8s.networking.v1.Ingress(
     opts=pulumi.ResourceOptions(depends_on=[ray_dev_dashboard_service]),
 )
 
-ray_dev_podmonitor = k8s.apiextensions.CustomResource(
+ray_dev_podmonitor = PodMonitor(
     "ray-dev-podmonitor",
-    api_version="monitoring.coreos.com/v1",
-    kind="PodMonitor",
     metadata={
         "name": "ray-dev-pods",
         "namespace": ray_dev_namespace.metadata.name,

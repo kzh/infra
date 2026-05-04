@@ -1,8 +1,10 @@
-import pulumi
 import pulumi_kubernetes as k8s
+from pulumi_spark_operator_crds.sparkoperator.v1alpha1 import SparkConnect
 
-CHART_VERSION = "2.4.0"
-SPARK_VERSION = "4.0.1"
+import pulumi
+
+CHART_VERSION = "2.5.0"
+SPARK_VERSION = "4.1.1"
 
 config = pulumi.Config()
 namespace_name = config.require("namespace")
@@ -45,10 +47,8 @@ spark_operator = k8s.helm.v4.Chart(
     },
 )
 
-spark_connect = k8s.apiextensions.CustomResource(
+spark_connect = SparkConnect(
     "spark-connect",
-    api_version="sparkoperator.k8s.io/v1alpha1",
-    kind="SparkConnect",
     metadata={
         "name": connect_name,
         "namespace": namespace_name,

@@ -1,13 +1,15 @@
 import hashlib
 from pathlib import Path
 
-import pulumi
 import pulumi_kubernetes as k8s
 import pulumi_random as random
+from pulumi_clickhouse_operator_crds.clickhouse.v1 import ClickHouseInstallation
+
+import pulumi
 
 config = pulumi.Config()
 namespace_name = config.get("namespace", "clickhouse")
-operator_chart_version = config.get("operatorChartVersion", "0.25.6")
+operator_chart_version = config.get("operatorChartVersion", "0.26.3")
 clickhouse_installation_name = config.get("installationName", "clickhouse")
 clickhouse_cluster_name = config.get("clusterName", "default")
 clickhouse_admin_username = config.get("adminUsername", "admin")
@@ -20,7 +22,7 @@ clickhouse_admin_networks = config.get_object(
 )
 clickhouse_image = config.get(
     "clickhouseImage",
-    "altinity/clickhouse-server:25.3.8.10041.altinitystable",
+    "clickhouse/clickhouse-server:26.3.9.8",
 )
 storage_class_name = config.get("storageClassName", "local-path")
 storage_size = config.get("storageSize", "100Gi")
@@ -28,8 +30,7 @@ clickhouse_hostname = config.get("hostname", "clickhouse")
 tailscale_domain = config.get("tailscaleDomain", "tail1c114.ts.net")
 clickhouse_host = f"{clickhouse_hostname}.{tailscale_domain}"
 clickhouse_port = 9000
-pulumi_dir = Path(__file__).resolve().parents[3]
-dashboards_dir = pulumi_dir / "ops" / "dashboards" / "clickhouse"
+dashboards_dir = Path(__file__).resolve().parent / "dashboards"
 dashboard_files = [
     "altinity-clickhouse-operator.json",
     "clickhouse-queries.json",
@@ -124,10 +125,8 @@ for dashboard_file in dashboard_files:
         opts=pulumi.ResourceOptions(depends_on=[clickhouse_operator]),
     )
 
-clickhouse_installation = k8s.apiextensions.CustomResource(
+clickhouse_installation = ClickHouseInstallation(
     "clickhouse-installation",
-    api_version="clickhouse.altinity.com/v1",
-    kind="ClickHouseInstallation",
     metadata={
         "name": clickhouse_installation_name,
         "namespace": namespace_name,
@@ -231,4 +230,6 @@ clickhouse_tailscale_service = k8s.core.v1.Service(
 pulumi.export("clickhouseHost", clickhouse_host)
 pulumi.export("clickhousePort", clickhouse_port)
 pulumi.export("clickhouseAdminUsername", clickhouse_admin_username)
-pulumi.export("clickhouseAdminPassword", pulumi.Output.secret(clickhouse_admin_password))
+pulumi.export(
+    "clickhouseAdminPassword", pulumi.Output.secret(clickhouse_admin_password)
+)

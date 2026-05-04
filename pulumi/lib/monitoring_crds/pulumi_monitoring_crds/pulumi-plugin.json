@@ -1,0 +1,5 @@
+{
+  "resource": true,
+  "name": "monitoring_crds",
+  "version": "4.30.0"
+}

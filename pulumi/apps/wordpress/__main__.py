@@ -1,18 +1,43 @@
 import hashlib
 
-import pulumi
 import pulumi_kubernetes as k8s
 import pulumi_random as random
+from pulumi_mysql_operator_crds.mysql.v2 import (
+    InnoDBCluster,
+    InnoDBClusterSpecArgs,
+    InnoDBClusterSpecRouterArgs,
+)
+
+import pulumi
 
 config = pulumi.Config()
 
+
+def secret_env_var(
+    name: str,
+    secret_name: pulumi.Input[str],
+    key: str,
+) -> k8s.core.v1.EnvVarArgs:
+    return k8s.core.v1.EnvVarArgs(
+        name=name,
+        value_from=k8s.core.v1.EnvVarSourceArgs(
+            secret_key_ref=k8s.core.v1.SecretKeySelectorArgs(
+                name=secret_name,
+                key=key,
+            )
+        ),
+    )
+
+
+def stable_task_id(values: list[object]) -> str:
+    payload = "|".join(str(value) for value in values).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()[:16]
+
+
 namespace_name = config.get("namespace") or "wordpress"
-operator_namespace_name = config.get("operatorNamespace") or "wordpress-mysql-operator"
-operator_release_name = config.get("operatorReleaseName") or "wordpress-mysql-operator"
 hostname = config.get("hostname") or "wordpress"
 wordpress_image = config.get("wordpressImage") or "wordpress:6.9.4-php8.3-apache"
-mysql_operator_chart_version = config.get("mysqlOperatorChartVersion") or "2.2.7"
-mysql_version = config.get("mysqlVersion") or "9.6.0"
+mysql_version = config.get("mysqlVersion") or "9.7.0"
 mysql_client_image = config.get("mysqlClientImage") or f"mysql:{mysql_version}"
 mysql_cluster_name = config.get("mysqlClusterName") or "wordpress-mysql"
 mysql_instances = config.get_int("mysqlInstances") or 1
@@ -20,7 +45,6 @@ mysql_router_instances = config.get_int("mysqlRouterInstances") or 1
 mysql_storage_size = config.get("mysqlStorageSize") or "20Gi"
 wordpress_storage_size = config.get("wordpressStorageSize") or "20Gi"
 storage_class_name = config.get("storageClassName")
-k8s_cluster_domain = config.get("k8sClusterDomain") or "cluster.local"
 tailscale_domain = config.get("tailscaleDomain")
 db_name = config.get("dbName") or "wordpress"
 db_user = config.get("dbUser") or "wordpress"
@@ -42,18 +66,6 @@ wordpress_namespace = k8s.core.v1.Namespace(
         labels=labels,
     ),
 )
-
-mysql_operator_namespace = wordpress_namespace
-if operator_namespace_name != namespace_name:
-    mysql_operator_namespace = k8s.core.v1.Namespace(
-        "wordpress-mysql-operator-namespace",
-        metadata=k8s.meta.v1.ObjectMetaArgs(
-            name=operator_namespace_name,
-            labels={
-                "app": "mysql-operator",
-            },
-        ),
-    )
 
 mysql_root_password = random.RandomPassword(
     "wordpress-mysql-root-password",
@@ -109,23 +121,6 @@ wordpress_db_credentials = k8s.core.v1.Secret(
     opts=pulumi.ResourceOptions(depends_on=[wordpress_namespace]),
 )
 
-mysql_operator = k8s.helm.v3.Release(
-    "wordpress-mysql-operator",
-    chart="mysql-operator",
-    name=operator_release_name,
-    namespace=operator_namespace_name,
-    version=mysql_operator_chart_version,
-    repository_opts=k8s.helm.v3.RepositoryOptsArgs(
-        repo="https://mysql.github.io/mysql-operator/",
-    ),
-    values={
-        "envs": {
-            "k8sClusterDomain": k8s_cluster_domain,
-        },
-    },
-    opts=pulumi.ResourceOptions(depends_on=[mysql_operator_namespace]),
-)
-
 mysql_data_volume_claim_template = {
     "accessModes": ["ReadWriteOnce"],
     "resources": {
@@ -137,10 +132,8 @@ mysql_data_volume_claim_template = {
 if storage_class_name:
     mysql_data_volume_claim_template["storageClassName"] = storage_class_name
 
-wordpress_mysql_cluster = k8s.apiextensions.CustomResource(
+wordpress_mysql_cluster = InnoDBCluster(
     "wordpress-mysql-cluster",
-    api_version="mysql.oracle.com/v2",
-    kind="InnoDBCluster",
     metadata={
         "name": mysql_cluster_name,
         "namespace": namespace_name,
@@ -148,24 +141,24 @@ wordpress_mysql_cluster = k8s.apiextensions.CustomResource(
             "pulumi.com/skipAwait": "true",
         },
     },
-    spec={
-        "secretName": mysql_root_credentials.metadata.name,
-        "version": mysql_version,
-        "instances": mysql_instances,
-        "router": {
-            "instances": mysql_router_instances,
-        },
-        "tlsUseSelfSigned": True,
-        "datadirVolumeClaimTemplate": mysql_data_volume_claim_template,
-    },
+    spec=InnoDBClusterSpecArgs(
+        secret_name=mysql_root_credentials.metadata.name,
+        version=mysql_version,
+        instances=mysql_instances,
+        router=InnoDBClusterSpecRouterArgs(instances=mysql_router_instances),
+        tls_use_self_signed=True,
+        datadir_volume_claim_template=mysql_data_volume_claim_template,
+    ),
     opts=pulumi.ResourceOptions(
-        depends_on=[mysql_operator, wordpress_namespace, mysql_root_credentials]
+        depends_on=[wordpress_namespace, mysql_root_credentials]
     ),
 )
 
 mysql_service_host = f"{mysql_cluster_name}.{namespace_name}.svc.cluster.local"
 wordpress_url = config.get("publicUrl") or (
-    f"https://{hostname}.{tailscale_domain}" if tailscale_domain else f"https://{hostname}"
+    f"https://{hostname}.{tailscale_domain}"
+    if tailscale_domain
+    else f"https://{hostname}"
 )
 
 db_init_task_id = pulumi.Output.all(
@@ -175,10 +168,7 @@ db_init_task_id = pulumi.Output.all(
     db_user,
     mysql_service_host,
     mysql_version,
-).apply(
-    lambda values: hashlib.sha256("|".join(str(value) for value in values).encode("utf-8"))
-    .hexdigest()[:16]
-)
+).apply(stable_task_id)
 
 db_init_job = k8s.batch.v1.Job(
     "wordpress-db-init",
@@ -211,52 +201,34 @@ db_init_job = k8s.batch.v1.Job(
                         image=mysql_client_image,
                         image_pull_policy="IfNotPresent",
                         env=[
-                            k8s.core.v1.EnvVarArgs(name="MYSQL_HOST", value=mysql_service_host),
+                            k8s.core.v1.EnvVarArgs(
+                                name="MYSQL_HOST", value=mysql_service_host
+                            ),
                             k8s.core.v1.EnvVarArgs(name="MYSQL_PORT", value="3306"),
-                            k8s.core.v1.EnvVarArgs(
+                            secret_env_var(
                                 name="MYSQL_ROOT_USER",
-                                value_from=k8s.core.v1.EnvVarSourceArgs(
-                                    secret_key_ref=k8s.core.v1.SecretKeySelectorArgs(
-                                        name=mysql_root_credentials.metadata.name,
-                                        key="rootUser",
-                                    )
-                                ),
+                                secret_name=mysql_root_credentials.metadata.name,
+                                key="rootUser",
                             ),
-                            k8s.core.v1.EnvVarArgs(
+                            secret_env_var(
                                 name="MYSQL_PWD",
-                                value_from=k8s.core.v1.EnvVarSourceArgs(
-                                    secret_key_ref=k8s.core.v1.SecretKeySelectorArgs(
-                                        name=mysql_root_credentials.metadata.name,
-                                        key="rootPassword",
-                                    )
-                                ),
+                                secret_name=mysql_root_credentials.metadata.name,
+                                key="rootPassword",
                             ),
-                            k8s.core.v1.EnvVarArgs(
+                            secret_env_var(
                                 name="WORDPRESS_DB_NAME",
-                                value_from=k8s.core.v1.EnvVarSourceArgs(
-                                    secret_key_ref=k8s.core.v1.SecretKeySelectorArgs(
-                                        name=wordpress_db_credentials.metadata.name,
-                                        key="WORDPRESS_DB_NAME",
-                                    )
-                                ),
+                                secret_name=wordpress_db_credentials.metadata.name,
+                                key="WORDPRESS_DB_NAME",
                             ),
-                            k8s.core.v1.EnvVarArgs(
+                            secret_env_var(
                                 name="WORDPRESS_DB_USER",
-                                value_from=k8s.core.v1.EnvVarSourceArgs(
-                                    secret_key_ref=k8s.core.v1.SecretKeySelectorArgs(
-                                        name=wordpress_db_credentials.metadata.name,
-                                        key="WORDPRESS_DB_USER",
-                                    )
-                                ),
+                                secret_name=wordpress_db_credentials.metadata.name,
+                                key="WORDPRESS_DB_USER",
                             ),
-                            k8s.core.v1.EnvVarArgs(
+                            secret_env_var(
                                 name="WORDPRESS_DB_PASSWORD",
-                                value_from=k8s.core.v1.EnvVarSourceArgs(
-                                    secret_key_ref=k8s.core.v1.SecretKeySelectorArgs(
-                                        name=wordpress_db_credentials.metadata.name,
-                                        key="WORDPRESS_DB_PASSWORD",
-                                    )
-                                ),
+                                secret_name=wordpress_db_credentials.metadata.name,
+                                key="WORDPRESS_DB_PASSWORD",
                             ),
                         ],
                         command=["sh", "-c"],
@@ -284,7 +256,11 @@ SQL
         ),
     ),
     opts=pulumi.ResourceOptions(
-        depends_on=[wordpress_mysql_cluster, mysql_root_credentials, wordpress_db_credentials],
+        depends_on=[
+            wordpress_mysql_cluster,
+            mysql_root_credentials,
+            wordpress_db_credentials,
+        ],
         delete_before_replace=True,
         replace_on_changes=["spec"],
     ),
@@ -299,7 +275,9 @@ wordpress_pvc_spec_kwargs = {
 if storage_class_name:
     wordpress_pvc_spec_kwargs["storage_class_name"] = storage_class_name
 
-wordpress_pvc_spec = k8s.core.v1.PersistentVolumeClaimSpecArgs(**wordpress_pvc_spec_kwargs)
+wordpress_pvc_spec = k8s.core.v1.PersistentVolumeClaimSpecArgs(
+    **wordpress_pvc_spec_kwargs
+)
 
 wordpress_pvc = k8s.core.v1.PersistentVolumeClaim(
     "wordpress-data",
@@ -335,42 +313,33 @@ wordpress_deployment = k8s.apps.v1.Deployment(
                         image=wordpress_image,
                         image_pull_policy="IfNotPresent",
                         env=[
-                            k8s.core.v1.EnvVarArgs(name="WORDPRESS_DB_HOST", value=mysql_service_host),
                             k8s.core.v1.EnvVarArgs(
+                                name="WORDPRESS_DB_HOST", value=mysql_service_host
+                            ),
+                            secret_env_var(
                                 name="WORDPRESS_DB_NAME",
-                                value_from=k8s.core.v1.EnvVarSourceArgs(
-                                    secret_key_ref=k8s.core.v1.SecretKeySelectorArgs(
-                                        name=wordpress_db_credentials.metadata.name,
-                                        key="WORDPRESS_DB_NAME",
-                                    )
-                                ),
+                                secret_name=wordpress_db_credentials.metadata.name,
+                                key="WORDPRESS_DB_NAME",
                             ),
-                            k8s.core.v1.EnvVarArgs(
+                            secret_env_var(
                                 name="WORDPRESS_DB_USER",
-                                value_from=k8s.core.v1.EnvVarSourceArgs(
-                                    secret_key_ref=k8s.core.v1.SecretKeySelectorArgs(
-                                        name=wordpress_db_credentials.metadata.name,
-                                        key="WORDPRESS_DB_USER",
-                                    )
-                                ),
+                                secret_name=wordpress_db_credentials.metadata.name,
+                                key="WORDPRESS_DB_USER",
+                            ),
+                            secret_env_var(
+                                name="WORDPRESS_DB_PASSWORD",
+                                secret_name=wordpress_db_credentials.metadata.name,
+                                key="WORDPRESS_DB_PASSWORD",
                             ),
                             k8s.core.v1.EnvVarArgs(
-                                name="WORDPRESS_DB_PASSWORD",
-                                value_from=k8s.core.v1.EnvVarSourceArgs(
-                                    secret_key_ref=k8s.core.v1.SecretKeySelectorArgs(
-                                        name=wordpress_db_credentials.metadata.name,
-                                        key="WORDPRESS_DB_PASSWORD",
-                                    )
-                                ),
+                                name="WORDPRESS_TABLE_PREFIX", value=table_prefix
                             ),
-                            k8s.core.v1.EnvVarArgs(name="WORDPRESS_TABLE_PREFIX", value=table_prefix),
                             k8s.core.v1.EnvVarArgs(
                                 name="WORDPRESS_CONFIG_EXTRA",
                                 value=(
-                                    "define('WP_HOME', '%s');\n"
-                                    "define('WP_SITEURL', '%s');"
-                                )
-                                % (wordpress_url, wordpress_url),
+                                    f"define('WP_HOME', '{wordpress_url}');\n"
+                                    f"define('WP_SITEURL', '{wordpress_url}');"
+                                ),
                             ),
                         ],
                         ports=[
@@ -480,7 +449,6 @@ wordpress_ingress = k8s.networking.v1.Ingress(
 )
 
 pulumi.export("namespace", namespace_name)
-pulumi.export("operatorNamespace", operator_namespace_name)
 pulumi.export("hostname", hostname)
 pulumi.export("url", wordpress_url)
 pulumi.export("wordpressImage", wordpress_image)

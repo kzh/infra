@@ -1,0 +1,10 @@
+name: mysql-operator
+description: Deploy the MySQL operator via Helm
+runtime:
+  name: python
+  options:
+    toolchain: uv
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: helm-kubernetes-python
