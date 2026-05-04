@@ -1,0 +1,15 @@
+config:
+  mediawiki:namespace: mediawiki
+  mediawiki:hostname: wiki
+  mediawiki:wikiName: MediaWiki
+  mediawiki:adminUser: Admin
+  mediawiki:mediawikiImage: mediawiki:1.45.3
+  mediawiki:mysqlVersion: 9.6.0
+  mediawiki:mysqlClusterName: mediawiki-mysql
+  mediawiki:mysqlInstances: 1
+  mediawiki:mysqlRouterInstances: 1
+  mediawiki:mysqlStorageSize: 20Gi
+  mediawiki:imagesStorageSize: 20Gi
+  mediawiki:tailscaleDomain: tail1c114.ts.net
+  mediawiki:dbName: mediawiki
+  mediawiki:dbUser: mediawiki

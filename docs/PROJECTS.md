@@ -44,6 +44,7 @@ Project-local support assets should live beside the project that consumes them:
 | `pulumi/apps/coder` | Coder |
 | `pulumi/apps/golink` | Tailscale golink |
 | `pulumi/apps/immich` | Immich |
+| `pulumi/apps/mediawiki` | MediaWiki with MySQL Operator storage and Tailscale ingress |
 | `pulumi/apps/penpot` | Penpot plus MCP server/plugin image builds |
 | `pulumi/apps/stitch` | Stitch |
 | `pulumi/apps/wordpress` | WordPress |
