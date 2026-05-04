@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "skills": {
+    "cloudformation-to-pulumi": {
+      "source": "pulumi/agent-skills",
+      "sourceType": "github",
+      "skillPath": "migration/skills/cloudformation-to-pulumi/SKILL.md",
+      "computedHash": "1fdf5b0d1d0bf20659d6175f5dcea77064e965464efb851f152f60c4273cdb01"
+    },
+    "package-usage": {
+      "source": "pulumi/agent-skills",
+      "sourceType": "github",
+      "skillPath": "authoring/skills/package-usage/SKILL.md",
+      "computedHash": "2b7558f4da8312e4187758957a7e2688597b2c64a9f82d5c03a03b1911e5ab06"
+    },
+    "provider-upgrade": {
+      "source": "pulumi/agent-skills",
+      "sourceType": "github",
+      "skillPath": "authoring/skills/provider-upgrade/SKILL.md",
+      "computedHash": "90dbaa3072953d2a58665d17163b41afc35c727e49637e0bf05d517a22e24f26"
+    },
+    "pulumi-arm-to-pulumi": {
+      "source": "pulumi/agent-skills",
+      "sourceType": "github",
+      "skillPath": "migration/skills/pulumi-arm-to-pulumi/SKILL.md",
+      "computedHash": "cedeade1a8386a7e6f11898b6fb8e790b2bf27a273f14ec1bafba9eed47eb96d"
+    },
+    "pulumi-automation-api": {
+      "source": "pulumi/agent-skills",
+      "sourceType": "github",
+      "skillPath": "authoring/skills/pulumi-automation-api/SKILL.md",
+      "computedHash": "2d19e88634977983169523fc68b227efb170e776a02b53895fce7f34b2d9c390"
+    },
+    "pulumi-best-practices": {
+      "source": "pulumi/agent-skills",
+      "sourceType": "github",
+      "skillPath": "authoring/skills/pulumi-best-practices/SKILL.md",
+      "computedHash": "cbbaa9f2a7b3a52eb5ed0e0c60e50b4440ed884113dc919bb83c0a5723cd487f"
+    },
+    "pulumi-cdk-to-pulumi": {
+      "source": "pulumi/agent-skills",
+      "sourceType": "github",
+      "skillPath": "migration/skills/pulumi-cdk-to-pulumi/SKILL.md",
+      "computedHash": "603c350c0a6fcae99565b1faaddbb5e6848bbcf22a0005d311cbf8a57305aa41"
+    },
+    "pulumi-component": {
+      "source": "pulumi/agent-skills",
+      "sourceType": "github",
+      "skillPath": "authoring/skills/pulumi-component/SKILL.md",
+      "computedHash": "b3e3d1ff41bc3f3c8afa215d46de11e148ae771731540568a6d5467eeb45711f"
+    },
+    "pulumi-esc": {
+      "source": "pulumi/agent-skills",
+      "sourceType": "github",
+      "skillPath": "authoring/skills/pulumi-esc/SKILL.md",
+      "computedHash": "0476a30cbf9595b1011eb1a5ae4e7bae99c0a2a3bcb15eed1626f4deaaf38a3f"
+    },
+    "pulumi-terraform-to-pulumi": {
+      "source": "pulumi/agent-skills",
+      "sourceType": "github",
+      "skillPath": "migration/skills/pulumi-terraform-to-pulumi/SKILL.md",
+      "computedHash": "0a42023008823ae9e717e1d45a94d94065a7dc3d56e398f5115a901ba2e98324"
+    },
+    "pulumi-upgrade-provider": {
+      "source": "pulumi/agent-skills",
+      "sourceType": "github",
+      "skillPath": "authoring/skills/pulumi-upgrade-provider/SKILL.md",
+      "computedHash": "04dcca010850374a422b54bf5019fe06f162cb35ddf2aab0effb54a07c2b0c7c"
+    },
+    "upstream-patches": {
+      "source": "pulumi/agent-skills",
+      "sourceType": "github",
+      "skillPath": "authoring/skills/upstream-patches/SKILL.md",
+      "computedHash": "280be570d7ef31a78a2703b2d176cb30abf2da58d0e507b7bd8aead0a30d6501"
+    }
+  }
+}

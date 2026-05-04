@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pulumi CRD Bindings"
+  short_description: "Generate typed Pulumi CRD packages"
+  default_prompt: "Use $pulumi-crd-bindings to generate typed Pulumi Python bindings for a Kubernetes CRD chart."
