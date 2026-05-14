@@ -1,0 +1,9 @@
+[project]
+name = "hermes"
+version = "0.1.0"
+description = "Pulumi infrastructure deployment"
+requires-python = ">=3.12"
+dependencies = [
+    "pulumi>=3.234.0,<4.0.0",
+    "pulumi-kubernetes>=4.30.0,<5.0.0",
+]

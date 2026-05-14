@@ -43,6 +43,7 @@ Project-local support assets should live beside the project that consumes them:
 | `pulumi/ops/monitoring` | Prometheus Operator CRDs and kube-prometheus-stack |
 | `pulumi/apps/coder` | Coder |
 | `pulumi/apps/golink` | Tailscale golink |
+| `pulumi/apps/hermes` | Hermes Agent with persistent local state and localhost-only dashboard |
 | `pulumi/apps/immich` | Immich |
 | `pulumi/apps/mediawiki` | MediaWiki with MySQL Operator storage and Tailscale ingress |
 | `pulumi/apps/penpot` | Penpot plus MCP server/plugin image builds |
