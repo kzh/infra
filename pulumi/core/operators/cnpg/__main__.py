@@ -21,7 +21,7 @@ cloudnative_pg = k8s.helm.v4.Chart(
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://cloudnative-pg.github.io/charts",
     ),
-    version="0.28.0",
+    version="0.28.2",
     values={
         "monitoring": {
             "podMonitorEnabled": True,

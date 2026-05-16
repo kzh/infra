@@ -13,29 +13,34 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import NotRequired, TypedDict, TypeAlias
 from ... import _utilities
+from . import outputs
 from ... import meta as _meta
+from ._inputs import *
 
-__all__ = ['ClusterKopfPeeringInitArgs', 'ClusterKopfPeering']
+__all__ = ['MySQLClusterSetFailoverPatchArgs', 'MySQLClusterSetFailoverPatch']
 
 @pulumi.input_type
-class ClusterKopfPeeringInitArgs:
+class MySQLClusterSetFailoverPatchArgs:
     def __init__(__self__, *,
                  api_version: pulumi.Input[Optional[_builtins.str]] = None,
                  kind: pulumi.Input[Optional[_builtins.str]] = None,
-                 metadata: pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']] = None):
+                 metadata: pulumi.Input[Optional['_meta.v1.ObjectMetaPatchArgs']] = None,
+                 spec: pulumi.Input[Optional['MySQLClusterSetFailoverSpecPatchArgs']] = None):
         """
-        The set of arguments for constructing a ClusterKopfPeering resource.
+        The set of arguments for constructing a MySQLClusterSetFailoverPatch resource.
 
         :param pulumi.Input[_builtins.str] api_version: APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
         :param pulumi.Input[_builtins.str] kind: Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-        :param pulumi.Input['_meta.v1.ObjectMetaArgs'] metadata: Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+        :param pulumi.Input['_meta.v1.ObjectMetaPatchArgs'] metadata: Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
         """
         if api_version is not None:
-            pulumi.set(__self__, "api_version", 'zalando.org/v1')
+            pulumi.set(__self__, "api_version", 'mysql.oracle.com/v2')
         if kind is not None:
-            pulumi.set(__self__, "kind", 'ClusterKopfPeering')
+            pulumi.set(__self__, "kind", 'MySQLClusterSetFailover')
         if metadata is not None:
             pulumi.set(__self__, "metadata", metadata)
+        if spec is not None:
+            pulumi.set(__self__, "spec", spec)
 
     @_builtins.property
     @pulumi.getter(name="apiVersion")
@@ -63,52 +68,74 @@ class ClusterKopfPeeringInitArgs:
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['_meta.v1.ObjectMetaPatchArgs']]:
         """
         Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['_meta.v1.ObjectMetaPatchArgs']]):
         pulumi.set(self, "metadata", value)
 
+    @_builtins.property
+    @pulumi.getter
+    def spec(self) -> pulumi.Input[Optional['MySQLClusterSetFailoverSpecPatchArgs']]:
+        return pulumi.get(self, "spec")
 
-@pulumi.type_token("kubernetes:zalando.org/v1:ClusterKopfPeering")
-class ClusterKopfPeering(pulumi.CustomResource):
+    @spec.setter
+    def spec(self, value: pulumi.Input[Optional['MySQLClusterSetFailoverSpecPatchArgs']]):
+        pulumi.set(self, "spec", value)
+
+
+@pulumi.type_token("kubernetes:mysql.oracle.com/v2:MySQLClusterSetFailoverPatch")
+class MySQLClusterSetFailoverPatch(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  api_version: pulumi.Input[Optional[_builtins.str]] = None,
                  kind: pulumi.Input[Optional[_builtins.str]] = None,
-                 metadata: pulumi.Input[Optional[Union['_meta.v1.ObjectMetaArgs', '_meta.v1.ObjectMetaArgsDict']]] = None,
+                 metadata: pulumi.Input[Optional[Union['_meta.v1.ObjectMetaPatchArgs', '_meta.v1.ObjectMetaPatchArgsDict']]] = None,
+                 spec: pulumi.Input[Optional[Union['MySQLClusterSetFailoverSpecPatchArgs', 'MySQLClusterSetFailoverSpecPatchArgsDict']]] = None,
                  __props__=None):
         """
-        Create a ClusterKopfPeering resource with the given unique name, props, and options.
+        Patch resources are used to modify existing Kubernetes resources by using
+        Server-Side Apply updates. The name of the resource must be specified, but all other properties are optional. More than
+        one patch may be applied to the same resource, and a random FieldManager name will be used for each Patch resource.
+        Conflicts will result in an error by default, but can be forced using the "pulumi.com/patchForce" annotation. See the
+        [Server-Side Apply Docs](https://www.pulumi.com/registry/packages/kubernetes/how-to-guides/managing-resources-with-server-side-apply/) for
+        additional information about using Server-Side Apply to manage Kubernetes resources with Pulumi.
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] api_version: APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
         :param pulumi.Input[_builtins.str] kind: Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-        :param pulumi.Input[Union['_meta.v1.ObjectMetaArgs', '_meta.v1.ObjectMetaArgsDict']] metadata: Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+        :param pulumi.Input[Union['_meta.v1.ObjectMetaPatchArgs', '_meta.v1.ObjectMetaPatchArgsDict']] metadata: Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
         """
         ...
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: Optional[ClusterKopfPeeringInitArgs] = None,
+                 args: Optional[MySQLClusterSetFailoverPatchArgs] = None,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a ClusterKopfPeering resource with the given unique name, props, and options.
+        Patch resources are used to modify existing Kubernetes resources by using
+        Server-Side Apply updates. The name of the resource must be specified, but all other properties are optional. More than
+        one patch may be applied to the same resource, and a random FieldManager name will be used for each Patch resource.
+        Conflicts will result in an error by default, but can be forced using the "pulumi.com/patchForce" annotation. See the
+        [Server-Side Apply Docs](https://www.pulumi.com/registry/packages/kubernetes/how-to-guides/managing-resources-with-server-side-apply/) for
+        additional information about using Server-Side Apply to manage Kubernetes resources with Pulumi.
+
 
         :param str resource_name: The name of the resource.
-        :param ClusterKopfPeeringInitArgs args: The arguments to use to populate this resource's properties.
+        :param MySQLClusterSetFailoverPatchArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
         """
         ...
     def __init__(__self__, resource_name: str, *args, **kwargs):
-        resource_args, opts = _utilities.get_resource_args_opts(ClusterKopfPeeringInitArgs, pulumi.ResourceOptions, *args, **kwargs)
+        resource_args, opts = _utilities.get_resource_args_opts(MySQLClusterSetFailoverPatchArgs, pulumi.ResourceOptions, *args, **kwargs)
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
@@ -119,7 +146,8 @@ class ClusterKopfPeering(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  api_version: pulumi.Input[Optional[_builtins.str]] = None,
                  kind: pulumi.Input[Optional[_builtins.str]] = None,
-                 metadata: pulumi.Input[Optional[Union['_meta.v1.ObjectMetaArgs', '_meta.v1.ObjectMetaArgsDict']]] = None,
+                 metadata: pulumi.Input[Optional[Union['_meta.v1.ObjectMetaPatchArgs', '_meta.v1.ObjectMetaPatchArgsDict']]] = None,
+                 spec: pulumi.Input[Optional[Union['MySQLClusterSetFailoverSpecPatchArgs', 'MySQLClusterSetFailoverSpecPatchArgsDict']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -127,14 +155,15 @@ class ClusterKopfPeering(pulumi.CustomResource):
         if opts.id is None:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
-            __props__ = ClusterKopfPeeringInitArgs.__new__(ClusterKopfPeeringInitArgs)
+            __props__ = MySQLClusterSetFailoverPatchArgs.__new__(MySQLClusterSetFailoverPatchArgs)
 
-            __props__.__dict__["api_version"] = 'zalando.org/v1'
-            __props__.__dict__["kind"] = 'ClusterKopfPeering'
+            __props__.__dict__["api_version"] = 'mysql.oracle.com/v2'
+            __props__.__dict__["kind"] = 'MySQLClusterSetFailover'
             __props__.__dict__["metadata"] = metadata
+            __props__.__dict__["spec"] = spec
             __props__.__dict__["status"] = None
-        super(ClusterKopfPeering, __self__).__init__(
-            'kubernetes:zalando.org/v1:ClusterKopfPeering',
+        super(MySQLClusterSetFailoverPatch, __self__).__init__(
+            'kubernetes:mysql.oracle.com/v2:MySQLClusterSetFailoverPatch',
             resource_name,
             __props__,
             opts)
@@ -142,9 +171,9 @@ class ClusterKopfPeering(pulumi.CustomResource):
     @staticmethod
     def get(resource_name: str,
             id: pulumi.Input[str],
-            opts: Optional[pulumi.ResourceOptions] = None) -> 'ClusterKopfPeering':
+            opts: Optional[pulumi.ResourceOptions] = None) -> 'MySQLClusterSetFailoverPatch':
         """
-        Get an existing ClusterKopfPeering resource's state with the given name, id, and optional extra
+        Get an existing MySQLClusterSetFailoverPatch resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
 
         :param str resource_name: The unique name of the resulting resource.
@@ -153,17 +182,18 @@ class ClusterKopfPeering(pulumi.CustomResource):
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
-        __props__ = ClusterKopfPeeringInitArgs.__new__(ClusterKopfPeeringInitArgs)
+        __props__ = MySQLClusterSetFailoverPatchArgs.__new__(MySQLClusterSetFailoverPatchArgs)
 
         __props__.__dict__["api_version"] = None
         __props__.__dict__["kind"] = None
         __props__.__dict__["metadata"] = None
+        __props__.__dict__["spec"] = None
         __props__.__dict__["status"] = None
-        return ClusterKopfPeering(resource_name, opts=opts, __props__=__props__)
+        return MySQLClusterSetFailoverPatch(resource_name, opts=opts, __props__=__props__)
 
     @_builtins.property
     @pulumi.getter(name="apiVersion")
-    def api_version(self) -> pulumi.Output[_builtins.str]:
+    def api_version(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
         APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
         """
@@ -171,7 +201,7 @@ class ClusterKopfPeering(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
-    def kind(self) -> pulumi.Output[_builtins.str]:
+    def kind(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
         Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
         """
@@ -179,7 +209,7 @@ class ClusterKopfPeering(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> pulumi.Output['_meta.v1.outputs.ObjectMeta']:
+    def metadata(self) -> pulumi.Output[Optional['_meta.v1.outputs.ObjectMetaPatch']]:
         """
         Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
         """
@@ -187,5 +217,10 @@ class ClusterKopfPeering(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def spec(self) -> pulumi.Output[Optional['outputs.MySQLClusterSetFailoverSpecPatch']]:
+        return pulumi.get(self, "spec")
+
+    @_builtins.property
+    @pulumi.getter
+    def status(self) -> pulumi.Output[Optional['outputs.MySQLClusterSetFailoverStatusPatch']]:
         return pulumi.get(self, "status")

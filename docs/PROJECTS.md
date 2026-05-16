@@ -60,6 +60,7 @@ just projects
 just sync pulumi/apps/penpot
 just preview pulumi/apps/penpot stack=mx
 just up pulumi/apps/penpot stack=mx
+just preview-all
 just check-python
 just lint
 just format

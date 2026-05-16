@@ -4,7 +4,7 @@ config:
   mediawiki:wikiName: MediaWiki
   mediawiki:adminUser: Admin
   mediawiki:mediawikiImage: mediawiki:1.45.3
-  mediawiki:mysqlVersion: 9.6.0
+  mediawiki:mysqlVersion: 9.7.0
   mediawiki:mysqlClusterName: mediawiki-mysql
   mediawiki:mysqlInstances: 1
   mediawiki:mysqlRouterInstances: 1

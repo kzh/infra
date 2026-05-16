@@ -71,9 +71,6 @@ def _get_semver_version():
     # <some module>._utilities. <some module> is the module we want to query the version for.
     root_package, *rest = __name__.split('.')
 
-    # pkg_resources uses setuptools to inspect the set of installed packages. We use it here to ask
-    # for the currently installed version of the root package (i.e. us) and get its version.
-
     # Unfortunately, PEP440 and semver differ slightly in incompatible ways. The Pulumi engine expects
     # to receive a valid semver string when receiving requests from the language host, so it's our
     # responsibility as the library to convert our own PEP440 version into a valid semver string.

@@ -83,6 +83,13 @@ __all__ = [
     'MySQLBackupSpecPatch',
     'MySQLBackupStatus',
     'MySQLBackupStatusPatch',
+    'MySQLClusterSetFailover',
+    'MySQLClusterSetFailoverSpec',
+    'MySQLClusterSetFailoverSpecOptions',
+    'MySQLClusterSetFailoverSpecOptionsPatch',
+    'MySQLClusterSetFailoverSpecPatch',
+    'MySQLClusterSetFailoverStatus',
+    'MySQLClusterSetFailoverStatusPatch',
 ]
 
 @pulumi.output_type
@@ -655,6 +662,7 @@ class InnoDBClusterSpecInstanceService(dict):
                  labels: Optional[Mapping[str, Any]] = None):
         """
         Configuration of the Service used by the InnoDB Cluster GR members internally
+
         :param Mapping[str, Any] annotations: Custom annotations for the Service
         :param Mapping[str, Any] labels: Custom labels for the Service
         """
@@ -690,6 +698,7 @@ class InnoDBClusterSpecInstanceServicePatch(dict):
                  labels: Optional[Mapping[str, Any]] = None):
         """
         Configuration of the Service used by the InnoDB Cluster GR members internally
+
         :param Mapping[str, Any] annotations: Custom annotations for the Service
         :param Mapping[str, Any] labels: Custom labels for the Service
         """
@@ -806,6 +815,7 @@ class InnoDBClusterSpecKeyringEncryptedFile(dict):
                  storage: Optional[Mapping[str, Any]] = None):
         """
         Keyring 'Encrypted File' specification
+
         :param _builtins.str file_name: Path to the keyring file name inside the storage volume (will be prefixed by mount path)
         :param _builtins.str password: Name of a secret that contains password for the keyring in the key 'keyring_password'
         :param _builtins.bool read_only: Whether to open the keyring file in read-only mode
@@ -884,6 +894,7 @@ class InnoDBClusterSpecKeyringEncryptedFilePatch(dict):
                  storage: Optional[Mapping[str, Any]] = None):
         """
         Keyring 'Encrypted File' specification
+
         :param _builtins.str file_name: Path to the keyring file name inside the storage volume (will be prefixed by mount path)
         :param _builtins.str password: Name of a secret that contains password for the keyring in the key 'keyring_password'
         :param _builtins.bool read_only: Whether to open the keyring file in read-only mode
@@ -961,6 +972,7 @@ class InnoDBClusterSpecKeyringFile(dict):
                  storage: Optional[Mapping[str, Any]] = None):
         """
         Keyring 'File' specification
+
         :param _builtins.str file_name: Path to the keyring file name inside the storage volume (will be prefixed by mount path)
         :param _builtins.bool read_only: Whether to open the keyring file in read-only mode
         :param Mapping[str, Any] storage: Specification of the volume to be mounted where the keyring file resides
@@ -1027,6 +1039,7 @@ class InnoDBClusterSpecKeyringFilePatch(dict):
                  storage: Optional[Mapping[str, Any]] = None):
         """
         Keyring 'File' specification
+
         :param _builtins.str file_name: Path to the keyring file name inside the storage volume (will be prefixed by mount path)
         :param _builtins.bool read_only: Whether to open the keyring file in read-only mode
         :param Mapping[str, Any] storage: Specification of the volume to be mounted where the keyring file resides
@@ -1094,6 +1107,7 @@ class InnoDBClusterSpecKeyringKmip(dict):
                  standby_server: Optional[Sequence[_builtins.str]] = None):
         """
         Keyring 'KMIP' specification
+
         :param _builtins.bool cache_keys: Whether the keys are cached by the MySQL Server in RAM in plaintext. If set to false the keys are decrypted on every access
         :param _builtins.str configuration: Name of a secret that contains TLS certificates
         :param _builtins.str server: Primary OKV Server host with port number in the format <host>:<port>
@@ -1172,6 +1186,7 @@ class InnoDBClusterSpecKeyringKmipPatch(dict):
                  standby_server: Optional[Sequence[_builtins.str]] = None):
         """
         Keyring 'KMIP' specification
+
         :param _builtins.bool cache_keys: Whether the keys are cached by the MySQL Server in RAM in plaintext. If set to false the keys are decrypted on every access
         :param _builtins.str configuration: Name of a secret that contains TLS certificates
         :param _builtins.str server: Primary OKV Server host with port number in the format <host>:<port>
@@ -1261,6 +1276,7 @@ class InnoDBClusterSpecKeyringOci(dict):
                  virtual_vault: Optional[_builtins.str] = None):
         """
         Keyring 'OCI' specification
+
         :param _builtins.str ca_certificate: Secret that contains ca.crt field with CA certificate bundle file that the keyring_oci plugin uses for Oracle Cloud Infrastructure certificate verification
         :param _builtins.str compartment: Compartment identifier in the form ocid1.compartment.oc1...
         :param _builtins.str key_fingerprint: Private key fingerprint
@@ -1511,6 +1527,7 @@ class InnoDBClusterSpecKeyringOciPatch(dict):
                  virtual_vault: Optional[_builtins.str] = None):
         """
         Keyring 'OCI' specification
+
         :param _builtins.str ca_certificate: Secret that contains ca.crt field with CA certificate bundle file that the keyring_oci plugin uses for Oracle Cloud Infrastructure certificate verification
         :param _builtins.str compartment: Compartment identifier in the form ocid1.compartment.oc1...
         :param _builtins.str key_fingerprint: Private key fingerprint
@@ -1826,6 +1843,7 @@ class InnoDBClusterSpecLogsCollectorFluentd(dict):
                  slow_query_log: Optional['outputs.InnoDBClusterSpecLogsCollectorFluentdSlowQueryLog'] = None):
         """
         Properties of the fluentd log collector
+
         :param _builtins.str additional_filter_configuration: Raw configuration of additional Fluentd filters to be added to the configuration file
         """
         if additional_filter_configuration is not None:
@@ -2038,6 +2056,7 @@ class InnoDBClusterSpecLogsCollectorFluentdPatch(dict):
                  slow_query_log: Optional['outputs.InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogPatch'] = None):
         """
         Properties of the fluentd log collector
+
         :param _builtins.str additional_filter_configuration: Raw configuration of additional Fluentd filters to be added to the configuration file
         """
         if additional_filter_configuration is not None:
@@ -3223,6 +3242,7 @@ class InnoDBClusterSpecMetrics(dict):
                  web_config: Optional[_builtins.str] = None):
         """
         Configuration of a Prometheus-style metrics provider
+
         :param _builtins.bool enable: Toggle to enable or disable the metrics sidecar
         :param _builtins.str image: Name of an image to be used for the metrics sidecar, if provided metrics will be enabled
         :param _builtins.bool monitor: Create a ServiceMonitor for Prometheus Operator
@@ -3339,6 +3359,7 @@ class InnoDBClusterSpecMetricsPatch(dict):
                  web_config: Optional[_builtins.str] = None):
         """
         Configuration of a Prometheus-style metrics provider
+
         :param _builtins.bool enable: Toggle to enable or disable the metrics sidecar
         :param _builtins.str image: Name of an image to be used for the metrics sidecar, if provided metrics will be enabled
         :param _builtins.bool monitor: Create a ServiceMonitor for Prometheus Operator
@@ -4077,6 +4098,7 @@ class InnoDBClusterSpecRouter(dict):
                  version: Optional[_builtins.str] = None):
         """
         MySQL Router specification
+
         :param Sequence[_builtins.str] bootstrap_options: Command line options passed to MySQL Router while bootstrapping
         :param _builtins.int instances: Number of MySQL Router instances to deploy
         :param Sequence[_builtins.str] options: Command line options passed to MySQL Router while running
@@ -4211,6 +4233,7 @@ class InnoDBClusterSpecRouterPatch(dict):
                  version: Optional[_builtins.str] = None):
         """
         MySQL Router specification
+
         :param Sequence[_builtins.str] bootstrap_options: Command line options passed to MySQL Router while bootstrapping
         :param _builtins.int instances: Number of MySQL Router instances to deploy
         :param Sequence[_builtins.str] options: Command line options passed to MySQL Router while running
@@ -4400,6 +4423,7 @@ class InnoDBClusterSpecService(dict):
                  type: Optional[_builtins.str] = None):
         """
         Configuration of the Service used by applications connecting to the InnoDB Cluster
+
         :param Mapping[str, Any] annotations: Custom annotations for the Service
         :param _builtins.str default_port: Target for the Service's default (3306) port. If mysql-rw traffic will go to the primary and allow read and write operations, with mysql-ro traffic goes to the replica and allows only read operations, with mysql-rw-split the router's read-write-splitting will be targeted
         :param Mapping[str, Any] labels: Custom labels for the Service
@@ -4472,6 +4496,7 @@ class InnoDBClusterSpecServicePatch(dict):
                  type: Optional[_builtins.str] = None):
         """
         Configuration of the Service used by applications connecting to the InnoDB Cluster
+
         :param Mapping[str, Any] annotations: Custom annotations for the Service
         :param _builtins.str default_port: Target for the Service's default (3306) port. If mysql-rw traffic will go to the primary and allow read and write operations, with mysql-ro traffic goes to the replica and allows only read operations, with mysql-rw-split the router's read-write-splitting will be targeted
         :param Mapping[str, Any] labels: Custom labels for the Service
@@ -5051,6 +5076,366 @@ class MySQLBackupStatusPatch(dict):
     @pulumi.getter(name="spaceAvailable")
     def space_available(self) -> Optional[_builtins.str]:
         return pulumi.get(self, "space_available")
+
+    @_builtins.property
+    @pulumi.getter(name="startTime")
+    def start_time(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "start_time")
+
+    @_builtins.property
+    @pulumi.getter
+    def status(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "status")
+
+
+@pulumi.output_type
+class MySQLClusterSetFailover(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "apiVersion":
+            suggest = "api_version"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in MySQLClusterSetFailover. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        MySQLClusterSetFailover.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        MySQLClusterSetFailover.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 api_version: Optional[_builtins.str] = None,
+                 kind: Optional[_builtins.str] = None,
+                 metadata: Optional['_meta.v1.outputs.ObjectMeta'] = None,
+                 spec: Optional['outputs.MySQLClusterSetFailoverSpec'] = None,
+                 status: Optional['outputs.MySQLClusterSetFailoverStatus'] = None):
+        """
+        :param _builtins.str api_version: APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+        :param _builtins.str kind: Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+        :param '_meta.v1.ObjectMetaArgs' metadata: Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+        """
+        if api_version is not None:
+            pulumi.set(__self__, "api_version", 'mysql.oracle.com/v2')
+        if kind is not None:
+            pulumi.set(__self__, "kind", 'MySQLClusterSetFailover')
+        if metadata is not None:
+            pulumi.set(__self__, "metadata", metadata)
+        if spec is not None:
+            pulumi.set(__self__, "spec", spec)
+        if status is not None:
+            pulumi.set(__self__, "status", status)
+
+    @_builtins.property
+    @pulumi.getter(name="apiVersion")
+    def api_version(self) -> Optional[_builtins.str]:
+        """
+        APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+        """
+        return pulumi.get(self, "api_version")
+
+    @_builtins.property
+    @pulumi.getter
+    def kind(self) -> Optional[_builtins.str]:
+        """
+        Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+        """
+        return pulumi.get(self, "kind")
+
+    @_builtins.property
+    @pulumi.getter
+    def metadata(self) -> Optional['_meta.v1.outputs.ObjectMeta']:
+        """
+        Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+        """
+        return pulumi.get(self, "metadata")
+
+    @_builtins.property
+    @pulumi.getter
+    def spec(self) -> Optional['outputs.MySQLClusterSetFailoverSpec']:
+        return pulumi.get(self, "spec")
+
+    @_builtins.property
+    @pulumi.getter
+    def status(self) -> Optional['outputs.MySQLClusterSetFailoverStatus']:
+        return pulumi.get(self, "status")
+
+
+@pulumi.output_type
+class MySQLClusterSetFailoverSpec(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "clusterName":
+            suggest = "cluster_name"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in MySQLClusterSetFailoverSpec. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        MySQLClusterSetFailoverSpec.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        MySQLClusterSetFailoverSpec.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 cluster_name: Optional[_builtins.str] = None,
+                 force: Optional[_builtins.bool] = None,
+                 options: Optional['outputs.MySQLClusterSetFailoverSpecOptions'] = None):
+        if cluster_name is not None:
+            pulumi.set(__self__, "cluster_name", cluster_name)
+        if force is not None:
+            pulumi.set(__self__, "force", force)
+        if options is not None:
+            pulumi.set(__self__, "options", options)
+
+    @_builtins.property
+    @pulumi.getter(name="clusterName")
+    def cluster_name(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "cluster_name")
+
+    @_builtins.property
+    @pulumi.getter
+    def force(self) -> Optional[_builtins.bool]:
+        return pulumi.get(self, "force")
+
+    @_builtins.property
+    @pulumi.getter
+    def options(self) -> Optional['outputs.MySQLClusterSetFailoverSpecOptions']:
+        return pulumi.get(self, "options")
+
+
+@pulumi.output_type
+class MySQLClusterSetFailoverSpecOptions(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "invalidateReplicaClusters":
+            suggest = "invalidate_replica_clusters"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in MySQLClusterSetFailoverSpecOptions. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        MySQLClusterSetFailoverSpecOptions.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        MySQLClusterSetFailoverSpecOptions.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 invalidate_replica_clusters: Optional[Sequence[_builtins.str]] = None,
+                 timeout: Optional[_builtins.int] = None):
+        if invalidate_replica_clusters is not None:
+            pulumi.set(__self__, "invalidate_replica_clusters", invalidate_replica_clusters)
+        if timeout is not None:
+            pulumi.set(__self__, "timeout", timeout)
+
+    @_builtins.property
+    @pulumi.getter(name="invalidateReplicaClusters")
+    def invalidate_replica_clusters(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "invalidate_replica_clusters")
+
+    @_builtins.property
+    @pulumi.getter
+    def timeout(self) -> Optional[_builtins.int]:
+        return pulumi.get(self, "timeout")
+
+
+@pulumi.output_type
+class MySQLClusterSetFailoverSpecOptionsPatch(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "invalidateReplicaClusters":
+            suggest = "invalidate_replica_clusters"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in MySQLClusterSetFailoverSpecOptionsPatch. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        MySQLClusterSetFailoverSpecOptionsPatch.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        MySQLClusterSetFailoverSpecOptionsPatch.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 invalidate_replica_clusters: Optional[Sequence[_builtins.str]] = None,
+                 timeout: Optional[_builtins.int] = None):
+        if invalidate_replica_clusters is not None:
+            pulumi.set(__self__, "invalidate_replica_clusters", invalidate_replica_clusters)
+        if timeout is not None:
+            pulumi.set(__self__, "timeout", timeout)
+
+    @_builtins.property
+    @pulumi.getter(name="invalidateReplicaClusters")
+    def invalidate_replica_clusters(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "invalidate_replica_clusters")
+
+    @_builtins.property
+    @pulumi.getter
+    def timeout(self) -> Optional[_builtins.int]:
+        return pulumi.get(self, "timeout")
+
+
+@pulumi.output_type
+class MySQLClusterSetFailoverSpecPatch(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "clusterName":
+            suggest = "cluster_name"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in MySQLClusterSetFailoverSpecPatch. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        MySQLClusterSetFailoverSpecPatch.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        MySQLClusterSetFailoverSpecPatch.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 cluster_name: Optional[_builtins.str] = None,
+                 force: Optional[_builtins.bool] = None,
+                 options: Optional['outputs.MySQLClusterSetFailoverSpecOptionsPatch'] = None):
+        if cluster_name is not None:
+            pulumi.set(__self__, "cluster_name", cluster_name)
+        if force is not None:
+            pulumi.set(__self__, "force", force)
+        if options is not None:
+            pulumi.set(__self__, "options", options)
+
+    @_builtins.property
+    @pulumi.getter(name="clusterName")
+    def cluster_name(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "cluster_name")
+
+    @_builtins.property
+    @pulumi.getter
+    def force(self) -> Optional[_builtins.bool]:
+        return pulumi.get(self, "force")
+
+    @_builtins.property
+    @pulumi.getter
+    def options(self) -> Optional['outputs.MySQLClusterSetFailoverSpecOptionsPatch']:
+        return pulumi.get(self, "options")
+
+
+@pulumi.output_type
+class MySQLClusterSetFailoverStatus(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "completionTime":
+            suggest = "completion_time"
+        elif key == "elapsedTime":
+            suggest = "elapsed_time"
+        elif key == "startTime":
+            suggest = "start_time"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in MySQLClusterSetFailoverStatus. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        MySQLClusterSetFailoverStatus.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        MySQLClusterSetFailoverStatus.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 completion_time: Optional[_builtins.str] = None,
+                 elapsed_time: Optional[_builtins.str] = None,
+                 start_time: Optional[_builtins.str] = None,
+                 status: Optional[_builtins.str] = None):
+        if completion_time is not None:
+            pulumi.set(__self__, "completion_time", completion_time)
+        if elapsed_time is not None:
+            pulumi.set(__self__, "elapsed_time", elapsed_time)
+        if start_time is not None:
+            pulumi.set(__self__, "start_time", start_time)
+        if status is not None:
+            pulumi.set(__self__, "status", status)
+
+    @_builtins.property
+    @pulumi.getter(name="completionTime")
+    def completion_time(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "completion_time")
+
+    @_builtins.property
+    @pulumi.getter(name="elapsedTime")
+    def elapsed_time(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "elapsed_time")
+
+    @_builtins.property
+    @pulumi.getter(name="startTime")
+    def start_time(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "start_time")
+
+    @_builtins.property
+    @pulumi.getter
+    def status(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "status")
+
+
+@pulumi.output_type
+class MySQLClusterSetFailoverStatusPatch(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "completionTime":
+            suggest = "completion_time"
+        elif key == "elapsedTime":
+            suggest = "elapsed_time"
+        elif key == "startTime":
+            suggest = "start_time"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in MySQLClusterSetFailoverStatusPatch. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        MySQLClusterSetFailoverStatusPatch.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        MySQLClusterSetFailoverStatusPatch.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 completion_time: Optional[_builtins.str] = None,
+                 elapsed_time: Optional[_builtins.str] = None,
+                 start_time: Optional[_builtins.str] = None,
+                 status: Optional[_builtins.str] = None):
+        if completion_time is not None:
+            pulumi.set(__self__, "completion_time", completion_time)
+        if elapsed_time is not None:
+            pulumi.set(__self__, "elapsed_time", elapsed_time)
+        if start_time is not None:
+            pulumi.set(__self__, "start_time", start_time)
+        if status is not None:
+            pulumi.set(__self__, "status", status)
+
+    @_builtins.property
+    @pulumi.getter(name="completionTime")
+    def completion_time(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "completion_time")
+
+    @_builtins.property
+    @pulumi.getter(name="elapsedTime")
+    def elapsed_time(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "elapsed_time")
 
     @_builtins.property
     @pulumi.getter(name="startTime")

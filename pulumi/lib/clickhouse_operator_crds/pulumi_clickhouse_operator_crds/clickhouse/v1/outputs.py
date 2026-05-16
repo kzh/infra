@@ -41,11 +41,47 @@ __all__ = [
     'ClickHouseInstallationSpecConfigurationClustersLayoutShardsTemplatesPatch',
     'ClickHouseInstallationSpecConfigurationClustersPatch',
     'ClickHouseInstallationSpecConfigurationClustersReconcile',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooks',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooksPatch',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooksPost',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostHttp',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostHttpPatch',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostPatch',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostShell',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostShellPatch',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostSql',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostSqlPatch',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooksPre',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreHttp',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreHttpPatch',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooksPrePatch',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreShell',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreShellPatch',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreSql',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreSqlPatch',
     'ClickHouseInstallationSpecConfigurationClustersReconcileHost',
     'ClickHouseInstallationSpecConfigurationClustersReconcileHostDrop',
     'ClickHouseInstallationSpecConfigurationClustersReconcileHostDropPatch',
     'ClickHouseInstallationSpecConfigurationClustersReconcileHostDropReplicas',
     'ClickHouseInstallationSpecConfigurationClustersReconcileHostDropReplicasPatch',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooks',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPatch',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPost',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostHttp',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostHttpPatch',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostPatch',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostShell',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostShellPatch',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostSql',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostSqlPatch',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPre',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreHttp',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreHttpPatch',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPrePatch',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreShell',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreShellPatch',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreSql',
+    'ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreSqlPatch',
     'ClickHouseInstallationSpecConfigurationClustersReconcileHostPatch',
     'ClickHouseInstallationSpecConfigurationClustersReconcileHostWait',
     'ClickHouseInstallationSpecConfigurationClustersReconcileHostWaitPatch',
@@ -67,11 +103,15 @@ __all__ = [
     'ClickHouseInstallationSpecConfigurationClustersTemplates',
     'ClickHouseInstallationSpecConfigurationClustersTemplatesPatch',
     'ClickHouseInstallationSpecConfigurationClustersZookeeper',
+    'ClickHouseInstallationSpecConfigurationClustersZookeeperKeeper',
+    'ClickHouseInstallationSpecConfigurationClustersZookeeperKeeperPatch',
     'ClickHouseInstallationSpecConfigurationClustersZookeeperNodes',
     'ClickHouseInstallationSpecConfigurationClustersZookeeperNodesPatch',
     'ClickHouseInstallationSpecConfigurationClustersZookeeperPatch',
     'ClickHouseInstallationSpecConfigurationPatch',
     'ClickHouseInstallationSpecConfigurationZookeeper',
+    'ClickHouseInstallationSpecConfigurationZookeeperKeeper',
+    'ClickHouseInstallationSpecConfigurationZookeeperKeeperPatch',
     'ClickHouseInstallationSpecConfigurationZookeeperNodes',
     'ClickHouseInstallationSpecConfigurationZookeeperNodesPatch',
     'ClickHouseInstallationSpecConfigurationZookeeperPatch',
@@ -91,11 +131,49 @@ __all__ = [
     'ClickHouseInstallationSpecReconcileCleanupReconcileFailedObjectsPatch',
     'ClickHouseInstallationSpecReconcileCleanupUnknownObjects',
     'ClickHouseInstallationSpecReconcileCleanupUnknownObjectsPatch',
+    'ClickHouseInstallationSpecReconcileCluster',
+    'ClickHouseInstallationSpecReconcileClusterHooks',
+    'ClickHouseInstallationSpecReconcileClusterHooksPatch',
+    'ClickHouseInstallationSpecReconcileClusterHooksPost',
+    'ClickHouseInstallationSpecReconcileClusterHooksPostHttp',
+    'ClickHouseInstallationSpecReconcileClusterHooksPostHttpPatch',
+    'ClickHouseInstallationSpecReconcileClusterHooksPostPatch',
+    'ClickHouseInstallationSpecReconcileClusterHooksPostShell',
+    'ClickHouseInstallationSpecReconcileClusterHooksPostShellPatch',
+    'ClickHouseInstallationSpecReconcileClusterHooksPostSql',
+    'ClickHouseInstallationSpecReconcileClusterHooksPostSqlPatch',
+    'ClickHouseInstallationSpecReconcileClusterHooksPre',
+    'ClickHouseInstallationSpecReconcileClusterHooksPreHttp',
+    'ClickHouseInstallationSpecReconcileClusterHooksPreHttpPatch',
+    'ClickHouseInstallationSpecReconcileClusterHooksPrePatch',
+    'ClickHouseInstallationSpecReconcileClusterHooksPreShell',
+    'ClickHouseInstallationSpecReconcileClusterHooksPreShellPatch',
+    'ClickHouseInstallationSpecReconcileClusterHooksPreSql',
+    'ClickHouseInstallationSpecReconcileClusterHooksPreSqlPatch',
+    'ClickHouseInstallationSpecReconcileClusterPatch',
     'ClickHouseInstallationSpecReconcileHost',
     'ClickHouseInstallationSpecReconcileHostDrop',
     'ClickHouseInstallationSpecReconcileHostDropPatch',
     'ClickHouseInstallationSpecReconcileHostDropReplicas',
     'ClickHouseInstallationSpecReconcileHostDropReplicasPatch',
+    'ClickHouseInstallationSpecReconcileHostHooks',
+    'ClickHouseInstallationSpecReconcileHostHooksPatch',
+    'ClickHouseInstallationSpecReconcileHostHooksPost',
+    'ClickHouseInstallationSpecReconcileHostHooksPostHttp',
+    'ClickHouseInstallationSpecReconcileHostHooksPostHttpPatch',
+    'ClickHouseInstallationSpecReconcileHostHooksPostPatch',
+    'ClickHouseInstallationSpecReconcileHostHooksPostShell',
+    'ClickHouseInstallationSpecReconcileHostHooksPostShellPatch',
+    'ClickHouseInstallationSpecReconcileHostHooksPostSql',
+    'ClickHouseInstallationSpecReconcileHostHooksPostSqlPatch',
+    'ClickHouseInstallationSpecReconcileHostHooksPre',
+    'ClickHouseInstallationSpecReconcileHostHooksPreHttp',
+    'ClickHouseInstallationSpecReconcileHostHooksPreHttpPatch',
+    'ClickHouseInstallationSpecReconcileHostHooksPrePatch',
+    'ClickHouseInstallationSpecReconcileHostHooksPreShell',
+    'ClickHouseInstallationSpecReconcileHostHooksPreShellPatch',
+    'ClickHouseInstallationSpecReconcileHostHooksPreSql',
+    'ClickHouseInstallationSpecReconcileHostHooksPreSqlPatch',
     'ClickHouseInstallationSpecReconcileHostPatch',
     'ClickHouseInstallationSpecReconcileHostWait',
     'ClickHouseInstallationSpecReconcileHostWaitPatch',
@@ -135,11 +213,49 @@ __all__ = [
     'ClickHouseInstallationSpecReconcilingCleanupReconcileFailedObjectsPatch',
     'ClickHouseInstallationSpecReconcilingCleanupUnknownObjects',
     'ClickHouseInstallationSpecReconcilingCleanupUnknownObjectsPatch',
+    'ClickHouseInstallationSpecReconcilingCluster',
+    'ClickHouseInstallationSpecReconcilingClusterHooks',
+    'ClickHouseInstallationSpecReconcilingClusterHooksPatch',
+    'ClickHouseInstallationSpecReconcilingClusterHooksPost',
+    'ClickHouseInstallationSpecReconcilingClusterHooksPostHttp',
+    'ClickHouseInstallationSpecReconcilingClusterHooksPostHttpPatch',
+    'ClickHouseInstallationSpecReconcilingClusterHooksPostPatch',
+    'ClickHouseInstallationSpecReconcilingClusterHooksPostShell',
+    'ClickHouseInstallationSpecReconcilingClusterHooksPostShellPatch',
+    'ClickHouseInstallationSpecReconcilingClusterHooksPostSql',
+    'ClickHouseInstallationSpecReconcilingClusterHooksPostSqlPatch',
+    'ClickHouseInstallationSpecReconcilingClusterHooksPre',
+    'ClickHouseInstallationSpecReconcilingClusterHooksPreHttp',
+    'ClickHouseInstallationSpecReconcilingClusterHooksPreHttpPatch',
+    'ClickHouseInstallationSpecReconcilingClusterHooksPrePatch',
+    'ClickHouseInstallationSpecReconcilingClusterHooksPreShell',
+    'ClickHouseInstallationSpecReconcilingClusterHooksPreShellPatch',
+    'ClickHouseInstallationSpecReconcilingClusterHooksPreSql',
+    'ClickHouseInstallationSpecReconcilingClusterHooksPreSqlPatch',
+    'ClickHouseInstallationSpecReconcilingClusterPatch',
     'ClickHouseInstallationSpecReconcilingHost',
     'ClickHouseInstallationSpecReconcilingHostDrop',
     'ClickHouseInstallationSpecReconcilingHostDropPatch',
     'ClickHouseInstallationSpecReconcilingHostDropReplicas',
     'ClickHouseInstallationSpecReconcilingHostDropReplicasPatch',
+    'ClickHouseInstallationSpecReconcilingHostHooks',
+    'ClickHouseInstallationSpecReconcilingHostHooksPatch',
+    'ClickHouseInstallationSpecReconcilingHostHooksPost',
+    'ClickHouseInstallationSpecReconcilingHostHooksPostHttp',
+    'ClickHouseInstallationSpecReconcilingHostHooksPostHttpPatch',
+    'ClickHouseInstallationSpecReconcilingHostHooksPostPatch',
+    'ClickHouseInstallationSpecReconcilingHostHooksPostShell',
+    'ClickHouseInstallationSpecReconcilingHostHooksPostShellPatch',
+    'ClickHouseInstallationSpecReconcilingHostHooksPostSql',
+    'ClickHouseInstallationSpecReconcilingHostHooksPostSqlPatch',
+    'ClickHouseInstallationSpecReconcilingHostHooksPre',
+    'ClickHouseInstallationSpecReconcilingHostHooksPreHttp',
+    'ClickHouseInstallationSpecReconcilingHostHooksPreHttpPatch',
+    'ClickHouseInstallationSpecReconcilingHostHooksPrePatch',
+    'ClickHouseInstallationSpecReconcilingHostHooksPreShell',
+    'ClickHouseInstallationSpecReconcilingHostHooksPreShellPatch',
+    'ClickHouseInstallationSpecReconcilingHostHooksPreSql',
+    'ClickHouseInstallationSpecReconcilingHostHooksPreSqlPatch',
     'ClickHouseInstallationSpecReconcilingHostPatch',
     'ClickHouseInstallationSpecReconcilingHostWait',
     'ClickHouseInstallationSpecReconcilingHostWaitPatch',
@@ -230,6 +346,7 @@ class ClickHouseInstallation(dict):
                  status: Optional['outputs.ClickHouseInstallationStatus'] = None):
         """
         define a set of Kubernetes resources (StatefulSet, PVC, Service, ConfigMap) which describe behavior one or more clusters
+
         :param _builtins.str api_version: APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
         :param _builtins.str kind: Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
         :param '_meta.v1.ObjectMetaArgs' metadata: Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
@@ -324,6 +441,7 @@ class ClickHouseInstallationSpec(dict):
         """
         Specification of the desired behavior of one or more ClickHouse clusters
         More info: https://github.com/Altinity/clickhouse-operator/blob/master/docs/custom_resource_explained.md
+
 
         :param _builtins.str namespace_domain_pattern: Custom domain pattern which will be used for DNS names of `Service` or `Pod`.
                Typical use scenario - custom cluster domain in Kubernetes cluster
@@ -494,6 +612,7 @@ class ClickHouseInstallationSpecConfiguration(dict):
                  zookeeper: Optional['outputs.ClickHouseInstallationSpecConfigurationZookeeper'] = None):
         """
         allows configure multiple aspects and behavior for `clickhouse-server` instance and also allows describe multiple `clickhouse-server` clusters inside one `chi` resource
+
         :param Sequence['ClickHouseInstallationSpecConfigurationClustersArgs'] clusters: describes clusters layout and allows change settings on cluster-level, shard-level and replica-level
                every cluster is a set of StatefulSet, one StatefulSet contains only one Pod with `clickhouse-server`
                all Pods will rendered in <remote_server> part of ClickHouse configs, mounted from ConfigMap as `/etc/clickhouse-server/config.d/chop-generated-remote_servers.xml`
@@ -876,6 +995,7 @@ class ClickHouseInstallationSpecConfigurationClustersLayout(dict):
         describe current cluster layout, how much shards in cluster, how much replica in shard
         allows override settings on each shard and replica separatelly
 
+
         :param Sequence['ClickHouseInstallationSpecConfigurationClustersLayoutReplicasArgs'] replicas: optional, allows override top-level `chi.spec.configuration` and cluster-level `chi.spec.configuration.clusters` configuration for each replica and each shard relates to selected replica, use it only if you fully understand what you do
         :param _builtins.int replicas_count: how much replicas in each shards for current cluster will run in Kubernetes,
                each replica is a separate `StatefulSet` which contains only one `Pod` with `clickhouse-server` instance,
@@ -968,6 +1088,7 @@ class ClickHouseInstallationSpecConfigurationClustersLayoutPatch(dict):
         """
         describe current cluster layout, how much shards in cluster, how much replica in shard
         allows override settings on each shard and replica separatelly
+
 
         :param Sequence['ClickHouseInstallationSpecConfigurationClustersLayoutReplicasPatchArgs'] replicas: optional, allows override top-level `chi.spec.configuration` and cluster-level `chi.spec.configuration.clusters` configuration for each replica and each shard relates to selected replica, use it only if you fully understand what you do
         :param _builtins.int replicas_count: how much replicas in each shards for current cluster will run in Kubernetes,
@@ -1608,6 +1729,7 @@ class ClickHouseInstallationSpecConfigurationClustersLayoutReplicasShardsTemplat
         optional, configuration of the templates names which will use for generate Kubernetes resources according to selected replica
         override top-level `chi.spec.configuration.templates`, cluster-level `chi.spec.configuration.clusters.templates`, replica-level `chi.spec.configuration.clusters.layout.replicas.templates`
 
+
         :param _builtins.str cluster_service_template: optional, template name from chi.spec.templates.serviceTemplates, allows customization for each `Service` resource which will created by `clickhouse-operator` which cover each clickhouse cluster described in `chi.spec.configuration.clusters`
         :param _builtins.str data_volume_claim_template: optional, template name from chi.spec.templates.volumeClaimTemplates, allows customization each `PVC` which will mount for clickhouse data directory in each `Pod` during render and reconcile every StatefulSet.spec resource described in `chi.spec.configuration.clusters`
         :param _builtins.str host_template: optional, template name from chi.spec.templates.hostTemplates, which will apply to configure every `clickhouse-server` instance during render ConfigMap resources which will mount into `Pod`
@@ -1776,6 +1898,7 @@ class ClickHouseInstallationSpecConfigurationClustersLayoutReplicasShardsTemplat
         """
         optional, configuration of the templates names which will use for generate Kubernetes resources according to selected replica
         override top-level `chi.spec.configuration.templates`, cluster-level `chi.spec.configuration.clusters.templates`, replica-level `chi.spec.configuration.clusters.layout.replicas.templates`
+
 
         :param _builtins.str cluster_service_template: optional, template name from chi.spec.templates.serviceTemplates, allows customization for each `Service` resource which will created by `clickhouse-operator` which cover each clickhouse cluster described in `chi.spec.configuration.clusters`
         :param _builtins.str data_volume_claim_template: optional, template name from chi.spec.templates.volumeClaimTemplates, allows customization each `PVC` which will mount for clickhouse data directory in each `Pod` during render and reconcile every StatefulSet.spec resource described in `chi.spec.configuration.clusters`
@@ -1946,6 +2069,7 @@ class ClickHouseInstallationSpecConfigurationClustersLayoutReplicasTemplates(dic
         optional, configuration of the templates names which will use for generate Kubernetes resources according to selected replica
         override top-level `chi.spec.configuration.templates`, cluster-level `chi.spec.configuration.clusters.templates`
 
+
         :param _builtins.str cluster_service_template: optional, template name from chi.spec.templates.serviceTemplates, allows customization for each `Service` resource which will created by `clickhouse-operator` which cover each clickhouse cluster described in `chi.spec.configuration.clusters`
         :param _builtins.str data_volume_claim_template: optional, template name from chi.spec.templates.volumeClaimTemplates, allows customization each `PVC` which will mount for clickhouse data directory in each `Pod` during render and reconcile every StatefulSet.spec resource described in `chi.spec.configuration.clusters`
         :param _builtins.str host_template: optional, template name from chi.spec.templates.hostTemplates, which will apply to configure every `clickhouse-server` instance during render ConfigMap resources which will mount into `Pod`
@@ -2114,6 +2238,7 @@ class ClickHouseInstallationSpecConfigurationClustersLayoutReplicasTemplatesPatc
         """
         optional, configuration of the templates names which will use for generate Kubernetes resources according to selected replica
         override top-level `chi.spec.configuration.templates`, cluster-level `chi.spec.configuration.clusters.templates`
+
 
         :param _builtins.str cluster_service_template: optional, template name from chi.spec.templates.serviceTemplates, allows customization for each `Service` resource which will created by `clickhouse-operator` which cover each clickhouse cluster described in `chi.spec.configuration.clusters`
         :param _builtins.str data_volume_claim_template: optional, template name from chi.spec.templates.volumeClaimTemplates, allows customization each `PVC` which will mount for clickhouse data directory in each `Pod` during render and reconcile every StatefulSet.spec resource described in `chi.spec.configuration.clusters`
@@ -2916,6 +3041,7 @@ class ClickHouseInstallationSpecConfigurationClustersLayoutShardsReplicasTemplat
         optional, configuration of the templates names which will use for generate Kubernetes resources according to selected replica
         override top-level `chi.spec.configuration.templates`, cluster-level `chi.spec.configuration.clusters.templates` and shard-level `chi.spec.configuration.clusters.layout.shards.templates`
 
+
         :param _builtins.str cluster_service_template: optional, template name from chi.spec.templates.serviceTemplates, allows customization for each `Service` resource which will created by `clickhouse-operator` which cover each clickhouse cluster described in `chi.spec.configuration.clusters`
         :param _builtins.str data_volume_claim_template: optional, template name from chi.spec.templates.volumeClaimTemplates, allows customization each `PVC` which will mount for clickhouse data directory in each `Pod` during render and reconcile every StatefulSet.spec resource described in `chi.spec.configuration.clusters`
         :param _builtins.str host_template: optional, template name from chi.spec.templates.hostTemplates, which will apply to configure every `clickhouse-server` instance during render ConfigMap resources which will mount into `Pod`
@@ -3084,6 +3210,7 @@ class ClickHouseInstallationSpecConfigurationClustersLayoutShardsReplicasTemplat
         """
         optional, configuration of the templates names which will use for generate Kubernetes resources according to selected replica
         override top-level `chi.spec.configuration.templates`, cluster-level `chi.spec.configuration.clusters.templates` and shard-level `chi.spec.configuration.clusters.layout.shards.templates`
+
 
         :param _builtins.str cluster_service_template: optional, template name from chi.spec.templates.serviceTemplates, allows customization for each `Service` resource which will created by `clickhouse-operator` which cover each clickhouse cluster described in `chi.spec.configuration.clusters`
         :param _builtins.str data_volume_claim_template: optional, template name from chi.spec.templates.volumeClaimTemplates, allows customization each `PVC` which will mount for clickhouse data directory in each `Pod` during render and reconcile every StatefulSet.spec resource described in `chi.spec.configuration.clusters`
@@ -3254,6 +3381,7 @@ class ClickHouseInstallationSpecConfigurationClustersLayoutShardsTemplates(dict)
         optional, configuration of the templates names which will use for generate Kubernetes resources according to selected shard
         override top-level `chi.spec.configuration.templates` and cluster-level `chi.spec.configuration.clusters.templates`
 
+
         :param _builtins.str cluster_service_template: optional, template name from chi.spec.templates.serviceTemplates, allows customization for each `Service` resource which will created by `clickhouse-operator` which cover each clickhouse cluster described in `chi.spec.configuration.clusters`
         :param _builtins.str data_volume_claim_template: optional, template name from chi.spec.templates.volumeClaimTemplates, allows customization each `PVC` which will mount for clickhouse data directory in each `Pod` during render and reconcile every StatefulSet.spec resource described in `chi.spec.configuration.clusters`
         :param _builtins.str host_template: optional, template name from chi.spec.templates.hostTemplates, which will apply to configure every `clickhouse-server` instance during render ConfigMap resources which will mount into `Pod`
@@ -3422,6 +3550,7 @@ class ClickHouseInstallationSpecConfigurationClustersLayoutShardsTemplatesPatch(
         """
         optional, configuration of the templates names which will use for generate Kubernetes resources according to selected shard
         override top-level `chi.spec.configuration.templates` and cluster-level `chi.spec.configuration.clusters.templates`
+
 
         :param _builtins.str cluster_service_template: optional, template name from chi.spec.templates.serviceTemplates, allows customization for each `Service` resource which will created by `clickhouse-operator` which cover each clickhouse cluster described in `chi.spec.configuration.clusters`
         :param _builtins.str data_volume_claim_template: optional, template name from chi.spec.templates.volumeClaimTemplates, allows customization each `PVC` which will mount for clickhouse data directory in each `Pod` during render and reconcile every StatefulSet.spec resource described in `chi.spec.configuration.clusters`
@@ -3722,15 +3851,23 @@ class ClickHouseInstallationSpecConfigurationClustersReconcile(dict):
     allow tuning reconciling process
     """
     def __init__(__self__, *,
+                 hooks: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooks'] = None,
                  host: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHost'] = None,
                  runtime: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileRuntime'] = None):
         """
         allow tuning reconciling process
         """
+        if hooks is not None:
+            pulumi.set(__self__, "hooks", hooks)
         if host is not None:
             pulumi.set(__self__, "host", host)
         if runtime is not None:
             pulumi.set(__self__, "runtime", runtime)
+
+    @_builtins.property
+    @pulumi.getter
+    def hooks(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooks']:
+        return pulumi.get(self, "hooks")
 
     @_builtins.property
     @pulumi.getter
@@ -3744,6 +3881,722 @@ class ClickHouseInstallationSpecConfigurationClustersReconcile(dict):
 
 
 @pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooks(dict):
+    """
+    cluster-level hooks to execute before and after cluster reconcile
+    """
+    def __init__(__self__, *,
+                 post: Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPost']] = None,
+                 pre: Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPre']] = None):
+        """
+        cluster-level hooks to execute before and after cluster reconcile
+
+        :param Sequence['ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostArgs'] post: actions to execute after cluster reconcile
+        :param Sequence['ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreArgs'] pre: actions to execute before cluster reconcile
+        """
+        if post is not None:
+            pulumi.set(__self__, "post", post)
+        if pre is not None:
+            pulumi.set(__self__, "pre", pre)
+
+    @_builtins.property
+    @pulumi.getter
+    def post(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPost']]:
+        """
+        actions to execute after cluster reconcile
+        """
+        return pulumi.get(self, "post")
+
+    @_builtins.property
+    @pulumi.getter
+    def pre(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPre']]:
+        """
+        actions to execute before cluster reconcile
+        """
+        return pulumi.get(self, "pre")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooksPatch(dict):
+    """
+    cluster-level hooks to execute before and after cluster reconcile
+    """
+    def __init__(__self__, *,
+                 post: Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostPatch']] = None,
+                 pre: Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPrePatch']] = None):
+        """
+        cluster-level hooks to execute before and after cluster reconcile
+
+        :param Sequence['ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostPatchArgs'] post: actions to execute after cluster reconcile
+        :param Sequence['ClickHouseInstallationSpecConfigurationClustersReconcileHooksPrePatchArgs'] pre: actions to execute before cluster reconcile
+        """
+        if post is not None:
+            pulumi.set(__self__, "post", post)
+        if pre is not None:
+            pulumi.set(__self__, "pre", pre)
+
+    @_builtins.property
+    @pulumi.getter
+    def post(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostPatch']]:
+        """
+        actions to execute after cluster reconcile
+        """
+        return pulumi.get(self, "post")
+
+    @_builtins.property
+    @pulumi.getter
+    def pre(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPrePatch']]:
+        """
+        actions to execute before cluster reconcile
+        """
+        return pulumi.get(self, "pre")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooksPost(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecConfigurationClustersReconcileHooksPost. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersReconcileHooksPost.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersReconcileHooksPost.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostHttp'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostShell'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostSql'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Cluster-scope reconcile lifecycle events. Required, non-empty.
+                 Any              - wildcard match: fires on every cluster reconcile pass
+                                    and the cluster delete sweep
+                 ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                                    only on the first reconcile of a brand-new cluster
+                 ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                                    least one host has prior state). Fires on every
+                                    operator reconcile cycle the upstream gates allow,
+                                    including taskID-only force-reconciles. NOT a "spec
+                                    changed" signal.
+                 ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default) propagates the error; Ignore logs a warning and continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Cluster-scope reconcile lifecycle events. Required, non-empty.
+          Any              - wildcard match: fires on every cluster reconcile pass
+                             and the cluster delete sweep
+          ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                             only on the first reconcile of a brand-new cluster
+          ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                             least one host has prior state). Fires on every
+                             operator reconcile cycle the upstream gates allow,
+                             including taskID-only force-reconciles. NOT a "spec
+                             changed" signal.
+          ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default) propagates the error; Ignore logs a warning and continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostHttp']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostShell']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostSql']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostHttp(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostHttpPatch(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostPatch(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostPatch. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostPatch.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostPatch.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostHttpPatch'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostShellPatch'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostSqlPatch'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Cluster-scope reconcile lifecycle events. Required, non-empty.
+                 Any              - wildcard match: fires on every cluster reconcile pass
+                                    and the cluster delete sweep
+                 ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                                    only on the first reconcile of a brand-new cluster
+                 ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                                    least one host has prior state). Fires on every
+                                    operator reconcile cycle the upstream gates allow,
+                                    including taskID-only force-reconciles. NOT a "spec
+                                    changed" signal.
+                 ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default) propagates the error; Ignore logs a warning and continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Cluster-scope reconcile lifecycle events. Required, non-empty.
+          Any              - wildcard match: fires on every cluster reconcile pass
+                             and the cluster delete sweep
+          ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                             only on the first reconcile of a brand-new cluster
+          ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                             least one host has prior state). Fires on every
+                             operator reconcile cycle the upstream gates allow,
+                             including taskID-only force-reconciles. NOT a "spec
+                             changed" signal.
+          ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default) propagates the error; Ignore logs a warning and continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostHttpPatch']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostShellPatch']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostSqlPatch']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostShell(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostShellPatch(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostSql(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooksPostSqlPatch(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooksPre(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecConfigurationClustersReconcileHooksPre. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersReconcileHooksPre.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersReconcileHooksPre.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreHttp'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreShell'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreSql'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Cluster-scope reconcile lifecycle events. Required, non-empty.
+                 Any              - wildcard match: fires on every cluster reconcile pass
+                                    and the cluster delete sweep
+                 ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                                    only on the first reconcile of a brand-new cluster
+                 ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                                    least one host has prior state). Fires on every
+                                    operator reconcile cycle the upstream gates allow,
+                                    including taskID-only force-reconciles. NOT a "spec
+                                    changed" signal.
+                 ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default) propagates the error; Ignore logs a warning and continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Cluster-scope reconcile lifecycle events. Required, non-empty.
+          Any              - wildcard match: fires on every cluster reconcile pass
+                             and the cluster delete sweep
+          ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                             only on the first reconcile of a brand-new cluster
+          ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                             least one host has prior state). Fires on every
+                             operator reconcile cycle the upstream gates allow,
+                             including taskID-only force-reconciles. NOT a "spec
+                             changed" signal.
+          ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default) propagates the error; Ignore logs a warning and continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreHttp']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreShell']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreSql']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreHttp(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreHttpPatch(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooksPrePatch(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecConfigurationClustersReconcileHooksPrePatch. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersReconcileHooksPrePatch.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersReconcileHooksPrePatch.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreHttpPatch'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreShellPatch'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreSqlPatch'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Cluster-scope reconcile lifecycle events. Required, non-empty.
+                 Any              - wildcard match: fires on every cluster reconcile pass
+                                    and the cluster delete sweep
+                 ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                                    only on the first reconcile of a brand-new cluster
+                 ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                                    least one host has prior state). Fires on every
+                                    operator reconcile cycle the upstream gates allow,
+                                    including taskID-only force-reconciles. NOT a "spec
+                                    changed" signal.
+                 ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default) propagates the error; Ignore logs a warning and continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Cluster-scope reconcile lifecycle events. Required, non-empty.
+          Any              - wildcard match: fires on every cluster reconcile pass
+                             and the cluster delete sweep
+          ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                             only on the first reconcile of a brand-new cluster
+          ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                             least one host has prior state). Fires on every
+                             operator reconcile cycle the upstream gates allow,
+                             including taskID-only force-reconciles. NOT a "spec
+                             changed" signal.
+          ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default) propagates the error; Ignore logs a warning and continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreHttpPatch']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreShellPatch']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreSqlPatch']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreShell(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreShellPatch(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreSql(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHooksPreSqlPatch(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
 class ClickHouseInstallationSpecConfigurationClustersReconcileHost(dict):
     """
     Whether the operator during reconcile procedure should wait for a ClickHouse host:
@@ -3754,6 +4607,7 @@ class ClickHouseInstallationSpecConfigurationClustersReconcileHost(dict):
     """
     def __init__(__self__, *,
                  drop: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostDrop'] = None,
+                 hooks: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooks'] = None,
                  wait: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostWait'] = None):
         """
         Whether the operator during reconcile procedure should wait for a ClickHouse host:
@@ -3764,6 +4618,8 @@ class ClickHouseInstallationSpecConfigurationClustersReconcileHost(dict):
         """
         if drop is not None:
             pulumi.set(__self__, "drop", drop)
+        if hooks is not None:
+            pulumi.set(__self__, "hooks", hooks)
         if wait is not None:
             pulumi.set(__self__, "wait", wait)
 
@@ -3771,6 +4627,11 @@ class ClickHouseInstallationSpecConfigurationClustersReconcileHost(dict):
     @pulumi.getter
     def drop(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostDrop']:
         return pulumi.get(self, "drop")
+
+    @_builtins.property
+    @pulumi.getter
+    def hooks(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooks']:
+        return pulumi.get(self, "hooks")
 
     @_builtins.property
     @pulumi.getter
@@ -3834,6 +4695,7 @@ class ClickHouseInstallationSpecConfigurationClustersReconcileHostDropReplicas(d
                  on_lost_volume: Optional[_builtins.str] = None):
         """
         Whether the operator during reconcile procedure should drop replicas when replica is deleted or recreated
+
 
         :param _builtins.str active: Whether the operator during reconcile procedure should drop active replicas when replica is deleted or recreated
         :param _builtins.str on_delete: Whether the operator during reconcile procedure should drop replicas when replica is deleted
@@ -3902,6 +4764,7 @@ class ClickHouseInstallationSpecConfigurationClustersReconcileHostDropReplicasPa
         """
         Whether the operator during reconcile procedure should drop replicas when replica is deleted or recreated
 
+
         :param _builtins.str active: Whether the operator during reconcile procedure should drop active replicas when replica is deleted or recreated
         :param _builtins.str on_delete: Whether the operator during reconcile procedure should drop replicas when replica is deleted
         :param _builtins.str on_lost_volume: Whether the operator during reconcile procedure should drop replicas when replica volume is lost
@@ -3939,6 +4802,794 @@ class ClickHouseInstallationSpecConfigurationClustersReconcileHostDropReplicasPa
 
 
 @pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooks(dict):
+    """
+    hooks to execute before and after host reconcile
+    """
+    def __init__(__self__, *,
+                 post: Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPost']] = None,
+                 pre: Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPre']] = None):
+        """
+        hooks to execute before and after host reconcile
+
+        :param Sequence['ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostArgs'] post: actions to execute after reconcile
+        :param Sequence['ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreArgs'] pre: actions to execute before reconcile
+        """
+        if post is not None:
+            pulumi.set(__self__, "post", post)
+        if pre is not None:
+            pulumi.set(__self__, "pre", pre)
+
+    @_builtins.property
+    @pulumi.getter
+    def post(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPost']]:
+        """
+        actions to execute after reconcile
+        """
+        return pulumi.get(self, "post")
+
+    @_builtins.property
+    @pulumi.getter
+    def pre(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPre']]:
+        """
+        actions to execute before reconcile
+        """
+        return pulumi.get(self, "pre")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPatch(dict):
+    """
+    hooks to execute before and after host reconcile
+    """
+    def __init__(__self__, *,
+                 post: Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostPatch']] = None,
+                 pre: Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPrePatch']] = None):
+        """
+        hooks to execute before and after host reconcile
+
+        :param Sequence['ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostPatchArgs'] post: actions to execute after reconcile
+        :param Sequence['ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPrePatchArgs'] pre: actions to execute before reconcile
+        """
+        if post is not None:
+            pulumi.set(__self__, "post", post)
+        if pre is not None:
+            pulumi.set(__self__, "pre", pre)
+
+    @_builtins.property
+    @pulumi.getter
+    def post(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostPatch']]:
+        """
+        actions to execute after reconcile
+        """
+        return pulumi.get(self, "post")
+
+    @_builtins.property
+    @pulumi.getter
+    def pre(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPrePatch']]:
+        """
+        actions to execute before reconcile
+        """
+        return pulumi.get(self, "pre")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPost(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPost. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPost.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPost.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostHttp'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostShell'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostSql'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+               The hook is skipped on any reconcile whose classifier does not emit at least one
+               of the listed events. Supported values:
+                 Any               - wildcard match: fires on every hook-evaluation point,
+                                     including the pre-delete sweep on the dying host
+                 HostCreate        - first reconcile that creates a host (no ancestor); best
+                                     paired with POST hooks because PRE hooks on first creation
+                                     are skipped (no live pod yet)
+                 HostUpdate        - reconcile that has prior state for the host; catch-all
+                                     for ongoing reconciles
+                 HostStart         - host transitions from stopped to running
+                 HostStop          - host is being stopped (current spec marks it stopped)
+                 HostConfigRestart - in-place software restart for a configuration change
+                 HostRollout       - pod-template change forces a StatefulSet rollout
+                 HostShutdown      - aggregate: fires whenever the pod is going down for any
+                                     reason (Stop, ConfigRestart, Rollout, or Delete)
+                 HostDelete        - host is being removed from the cluster (downsize); fires
+                                     on the dying host before tear-down. Always emitted
+                                     alongside HostShutdown.
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+               Ignore: error is logged and the reconcile continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+        The hook is skipped on any reconcile whose classifier does not emit at least one
+        of the listed events. Supported values:
+          Any               - wildcard match: fires on every hook-evaluation point,
+                              including the pre-delete sweep on the dying host
+          HostCreate        - first reconcile that creates a host (no ancestor); best
+                              paired with POST hooks because PRE hooks on first creation
+                              are skipped (no live pod yet)
+          HostUpdate        - reconcile that has prior state for the host; catch-all
+                              for ongoing reconciles
+          HostStart         - host transitions from stopped to running
+          HostStop          - host is being stopped (current spec marks it stopped)
+          HostConfigRestart - in-place software restart for a configuration change
+          HostRollout       - pod-template change forces a StatefulSet rollout
+          HostShutdown      - aggregate: fires whenever the pod is going down for any
+                              reason (Stop, ConfigRestart, Rollout, or Delete)
+          HostDelete        - host is being removed from the cluster (downsize); fires
+                              on the dying host before tear-down. Always emitted
+                              alongside HostShutdown.
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+        Ignore: error is logged and the reconcile continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostHttp']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostShell']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostSql']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostHttp(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostHttpPatch(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostPatch(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostPatch. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostPatch.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostPatch.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostHttpPatch'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostShellPatch'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostSqlPatch'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+               The hook is skipped on any reconcile whose classifier does not emit at least one
+               of the listed events. Supported values:
+                 Any               - wildcard match: fires on every hook-evaluation point,
+                                     including the pre-delete sweep on the dying host
+                 HostCreate        - first reconcile that creates a host (no ancestor); best
+                                     paired with POST hooks because PRE hooks on first creation
+                                     are skipped (no live pod yet)
+                 HostUpdate        - reconcile that has prior state for the host; catch-all
+                                     for ongoing reconciles
+                 HostStart         - host transitions from stopped to running
+                 HostStop          - host is being stopped (current spec marks it stopped)
+                 HostConfigRestart - in-place software restart for a configuration change
+                 HostRollout       - pod-template change forces a StatefulSet rollout
+                 HostShutdown      - aggregate: fires whenever the pod is going down for any
+                                     reason (Stop, ConfigRestart, Rollout, or Delete)
+                 HostDelete        - host is being removed from the cluster (downsize); fires
+                                     on the dying host before tear-down. Always emitted
+                                     alongside HostShutdown.
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+               Ignore: error is logged and the reconcile continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+        The hook is skipped on any reconcile whose classifier does not emit at least one
+        of the listed events. Supported values:
+          Any               - wildcard match: fires on every hook-evaluation point,
+                              including the pre-delete sweep on the dying host
+          HostCreate        - first reconcile that creates a host (no ancestor); best
+                              paired with POST hooks because PRE hooks on first creation
+                              are skipped (no live pod yet)
+          HostUpdate        - reconcile that has prior state for the host; catch-all
+                              for ongoing reconciles
+          HostStart         - host transitions from stopped to running
+          HostStop          - host is being stopped (current spec marks it stopped)
+          HostConfigRestart - in-place software restart for a configuration change
+          HostRollout       - pod-template change forces a StatefulSet rollout
+          HostShutdown      - aggregate: fires whenever the pod is going down for any
+                              reason (Stop, ConfigRestart, Rollout, or Delete)
+          HostDelete        - host is being removed from the cluster (downsize); fires
+                              on the dying host before tear-down. Always emitted
+                              alongside HostShutdown.
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+        Ignore: error is logged and the reconcile continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostHttpPatch']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostShellPatch']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostSqlPatch']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostShell(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostShellPatch(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostSql(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPostSqlPatch(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPre(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPre. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPre.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPre.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreHttp'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreShell'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreSql'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+               The hook is skipped on any reconcile whose classifier does not emit at least one
+               of the listed events. Supported values:
+                 Any               - wildcard match: fires on every hook-evaluation point,
+                                     including the pre-delete sweep on the dying host
+                 HostCreate        - first reconcile that creates a host (no ancestor); best
+                                     paired with POST hooks because PRE hooks on first creation
+                                     are skipped (no live pod yet)
+                 HostUpdate        - reconcile that has prior state for the host; catch-all
+                                     for ongoing reconciles
+                 HostStart         - host transitions from stopped to running
+                 HostStop          - host is being stopped (current spec marks it stopped)
+                 HostConfigRestart - in-place software restart for a configuration change
+                 HostRollout       - pod-template change forces a StatefulSet rollout
+                 HostShutdown      - aggregate: fires whenever the pod is going down for any
+                                     reason (Stop, ConfigRestart, Rollout, or Delete)
+                 HostDelete        - host is being removed from the cluster (downsize); fires
+                                     on the dying host before tear-down. Always emitted
+                                     alongside HostShutdown.
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+               Ignore: error is logged and the reconcile continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+        The hook is skipped on any reconcile whose classifier does not emit at least one
+        of the listed events. Supported values:
+          Any               - wildcard match: fires on every hook-evaluation point,
+                              including the pre-delete sweep on the dying host
+          HostCreate        - first reconcile that creates a host (no ancestor); best
+                              paired with POST hooks because PRE hooks on first creation
+                              are skipped (no live pod yet)
+          HostUpdate        - reconcile that has prior state for the host; catch-all
+                              for ongoing reconciles
+          HostStart         - host transitions from stopped to running
+          HostStop          - host is being stopped (current spec marks it stopped)
+          HostConfigRestart - in-place software restart for a configuration change
+          HostRollout       - pod-template change forces a StatefulSet rollout
+          HostShutdown      - aggregate: fires whenever the pod is going down for any
+                              reason (Stop, ConfigRestart, Rollout, or Delete)
+          HostDelete        - host is being removed from the cluster (downsize); fires
+                              on the dying host before tear-down. Always emitted
+                              alongside HostShutdown.
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+        Ignore: error is logged and the reconcile continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreHttp']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreShell']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreSql']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreHttp(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreHttpPatch(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPrePatch(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPrePatch. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPrePatch.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPrePatch.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreHttpPatch'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreShellPatch'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreSqlPatch'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+               The hook is skipped on any reconcile whose classifier does not emit at least one
+               of the listed events. Supported values:
+                 Any               - wildcard match: fires on every hook-evaluation point,
+                                     including the pre-delete sweep on the dying host
+                 HostCreate        - first reconcile that creates a host (no ancestor); best
+                                     paired with POST hooks because PRE hooks on first creation
+                                     are skipped (no live pod yet)
+                 HostUpdate        - reconcile that has prior state for the host; catch-all
+                                     for ongoing reconciles
+                 HostStart         - host transitions from stopped to running
+                 HostStop          - host is being stopped (current spec marks it stopped)
+                 HostConfigRestart - in-place software restart for a configuration change
+                 HostRollout       - pod-template change forces a StatefulSet rollout
+                 HostShutdown      - aggregate: fires whenever the pod is going down for any
+                                     reason (Stop, ConfigRestart, Rollout, or Delete)
+                 HostDelete        - host is being removed from the cluster (downsize); fires
+                                     on the dying host before tear-down. Always emitted
+                                     alongside HostShutdown.
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+               Ignore: error is logged and the reconcile continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+        The hook is skipped on any reconcile whose classifier does not emit at least one
+        of the listed events. Supported values:
+          Any               - wildcard match: fires on every hook-evaluation point,
+                              including the pre-delete sweep on the dying host
+          HostCreate        - first reconcile that creates a host (no ancestor); best
+                              paired with POST hooks because PRE hooks on first creation
+                              are skipped (no live pod yet)
+          HostUpdate        - reconcile that has prior state for the host; catch-all
+                              for ongoing reconciles
+          HostStart         - host transitions from stopped to running
+          HostStop          - host is being stopped (current spec marks it stopped)
+          HostConfigRestart - in-place software restart for a configuration change
+          HostRollout       - pod-template change forces a StatefulSet rollout
+          HostShutdown      - aggregate: fires whenever the pod is going down for any
+                              reason (Stop, ConfigRestart, Rollout, or Delete)
+          HostDelete        - host is being removed from the cluster (downsize); fires
+                              on the dying host before tear-down. Always emitted
+                              alongside HostShutdown.
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+        Ignore: error is logged and the reconcile continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreHttpPatch']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreShellPatch']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreSqlPatch']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreShell(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreShellPatch(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreSql(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPreSqlPatch(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
 class ClickHouseInstallationSpecConfigurationClustersReconcileHostPatch(dict):
     """
     Whether the operator during reconcile procedure should wait for a ClickHouse host:
@@ -3949,6 +5600,7 @@ class ClickHouseInstallationSpecConfigurationClustersReconcileHostPatch(dict):
     """
     def __init__(__self__, *,
                  drop: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostDropPatch'] = None,
+                 hooks: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPatch'] = None,
                  wait: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostWaitPatch'] = None):
         """
         Whether the operator during reconcile procedure should wait for a ClickHouse host:
@@ -3959,6 +5611,8 @@ class ClickHouseInstallationSpecConfigurationClustersReconcileHostPatch(dict):
         """
         if drop is not None:
             pulumi.set(__self__, "drop", drop)
+        if hooks is not None:
+            pulumi.set(__self__, "hooks", hooks)
         if wait is not None:
             pulumi.set(__self__, "wait", wait)
 
@@ -3966,6 +5620,11 @@ class ClickHouseInstallationSpecConfigurationClustersReconcileHostPatch(dict):
     @pulumi.getter
     def drop(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostDropPatch']:
         return pulumi.get(self, "drop")
+
+    @_builtins.property
+    @pulumi.getter
+    def hooks(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostHooksPatch']:
+        return pulumi.get(self, "hooks")
 
     @_builtins.property
     @pulumi.getter
@@ -4113,6 +5772,7 @@ class ClickHouseInstallationSpecConfigurationClustersReconcileHostWaitProbes(dic
                  startup: Optional[_builtins.str] = None):
         """
         What probes the operator should wait during host launch procedure
+
         :param _builtins.str readiness: Whether the operator during host launch procedure should wait for ready probe to succeed.
                In case probe is unspecified wait is assumed to be completed successfully.
                Default option value is to wait.
@@ -4156,6 +5816,7 @@ class ClickHouseInstallationSpecConfigurationClustersReconcileHostWaitProbesPatc
                  startup: Optional[_builtins.str] = None):
         """
         What probes the operator should wait during host launch procedure
+
         :param _builtins.str readiness: Whether the operator during host launch procedure should wait for ready probe to succeed.
                In case probe is unspecified wait is assumed to be completed successfully.
                Default option value is to wait.
@@ -4200,6 +5861,7 @@ class ClickHouseInstallationSpecConfigurationClustersReconcileHostWaitReplicas(d
                  new: Optional[_builtins.str] = None):
         """
         Whether the operator during reconcile procedure should wait for replicas to catch-up
+
         :param _builtins.str all: Whether the operator during reconcile procedure should wait for all replicas to catch-up
         :param _builtins.int delay: replication max absolute delay to consider replica is not delayed
         :param _builtins.str new: Whether the operator during reconcile procedure should wait for new replicas to catch-up
@@ -4247,6 +5909,7 @@ class ClickHouseInstallationSpecConfigurationClustersReconcileHostWaitReplicasPa
                  new: Optional[_builtins.str] = None):
         """
         Whether the operator during reconcile procedure should wait for replicas to catch-up
+
         :param _builtins.str all: Whether the operator during reconcile procedure should wait for all replicas to catch-up
         :param _builtins.int delay: replication max absolute delay to consider replica is not delayed
         :param _builtins.str new: Whether the operator during reconcile procedure should wait for new replicas to catch-up
@@ -4289,15 +5952,23 @@ class ClickHouseInstallationSpecConfigurationClustersReconcilePatch(dict):
     allow tuning reconciling process
     """
     def __init__(__self__, *,
+                 hooks: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPatch'] = None,
                  host: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHostPatch'] = None,
                  runtime: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileRuntimePatch'] = None):
         """
         allow tuning reconciling process
         """
+        if hooks is not None:
+            pulumi.set(__self__, "hooks", hooks)
         if host is not None:
             pulumi.set(__self__, "host", host)
         if runtime is not None:
             pulumi.set(__self__, "runtime", runtime)
+
+    @_builtins.property
+    @pulumi.getter
+    def hooks(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersReconcileHooksPatch']:
+        return pulumi.get(self, "hooks")
 
     @_builtins.property
     @pulumi.getter
@@ -4339,6 +6010,7 @@ class ClickHouseInstallationSpecConfigurationClustersReconcileRuntime(dict):
                  reconcile_shards_threads_number: Optional[_builtins.int] = None):
         """
         runtime parameters for clickhouse-operator process which are used during reconcile cycle
+
         :param _builtins.int reconcile_shards_max_concurrency_percent: The maximum percentage of cluster shards that may be reconciled in parallel, 50 percent by default.
         :param _builtins.int reconcile_shards_threads_number: The maximum number of cluster shards that may be reconciled in parallel, 1 by default
         """
@@ -4393,6 +6065,7 @@ class ClickHouseInstallationSpecConfigurationClustersReconcileRuntimePatch(dict)
                  reconcile_shards_threads_number: Optional[_builtins.int] = None):
         """
         runtime parameters for clickhouse-operator process which are used during reconcile cycle
+
         :param _builtins.int reconcile_shards_max_concurrency_percent: The maximum percentage of cluster shards that may be reconciled in parallel, 50 percent by default.
         :param _builtins.int reconcile_shards_threads_number: The maximum number of cluster shards that may be reconciled in parallel, 1 by default
         """
@@ -4429,6 +6102,7 @@ class ClickHouseInstallationSpecConfigurationClustersSchemaPolicy(dict):
         """
         describes how schema is propagated within replicas and shards
 
+
         :param _builtins.str replica: how schema is propagated within a replica
         :param _builtins.str shard: how schema is propagated between shards
         """
@@ -4464,6 +6138,7 @@ class ClickHouseInstallationSpecConfigurationClustersSchemaPolicyPatch(dict):
                  shard: Optional[_builtins.str] = None):
         """
         describes how schema is propagated within replicas and shards
+
 
         :param _builtins.str replica: how schema is propagated within a replica
         :param _builtins.str shard: how schema is propagated between shards
@@ -4518,6 +6193,7 @@ class ClickHouseInstallationSpecConfigurationClustersSecret(dict):
                  value_from: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersSecretValueFrom'] = None):
         """
         optional, shared secret value to secure cluster communications
+
         :param _builtins.str auto: Auto-generate shared secret value to secure cluster communications
         :param _builtins.str value: Cluster shared secret value in plain text
         """
@@ -4578,6 +6254,7 @@ class ClickHouseInstallationSpecConfigurationClustersSecretPatch(dict):
                  value_from: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersSecretValueFromPatch'] = None):
         """
         optional, shared secret value to secure cluster communications
+
         :param _builtins.str auto: Auto-generate shared secret value to secure cluster communications
         :param _builtins.str value: Cluster shared secret value in plain text
         """
@@ -4696,6 +6373,7 @@ class ClickHouseInstallationSpecConfigurationClustersSecretValueFromSecretKeyRef
         Selects a key of a secret in the clickhouse installation namespace.
         Should not be used if value is not empty.
 
+
         :param _builtins.str key: The key of the secret to select from. Must be a valid secret key.
         :param _builtins.str name: Name of the referent. More info:
                https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
@@ -4747,6 +6425,7 @@ class ClickHouseInstallationSpecConfigurationClustersSecretValueFromSecretKeyRef
         """
         Selects a key of a secret in the clickhouse installation namespace.
         Should not be used if value is not empty.
+
 
         :param _builtins.str key: The key of the secret to select from. Must be a valid secret key.
         :param _builtins.str name: Name of the referent. More info:
@@ -4841,6 +6520,7 @@ class ClickHouseInstallationSpecConfigurationClustersTemplates(dict):
         """
         optional, configuration of the templates names which will use for generate Kubernetes resources according to selected cluster
         override top-level `chi.spec.configuration.templates`
+
 
         :param _builtins.str cluster_service_template: optional, template name from chi.spec.templates.serviceTemplates, allows customization for each `Service` resource which will created by `clickhouse-operator` which cover each clickhouse cluster described in `chi.spec.configuration.clusters`
         :param _builtins.str data_volume_claim_template: optional, template name from chi.spec.templates.volumeClaimTemplates, allows customization each `PVC` which will mount for clickhouse data directory in each `Pod` during render and reconcile every StatefulSet.spec resource described in `chi.spec.configuration.clusters`
@@ -5011,6 +6691,7 @@ class ClickHouseInstallationSpecConfigurationClustersTemplatesPatch(dict):
         optional, configuration of the templates names which will use for generate Kubernetes resources according to selected cluster
         override top-level `chi.spec.configuration.templates`
 
+
         :param _builtins.str cluster_service_template: optional, template name from chi.spec.templates.serviceTemplates, allows customization for each `Service` resource which will created by `clickhouse-operator` which cover each clickhouse cluster described in `chi.spec.configuration.clusters`
         :param _builtins.str data_volume_claim_template: optional, template name from chi.spec.templates.volumeClaimTemplates, allows customization each `PVC` which will mount for clickhouse data directory in each `Pod` during render and reconcile every StatefulSet.spec resource described in `chi.spec.configuration.clusters`
         :param _builtins.str host_template: optional, template name from chi.spec.templates.hostTemplates, which will apply to configure every `clickhouse-server` instance during render ConfigMap resources which will mount into `Pod`
@@ -5132,6 +6813,7 @@ class ClickHouseInstallationSpecConfigurationClustersZookeeper(dict):
     """
     def __init__(__self__, *,
                  identity: Optional[_builtins.str] = None,
+                 keeper: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersZookeeperKeeper'] = None,
                  nodes: Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersZookeeperNodes']] = None,
                  operation_timeout_ms: Optional[_builtins.int] = None,
                  root: Optional[_builtins.str] = None,
@@ -5140,6 +6822,7 @@ class ClickHouseInstallationSpecConfigurationClustersZookeeper(dict):
         """
         optional, allows configure <yandex><zookeeper>..</zookeeper></yandex> section in each `Pod` only in current ClickHouse cluster, during generate `ConfigMap` which will mounted in `/etc/clickhouse-server/config.d/`
         override top-level `chi.spec.configuration.zookeeper` settings
+
 
         :param _builtins.str identity: optional access credentials string with `user:password` format used when use digest authorization in Zookeeper
         :param Sequence['ClickHouseInstallationSpecConfigurationClustersZookeeperNodesArgs'] nodes: describe every available zookeeper cluster node for interaction
@@ -5150,6 +6833,8 @@ class ClickHouseInstallationSpecConfigurationClustersZookeeper(dict):
         """
         if identity is not None:
             pulumi.set(__self__, "identity", identity)
+        if keeper is not None:
+            pulumi.set(__self__, "keeper", keeper)
         if nodes is not None:
             pulumi.set(__self__, "nodes", nodes)
         if operation_timeout_ms is not None:
@@ -5168,6 +6853,11 @@ class ClickHouseInstallationSpecConfigurationClustersZookeeper(dict):
         optional access credentials string with `user:password` format used when use digest authorization in Zookeeper
         """
         return pulumi.get(self, "identity")
+
+    @_builtins.property
+    @pulumi.getter
+    def keeper(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersZookeeperKeeper']:
+        return pulumi.get(self, "keeper")
 
     @_builtins.property
     @pulumi.getter
@@ -5208,6 +6898,150 @@ class ClickHouseInstallationSpecConfigurationClustersZookeeper(dict):
         Enables compression in Keeper protocol if set to true
         """
         return pulumi.get(self, "use_compression")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersZookeeperKeeper(dict):
+    """
+    reference to a ClickHouseKeeperInstallation (CHK) resource.
+    The operator resolves this to ZooKeeper node addresses automatically.
+    """
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "serviceType":
+            suggest = "service_type"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecConfigurationClustersZookeeperKeeper. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersZookeeperKeeper.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersZookeeperKeeper.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 name: Optional[_builtins.str] = None,
+                 namespace: Optional[_builtins.str] = None,
+                 service_type: Optional[_builtins.str] = None):
+        """
+        reference to a ClickHouseKeeperInstallation (CHK) resource.
+        The operator resolves this to ZooKeeper node addresses automatically.
+
+
+        :param _builtins.str name: name of the ClickHouseKeeperInstallation custom resource
+        :param _builtins.str namespace: namespace of the CHK resource, defaults to the CHI namespace if omitted
+        :param _builtins.str service_type: how to discover keeper endpoints:
+                 replicas (default) — enumerate per-host services, one ZK node per keeper replica
+                 service — use the CR-level headless service as a single ZK node entry
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if namespace is not None:
+            pulumi.set(__self__, "namespace", namespace)
+        if service_type is not None:
+            pulumi.set(__self__, "service_type", service_type)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> Optional[_builtins.str]:
+        """
+        name of the ClickHouseKeeperInstallation custom resource
+        """
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter
+    def namespace(self) -> Optional[_builtins.str]:
+        """
+        namespace of the CHK resource, defaults to the CHI namespace if omitted
+        """
+        return pulumi.get(self, "namespace")
+
+    @_builtins.property
+    @pulumi.getter(name="serviceType")
+    def service_type(self) -> Optional[_builtins.str]:
+        """
+        how to discover keeper endpoints:
+          replicas (default) — enumerate per-host services, one ZK node per keeper replica
+          service — use the CR-level headless service as a single ZK node entry
+        """
+        return pulumi.get(self, "service_type")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationClustersZookeeperKeeperPatch(dict):
+    """
+    reference to a ClickHouseKeeperInstallation (CHK) resource.
+    The operator resolves this to ZooKeeper node addresses automatically.
+    """
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "serviceType":
+            suggest = "service_type"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecConfigurationClustersZookeeperKeeperPatch. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersZookeeperKeeperPatch.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecConfigurationClustersZookeeperKeeperPatch.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 name: Optional[_builtins.str] = None,
+                 namespace: Optional[_builtins.str] = None,
+                 service_type: Optional[_builtins.str] = None):
+        """
+        reference to a ClickHouseKeeperInstallation (CHK) resource.
+        The operator resolves this to ZooKeeper node addresses automatically.
+
+
+        :param _builtins.str name: name of the ClickHouseKeeperInstallation custom resource
+        :param _builtins.str namespace: namespace of the CHK resource, defaults to the CHI namespace if omitted
+        :param _builtins.str service_type: how to discover keeper endpoints:
+                 replicas (default) — enumerate per-host services, one ZK node per keeper replica
+                 service — use the CR-level headless service as a single ZK node entry
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if namespace is not None:
+            pulumi.set(__self__, "namespace", namespace)
+        if service_type is not None:
+            pulumi.set(__self__, "service_type", service_type)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> Optional[_builtins.str]:
+        """
+        name of the ClickHouseKeeperInstallation custom resource
+        """
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter
+    def namespace(self) -> Optional[_builtins.str]:
+        """
+        namespace of the CHK resource, defaults to the CHI namespace if omitted
+        """
+        return pulumi.get(self, "namespace")
+
+    @_builtins.property
+    @pulumi.getter(name="serviceType")
+    def service_type(self) -> Optional[_builtins.str]:
+        """
+        how to discover keeper endpoints:
+          replicas (default) — enumerate per-host services, one ZK node per keeper replica
+          service — use the CR-level headless service as a single ZK node entry
+        """
+        return pulumi.get(self, "service_type")
 
 
 @pulumi.output_type
@@ -5362,6 +7196,7 @@ class ClickHouseInstallationSpecConfigurationClustersZookeeperPatch(dict):
     """
     def __init__(__self__, *,
                  identity: Optional[_builtins.str] = None,
+                 keeper: Optional['outputs.ClickHouseInstallationSpecConfigurationClustersZookeeperKeeperPatch'] = None,
                  nodes: Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationClustersZookeeperNodesPatch']] = None,
                  operation_timeout_ms: Optional[_builtins.int] = None,
                  root: Optional[_builtins.str] = None,
@@ -5370,6 +7205,7 @@ class ClickHouseInstallationSpecConfigurationClustersZookeeperPatch(dict):
         """
         optional, allows configure <yandex><zookeeper>..</zookeeper></yandex> section in each `Pod` only in current ClickHouse cluster, during generate `ConfigMap` which will mounted in `/etc/clickhouse-server/config.d/`
         override top-level `chi.spec.configuration.zookeeper` settings
+
 
         :param _builtins.str identity: optional access credentials string with `user:password` format used when use digest authorization in Zookeeper
         :param Sequence['ClickHouseInstallationSpecConfigurationClustersZookeeperNodesPatchArgs'] nodes: describe every available zookeeper cluster node for interaction
@@ -5380,6 +7216,8 @@ class ClickHouseInstallationSpecConfigurationClustersZookeeperPatch(dict):
         """
         if identity is not None:
             pulumi.set(__self__, "identity", identity)
+        if keeper is not None:
+            pulumi.set(__self__, "keeper", keeper)
         if nodes is not None:
             pulumi.set(__self__, "nodes", nodes)
         if operation_timeout_ms is not None:
@@ -5398,6 +7236,11 @@ class ClickHouseInstallationSpecConfigurationClustersZookeeperPatch(dict):
         optional access credentials string with `user:password` format used when use digest authorization in Zookeeper
         """
         return pulumi.get(self, "identity")
+
+    @_builtins.property
+    @pulumi.getter
+    def keeper(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationClustersZookeeperKeeperPatch']:
+        return pulumi.get(self, "keeper")
 
     @_builtins.property
     @pulumi.getter
@@ -5455,6 +7298,7 @@ class ClickHouseInstallationSpecConfigurationPatch(dict):
                  zookeeper: Optional['outputs.ClickHouseInstallationSpecConfigurationZookeeperPatch'] = None):
         """
         allows configure multiple aspects and behavior for `clickhouse-server` instance and also allows describe multiple `clickhouse-server` clusters inside one `chi` resource
+
         :param Sequence['ClickHouseInstallationSpecConfigurationClustersPatchArgs'] clusters: describes clusters layout and allows change settings on cluster-level, shard-level and replica-level
                every cluster is a set of StatefulSet, one StatefulSet contains only one Pod with `clickhouse-server`
                all Pods will rendered in <remote_server> part of ClickHouse configs, mounted from ConfigMap as `/etc/clickhouse-server/config.d/chop-generated-remote_servers.xml`
@@ -5633,6 +7477,7 @@ class ClickHouseInstallationSpecConfigurationZookeeper(dict):
     """
     def __init__(__self__, *,
                  identity: Optional[_builtins.str] = None,
+                 keeper: Optional['outputs.ClickHouseInstallationSpecConfigurationZookeeperKeeper'] = None,
                  nodes: Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationZookeeperNodes']] = None,
                  operation_timeout_ms: Optional[_builtins.int] = None,
                  root: Optional[_builtins.str] = None,
@@ -5644,6 +7489,7 @@ class ClickHouseInstallationSpecConfigurationZookeeper(dict):
         currently, zookeeper (or clickhouse-keeper replacement) used for *ReplicatedMergeTree table engines and for `distributed_ddl`
         More details: https://clickhouse.tech/docs/en/operations/server-configuration-parameters/settings/#server-settings_zookeeper
 
+
         :param _builtins.str identity: optional access credentials string with `user:password` format used when use digest authorization in Zookeeper
         :param Sequence['ClickHouseInstallationSpecConfigurationZookeeperNodesArgs'] nodes: describe every available zookeeper cluster node for interaction
         :param _builtins.int operation_timeout_ms: one operation timeout during Zookeeper transactions
@@ -5653,6 +7499,8 @@ class ClickHouseInstallationSpecConfigurationZookeeper(dict):
         """
         if identity is not None:
             pulumi.set(__self__, "identity", identity)
+        if keeper is not None:
+            pulumi.set(__self__, "keeper", keeper)
         if nodes is not None:
             pulumi.set(__self__, "nodes", nodes)
         if operation_timeout_ms is not None:
@@ -5671,6 +7519,11 @@ class ClickHouseInstallationSpecConfigurationZookeeper(dict):
         optional access credentials string with `user:password` format used when use digest authorization in Zookeeper
         """
         return pulumi.get(self, "identity")
+
+    @_builtins.property
+    @pulumi.getter
+    def keeper(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationZookeeperKeeper']:
+        return pulumi.get(self, "keeper")
 
     @_builtins.property
     @pulumi.getter
@@ -5711,6 +7564,150 @@ class ClickHouseInstallationSpecConfigurationZookeeper(dict):
         Enables compression in Keeper protocol if set to true
         """
         return pulumi.get(self, "use_compression")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationZookeeperKeeper(dict):
+    """
+    reference to a ClickHouseKeeperInstallation (CHK) resource.
+    The operator resolves this to ZooKeeper node addresses automatically.
+    """
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "serviceType":
+            suggest = "service_type"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecConfigurationZookeeperKeeper. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecConfigurationZookeeperKeeper.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecConfigurationZookeeperKeeper.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 name: Optional[_builtins.str] = None,
+                 namespace: Optional[_builtins.str] = None,
+                 service_type: Optional[_builtins.str] = None):
+        """
+        reference to a ClickHouseKeeperInstallation (CHK) resource.
+        The operator resolves this to ZooKeeper node addresses automatically.
+
+
+        :param _builtins.str name: name of the ClickHouseKeeperInstallation custom resource
+        :param _builtins.str namespace: namespace of the CHK resource, defaults to the CHI namespace if omitted
+        :param _builtins.str service_type: how to discover keeper endpoints:
+                 replicas (default) — enumerate per-host services, one ZK node per keeper replica
+                 service — use the CR-level headless service as a single ZK node entry
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if namespace is not None:
+            pulumi.set(__self__, "namespace", namespace)
+        if service_type is not None:
+            pulumi.set(__self__, "service_type", service_type)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> Optional[_builtins.str]:
+        """
+        name of the ClickHouseKeeperInstallation custom resource
+        """
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter
+    def namespace(self) -> Optional[_builtins.str]:
+        """
+        namespace of the CHK resource, defaults to the CHI namespace if omitted
+        """
+        return pulumi.get(self, "namespace")
+
+    @_builtins.property
+    @pulumi.getter(name="serviceType")
+    def service_type(self) -> Optional[_builtins.str]:
+        """
+        how to discover keeper endpoints:
+          replicas (default) — enumerate per-host services, one ZK node per keeper replica
+          service — use the CR-level headless service as a single ZK node entry
+        """
+        return pulumi.get(self, "service_type")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecConfigurationZookeeperKeeperPatch(dict):
+    """
+    reference to a ClickHouseKeeperInstallation (CHK) resource.
+    The operator resolves this to ZooKeeper node addresses automatically.
+    """
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "serviceType":
+            suggest = "service_type"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecConfigurationZookeeperKeeperPatch. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecConfigurationZookeeperKeeperPatch.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecConfigurationZookeeperKeeperPatch.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 name: Optional[_builtins.str] = None,
+                 namespace: Optional[_builtins.str] = None,
+                 service_type: Optional[_builtins.str] = None):
+        """
+        reference to a ClickHouseKeeperInstallation (CHK) resource.
+        The operator resolves this to ZooKeeper node addresses automatically.
+
+
+        :param _builtins.str name: name of the ClickHouseKeeperInstallation custom resource
+        :param _builtins.str namespace: namespace of the CHK resource, defaults to the CHI namespace if omitted
+        :param _builtins.str service_type: how to discover keeper endpoints:
+                 replicas (default) — enumerate per-host services, one ZK node per keeper replica
+                 service — use the CR-level headless service as a single ZK node entry
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if namespace is not None:
+            pulumi.set(__self__, "namespace", namespace)
+        if service_type is not None:
+            pulumi.set(__self__, "service_type", service_type)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> Optional[_builtins.str]:
+        """
+        name of the ClickHouseKeeperInstallation custom resource
+        """
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter
+    def namespace(self) -> Optional[_builtins.str]:
+        """
+        namespace of the CHK resource, defaults to the CHI namespace if omitted
+        """
+        return pulumi.get(self, "namespace")
+
+    @_builtins.property
+    @pulumi.getter(name="serviceType")
+    def service_type(self) -> Optional[_builtins.str]:
+        """
+        how to discover keeper endpoints:
+          replicas (default) — enumerate per-host services, one ZK node per keeper replica
+          service — use the CR-level headless service as a single ZK node entry
+        """
+        return pulumi.get(self, "service_type")
 
 
 @pulumi.output_type
@@ -5867,6 +7864,7 @@ class ClickHouseInstallationSpecConfigurationZookeeperPatch(dict):
     """
     def __init__(__self__, *,
                  identity: Optional[_builtins.str] = None,
+                 keeper: Optional['outputs.ClickHouseInstallationSpecConfigurationZookeeperKeeperPatch'] = None,
                  nodes: Optional[Sequence['outputs.ClickHouseInstallationSpecConfigurationZookeeperNodesPatch']] = None,
                  operation_timeout_ms: Optional[_builtins.int] = None,
                  root: Optional[_builtins.str] = None,
@@ -5878,6 +7876,7 @@ class ClickHouseInstallationSpecConfigurationZookeeperPatch(dict):
         currently, zookeeper (or clickhouse-keeper replacement) used for *ReplicatedMergeTree table engines and for `distributed_ddl`
         More details: https://clickhouse.tech/docs/en/operations/server-configuration-parameters/settings/#server-settings_zookeeper
 
+
         :param _builtins.str identity: optional access credentials string with `user:password` format used when use digest authorization in Zookeeper
         :param Sequence['ClickHouseInstallationSpecConfigurationZookeeperNodesPatchArgs'] nodes: describe every available zookeeper cluster node for interaction
         :param _builtins.int operation_timeout_ms: one operation timeout during Zookeeper transactions
@@ -5887,6 +7886,8 @@ class ClickHouseInstallationSpecConfigurationZookeeperPatch(dict):
         """
         if identity is not None:
             pulumi.set(__self__, "identity", identity)
+        if keeper is not None:
+            pulumi.set(__self__, "keeper", keeper)
         if nodes is not None:
             pulumi.set(__self__, "nodes", nodes)
         if operation_timeout_ms is not None:
@@ -5905,6 +7906,11 @@ class ClickHouseInstallationSpecConfigurationZookeeperPatch(dict):
         optional access credentials string with `user:password` format used when use digest authorization in Zookeeper
         """
         return pulumi.get(self, "identity")
+
+    @_builtins.property
+    @pulumi.getter
+    def keeper(self) -> Optional['outputs.ClickHouseInstallationSpecConfigurationZookeeperKeeperPatch']:
+        return pulumi.get(self, "keeper")
 
     @_builtins.property
     @pulumi.getter
@@ -5983,6 +7989,7 @@ class ClickHouseInstallationSpecDefaults(dict):
         define default behavior for whole ClickHouseInstallation, some behavior can be re-define on cluster, shard and replica level
         More info: https://github.com/Altinity/clickhouse-operator/blob/master/docs/custom_resource_explained.md#specdefaults
 
+
         :param _builtins.str replicas_use_fqdn: define should replicas be specified by FQDN in `<host></host>`.
                In case of "no" will use short hostname and clickhouse-server will use kubernetes default suffixes for DNS lookup
                "no" by default
@@ -6034,6 +8041,7 @@ class ClickHouseInstallationSpecDefaultsDistributedDDL(dict):
         allows change `<yandex><distributed_ddl></distributed_ddl></yandex>` settings
         More info: https://clickhouse.tech/docs/en/operations/server-configuration-parameters/settings/#server-settings-distributed_ddl
 
+
         :param _builtins.str profile: Settings from this profile will be used to execute DDL queries
         """
         if profile is not None:
@@ -6059,6 +8067,7 @@ class ClickHouseInstallationSpecDefaultsDistributedDDLPatch(dict):
         """
         allows change `<yandex><distributed_ddl></distributed_ddl></yandex>` settings
         More info: https://clickhouse.tech/docs/en/operations/server-configuration-parameters/settings/#server-settings-distributed_ddl
+
 
         :param _builtins.str profile: Settings from this profile will be used to execute DDL queries
         """
@@ -6109,6 +8118,7 @@ class ClickHouseInstallationSpecDefaultsPatch(dict):
         """
         define default behavior for whole ClickHouseInstallation, some behavior can be re-define on cluster, shard and replica level
         More info: https://github.com/Altinity/clickhouse-operator/blob/master/docs/custom_resource_explained.md#specdefaults
+
 
         :param _builtins.str replicas_use_fqdn: define should replicas be specified by FQDN in `<host></host>`.
                In case of "no" will use short hostname and clickhouse-server will use kubernetes default suffixes for DNS lookup
@@ -6176,6 +8186,7 @@ class ClickHouseInstallationSpecDefaultsStorageManagement(dict):
                  reclaim_policy: Optional[_builtins.str] = None):
         """
         default storage management options
+
         :param _builtins.str provisioner: defines `PVC` provisioner - be it StatefulSet or the Operator
         :param _builtins.str reclaim_policy: defines behavior of `PVC` deletion.
                `Delete` by default, if `Retain` specified then `PVC` will be kept when deleting StatefulSet
@@ -6230,6 +8241,7 @@ class ClickHouseInstallationSpecDefaultsStorageManagementPatch(dict):
                  reclaim_policy: Optional[_builtins.str] = None):
         """
         default storage management options
+
         :param _builtins.str provisioner: defines `PVC` provisioner - be it StatefulSet or the Operator
         :param _builtins.str reclaim_policy: defines behavior of `PVC` deletion.
                `Delete` by default, if `Retain` specified then `PVC` will be kept when deleting StatefulSet
@@ -6310,6 +8322,7 @@ class ClickHouseInstallationSpecDefaultsTemplates(dict):
                  volume_claim_template: Optional[_builtins.str] = None):
         """
         optional, configuration of the templates names which will use for generate Kubernetes resources according to one or more ClickHouse clusters described in current ClickHouseInstallation (chi) resource
+
         :param _builtins.str cluster_service_template: optional, template name from chi.spec.templates.serviceTemplates, allows customization for each `Service` resource which will created by `clickhouse-operator` which cover each clickhouse cluster described in `chi.spec.configuration.clusters`
         :param _builtins.str data_volume_claim_template: optional, template name from chi.spec.templates.volumeClaimTemplates, allows customization each `PVC` which will mount for clickhouse data directory in each `Pod` during render and reconcile every StatefulSet.spec resource described in `chi.spec.configuration.clusters`
         :param _builtins.str host_template: optional, template name from chi.spec.templates.hostTemplates, which will apply to configure every `clickhouse-server` instance during render ConfigMap resources which will mount into `Pod`
@@ -6476,6 +8489,7 @@ class ClickHouseInstallationSpecDefaultsTemplatesPatch(dict):
                  volume_claim_template: Optional[_builtins.str] = None):
         """
         optional, configuration of the templates names which will use for generate Kubernetes resources according to one or more ClickHouse clusters described in current ClickHouseInstallation (chi) resource
+
         :param _builtins.str cluster_service_template: optional, template name from chi.spec.templates.serviceTemplates, allows customization for each `Service` resource which will created by `clickhouse-operator` which cover each clickhouse cluster described in `chi.spec.configuration.clusters`
         :param _builtins.str data_volume_claim_template: optional, template name from chi.spec.templates.volumeClaimTemplates, allows customization each `PVC` which will mount for clickhouse data directory in each `Pod` during render and reconcile every StatefulSet.spec resource described in `chi.spec.configuration.clusters`
         :param _builtins.str host_template: optional, template name from chi.spec.templates.hostTemplates, which will apply to configure every `clickhouse-server` instance during render ConfigMap resources which will mount into `Pod`
@@ -6633,6 +8647,7 @@ class ClickHouseInstallationSpecPatch(dict):
         """
         Specification of the desired behavior of one or more ClickHouse clusters
         More info: https://github.com/Altinity/clickhouse-operator/blob/master/docs/custom_resource_explained.md
+
 
         :param _builtins.str namespace_domain_pattern: Custom domain pattern which will be used for DNS names of `Service` or `Pod`.
                Typical use scenario - custom cluster domain in Kubernetes cluster
@@ -6814,6 +8829,7 @@ class ClickHouseInstallationSpecReconcile(dict):
 
     def __init__(__self__, *,
                  cleanup: Optional['outputs.ClickHouseInstallationSpecReconcileCleanup'] = None,
+                 cluster: Optional['outputs.ClickHouseInstallationSpecReconcileCluster'] = None,
                  config_map_propagation_timeout: Optional[_builtins.int] = None,
                  host: Optional['outputs.ClickHouseInstallationSpecReconcileHost'] = None,
                  macros: Optional['outputs.ClickHouseInstallationSpecReconcileMacros'] = None,
@@ -6822,6 +8838,7 @@ class ClickHouseInstallationSpecReconcile(dict):
                  stateful_set: Optional['outputs.ClickHouseInstallationSpecReconcileStatefulSet'] = None):
         """
         Optional, allows tuning reconciling cycle for ClickhouseInstallation from clickhouse-operator side
+
         :param _builtins.int config_map_propagation_timeout: Timeout in seconds for `clickhouse-operator` to wait for modified `ConfigMap` to propagate into the `Pod`
                More details: https://kubernetes.io/docs/concepts/configuration/configmap/#mounted-configmaps-are-updated-automatically
         :param _builtins.str policy: DISCUSSED TO BE DEPRECATED
@@ -6833,6 +8850,8 @@ class ClickHouseInstallationSpecReconcile(dict):
         """
         if cleanup is not None:
             pulumi.set(__self__, "cleanup", cleanup)
+        if cluster is not None:
+            pulumi.set(__self__, "cluster", cluster)
         if config_map_propagation_timeout is not None:
             pulumi.set(__self__, "config_map_propagation_timeout", config_map_propagation_timeout)
         if host is not None:
@@ -6850,6 +8869,11 @@ class ClickHouseInstallationSpecReconcile(dict):
     @pulumi.getter
     def cleanup(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileCleanup']:
         return pulumi.get(self, "cleanup")
+
+    @_builtins.property
+    @pulumi.getter
+    def cluster(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileCluster']:
+        return pulumi.get(self, "cluster")
 
     @_builtins.property
     @pulumi.getter(name="configMapPropagationTimeout")
@@ -7020,6 +9044,7 @@ class ClickHouseInstallationSpecReconcileCleanupReconcileFailedObjects(dict):
         Describes what clickhouse-operator should do with Kubernetes resources which are failed during reconcile.
         Default behavior is `Retain`"
 
+
         :param _builtins.str config_map: Behavior policy for failed ConfigMap, `Retain` by default
         :param _builtins.str pvc: Behavior policy for failed PVC, `Retain` by default
         :param _builtins.str service: Behavior policy for failed Service, `Retain` by default
@@ -7100,6 +9125,7 @@ class ClickHouseInstallationSpecReconcileCleanupReconcileFailedObjectsPatch(dict
         """
         Describes what clickhouse-operator should do with Kubernetes resources which are failed during reconcile.
         Default behavior is `Retain`"
+
 
         :param _builtins.str config_map: Behavior policy for failed ConfigMap, `Retain` by default
         :param _builtins.str pvc: Behavior policy for failed PVC, `Retain` by default
@@ -7184,6 +9210,7 @@ class ClickHouseInstallationSpecReconcileCleanupUnknownObjects(dict):
         but do not have `ownerReference` to any currently managed `ClickHouseInstallation` resource.
         Default behavior is `Delete`"
 
+
         :param _builtins.str config_map: Behavior policy for unknown ConfigMap, `Delete` by default
         :param _builtins.str pvc: Behavior policy for unknown PVC, `Delete` by default
         :param _builtins.str service: Behavior policy for unknown Service, `Delete` by default
@@ -7267,6 +9294,7 @@ class ClickHouseInstallationSpecReconcileCleanupUnknownObjectsPatch(dict):
         but do not have `ownerReference` to any currently managed `ClickHouseInstallation` resource.
         Default behavior is `Delete`"
 
+
         :param _builtins.str config_map: Behavior policy for unknown ConfigMap, `Delete` by default
         :param _builtins.str pvc: Behavior policy for unknown PVC, `Delete` by default
         :param _builtins.str service: Behavior policy for unknown Service, `Delete` by default
@@ -7315,6 +9343,776 @@ class ClickHouseInstallationSpecReconcileCleanupUnknownObjectsPatch(dict):
 
 
 @pulumi.output_type
+class ClickHouseInstallationSpecReconcileCluster(dict):
+    """
+    CHI-level cluster reconcile defaults inherited by every cluster's
+    spec.configuration.clusters[N].reconcile section. Use this as a single
+    place to define cluster-level hooks that should apply to all clusters
+    in this CHI; per-cluster hooks (under clusters[N].reconcile.hooks)
+    are appended to (and dedup'd against) the inherited set.
+    """
+    def __init__(__self__, *,
+                 hooks: Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooks'] = None):
+        """
+        CHI-level cluster reconcile defaults inherited by every cluster's
+        spec.configuration.clusters[N].reconcile section. Use this as a single
+        place to define cluster-level hooks that should apply to all clusters
+        in this CHI; per-cluster hooks (under clusters[N].reconcile.hooks)
+        are appended to (and dedup'd against) the inherited set.
+        """
+        if hooks is not None:
+            pulumi.set(__self__, "hooks", hooks)
+
+    @_builtins.property
+    @pulumi.getter
+    def hooks(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooks']:
+        return pulumi.get(self, "hooks")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooks(dict):
+    """
+    cluster-level hooks inherited by every cluster
+    """
+    def __init__(__self__, *,
+                 post: Optional[Sequence['outputs.ClickHouseInstallationSpecReconcileClusterHooksPost']] = None,
+                 pre: Optional[Sequence['outputs.ClickHouseInstallationSpecReconcileClusterHooksPre']] = None):
+        """
+        cluster-level hooks inherited by every cluster
+
+        :param Sequence['ClickHouseInstallationSpecReconcileClusterHooksPostArgs'] post: actions to execute after each cluster reconcile
+        :param Sequence['ClickHouseInstallationSpecReconcileClusterHooksPreArgs'] pre: actions to execute before each cluster reconcile
+        """
+        if post is not None:
+            pulumi.set(__self__, "post", post)
+        if pre is not None:
+            pulumi.set(__self__, "pre", pre)
+
+    @_builtins.property
+    @pulumi.getter
+    def post(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecReconcileClusterHooksPost']]:
+        """
+        actions to execute after each cluster reconcile
+        """
+        return pulumi.get(self, "post")
+
+    @_builtins.property
+    @pulumi.getter
+    def pre(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecReconcileClusterHooksPre']]:
+        """
+        actions to execute before each cluster reconcile
+        """
+        return pulumi.get(self, "pre")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooksPatch(dict):
+    """
+    cluster-level hooks inherited by every cluster
+    """
+    def __init__(__self__, *,
+                 post: Optional[Sequence['outputs.ClickHouseInstallationSpecReconcileClusterHooksPostPatch']] = None,
+                 pre: Optional[Sequence['outputs.ClickHouseInstallationSpecReconcileClusterHooksPrePatch']] = None):
+        """
+        cluster-level hooks inherited by every cluster
+
+        :param Sequence['ClickHouseInstallationSpecReconcileClusterHooksPostPatchArgs'] post: actions to execute after each cluster reconcile
+        :param Sequence['ClickHouseInstallationSpecReconcileClusterHooksPrePatchArgs'] pre: actions to execute before each cluster reconcile
+        """
+        if post is not None:
+            pulumi.set(__self__, "post", post)
+        if pre is not None:
+            pulumi.set(__self__, "pre", pre)
+
+    @_builtins.property
+    @pulumi.getter
+    def post(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecReconcileClusterHooksPostPatch']]:
+        """
+        actions to execute after each cluster reconcile
+        """
+        return pulumi.get(self, "post")
+
+    @_builtins.property
+    @pulumi.getter
+    def pre(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecReconcileClusterHooksPrePatch']]:
+        """
+        actions to execute before each cluster reconcile
+        """
+        return pulumi.get(self, "pre")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooksPost(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecReconcileClusterHooksPost. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecReconcileClusterHooksPost.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecReconcileClusterHooksPost.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPostHttp'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPostShell'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPostSql'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Cluster-scope reconcile lifecycle events. Required, non-empty.
+                 Any              - wildcard match: fires on every cluster reconcile pass
+                                    and the cluster delete sweep
+                 ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                                    only on the first reconcile of a brand-new cluster
+                 ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                                    least one host has prior state). Fires on every
+                                    operator reconcile cycle the upstream gates allow,
+                                    including taskID-only force-reconciles. NOT a "spec
+                                    changed" signal.
+                 ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default) propagates the error; Ignore logs a warning and continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Cluster-scope reconcile lifecycle events. Required, non-empty.
+          Any              - wildcard match: fires on every cluster reconcile pass
+                             and the cluster delete sweep
+          ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                             only on the first reconcile of a brand-new cluster
+          ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                             least one host has prior state). Fires on every
+                             operator reconcile cycle the upstream gates allow,
+                             including taskID-only force-reconciles. NOT a "spec
+                             changed" signal.
+          ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default) propagates the error; Ignore logs a warning and continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPostHttp']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPostShell']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPostSql']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooksPostHttp(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooksPostHttpPatch(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooksPostPatch(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecReconcileClusterHooksPostPatch. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecReconcileClusterHooksPostPatch.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecReconcileClusterHooksPostPatch.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPostHttpPatch'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPostShellPatch'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPostSqlPatch'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Cluster-scope reconcile lifecycle events. Required, non-empty.
+                 Any              - wildcard match: fires on every cluster reconcile pass
+                                    and the cluster delete sweep
+                 ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                                    only on the first reconcile of a brand-new cluster
+                 ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                                    least one host has prior state). Fires on every
+                                    operator reconcile cycle the upstream gates allow,
+                                    including taskID-only force-reconciles. NOT a "spec
+                                    changed" signal.
+                 ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default) propagates the error; Ignore logs a warning and continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Cluster-scope reconcile lifecycle events. Required, non-empty.
+          Any              - wildcard match: fires on every cluster reconcile pass
+                             and the cluster delete sweep
+          ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                             only on the first reconcile of a brand-new cluster
+          ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                             least one host has prior state). Fires on every
+                             operator reconcile cycle the upstream gates allow,
+                             including taskID-only force-reconciles. NOT a "spec
+                             changed" signal.
+          ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default) propagates the error; Ignore logs a warning and continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPostHttpPatch']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPostShellPatch']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPostSqlPatch']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooksPostShell(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooksPostShellPatch(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooksPostSql(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooksPostSqlPatch(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooksPre(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecReconcileClusterHooksPre. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecReconcileClusterHooksPre.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecReconcileClusterHooksPre.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPreHttp'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPreShell'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPreSql'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Cluster-scope reconcile lifecycle events. Required, non-empty.
+                 Any              - wildcard match: fires on every cluster reconcile pass
+                                    and the cluster delete sweep
+                 ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                                    only on the first reconcile of a brand-new cluster
+                 ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                                    least one host has prior state). Fires on every
+                                    operator reconcile cycle the upstream gates allow,
+                                    including taskID-only force-reconciles. NOT a "spec
+                                    changed" signal.
+                 ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default) propagates the error; Ignore logs a warning and continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Cluster-scope reconcile lifecycle events. Required, non-empty.
+          Any              - wildcard match: fires on every cluster reconcile pass
+                             and the cluster delete sweep
+          ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                             only on the first reconcile of a brand-new cluster
+          ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                             least one host has prior state). Fires on every
+                             operator reconcile cycle the upstream gates allow,
+                             including taskID-only force-reconciles. NOT a "spec
+                             changed" signal.
+          ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default) propagates the error; Ignore logs a warning and continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPreHttp']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPreShell']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPreSql']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooksPreHttp(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooksPreHttpPatch(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooksPrePatch(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecReconcileClusterHooksPrePatch. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecReconcileClusterHooksPrePatch.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecReconcileClusterHooksPrePatch.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPreHttpPatch'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPreShellPatch'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPreSqlPatch'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Cluster-scope reconcile lifecycle events. Required, non-empty.
+                 Any              - wildcard match: fires on every cluster reconcile pass
+                                    and the cluster delete sweep
+                 ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                                    only on the first reconcile of a brand-new cluster
+                 ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                                    least one host has prior state). Fires on every
+                                    operator reconcile cycle the upstream gates allow,
+                                    including taskID-only force-reconciles. NOT a "spec
+                                    changed" signal.
+                 ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default) propagates the error; Ignore logs a warning and continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Cluster-scope reconcile lifecycle events. Required, non-empty.
+          Any              - wildcard match: fires on every cluster reconcile pass
+                             and the cluster delete sweep
+          ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                             only on the first reconcile of a brand-new cluster
+          ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                             least one host has prior state). Fires on every
+                             operator reconcile cycle the upstream gates allow,
+                             including taskID-only force-reconciles. NOT a "spec
+                             changed" signal.
+          ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default) propagates the error; Ignore logs a warning and continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPreHttpPatch']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPreShellPatch']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPreSqlPatch']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooksPreShell(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooksPreShellPatch(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooksPreSql(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterHooksPreSqlPatch(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileClusterPatch(dict):
+    """
+    CHI-level cluster reconcile defaults inherited by every cluster's
+    spec.configuration.clusters[N].reconcile section. Use this as a single
+    place to define cluster-level hooks that should apply to all clusters
+    in this CHI; per-cluster hooks (under clusters[N].reconcile.hooks)
+    are appended to (and dedup'd against) the inherited set.
+    """
+    def __init__(__self__, *,
+                 hooks: Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPatch'] = None):
+        """
+        CHI-level cluster reconcile defaults inherited by every cluster's
+        spec.configuration.clusters[N].reconcile section. Use this as a single
+        place to define cluster-level hooks that should apply to all clusters
+        in this CHI; per-cluster hooks (under clusters[N].reconcile.hooks)
+        are appended to (and dedup'd against) the inherited set.
+        """
+        if hooks is not None:
+            pulumi.set(__self__, "hooks", hooks)
+
+    @_builtins.property
+    @pulumi.getter
+    def hooks(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileClusterHooksPatch']:
+        return pulumi.get(self, "hooks")
+
+
+@pulumi.output_type
 class ClickHouseInstallationSpecReconcileHost(dict):
     """
     Whether the operator during reconcile procedure should wait for a ClickHouse host:
@@ -7325,6 +10123,7 @@ class ClickHouseInstallationSpecReconcileHost(dict):
     """
     def __init__(__self__, *,
                  drop: Optional['outputs.ClickHouseInstallationSpecReconcileHostDrop'] = None,
+                 hooks: Optional['outputs.ClickHouseInstallationSpecReconcileHostHooks'] = None,
                  wait: Optional['outputs.ClickHouseInstallationSpecReconcileHostWait'] = None):
         """
         Whether the operator during reconcile procedure should wait for a ClickHouse host:
@@ -7335,6 +10134,8 @@ class ClickHouseInstallationSpecReconcileHost(dict):
         """
         if drop is not None:
             pulumi.set(__self__, "drop", drop)
+        if hooks is not None:
+            pulumi.set(__self__, "hooks", hooks)
         if wait is not None:
             pulumi.set(__self__, "wait", wait)
 
@@ -7342,6 +10143,11 @@ class ClickHouseInstallationSpecReconcileHost(dict):
     @pulumi.getter
     def drop(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileHostDrop']:
         return pulumi.get(self, "drop")
+
+    @_builtins.property
+    @pulumi.getter
+    def hooks(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileHostHooks']:
+        return pulumi.get(self, "hooks")
 
     @_builtins.property
     @pulumi.getter
@@ -7405,6 +10211,7 @@ class ClickHouseInstallationSpecReconcileHostDropReplicas(dict):
                  on_lost_volume: Optional[_builtins.str] = None):
         """
         Whether the operator during reconcile procedure should drop replicas when replica is deleted or recreated
+
 
         :param _builtins.str active: Whether the operator during reconcile procedure should drop active replicas when replica is deleted or recreated
         :param _builtins.str on_delete: Whether the operator during reconcile procedure should drop replicas when replica is deleted
@@ -7473,6 +10280,7 @@ class ClickHouseInstallationSpecReconcileHostDropReplicasPatch(dict):
         """
         Whether the operator during reconcile procedure should drop replicas when replica is deleted or recreated
 
+
         :param _builtins.str active: Whether the operator during reconcile procedure should drop active replicas when replica is deleted or recreated
         :param _builtins.str on_delete: Whether the operator during reconcile procedure should drop replicas when replica is deleted
         :param _builtins.str on_lost_volume: Whether the operator during reconcile procedure should drop replicas when replica volume is lost
@@ -7510,6 +10318,794 @@ class ClickHouseInstallationSpecReconcileHostDropReplicasPatch(dict):
 
 
 @pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooks(dict):
+    """
+    hooks to execute before and after host reconcile
+    """
+    def __init__(__self__, *,
+                 post: Optional[Sequence['outputs.ClickHouseInstallationSpecReconcileHostHooksPost']] = None,
+                 pre: Optional[Sequence['outputs.ClickHouseInstallationSpecReconcileHostHooksPre']] = None):
+        """
+        hooks to execute before and after host reconcile
+
+        :param Sequence['ClickHouseInstallationSpecReconcileHostHooksPostArgs'] post: actions to execute after reconcile
+        :param Sequence['ClickHouseInstallationSpecReconcileHostHooksPreArgs'] pre: actions to execute before reconcile
+        """
+        if post is not None:
+            pulumi.set(__self__, "post", post)
+        if pre is not None:
+            pulumi.set(__self__, "pre", pre)
+
+    @_builtins.property
+    @pulumi.getter
+    def post(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecReconcileHostHooksPost']]:
+        """
+        actions to execute after reconcile
+        """
+        return pulumi.get(self, "post")
+
+    @_builtins.property
+    @pulumi.getter
+    def pre(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecReconcileHostHooksPre']]:
+        """
+        actions to execute before reconcile
+        """
+        return pulumi.get(self, "pre")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooksPatch(dict):
+    """
+    hooks to execute before and after host reconcile
+    """
+    def __init__(__self__, *,
+                 post: Optional[Sequence['outputs.ClickHouseInstallationSpecReconcileHostHooksPostPatch']] = None,
+                 pre: Optional[Sequence['outputs.ClickHouseInstallationSpecReconcileHostHooksPrePatch']] = None):
+        """
+        hooks to execute before and after host reconcile
+
+        :param Sequence['ClickHouseInstallationSpecReconcileHostHooksPostPatchArgs'] post: actions to execute after reconcile
+        :param Sequence['ClickHouseInstallationSpecReconcileHostHooksPrePatchArgs'] pre: actions to execute before reconcile
+        """
+        if post is not None:
+            pulumi.set(__self__, "post", post)
+        if pre is not None:
+            pulumi.set(__self__, "pre", pre)
+
+    @_builtins.property
+    @pulumi.getter
+    def post(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecReconcileHostHooksPostPatch']]:
+        """
+        actions to execute after reconcile
+        """
+        return pulumi.get(self, "post")
+
+    @_builtins.property
+    @pulumi.getter
+    def pre(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecReconcileHostHooksPrePatch']]:
+        """
+        actions to execute before reconcile
+        """
+        return pulumi.get(self, "pre")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooksPost(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecReconcileHostHooksPost. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecReconcileHostHooksPost.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecReconcileHostHooksPost.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPostHttp'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPostShell'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPostSql'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+               The hook is skipped on any reconcile whose classifier does not emit at least one
+               of the listed events. Supported values:
+                 Any               - wildcard match: fires on every hook-evaluation point,
+                                     including the pre-delete sweep on the dying host
+                 HostCreate        - first reconcile that creates a host (no ancestor); best
+                                     paired with POST hooks because PRE hooks on first creation
+                                     are skipped (no live pod yet)
+                 HostUpdate        - reconcile that has prior state for the host; catch-all
+                                     for ongoing reconciles
+                 HostStart         - host transitions from stopped to running
+                 HostStop          - host is being stopped (current spec marks it stopped)
+                 HostConfigRestart - in-place software restart for a configuration change
+                 HostRollout       - pod-template change forces a StatefulSet rollout
+                 HostShutdown      - aggregate: fires whenever the pod is going down for any
+                                     reason (Stop, ConfigRestart, Rollout, or Delete)
+                 HostDelete        - host is being removed from the cluster (downsize); fires
+                                     on the dying host before tear-down. Always emitted
+                                     alongside HostShutdown.
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+               Ignore: error is logged and the reconcile continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+        The hook is skipped on any reconcile whose classifier does not emit at least one
+        of the listed events. Supported values:
+          Any               - wildcard match: fires on every hook-evaluation point,
+                              including the pre-delete sweep on the dying host
+          HostCreate        - first reconcile that creates a host (no ancestor); best
+                              paired with POST hooks because PRE hooks on first creation
+                              are skipped (no live pod yet)
+          HostUpdate        - reconcile that has prior state for the host; catch-all
+                              for ongoing reconciles
+          HostStart         - host transitions from stopped to running
+          HostStop          - host is being stopped (current spec marks it stopped)
+          HostConfigRestart - in-place software restart for a configuration change
+          HostRollout       - pod-template change forces a StatefulSet rollout
+          HostShutdown      - aggregate: fires whenever the pod is going down for any
+                              reason (Stop, ConfigRestart, Rollout, or Delete)
+          HostDelete        - host is being removed from the cluster (downsize); fires
+                              on the dying host before tear-down. Always emitted
+                              alongside HostShutdown.
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+        Ignore: error is logged and the reconcile continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPostHttp']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPostShell']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPostSql']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooksPostHttp(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooksPostHttpPatch(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooksPostPatch(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecReconcileHostHooksPostPatch. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecReconcileHostHooksPostPatch.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecReconcileHostHooksPostPatch.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPostHttpPatch'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPostShellPatch'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPostSqlPatch'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+               The hook is skipped on any reconcile whose classifier does not emit at least one
+               of the listed events. Supported values:
+                 Any               - wildcard match: fires on every hook-evaluation point,
+                                     including the pre-delete sweep on the dying host
+                 HostCreate        - first reconcile that creates a host (no ancestor); best
+                                     paired with POST hooks because PRE hooks on first creation
+                                     are skipped (no live pod yet)
+                 HostUpdate        - reconcile that has prior state for the host; catch-all
+                                     for ongoing reconciles
+                 HostStart         - host transitions from stopped to running
+                 HostStop          - host is being stopped (current spec marks it stopped)
+                 HostConfigRestart - in-place software restart for a configuration change
+                 HostRollout       - pod-template change forces a StatefulSet rollout
+                 HostShutdown      - aggregate: fires whenever the pod is going down for any
+                                     reason (Stop, ConfigRestart, Rollout, or Delete)
+                 HostDelete        - host is being removed from the cluster (downsize); fires
+                                     on the dying host before tear-down. Always emitted
+                                     alongside HostShutdown.
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+               Ignore: error is logged and the reconcile continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+        The hook is skipped on any reconcile whose classifier does not emit at least one
+        of the listed events. Supported values:
+          Any               - wildcard match: fires on every hook-evaluation point,
+                              including the pre-delete sweep on the dying host
+          HostCreate        - first reconcile that creates a host (no ancestor); best
+                              paired with POST hooks because PRE hooks on first creation
+                              are skipped (no live pod yet)
+          HostUpdate        - reconcile that has prior state for the host; catch-all
+                              for ongoing reconciles
+          HostStart         - host transitions from stopped to running
+          HostStop          - host is being stopped (current spec marks it stopped)
+          HostConfigRestart - in-place software restart for a configuration change
+          HostRollout       - pod-template change forces a StatefulSet rollout
+          HostShutdown      - aggregate: fires whenever the pod is going down for any
+                              reason (Stop, ConfigRestart, Rollout, or Delete)
+          HostDelete        - host is being removed from the cluster (downsize); fires
+                              on the dying host before tear-down. Always emitted
+                              alongside HostShutdown.
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+        Ignore: error is logged and the reconcile continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPostHttpPatch']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPostShellPatch']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPostSqlPatch']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooksPostShell(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooksPostShellPatch(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooksPostSql(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooksPostSqlPatch(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooksPre(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecReconcileHostHooksPre. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecReconcileHostHooksPre.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecReconcileHostHooksPre.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPreHttp'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPreShell'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPreSql'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+               The hook is skipped on any reconcile whose classifier does not emit at least one
+               of the listed events. Supported values:
+                 Any               - wildcard match: fires on every hook-evaluation point,
+                                     including the pre-delete sweep on the dying host
+                 HostCreate        - first reconcile that creates a host (no ancestor); best
+                                     paired with POST hooks because PRE hooks on first creation
+                                     are skipped (no live pod yet)
+                 HostUpdate        - reconcile that has prior state for the host; catch-all
+                                     for ongoing reconciles
+                 HostStart         - host transitions from stopped to running
+                 HostStop          - host is being stopped (current spec marks it stopped)
+                 HostConfigRestart - in-place software restart for a configuration change
+                 HostRollout       - pod-template change forces a StatefulSet rollout
+                 HostShutdown      - aggregate: fires whenever the pod is going down for any
+                                     reason (Stop, ConfigRestart, Rollout, or Delete)
+                 HostDelete        - host is being removed from the cluster (downsize); fires
+                                     on the dying host before tear-down. Always emitted
+                                     alongside HostShutdown.
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+               Ignore: error is logged and the reconcile continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+        The hook is skipped on any reconcile whose classifier does not emit at least one
+        of the listed events. Supported values:
+          Any               - wildcard match: fires on every hook-evaluation point,
+                              including the pre-delete sweep on the dying host
+          HostCreate        - first reconcile that creates a host (no ancestor); best
+                              paired with POST hooks because PRE hooks on first creation
+                              are skipped (no live pod yet)
+          HostUpdate        - reconcile that has prior state for the host; catch-all
+                              for ongoing reconciles
+          HostStart         - host transitions from stopped to running
+          HostStop          - host is being stopped (current spec marks it stopped)
+          HostConfigRestart - in-place software restart for a configuration change
+          HostRollout       - pod-template change forces a StatefulSet rollout
+          HostShutdown      - aggregate: fires whenever the pod is going down for any
+                              reason (Stop, ConfigRestart, Rollout, or Delete)
+          HostDelete        - host is being removed from the cluster (downsize); fires
+                              on the dying host before tear-down. Always emitted
+                              alongside HostShutdown.
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+        Ignore: error is logged and the reconcile continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPreHttp']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPreShell']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPreSql']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooksPreHttp(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooksPreHttpPatch(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooksPrePatch(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecReconcileHostHooksPrePatch. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecReconcileHostHooksPrePatch.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecReconcileHostHooksPrePatch.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPreHttpPatch'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPreShellPatch'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPreSqlPatch'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+               The hook is skipped on any reconcile whose classifier does not emit at least one
+               of the listed events. Supported values:
+                 Any               - wildcard match: fires on every hook-evaluation point,
+                                     including the pre-delete sweep on the dying host
+                 HostCreate        - first reconcile that creates a host (no ancestor); best
+                                     paired with POST hooks because PRE hooks on first creation
+                                     are skipped (no live pod yet)
+                 HostUpdate        - reconcile that has prior state for the host; catch-all
+                                     for ongoing reconciles
+                 HostStart         - host transitions from stopped to running
+                 HostStop          - host is being stopped (current spec marks it stopped)
+                 HostConfigRestart - in-place software restart for a configuration change
+                 HostRollout       - pod-template change forces a StatefulSet rollout
+                 HostShutdown      - aggregate: fires whenever the pod is going down for any
+                                     reason (Stop, ConfigRestart, Rollout, or Delete)
+                 HostDelete        - host is being removed from the cluster (downsize); fires
+                                     on the dying host before tear-down. Always emitted
+                                     alongside HostShutdown.
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+               Ignore: error is logged and the reconcile continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+        The hook is skipped on any reconcile whose classifier does not emit at least one
+        of the listed events. Supported values:
+          Any               - wildcard match: fires on every hook-evaluation point,
+                              including the pre-delete sweep on the dying host
+          HostCreate        - first reconcile that creates a host (no ancestor); best
+                              paired with POST hooks because PRE hooks on first creation
+                              are skipped (no live pod yet)
+          HostUpdate        - reconcile that has prior state for the host; catch-all
+                              for ongoing reconciles
+          HostStart         - host transitions from stopped to running
+          HostStop          - host is being stopped (current spec marks it stopped)
+          HostConfigRestart - in-place software restart for a configuration change
+          HostRollout       - pod-template change forces a StatefulSet rollout
+          HostShutdown      - aggregate: fires whenever the pod is going down for any
+                              reason (Stop, ConfigRestart, Rollout, or Delete)
+          HostDelete        - host is being removed from the cluster (downsize); fires
+                              on the dying host before tear-down. Always emitted
+                              alongside HostShutdown.
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+        Ignore: error is logged and the reconcile continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPreHttpPatch']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPreShellPatch']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPreSqlPatch']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooksPreShell(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooksPreShellPatch(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooksPreSql(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcileHostHooksPreSqlPatch(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
 class ClickHouseInstallationSpecReconcileHostPatch(dict):
     """
     Whether the operator during reconcile procedure should wait for a ClickHouse host:
@@ -7520,6 +11116,7 @@ class ClickHouseInstallationSpecReconcileHostPatch(dict):
     """
     def __init__(__self__, *,
                  drop: Optional['outputs.ClickHouseInstallationSpecReconcileHostDropPatch'] = None,
+                 hooks: Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPatch'] = None,
                  wait: Optional['outputs.ClickHouseInstallationSpecReconcileHostWaitPatch'] = None):
         """
         Whether the operator during reconcile procedure should wait for a ClickHouse host:
@@ -7530,6 +11127,8 @@ class ClickHouseInstallationSpecReconcileHostPatch(dict):
         """
         if drop is not None:
             pulumi.set(__self__, "drop", drop)
+        if hooks is not None:
+            pulumi.set(__self__, "hooks", hooks)
         if wait is not None:
             pulumi.set(__self__, "wait", wait)
 
@@ -7537,6 +11136,11 @@ class ClickHouseInstallationSpecReconcileHostPatch(dict):
     @pulumi.getter
     def drop(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileHostDropPatch']:
         return pulumi.get(self, "drop")
+
+    @_builtins.property
+    @pulumi.getter
+    def hooks(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileHostHooksPatch']:
+        return pulumi.get(self, "hooks")
 
     @_builtins.property
     @pulumi.getter
@@ -7684,6 +11288,7 @@ class ClickHouseInstallationSpecReconcileHostWaitProbes(dict):
                  startup: Optional[_builtins.str] = None):
         """
         What probes the operator should wait during host launch procedure
+
         :param _builtins.str readiness: Whether the operator during host launch procedure should wait for ready probe to succeed.
                In case probe is unspecified wait is assumed to be completed successfully.
                Default option value is to wait.
@@ -7727,6 +11332,7 @@ class ClickHouseInstallationSpecReconcileHostWaitProbesPatch(dict):
                  startup: Optional[_builtins.str] = None):
         """
         What probes the operator should wait during host launch procedure
+
         :param _builtins.str readiness: Whether the operator during host launch procedure should wait for ready probe to succeed.
                In case probe is unspecified wait is assumed to be completed successfully.
                Default option value is to wait.
@@ -7771,6 +11377,7 @@ class ClickHouseInstallationSpecReconcileHostWaitReplicas(dict):
                  new: Optional[_builtins.str] = None):
         """
         Whether the operator during reconcile procedure should wait for replicas to catch-up
+
         :param _builtins.str all: Whether the operator during reconcile procedure should wait for all replicas to catch-up
         :param _builtins.int delay: replication max absolute delay to consider replica is not delayed
         :param _builtins.str new: Whether the operator during reconcile procedure should wait for new replicas to catch-up
@@ -7818,6 +11425,7 @@ class ClickHouseInstallationSpecReconcileHostWaitReplicasPatch(dict):
                  new: Optional[_builtins.str] = None):
         """
         Whether the operator during reconcile procedure should wait for replicas to catch-up
+
         :param _builtins.str all: Whether the operator during reconcile procedure should wait for all replicas to catch-up
         :param _builtins.int delay: replication max absolute delay to consider replica is not delayed
         :param _builtins.str new: Whether the operator during reconcile procedure should wait for new replicas to catch-up
@@ -7952,6 +11560,7 @@ class ClickHouseInstallationSpecReconcileMacrosSectionsFiles(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on files
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -7975,6 +11584,7 @@ class ClickHouseInstallationSpecReconcileMacrosSectionsFilesPatch(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on files
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -8049,6 +11659,7 @@ class ClickHouseInstallationSpecReconcileMacrosSectionsProfiles(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on profiles
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -8072,6 +11683,7 @@ class ClickHouseInstallationSpecReconcileMacrosSectionsProfilesPatch(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on profiles
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -8095,6 +11707,7 @@ class ClickHouseInstallationSpecReconcileMacrosSectionsQuotas(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on quotas
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -8118,6 +11731,7 @@ class ClickHouseInstallationSpecReconcileMacrosSectionsQuotasPatch(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on quotas
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -8141,6 +11755,7 @@ class ClickHouseInstallationSpecReconcileMacrosSectionsSettings(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on settings
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -8164,6 +11779,7 @@ class ClickHouseInstallationSpecReconcileMacrosSectionsSettingsPatch(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on settings
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -8187,6 +11803,7 @@ class ClickHouseInstallationSpecReconcileMacrosSectionsUsers(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on users
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -8210,6 +11827,7 @@ class ClickHouseInstallationSpecReconcileMacrosSectionsUsersPatch(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on users
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -8250,6 +11868,7 @@ class ClickHouseInstallationSpecReconcilePatch(dict):
 
     def __init__(__self__, *,
                  cleanup: Optional['outputs.ClickHouseInstallationSpecReconcileCleanupPatch'] = None,
+                 cluster: Optional['outputs.ClickHouseInstallationSpecReconcileClusterPatch'] = None,
                  config_map_propagation_timeout: Optional[_builtins.int] = None,
                  host: Optional['outputs.ClickHouseInstallationSpecReconcileHostPatch'] = None,
                  macros: Optional['outputs.ClickHouseInstallationSpecReconcileMacrosPatch'] = None,
@@ -8258,6 +11877,7 @@ class ClickHouseInstallationSpecReconcilePatch(dict):
                  stateful_set: Optional['outputs.ClickHouseInstallationSpecReconcileStatefulSetPatch'] = None):
         """
         Optional, allows tuning reconciling cycle for ClickhouseInstallation from clickhouse-operator side
+
         :param _builtins.int config_map_propagation_timeout: Timeout in seconds for `clickhouse-operator` to wait for modified `ConfigMap` to propagate into the `Pod`
                More details: https://kubernetes.io/docs/concepts/configuration/configmap/#mounted-configmaps-are-updated-automatically
         :param _builtins.str policy: DISCUSSED TO BE DEPRECATED
@@ -8269,6 +11889,8 @@ class ClickHouseInstallationSpecReconcilePatch(dict):
         """
         if cleanup is not None:
             pulumi.set(__self__, "cleanup", cleanup)
+        if cluster is not None:
+            pulumi.set(__self__, "cluster", cluster)
         if config_map_propagation_timeout is not None:
             pulumi.set(__self__, "config_map_propagation_timeout", config_map_propagation_timeout)
         if host is not None:
@@ -8286,6 +11908,11 @@ class ClickHouseInstallationSpecReconcilePatch(dict):
     @pulumi.getter
     def cleanup(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileCleanupPatch']:
         return pulumi.get(self, "cleanup")
+
+    @_builtins.property
+    @pulumi.getter
+    def cluster(self) -> Optional['outputs.ClickHouseInstallationSpecReconcileClusterPatch']:
+        return pulumi.get(self, "cluster")
 
     @_builtins.property
     @pulumi.getter(name="configMapPropagationTimeout")
@@ -8359,6 +11986,7 @@ class ClickHouseInstallationSpecReconcileRuntime(dict):
                  reconcile_shards_threads_number: Optional[_builtins.int] = None):
         """
         runtime parameters for clickhouse-operator process which are used during reconcile cycle
+
         :param _builtins.int reconcile_shards_max_concurrency_percent: The maximum percentage of cluster shards that may be reconciled in parallel, 50 percent by default.
         :param _builtins.int reconcile_shards_threads_number: The maximum number of cluster shards that may be reconciled in parallel, 1 by default
         """
@@ -8413,6 +12041,7 @@ class ClickHouseInstallationSpecReconcileRuntimePatch(dict):
                  reconcile_shards_threads_number: Optional[_builtins.int] = None):
         """
         runtime parameters for clickhouse-operator process which are used during reconcile cycle
+
         :param _builtins.int reconcile_shards_max_concurrency_percent: The maximum percentage of cluster shards that may be reconciled in parallel, 50 percent by default.
         :param _builtins.int reconcile_shards_threads_number: The maximum number of cluster shards that may be reconciled in parallel, 1 by default
         """
@@ -8499,6 +12128,7 @@ class ClickHouseInstallationSpecReconcileStatefulSetCreate(dict):
                  on_failure: Optional[_builtins.str] = None):
         """
         Behavior during create StatefulSet
+
         :param _builtins.str on_failure: What to do in case created StatefulSet is not in 'Ready' after `reconcile.statefulSet.update.timeout` seconds.
                Possible options:
                1. abort - abort the process, do nothing with the problematic StatefulSet, leave it as it is.
@@ -8547,6 +12177,7 @@ class ClickHouseInstallationSpecReconcileStatefulSetCreatePatch(dict):
                  on_failure: Optional[_builtins.str] = None):
         """
         Behavior during create StatefulSet
+
         :param _builtins.str on_failure: What to do in case created StatefulSet is not in 'Ready' after `reconcile.statefulSet.update.timeout` seconds.
                Possible options:
                1. abort - abort the process, do nothing with the problematic StatefulSet, leave it as it is.
@@ -8633,6 +12264,7 @@ class ClickHouseInstallationSpecReconcileStatefulSetRecreate(dict):
                  on_update_failure: Optional[_builtins.str] = None):
         """
         Behavior during recreate StatefulSet
+
         :param _builtins.str on_data_loss: What to do in case operator needs to recreate StatefulSet due to PVC data loss or missing volumes.
                Possible options:
                1. abort - abort the process, do nothing with the problematic StatefulSet.
@@ -8699,6 +12331,7 @@ class ClickHouseInstallationSpecReconcileStatefulSetRecreatePatch(dict):
                  on_update_failure: Optional[_builtins.str] = None):
         """
         Behavior during recreate StatefulSet
+
         :param _builtins.str on_data_loss: What to do in case operator needs to recreate StatefulSet due to PVC data loss or missing volumes.
                Possible options:
                1. abort - abort the process, do nothing with the problematic StatefulSet.
@@ -8766,6 +12399,7 @@ class ClickHouseInstallationSpecReconcileStatefulSetUpdate(dict):
                  timeout: Optional[_builtins.int] = None):
         """
         Behavior during update StatefulSet
+
         :param _builtins.str on_failure: What to do in case updated StatefulSet is not in 'Ready' after `reconcile.statefulSet.update.timeout` seconds.
                Possible options:
                1. abort - abort the process, do nothing with the problematic StatefulSet, leave it as it is.
@@ -8840,6 +12474,7 @@ class ClickHouseInstallationSpecReconcileStatefulSetUpdatePatch(dict):
                  timeout: Optional[_builtins.int] = None):
         """
         Behavior during update StatefulSet
+
         :param _builtins.str on_failure: What to do in case updated StatefulSet is not in 'Ready' after `reconcile.statefulSet.update.timeout` seconds.
                Possible options:
                1. abort - abort the process, do nothing with the problematic StatefulSet, leave it as it is.
@@ -8910,6 +12545,7 @@ class ClickHouseInstallationSpecReconciling(dict):
 
     def __init__(__self__, *,
                  cleanup: Optional['outputs.ClickHouseInstallationSpecReconcilingCleanup'] = None,
+                 cluster: Optional['outputs.ClickHouseInstallationSpecReconcilingCluster'] = None,
                  config_map_propagation_timeout: Optional[_builtins.int] = None,
                  host: Optional['outputs.ClickHouseInstallationSpecReconcilingHost'] = None,
                  macros: Optional['outputs.ClickHouseInstallationSpecReconcilingMacros'] = None,
@@ -8918,6 +12554,7 @@ class ClickHouseInstallationSpecReconciling(dict):
                  stateful_set: Optional['outputs.ClickHouseInstallationSpecReconcilingStatefulSet'] = None):
         """
         [OBSOLETED] Optional, allows tuning reconciling cycle for ClickhouseInstallation from clickhouse-operator side
+
         :param _builtins.int config_map_propagation_timeout: Timeout in seconds for `clickhouse-operator` to wait for modified `ConfigMap` to propagate into the `Pod`
                More details: https://kubernetes.io/docs/concepts/configuration/configmap/#mounted-configmaps-are-updated-automatically
         :param _builtins.str policy: DISCUSSED TO BE DEPRECATED
@@ -8929,6 +12566,8 @@ class ClickHouseInstallationSpecReconciling(dict):
         """
         if cleanup is not None:
             pulumi.set(__self__, "cleanup", cleanup)
+        if cluster is not None:
+            pulumi.set(__self__, "cluster", cluster)
         if config_map_propagation_timeout is not None:
             pulumi.set(__self__, "config_map_propagation_timeout", config_map_propagation_timeout)
         if host is not None:
@@ -8946,6 +12585,11 @@ class ClickHouseInstallationSpecReconciling(dict):
     @pulumi.getter
     def cleanup(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingCleanup']:
         return pulumi.get(self, "cleanup")
+
+    @_builtins.property
+    @pulumi.getter
+    def cluster(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingCluster']:
+        return pulumi.get(self, "cluster")
 
     @_builtins.property
     @pulumi.getter(name="configMapPropagationTimeout")
@@ -9116,6 +12760,7 @@ class ClickHouseInstallationSpecReconcilingCleanupReconcileFailedObjects(dict):
         Describes what clickhouse-operator should do with Kubernetes resources which are failed during reconcile.
         Default behavior is `Retain`"
 
+
         :param _builtins.str config_map: Behavior policy for failed ConfigMap, `Retain` by default
         :param _builtins.str pvc: Behavior policy for failed PVC, `Retain` by default
         :param _builtins.str service: Behavior policy for failed Service, `Retain` by default
@@ -9196,6 +12841,7 @@ class ClickHouseInstallationSpecReconcilingCleanupReconcileFailedObjectsPatch(di
         """
         Describes what clickhouse-operator should do with Kubernetes resources which are failed during reconcile.
         Default behavior is `Retain`"
+
 
         :param _builtins.str config_map: Behavior policy for failed ConfigMap, `Retain` by default
         :param _builtins.str pvc: Behavior policy for failed PVC, `Retain` by default
@@ -9280,6 +12926,7 @@ class ClickHouseInstallationSpecReconcilingCleanupUnknownObjects(dict):
         but do not have `ownerReference` to any currently managed `ClickHouseInstallation` resource.
         Default behavior is `Delete`"
 
+
         :param _builtins.str config_map: Behavior policy for unknown ConfigMap, `Delete` by default
         :param _builtins.str pvc: Behavior policy for unknown PVC, `Delete` by default
         :param _builtins.str service: Behavior policy for unknown Service, `Delete` by default
@@ -9363,6 +13010,7 @@ class ClickHouseInstallationSpecReconcilingCleanupUnknownObjectsPatch(dict):
         but do not have `ownerReference` to any currently managed `ClickHouseInstallation` resource.
         Default behavior is `Delete`"
 
+
         :param _builtins.str config_map: Behavior policy for unknown ConfigMap, `Delete` by default
         :param _builtins.str pvc: Behavior policy for unknown PVC, `Delete` by default
         :param _builtins.str service: Behavior policy for unknown Service, `Delete` by default
@@ -9411,6 +13059,776 @@ class ClickHouseInstallationSpecReconcilingCleanupUnknownObjectsPatch(dict):
 
 
 @pulumi.output_type
+class ClickHouseInstallationSpecReconcilingCluster(dict):
+    """
+    CHI-level cluster reconcile defaults inherited by every cluster's
+    spec.configuration.clusters[N].reconcile section. Use this as a single
+    place to define cluster-level hooks that should apply to all clusters
+    in this CHI; per-cluster hooks (under clusters[N].reconcile.hooks)
+    are appended to (and dedup'd against) the inherited set.
+    """
+    def __init__(__self__, *,
+                 hooks: Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooks'] = None):
+        """
+        CHI-level cluster reconcile defaults inherited by every cluster's
+        spec.configuration.clusters[N].reconcile section. Use this as a single
+        place to define cluster-level hooks that should apply to all clusters
+        in this CHI; per-cluster hooks (under clusters[N].reconcile.hooks)
+        are appended to (and dedup'd against) the inherited set.
+        """
+        if hooks is not None:
+            pulumi.set(__self__, "hooks", hooks)
+
+    @_builtins.property
+    @pulumi.getter
+    def hooks(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooks']:
+        return pulumi.get(self, "hooks")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooks(dict):
+    """
+    cluster-level hooks inherited by every cluster
+    """
+    def __init__(__self__, *,
+                 post: Optional[Sequence['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPost']] = None,
+                 pre: Optional[Sequence['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPre']] = None):
+        """
+        cluster-level hooks inherited by every cluster
+
+        :param Sequence['ClickHouseInstallationSpecReconcilingClusterHooksPostArgs'] post: actions to execute after each cluster reconcile
+        :param Sequence['ClickHouseInstallationSpecReconcilingClusterHooksPreArgs'] pre: actions to execute before each cluster reconcile
+        """
+        if post is not None:
+            pulumi.set(__self__, "post", post)
+        if pre is not None:
+            pulumi.set(__self__, "pre", pre)
+
+    @_builtins.property
+    @pulumi.getter
+    def post(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPost']]:
+        """
+        actions to execute after each cluster reconcile
+        """
+        return pulumi.get(self, "post")
+
+    @_builtins.property
+    @pulumi.getter
+    def pre(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPre']]:
+        """
+        actions to execute before each cluster reconcile
+        """
+        return pulumi.get(self, "pre")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooksPatch(dict):
+    """
+    cluster-level hooks inherited by every cluster
+    """
+    def __init__(__self__, *,
+                 post: Optional[Sequence['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPostPatch']] = None,
+                 pre: Optional[Sequence['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPrePatch']] = None):
+        """
+        cluster-level hooks inherited by every cluster
+
+        :param Sequence['ClickHouseInstallationSpecReconcilingClusterHooksPostPatchArgs'] post: actions to execute after each cluster reconcile
+        :param Sequence['ClickHouseInstallationSpecReconcilingClusterHooksPrePatchArgs'] pre: actions to execute before each cluster reconcile
+        """
+        if post is not None:
+            pulumi.set(__self__, "post", post)
+        if pre is not None:
+            pulumi.set(__self__, "pre", pre)
+
+    @_builtins.property
+    @pulumi.getter
+    def post(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPostPatch']]:
+        """
+        actions to execute after each cluster reconcile
+        """
+        return pulumi.get(self, "post")
+
+    @_builtins.property
+    @pulumi.getter
+    def pre(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPrePatch']]:
+        """
+        actions to execute before each cluster reconcile
+        """
+        return pulumi.get(self, "pre")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooksPost(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecReconcilingClusterHooksPost. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecReconcilingClusterHooksPost.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecReconcilingClusterHooksPost.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPostHttp'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPostShell'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPostSql'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Cluster-scope reconcile lifecycle events. Required, non-empty.
+                 Any              - wildcard match: fires on every cluster reconcile pass
+                                    and the cluster delete sweep
+                 ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                                    only on the first reconcile of a brand-new cluster
+                 ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                                    least one host has prior state). Fires on every
+                                    operator reconcile cycle the upstream gates allow,
+                                    including taskID-only force-reconciles. NOT a "spec
+                                    changed" signal.
+                 ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default) propagates the error; Ignore logs a warning and continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Cluster-scope reconcile lifecycle events. Required, non-empty.
+          Any              - wildcard match: fires on every cluster reconcile pass
+                             and the cluster delete sweep
+          ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                             only on the first reconcile of a brand-new cluster
+          ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                             least one host has prior state). Fires on every
+                             operator reconcile cycle the upstream gates allow,
+                             including taskID-only force-reconciles. NOT a "spec
+                             changed" signal.
+          ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default) propagates the error; Ignore logs a warning and continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPostHttp']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPostShell']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPostSql']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooksPostHttp(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooksPostHttpPatch(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooksPostPatch(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecReconcilingClusterHooksPostPatch. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecReconcilingClusterHooksPostPatch.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecReconcilingClusterHooksPostPatch.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPostHttpPatch'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPostShellPatch'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPostSqlPatch'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Cluster-scope reconcile lifecycle events. Required, non-empty.
+                 Any              - wildcard match: fires on every cluster reconcile pass
+                                    and the cluster delete sweep
+                 ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                                    only on the first reconcile of a brand-new cluster
+                 ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                                    least one host has prior state). Fires on every
+                                    operator reconcile cycle the upstream gates allow,
+                                    including taskID-only force-reconciles. NOT a "spec
+                                    changed" signal.
+                 ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default) propagates the error; Ignore logs a warning and continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Cluster-scope reconcile lifecycle events. Required, non-empty.
+          Any              - wildcard match: fires on every cluster reconcile pass
+                             and the cluster delete sweep
+          ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                             only on the first reconcile of a brand-new cluster
+          ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                             least one host has prior state). Fires on every
+                             operator reconcile cycle the upstream gates allow,
+                             including taskID-only force-reconciles. NOT a "spec
+                             changed" signal.
+          ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default) propagates the error; Ignore logs a warning and continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPostHttpPatch']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPostShellPatch']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPostSqlPatch']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooksPostShell(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooksPostShellPatch(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooksPostSql(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooksPostSqlPatch(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooksPre(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecReconcilingClusterHooksPre. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecReconcilingClusterHooksPre.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecReconcilingClusterHooksPre.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPreHttp'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPreShell'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPreSql'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Cluster-scope reconcile lifecycle events. Required, non-empty.
+                 Any              - wildcard match: fires on every cluster reconcile pass
+                                    and the cluster delete sweep
+                 ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                                    only on the first reconcile of a brand-new cluster
+                 ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                                    least one host has prior state). Fires on every
+                                    operator reconcile cycle the upstream gates allow,
+                                    including taskID-only force-reconciles. NOT a "spec
+                                    changed" signal.
+                 ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default) propagates the error; Ignore logs a warning and continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Cluster-scope reconcile lifecycle events. Required, non-empty.
+          Any              - wildcard match: fires on every cluster reconcile pass
+                             and the cluster delete sweep
+          ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                             only on the first reconcile of a brand-new cluster
+          ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                             least one host has prior state). Fires on every
+                             operator reconcile cycle the upstream gates allow,
+                             including taskID-only force-reconciles. NOT a "spec
+                             changed" signal.
+          ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default) propagates the error; Ignore logs a warning and continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPreHttp']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPreShell']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPreSql']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooksPreHttp(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooksPreHttpPatch(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooksPrePatch(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecReconcilingClusterHooksPrePatch. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecReconcilingClusterHooksPrePatch.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecReconcilingClusterHooksPrePatch.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPreHttpPatch'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPreShellPatch'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPreSqlPatch'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Cluster-scope reconcile lifecycle events. Required, non-empty.
+                 Any              - wildcard match: fires on every cluster reconcile pass
+                                    and the cluster delete sweep
+                 ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                                    only on the first reconcile of a brand-new cluster
+                 ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                                    least one host has prior state). Fires on every
+                                    operator reconcile cycle the upstream gates allow,
+                                    including taskID-only force-reconciles. NOT a "spec
+                                    changed" signal.
+                 ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default) propagates the error; Ignore logs a warning and continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Cluster-scope reconcile lifecycle events. Required, non-empty.
+          Any              - wildcard match: fires on every cluster reconcile pass
+                             and the cluster delete sweep
+          ClusterCreate    - all hosts in the cluster are new (no ancestor); fires
+                             only on the first reconcile of a brand-new cluster
+          ClusterReconcile - ongoing reconcile pass over an existing cluster (at
+                             least one host has prior state). Fires on every
+                             operator reconcile cycle the upstream gates allow,
+                             including taskID-only force-reconciles. NOT a "spec
+                             changed" signal.
+          ClusterDelete    - cluster is being removed (delete sweep — wiring follow-up)
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default) propagates the error; Ignore logs a warning and continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPreHttpPatch']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPreShellPatch']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPreSqlPatch']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooksPreShell(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooksPreShellPatch(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooksPreSql(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterHooksPreSqlPatch(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingClusterPatch(dict):
+    """
+    CHI-level cluster reconcile defaults inherited by every cluster's
+    spec.configuration.clusters[N].reconcile section. Use this as a single
+    place to define cluster-level hooks that should apply to all clusters
+    in this CHI; per-cluster hooks (under clusters[N].reconcile.hooks)
+    are appended to (and dedup'd against) the inherited set.
+    """
+    def __init__(__self__, *,
+                 hooks: Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPatch'] = None):
+        """
+        CHI-level cluster reconcile defaults inherited by every cluster's
+        spec.configuration.clusters[N].reconcile section. Use this as a single
+        place to define cluster-level hooks that should apply to all clusters
+        in this CHI; per-cluster hooks (under clusters[N].reconcile.hooks)
+        are appended to (and dedup'd against) the inherited set.
+        """
+        if hooks is not None:
+            pulumi.set(__self__, "hooks", hooks)
+
+    @_builtins.property
+    @pulumi.getter
+    def hooks(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingClusterHooksPatch']:
+        return pulumi.get(self, "hooks")
+
+
+@pulumi.output_type
 class ClickHouseInstallationSpecReconcilingHost(dict):
     """
     Whether the operator during reconcile procedure should wait for a ClickHouse host:
@@ -9421,6 +13839,7 @@ class ClickHouseInstallationSpecReconcilingHost(dict):
     """
     def __init__(__self__, *,
                  drop: Optional['outputs.ClickHouseInstallationSpecReconcilingHostDrop'] = None,
+                 hooks: Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooks'] = None,
                  wait: Optional['outputs.ClickHouseInstallationSpecReconcilingHostWait'] = None):
         """
         Whether the operator during reconcile procedure should wait for a ClickHouse host:
@@ -9431,6 +13850,8 @@ class ClickHouseInstallationSpecReconcilingHost(dict):
         """
         if drop is not None:
             pulumi.set(__self__, "drop", drop)
+        if hooks is not None:
+            pulumi.set(__self__, "hooks", hooks)
         if wait is not None:
             pulumi.set(__self__, "wait", wait)
 
@@ -9438,6 +13859,11 @@ class ClickHouseInstallationSpecReconcilingHost(dict):
     @pulumi.getter
     def drop(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingHostDrop']:
         return pulumi.get(self, "drop")
+
+    @_builtins.property
+    @pulumi.getter
+    def hooks(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooks']:
+        return pulumi.get(self, "hooks")
 
     @_builtins.property
     @pulumi.getter
@@ -9501,6 +13927,7 @@ class ClickHouseInstallationSpecReconcilingHostDropReplicas(dict):
                  on_lost_volume: Optional[_builtins.str] = None):
         """
         Whether the operator during reconcile procedure should drop replicas when replica is deleted or recreated
+
 
         :param _builtins.str active: Whether the operator during reconcile procedure should drop active replicas when replica is deleted or recreated
         :param _builtins.str on_delete: Whether the operator during reconcile procedure should drop replicas when replica is deleted
@@ -9569,6 +13996,7 @@ class ClickHouseInstallationSpecReconcilingHostDropReplicasPatch(dict):
         """
         Whether the operator during reconcile procedure should drop replicas when replica is deleted or recreated
 
+
         :param _builtins.str active: Whether the operator during reconcile procedure should drop active replicas when replica is deleted or recreated
         :param _builtins.str on_delete: Whether the operator during reconcile procedure should drop replicas when replica is deleted
         :param _builtins.str on_lost_volume: Whether the operator during reconcile procedure should drop replicas when replica volume is lost
@@ -9606,6 +14034,794 @@ class ClickHouseInstallationSpecReconcilingHostDropReplicasPatch(dict):
 
 
 @pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooks(dict):
+    """
+    hooks to execute before and after host reconcile
+    """
+    def __init__(__self__, *,
+                 post: Optional[Sequence['outputs.ClickHouseInstallationSpecReconcilingHostHooksPost']] = None,
+                 pre: Optional[Sequence['outputs.ClickHouseInstallationSpecReconcilingHostHooksPre']] = None):
+        """
+        hooks to execute before and after host reconcile
+
+        :param Sequence['ClickHouseInstallationSpecReconcilingHostHooksPostArgs'] post: actions to execute after reconcile
+        :param Sequence['ClickHouseInstallationSpecReconcilingHostHooksPreArgs'] pre: actions to execute before reconcile
+        """
+        if post is not None:
+            pulumi.set(__self__, "post", post)
+        if pre is not None:
+            pulumi.set(__self__, "pre", pre)
+
+    @_builtins.property
+    @pulumi.getter
+    def post(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecReconcilingHostHooksPost']]:
+        """
+        actions to execute after reconcile
+        """
+        return pulumi.get(self, "post")
+
+    @_builtins.property
+    @pulumi.getter
+    def pre(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecReconcilingHostHooksPre']]:
+        """
+        actions to execute before reconcile
+        """
+        return pulumi.get(self, "pre")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooksPatch(dict):
+    """
+    hooks to execute before and after host reconcile
+    """
+    def __init__(__self__, *,
+                 post: Optional[Sequence['outputs.ClickHouseInstallationSpecReconcilingHostHooksPostPatch']] = None,
+                 pre: Optional[Sequence['outputs.ClickHouseInstallationSpecReconcilingHostHooksPrePatch']] = None):
+        """
+        hooks to execute before and after host reconcile
+
+        :param Sequence['ClickHouseInstallationSpecReconcilingHostHooksPostPatchArgs'] post: actions to execute after reconcile
+        :param Sequence['ClickHouseInstallationSpecReconcilingHostHooksPrePatchArgs'] pre: actions to execute before reconcile
+        """
+        if post is not None:
+            pulumi.set(__self__, "post", post)
+        if pre is not None:
+            pulumi.set(__self__, "pre", pre)
+
+    @_builtins.property
+    @pulumi.getter
+    def post(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecReconcilingHostHooksPostPatch']]:
+        """
+        actions to execute after reconcile
+        """
+        return pulumi.get(self, "post")
+
+    @_builtins.property
+    @pulumi.getter
+    def pre(self) -> Optional[Sequence['outputs.ClickHouseInstallationSpecReconcilingHostHooksPrePatch']]:
+        """
+        actions to execute before reconcile
+        """
+        return pulumi.get(self, "pre")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooksPost(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecReconcilingHostHooksPost. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecReconcilingHostHooksPost.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecReconcilingHostHooksPost.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPostHttp'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPostShell'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPostSql'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+               The hook is skipped on any reconcile whose classifier does not emit at least one
+               of the listed events. Supported values:
+                 Any               - wildcard match: fires on every hook-evaluation point,
+                                     including the pre-delete sweep on the dying host
+                 HostCreate        - first reconcile that creates a host (no ancestor); best
+                                     paired with POST hooks because PRE hooks on first creation
+                                     are skipped (no live pod yet)
+                 HostUpdate        - reconcile that has prior state for the host; catch-all
+                                     for ongoing reconciles
+                 HostStart         - host transitions from stopped to running
+                 HostStop          - host is being stopped (current spec marks it stopped)
+                 HostConfigRestart - in-place software restart for a configuration change
+                 HostRollout       - pod-template change forces a StatefulSet rollout
+                 HostShutdown      - aggregate: fires whenever the pod is going down for any
+                                     reason (Stop, ConfigRestart, Rollout, or Delete)
+                 HostDelete        - host is being removed from the cluster (downsize); fires
+                                     on the dying host before tear-down. Always emitted
+                                     alongside HostShutdown.
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+               Ignore: error is logged and the reconcile continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+        The hook is skipped on any reconcile whose classifier does not emit at least one
+        of the listed events. Supported values:
+          Any               - wildcard match: fires on every hook-evaluation point,
+                              including the pre-delete sweep on the dying host
+          HostCreate        - first reconcile that creates a host (no ancestor); best
+                              paired with POST hooks because PRE hooks on first creation
+                              are skipped (no live pod yet)
+          HostUpdate        - reconcile that has prior state for the host; catch-all
+                              for ongoing reconciles
+          HostStart         - host transitions from stopped to running
+          HostStop          - host is being stopped (current spec marks it stopped)
+          HostConfigRestart - in-place software restart for a configuration change
+          HostRollout       - pod-template change forces a StatefulSet rollout
+          HostShutdown      - aggregate: fires whenever the pod is going down for any
+                              reason (Stop, ConfigRestart, Rollout, or Delete)
+          HostDelete        - host is being removed from the cluster (downsize); fires
+                              on the dying host before tear-down. Always emitted
+                              alongside HostShutdown.
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+        Ignore: error is logged and the reconcile continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPostHttp']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPostShell']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPostSql']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooksPostHttp(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooksPostHttpPatch(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooksPostPatch(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecReconcilingHostHooksPostPatch. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecReconcilingHostHooksPostPatch.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecReconcilingHostHooksPostPatch.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPostHttpPatch'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPostShellPatch'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPostSqlPatch'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+               The hook is skipped on any reconcile whose classifier does not emit at least one
+               of the listed events. Supported values:
+                 Any               - wildcard match: fires on every hook-evaluation point,
+                                     including the pre-delete sweep on the dying host
+                 HostCreate        - first reconcile that creates a host (no ancestor); best
+                                     paired with POST hooks because PRE hooks on first creation
+                                     are skipped (no live pod yet)
+                 HostUpdate        - reconcile that has prior state for the host; catch-all
+                                     for ongoing reconciles
+                 HostStart         - host transitions from stopped to running
+                 HostStop          - host is being stopped (current spec marks it stopped)
+                 HostConfigRestart - in-place software restart for a configuration change
+                 HostRollout       - pod-template change forces a StatefulSet rollout
+                 HostShutdown      - aggregate: fires whenever the pod is going down for any
+                                     reason (Stop, ConfigRestart, Rollout, or Delete)
+                 HostDelete        - host is being removed from the cluster (downsize); fires
+                                     on the dying host before tear-down. Always emitted
+                                     alongside HostShutdown.
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+               Ignore: error is logged and the reconcile continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+        The hook is skipped on any reconcile whose classifier does not emit at least one
+        of the listed events. Supported values:
+          Any               - wildcard match: fires on every hook-evaluation point,
+                              including the pre-delete sweep on the dying host
+          HostCreate        - first reconcile that creates a host (no ancestor); best
+                              paired with POST hooks because PRE hooks on first creation
+                              are skipped (no live pod yet)
+          HostUpdate        - reconcile that has prior state for the host; catch-all
+                              for ongoing reconciles
+          HostStart         - host transitions from stopped to running
+          HostStop          - host is being stopped (current spec marks it stopped)
+          HostConfigRestart - in-place software restart for a configuration change
+          HostRollout       - pod-template change forces a StatefulSet rollout
+          HostShutdown      - aggregate: fires whenever the pod is going down for any
+                              reason (Stop, ConfigRestart, Rollout, or Delete)
+          HostDelete        - host is being removed from the cluster (downsize); fires
+                              on the dying host before tear-down. Always emitted
+                              alongside HostShutdown.
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+        Ignore: error is logged and the reconcile continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPostHttpPatch']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPostShellPatch']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPostSqlPatch']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooksPostShell(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooksPostShellPatch(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooksPostSql(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooksPostSqlPatch(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooksPre(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecReconcilingHostHooksPre. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecReconcilingHostHooksPre.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecReconcilingHostHooksPre.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPreHttp'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPreShell'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPreSql'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+               The hook is skipped on any reconcile whose classifier does not emit at least one
+               of the listed events. Supported values:
+                 Any               - wildcard match: fires on every hook-evaluation point,
+                                     including the pre-delete sweep on the dying host
+                 HostCreate        - first reconcile that creates a host (no ancestor); best
+                                     paired with POST hooks because PRE hooks on first creation
+                                     are skipped (no live pod yet)
+                 HostUpdate        - reconcile that has prior state for the host; catch-all
+                                     for ongoing reconciles
+                 HostStart         - host transitions from stopped to running
+                 HostStop          - host is being stopped (current spec marks it stopped)
+                 HostConfigRestart - in-place software restart for a configuration change
+                 HostRollout       - pod-template change forces a StatefulSet rollout
+                 HostShutdown      - aggregate: fires whenever the pod is going down for any
+                                     reason (Stop, ConfigRestart, Rollout, or Delete)
+                 HostDelete        - host is being removed from the cluster (downsize); fires
+                                     on the dying host before tear-down. Always emitted
+                                     alongside HostShutdown.
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+               Ignore: error is logged and the reconcile continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+        The hook is skipped on any reconcile whose classifier does not emit at least one
+        of the listed events. Supported values:
+          Any               - wildcard match: fires on every hook-evaluation point,
+                              including the pre-delete sweep on the dying host
+          HostCreate        - first reconcile that creates a host (no ancestor); best
+                              paired with POST hooks because PRE hooks on first creation
+                              are skipped (no live pod yet)
+          HostUpdate        - reconcile that has prior state for the host; catch-all
+                              for ongoing reconciles
+          HostStart         - host transitions from stopped to running
+          HostStop          - host is being stopped (current spec marks it stopped)
+          HostConfigRestart - in-place software restart for a configuration change
+          HostRollout       - pod-template change forces a StatefulSet rollout
+          HostShutdown      - aggregate: fires whenever the pod is going down for any
+                              reason (Stop, ConfigRestart, Rollout, or Delete)
+          HostDelete        - host is being removed from the cluster (downsize); fires
+                              on the dying host before tear-down. Always emitted
+                              alongside HostShutdown.
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+        Ignore: error is logged and the reconcile continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPreHttp']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPreShell']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPreSql']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooksPreHttp(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooksPreHttpPatch(dict):
+    def __init__(__self__, *,
+                 method: Optional[_builtins.str] = None,
+                 url: Optional[_builtins.str] = None):
+        if method is not None:
+            pulumi.set(__self__, "method", method)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooksPrePatch(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failurePolicy":
+            suggest = "failure_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ClickHouseInstallationSpecReconcilingHostHooksPrePatch. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ClickHouseInstallationSpecReconcilingHostHooksPrePatch.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ClickHouseInstallationSpecReconcilingHostHooksPrePatch.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 events: Optional[Sequence[_builtins.str]] = None,
+                 failure_policy: Optional[_builtins.str] = None,
+                 http: Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPreHttpPatch'] = None,
+                 shell: Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPreShellPatch'] = None,
+                 sql: Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPreSqlPatch'] = None,
+                 target: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] events: Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+               The hook is skipped on any reconcile whose classifier does not emit at least one
+               of the listed events. Supported values:
+                 Any               - wildcard match: fires on every hook-evaluation point,
+                                     including the pre-delete sweep on the dying host
+                 HostCreate        - first reconcile that creates a host (no ancestor); best
+                                     paired with POST hooks because PRE hooks on first creation
+                                     are skipped (no live pod yet)
+                 HostUpdate        - reconcile that has prior state for the host; catch-all
+                                     for ongoing reconciles
+                 HostStart         - host transitions from stopped to running
+                 HostStop          - host is being stopped (current spec marks it stopped)
+                 HostConfigRestart - in-place software restart for a configuration change
+                 HostRollout       - pod-template change forces a StatefulSet rollout
+                 HostShutdown      - aggregate: fires whenever the pod is going down for any
+                                     reason (Stop, ConfigRestart, Rollout, or Delete)
+                 HostDelete        - host is being removed from the cluster (downsize); fires
+                                     on the dying host before tear-down. Always emitted
+                                     alongside HostShutdown.
+        :param _builtins.str failure_policy: Controls what happens when this hook returns an error.
+               Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+               Ignore: error is logged and the reconcile continues.
+        :param _builtins.str target: where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        if events is not None:
+            pulumi.set(__self__, "events", events)
+        if failure_policy is not None:
+            pulumi.set(__self__, "failure_policy", failure_policy)
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if shell is not None:
+            pulumi.set(__self__, "shell", shell)
+        if sql is not None:
+            pulumi.set(__self__, "sql", sql)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @_builtins.property
+    @pulumi.getter
+    def events(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Reconcile lifecycle events that trigger this hook. Required, must be non-empty.
+        The hook is skipped on any reconcile whose classifier does not emit at least one
+        of the listed events. Supported values:
+          Any               - wildcard match: fires on every hook-evaluation point,
+                              including the pre-delete sweep on the dying host
+          HostCreate        - first reconcile that creates a host (no ancestor); best
+                              paired with POST hooks because PRE hooks on first creation
+                              are skipped (no live pod yet)
+          HostUpdate        - reconcile that has prior state for the host; catch-all
+                              for ongoing reconciles
+          HostStart         - host transitions from stopped to running
+          HostStop          - host is being stopped (current spec marks it stopped)
+          HostConfigRestart - in-place software restart for a configuration change
+          HostRollout       - pod-template change forces a StatefulSet rollout
+          HostShutdown      - aggregate: fires whenever the pod is going down for any
+                              reason (Stop, ConfigRestart, Rollout, or Delete)
+          HostDelete        - host is being removed from the cluster (downsize); fires
+                              on the dying host before tear-down. Always emitted
+                              alongside HostShutdown.
+        """
+        return pulumi.get(self, "events")
+
+    @_builtins.property
+    @pulumi.getter(name="failurePolicy")
+    def failure_policy(self) -> Optional[_builtins.str]:
+        """
+        Controls what happens when this hook returns an error.
+        Fail (default): error propagates — pre-hook aborts reconcile / host deletion.
+        Ignore: error is logged and the reconcile continues.
+        """
+        return pulumi.get(self, "failure_policy")
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPreHttpPatch']:
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def shell(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPreShellPatch']:
+        return pulumi.get(self, "shell")
+
+    @_builtins.property
+    @pulumi.getter
+    def sql(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPreSqlPatch']:
+        return pulumi.get(self, "sql")
+
+    @_builtins.property
+    @pulumi.getter
+    def target(self) -> Optional[_builtins.str]:
+        """
+        where to execute hook for cluster-level hooks: FirstHost (default), AllHosts, AllShards
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooksPreShell(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooksPreShellPatch(dict):
+    def __init__(__self__, *,
+                 command: Optional[Sequence[_builtins.str]] = None,
+                 container: Optional[_builtins.str] = None):
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "command")
+
+    @_builtins.property
+    @pulumi.getter
+    def container(self) -> Optional[_builtins.str]:
+        return pulumi.get(self, "container")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooksPreSql(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
+class ClickHouseInstallationSpecReconcilingHostHooksPreSqlPatch(dict):
+    def __init__(__self__, *,
+                 queries: Optional[Sequence[_builtins.str]] = None):
+        if queries is not None:
+            pulumi.set(__self__, "queries", queries)
+
+    @_builtins.property
+    @pulumi.getter
+    def queries(self) -> Optional[Sequence[_builtins.str]]:
+        return pulumi.get(self, "queries")
+
+
+@pulumi.output_type
 class ClickHouseInstallationSpecReconcilingHostPatch(dict):
     """
     Whether the operator during reconcile procedure should wait for a ClickHouse host:
@@ -9616,6 +14832,7 @@ class ClickHouseInstallationSpecReconcilingHostPatch(dict):
     """
     def __init__(__self__, *,
                  drop: Optional['outputs.ClickHouseInstallationSpecReconcilingHostDropPatch'] = None,
+                 hooks: Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPatch'] = None,
                  wait: Optional['outputs.ClickHouseInstallationSpecReconcilingHostWaitPatch'] = None):
         """
         Whether the operator during reconcile procedure should wait for a ClickHouse host:
@@ -9626,6 +14843,8 @@ class ClickHouseInstallationSpecReconcilingHostPatch(dict):
         """
         if drop is not None:
             pulumi.set(__self__, "drop", drop)
+        if hooks is not None:
+            pulumi.set(__self__, "hooks", hooks)
         if wait is not None:
             pulumi.set(__self__, "wait", wait)
 
@@ -9633,6 +14852,11 @@ class ClickHouseInstallationSpecReconcilingHostPatch(dict):
     @pulumi.getter
     def drop(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingHostDropPatch']:
         return pulumi.get(self, "drop")
+
+    @_builtins.property
+    @pulumi.getter
+    def hooks(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingHostHooksPatch']:
+        return pulumi.get(self, "hooks")
 
     @_builtins.property
     @pulumi.getter
@@ -9780,6 +15004,7 @@ class ClickHouseInstallationSpecReconcilingHostWaitProbes(dict):
                  startup: Optional[_builtins.str] = None):
         """
         What probes the operator should wait during host launch procedure
+
         :param _builtins.str readiness: Whether the operator during host launch procedure should wait for ready probe to succeed.
                In case probe is unspecified wait is assumed to be completed successfully.
                Default option value is to wait.
@@ -9823,6 +15048,7 @@ class ClickHouseInstallationSpecReconcilingHostWaitProbesPatch(dict):
                  startup: Optional[_builtins.str] = None):
         """
         What probes the operator should wait during host launch procedure
+
         :param _builtins.str readiness: Whether the operator during host launch procedure should wait for ready probe to succeed.
                In case probe is unspecified wait is assumed to be completed successfully.
                Default option value is to wait.
@@ -9867,6 +15093,7 @@ class ClickHouseInstallationSpecReconcilingHostWaitReplicas(dict):
                  new: Optional[_builtins.str] = None):
         """
         Whether the operator during reconcile procedure should wait for replicas to catch-up
+
         :param _builtins.str all: Whether the operator during reconcile procedure should wait for all replicas to catch-up
         :param _builtins.int delay: replication max absolute delay to consider replica is not delayed
         :param _builtins.str new: Whether the operator during reconcile procedure should wait for new replicas to catch-up
@@ -9914,6 +15141,7 @@ class ClickHouseInstallationSpecReconcilingHostWaitReplicasPatch(dict):
                  new: Optional[_builtins.str] = None):
         """
         Whether the operator during reconcile procedure should wait for replicas to catch-up
+
         :param _builtins.str all: Whether the operator during reconcile procedure should wait for all replicas to catch-up
         :param _builtins.int delay: replication max absolute delay to consider replica is not delayed
         :param _builtins.str new: Whether the operator during reconcile procedure should wait for new replicas to catch-up
@@ -10048,6 +15276,7 @@ class ClickHouseInstallationSpecReconcilingMacrosSectionsFiles(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on files
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -10071,6 +15300,7 @@ class ClickHouseInstallationSpecReconcilingMacrosSectionsFilesPatch(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on files
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -10145,6 +15375,7 @@ class ClickHouseInstallationSpecReconcilingMacrosSectionsProfiles(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on profiles
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -10168,6 +15399,7 @@ class ClickHouseInstallationSpecReconcilingMacrosSectionsProfilesPatch(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on profiles
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -10191,6 +15423,7 @@ class ClickHouseInstallationSpecReconcilingMacrosSectionsQuotas(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on quotas
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -10214,6 +15447,7 @@ class ClickHouseInstallationSpecReconcilingMacrosSectionsQuotasPatch(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on quotas
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -10237,6 +15471,7 @@ class ClickHouseInstallationSpecReconcilingMacrosSectionsSettings(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on settings
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -10260,6 +15495,7 @@ class ClickHouseInstallationSpecReconcilingMacrosSectionsSettingsPatch(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on settings
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -10283,6 +15519,7 @@ class ClickHouseInstallationSpecReconcilingMacrosSectionsUsers(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on users
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -10306,6 +15543,7 @@ class ClickHouseInstallationSpecReconcilingMacrosSectionsUsersPatch(dict):
                  enabled: Optional[_builtins.str] = None):
         """
         sections behaviour for macros on users
+
         :param _builtins.str enabled: enabled or not
         """
         if enabled is not None:
@@ -10346,6 +15584,7 @@ class ClickHouseInstallationSpecReconcilingPatch(dict):
 
     def __init__(__self__, *,
                  cleanup: Optional['outputs.ClickHouseInstallationSpecReconcilingCleanupPatch'] = None,
+                 cluster: Optional['outputs.ClickHouseInstallationSpecReconcilingClusterPatch'] = None,
                  config_map_propagation_timeout: Optional[_builtins.int] = None,
                  host: Optional['outputs.ClickHouseInstallationSpecReconcilingHostPatch'] = None,
                  macros: Optional['outputs.ClickHouseInstallationSpecReconcilingMacrosPatch'] = None,
@@ -10354,6 +15593,7 @@ class ClickHouseInstallationSpecReconcilingPatch(dict):
                  stateful_set: Optional['outputs.ClickHouseInstallationSpecReconcilingStatefulSetPatch'] = None):
         """
         [OBSOLETED] Optional, allows tuning reconciling cycle for ClickhouseInstallation from clickhouse-operator side
+
         :param _builtins.int config_map_propagation_timeout: Timeout in seconds for `clickhouse-operator` to wait for modified `ConfigMap` to propagate into the `Pod`
                More details: https://kubernetes.io/docs/concepts/configuration/configmap/#mounted-configmaps-are-updated-automatically
         :param _builtins.str policy: DISCUSSED TO BE DEPRECATED
@@ -10365,6 +15605,8 @@ class ClickHouseInstallationSpecReconcilingPatch(dict):
         """
         if cleanup is not None:
             pulumi.set(__self__, "cleanup", cleanup)
+        if cluster is not None:
+            pulumi.set(__self__, "cluster", cluster)
         if config_map_propagation_timeout is not None:
             pulumi.set(__self__, "config_map_propagation_timeout", config_map_propagation_timeout)
         if host is not None:
@@ -10382,6 +15624,11 @@ class ClickHouseInstallationSpecReconcilingPatch(dict):
     @pulumi.getter
     def cleanup(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingCleanupPatch']:
         return pulumi.get(self, "cleanup")
+
+    @_builtins.property
+    @pulumi.getter
+    def cluster(self) -> Optional['outputs.ClickHouseInstallationSpecReconcilingClusterPatch']:
+        return pulumi.get(self, "cluster")
 
     @_builtins.property
     @pulumi.getter(name="configMapPropagationTimeout")
@@ -10455,6 +15702,7 @@ class ClickHouseInstallationSpecReconcilingRuntime(dict):
                  reconcile_shards_threads_number: Optional[_builtins.int] = None):
         """
         runtime parameters for clickhouse-operator process which are used during reconcile cycle
+
         :param _builtins.int reconcile_shards_max_concurrency_percent: The maximum percentage of cluster shards that may be reconciled in parallel, 50 percent by default.
         :param _builtins.int reconcile_shards_threads_number: The maximum number of cluster shards that may be reconciled in parallel, 1 by default
         """
@@ -10509,6 +15757,7 @@ class ClickHouseInstallationSpecReconcilingRuntimePatch(dict):
                  reconcile_shards_threads_number: Optional[_builtins.int] = None):
         """
         runtime parameters for clickhouse-operator process which are used during reconcile cycle
+
         :param _builtins.int reconcile_shards_max_concurrency_percent: The maximum percentage of cluster shards that may be reconciled in parallel, 50 percent by default.
         :param _builtins.int reconcile_shards_threads_number: The maximum number of cluster shards that may be reconciled in parallel, 1 by default
         """
@@ -10595,6 +15844,7 @@ class ClickHouseInstallationSpecReconcilingStatefulSetCreate(dict):
                  on_failure: Optional[_builtins.str] = None):
         """
         Behavior during create StatefulSet
+
         :param _builtins.str on_failure: What to do in case created StatefulSet is not in 'Ready' after `reconcile.statefulSet.update.timeout` seconds.
                Possible options:
                1. abort - abort the process, do nothing with the problematic StatefulSet, leave it as it is.
@@ -10643,6 +15893,7 @@ class ClickHouseInstallationSpecReconcilingStatefulSetCreatePatch(dict):
                  on_failure: Optional[_builtins.str] = None):
         """
         Behavior during create StatefulSet
+
         :param _builtins.str on_failure: What to do in case created StatefulSet is not in 'Ready' after `reconcile.statefulSet.update.timeout` seconds.
                Possible options:
                1. abort - abort the process, do nothing with the problematic StatefulSet, leave it as it is.
@@ -10729,6 +15980,7 @@ class ClickHouseInstallationSpecReconcilingStatefulSetRecreate(dict):
                  on_update_failure: Optional[_builtins.str] = None):
         """
         Behavior during recreate StatefulSet
+
         :param _builtins.str on_data_loss: What to do in case operator needs to recreate StatefulSet due to PVC data loss or missing volumes.
                Possible options:
                1. abort - abort the process, do nothing with the problematic StatefulSet.
@@ -10795,6 +16047,7 @@ class ClickHouseInstallationSpecReconcilingStatefulSetRecreatePatch(dict):
                  on_update_failure: Optional[_builtins.str] = None):
         """
         Behavior during recreate StatefulSet
+
         :param _builtins.str on_data_loss: What to do in case operator needs to recreate StatefulSet due to PVC data loss or missing volumes.
                Possible options:
                1. abort - abort the process, do nothing with the problematic StatefulSet.
@@ -10862,6 +16115,7 @@ class ClickHouseInstallationSpecReconcilingStatefulSetUpdate(dict):
                  timeout: Optional[_builtins.int] = None):
         """
         Behavior during update StatefulSet
+
         :param _builtins.str on_failure: What to do in case updated StatefulSet is not in 'Ready' after `reconcile.statefulSet.update.timeout` seconds.
                Possible options:
                1. abort - abort the process, do nothing with the problematic StatefulSet, leave it as it is.
@@ -10936,6 +16190,7 @@ class ClickHouseInstallationSpecReconcilingStatefulSetUpdatePatch(dict):
                  timeout: Optional[_builtins.int] = None):
         """
         Behavior during update StatefulSet
+
         :param _builtins.str on_failure: What to do in case updated StatefulSet is not in 'Ready' after `reconcile.statefulSet.update.timeout` seconds.
                Possible options:
                1. abort - abort the process, do nothing with the problematic StatefulSet, leave it as it is.
@@ -11015,6 +16270,7 @@ class ClickHouseInstallationSpecTemplates(dict):
                  volume_claim_templates: Optional[Sequence['outputs.ClickHouseInstallationSpecTemplatesVolumeClaimTemplates']] = None):
         """
         allows define templates which will use for render Kubernetes resources like StatefulSet, ConfigMap, Service, PVC, by default, clickhouse-operator have own templates, but you can override it
+
         :param Sequence['ClickHouseInstallationSpecTemplatesHostTemplatesArgs'] host_templates: hostTemplate will use during apply to generate `clickhose-server` config files
         :param Sequence['ClickHouseInstallationSpecTemplatesPodTemplatesArgs'] pod_templates: podTemplate will use during render `Pod` inside `StatefulSet.spec` and allows define rendered `Pod.spec`, pod scheduling distribution and pod zone
                More information: https://github.com/Altinity/clickhouse-operator/blob/master/docs/custom_resource_explained.md#spectemplatespodtemplates
@@ -11599,6 +16855,7 @@ class ClickHouseInstallationSpecTemplatesHostTemplatesSpecTemplates(dict):
                  volume_claim_template: Optional[_builtins.str] = None):
         """
         be careful, this part of CRD allows override template inside template, don't use it if you don't understand what you do
+
         :param _builtins.str cluster_service_template: optional, template name from chi.spec.templates.serviceTemplates, allows customization for each `Service` resource which will created by `clickhouse-operator` which cover each clickhouse cluster described in `chi.spec.configuration.clusters`
         :param _builtins.str data_volume_claim_template: optional, template name from chi.spec.templates.volumeClaimTemplates, allows customization each `PVC` which will mount for clickhouse data directory in each `Pod` during render and reconcile every StatefulSet.spec resource described in `chi.spec.configuration.clusters`
         :param _builtins.str host_template: optional, template name from chi.spec.templates.hostTemplates, which will apply to configure every `clickhouse-server` instance during render ConfigMap resources which will mount into `Pod`
@@ -11765,6 +17022,7 @@ class ClickHouseInstallationSpecTemplatesHostTemplatesSpecTemplatesPatch(dict):
                  volume_claim_template: Optional[_builtins.str] = None):
         """
         be careful, this part of CRD allows override template inside template, don't use it if you don't understand what you do
+
         :param _builtins.str cluster_service_template: optional, template name from chi.spec.templates.serviceTemplates, allows customization for each `Service` resource which will created by `clickhouse-operator` which cover each clickhouse cluster described in `chi.spec.configuration.clusters`
         :param _builtins.str data_volume_claim_template: optional, template name from chi.spec.templates.volumeClaimTemplates, allows customization each `PVC` which will mount for clickhouse data directory in each `Pod` during render and reconcile every StatefulSet.spec resource described in `chi.spec.configuration.clusters`
         :param _builtins.str host_template: optional, template name from chi.spec.templates.hostTemplates, which will apply to configure every `clickhouse-server` instance during render ConfigMap resources which will mount into `Pod`
@@ -11913,6 +17171,7 @@ class ClickHouseInstallationSpecTemplatesPatch(dict):
                  volume_claim_templates: Optional[Sequence['outputs.ClickHouseInstallationSpecTemplatesVolumeClaimTemplatesPatch']] = None):
         """
         allows define templates which will use for render Kubernetes resources like StatefulSet, ConfigMap, Service, PVC, by default, clickhouse-operator have own templates, but you can override it
+
         :param Sequence['ClickHouseInstallationSpecTemplatesHostTemplatesPatchArgs'] host_templates: hostTemplate will use during apply to generate `clickhose-server` config files
         :param Sequence['ClickHouseInstallationSpecTemplatesPodTemplatesPatchArgs'] pod_templates: podTemplate will use during render `Pod` inside `StatefulSet.spec` and allows define rendered `Pod.spec`, pod scheduling distribution and pod zone
                More information: https://github.com/Altinity/clickhouse-operator/blob/master/docs/custom_resource_explained.md#spectemplatespodtemplates
@@ -12336,6 +17595,7 @@ class ClickHouseInstallationSpecTemplatesPodTemplatesZone(dict):
                  values: Optional[Sequence[_builtins.str]] = None):
         """
         allows define custom zone name and will separate ClickHouse `Pods` between nodes, shortcut for `chi.spec.templates.podTemplates.spec.affinity.podAntiAffinity`
+
         :param _builtins.str key: optional, if defined, allows select kubernetes nodes by label with `name` equal `key`
         :param Sequence[_builtins.str] values: optional, if defined, allows select kubernetes nodes by label with `value` in `values`
         """
@@ -12371,6 +17631,7 @@ class ClickHouseInstallationSpecTemplatesPodTemplatesZonePatch(dict):
                  values: Optional[Sequence[_builtins.str]] = None):
         """
         allows define custom zone name and will separate ClickHouse `Pods` between nodes, shortcut for `chi.spec.templates.podTemplates.spec.affinity.podAntiAffinity`
+
         :param _builtins.str key: optional, if defined, allows select kubernetes nodes by label with `name` equal `key`
         :param Sequence[_builtins.str] values: optional, if defined, allows select kubernetes nodes by label with `value` in `values`
         """
@@ -12802,6 +18063,7 @@ class ClickHouseInstallationSpecTemplating(dict):
         Optional, applicable inside ClickHouseInstallationTemplate only.
         Defines current ClickHouseInstallationTemplate application options to target ClickHouseInstallation(s)."
 
+
         :param Mapping[str, Any] chi_selector: Optional, defines selector for ClickHouseInstallation(s) to be templated with ClickhouseInstallationTemplate
         :param _builtins.str policy: When defined as `auto` inside ClickhouseInstallationTemplate, this ClickhouseInstallationTemplate
                will be auto-added into ClickHouseInstallation, selectable by `chiSelector`.
@@ -12860,6 +18122,7 @@ class ClickHouseInstallationSpecTemplatingPatch(dict):
         """
         Optional, applicable inside ClickHouseInstallationTemplate only.
         Defines current ClickHouseInstallationTemplate application options to target ClickHouseInstallation(s)."
+
 
         :param Mapping[str, Any] chi_selector: Optional, defines selector for ClickHouseInstallation(s) to be templated with ClickhouseInstallationTemplate
         :param _builtins.str policy: When defined as `auto` inside ClickhouseInstallationTemplate, this ClickhouseInstallationTemplate
@@ -13105,6 +18368,7 @@ class ClickHouseInstallationStatus(dict):
                  used_templates: Optional[Mapping[str, Any]] = None):
         """
         Status contains many fields like a normalized configuration, clickhouse-operator version, current action and all applied action list, current taskID and all applied taskIDs and other
+
 
         :param _builtins.str action: Action
         :param Mapping[str, Any] action_plan: Action Plan
@@ -13578,6 +18842,7 @@ class ClickHouseInstallationStatusPatch(dict):
                  used_templates: Optional[Mapping[str, Any]] = None):
         """
         Status contains many fields like a normalized configuration, clickhouse-operator version, current action and all applied action list, current taskID and all applied taskIDs and other
+
 
         :param _builtins.str action: Action
         :param Mapping[str, Any] action_plan: Action Plan

@@ -26,7 +26,7 @@ create_database = get_bool_config("create_database", True)
 postgres_admin_db = config.get("postgres_admin_db") or "postgres"
 postgres_sslmode = config.get("postgres_sslmode") or "disable"
 
-penpot_chart_version = config.get("penpot_chart_version") or "0.40.0"
+penpot_chart_version = config.get("penpot_chart_version") or "0.42.0"
 valkey_chart_version = config.get("valkey_chart_version") or "0.9.4"
 valkey_service_name = config.get("valkey_service_name") or "penpot-valkey"
 valkey_port = config.get_int("valkey_port") or 6379

@@ -12,5 +12,8 @@ from .InnoDBClusterPatch import *
 from .MySQLBackup import *
 from .MySQLBackupList import *
 from .MySQLBackupPatch import *
+from .MySQLClusterSetFailover import *
+from .MySQLClusterSetFailoverList import *
+from .MySQLClusterSetFailoverPatch import *
 from ._inputs import *
 from . import outputs

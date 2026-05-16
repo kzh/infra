@@ -146,28 +146,35 @@ __all__ = [
     'MySQLBackupStatusArgsDict',
     'MySQLBackupArgs',
     'MySQLBackupArgsDict',
+    'MySQLClusterSetFailoverSpecOptionsPatchArgs',
+    'MySQLClusterSetFailoverSpecOptionsPatchArgsDict',
+    'MySQLClusterSetFailoverSpecOptionsArgs',
+    'MySQLClusterSetFailoverSpecOptionsArgsDict',
+    'MySQLClusterSetFailoverSpecPatchArgs',
+    'MySQLClusterSetFailoverSpecPatchArgsDict',
+    'MySQLClusterSetFailoverSpecArgs',
+    'MySQLClusterSetFailoverSpecArgsDict',
+    'MySQLClusterSetFailoverStatusArgs',
+    'MySQLClusterSetFailoverStatusArgsDict',
+    'MySQLClusterSetFailoverArgs',
+    'MySQLClusterSetFailoverArgsDict',
 ]
 
-MYPY = False
-
-if not MYPY:
-    class InnoDBClusterSpecDatadirPermissionsPatchArgsDict(TypedDict):
-        fs_group_change_policy: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Optional fsGroupChangePolicy value to be set in the pod security context. Some possible values are OnRootMismatch and Always. For more information check the official Kubernetes documentation
-        """
-        set_rights_using_init_container: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether to use an init container to set at start the DataDir permissions
-        """
-elif False:
-    InnoDBClusterSpecDatadirPermissionsPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecDatadirPermissionsPatchArgsDict(TypedDict):
+    fs_group_change_policy: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Optional fsGroupChangePolicy value to be set in the pod security context. Some possible values are OnRootMismatch and Always. For more information check the official Kubernetes documentation
+    """
+    set_rights_using_init_container: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether to use an init container to set at start the DataDir permissions
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecDatadirPermissionsPatchArgs:
     def __init__(__self__, *,
-                 fs_group_change_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 set_rights_using_init_container: Optional[pulumi.Input[_builtins.bool]] = None):
+                 fs_group_change_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 set_rights_using_init_container: pulumi.Input[Optional[_builtins.bool]] = None):
         """
         :param pulumi.Input[_builtins.str] fs_group_change_policy: Optional fsGroupChangePolicy value to be set in the pod security context. Some possible values are OnRootMismatch and Always. For more information check the official Kubernetes documentation
         :param pulumi.Input[_builtins.bool] set_rights_using_init_container: Whether to use an init container to set at start the DataDir permissions
@@ -179,47 +186,44 @@ class InnoDBClusterSpecDatadirPermissionsPatchArgs:
 
     @_builtins.property
     @pulumi.getter(name="fsGroupChangePolicy")
-    def fs_group_change_policy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def fs_group_change_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Optional fsGroupChangePolicy value to be set in the pod security context. Some possible values are OnRootMismatch and Always. For more information check the official Kubernetes documentation
         """
         return pulumi.get(self, "fs_group_change_policy")
 
     @fs_group_change_policy.setter
-    def fs_group_change_policy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def fs_group_change_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "fs_group_change_policy", value)
 
     @_builtins.property
     @pulumi.getter(name="setRightsUsingInitContainer")
-    def set_rights_using_init_container(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def set_rights_using_init_container(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether to use an init container to set at start the DataDir permissions
         """
         return pulumi.get(self, "set_rights_using_init_container")
 
     @set_rights_using_init_container.setter
-    def set_rights_using_init_container(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def set_rights_using_init_container(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "set_rights_using_init_container", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecDatadirPermissionsArgsDict(TypedDict):
-        fs_group_change_policy: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Optional fsGroupChangePolicy value to be set in the pod security context. Some possible values are OnRootMismatch and Always. For more information check the official Kubernetes documentation
-        """
-        set_rights_using_init_container: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether to use an init container to set at start the DataDir permissions
-        """
-elif False:
-    InnoDBClusterSpecDatadirPermissionsArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecDatadirPermissionsArgsDict(TypedDict):
+    fs_group_change_policy: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Optional fsGroupChangePolicy value to be set in the pod security context. Some possible values are OnRootMismatch and Always. For more information check the official Kubernetes documentation
+    """
+    set_rights_using_init_container: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether to use an init container to set at start the DataDir permissions
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecDatadirPermissionsArgs:
     def __init__(__self__, *,
-                 fs_group_change_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 set_rights_using_init_container: Optional[pulumi.Input[_builtins.bool]] = None):
+                 fs_group_change_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 set_rights_using_init_container: pulumi.Input[Optional[_builtins.bool]] = None):
         """
         :param pulumi.Input[_builtins.str] fs_group_change_policy: Optional fsGroupChangePolicy value to be set in the pod security context. Some possible values are OnRootMismatch and Always. For more information check the official Kubernetes documentation
         :param pulumi.Input[_builtins.bool] set_rights_using_init_container: Whether to use an init container to set at start the DataDir permissions
@@ -231,98 +235,90 @@ class InnoDBClusterSpecDatadirPermissionsArgs:
 
     @_builtins.property
     @pulumi.getter(name="fsGroupChangePolicy")
-    def fs_group_change_policy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def fs_group_change_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Optional fsGroupChangePolicy value to be set in the pod security context. Some possible values are OnRootMismatch and Always. For more information check the official Kubernetes documentation
         """
         return pulumi.get(self, "fs_group_change_policy")
 
     @fs_group_change_policy.setter
-    def fs_group_change_policy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def fs_group_change_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "fs_group_change_policy", value)
 
     @_builtins.property
     @pulumi.getter(name="setRightsUsingInitContainer")
-    def set_rights_using_init_container(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def set_rights_using_init_container(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether to use an init container to set at start the DataDir permissions
         """
         return pulumi.get(self, "set_rights_using_init_container")
 
     @set_rights_using_init_container.setter
-    def set_rights_using_init_container(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def set_rights_using_init_container(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "set_rights_using_init_container", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecImagePullSecretsPatchArgsDict(TypedDict):
-        name: NotRequired[pulumi.Input[_builtins.str]]
-elif False:
-    InnoDBClusterSpecImagePullSecretsPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecImagePullSecretsPatchArgsDict(TypedDict):
+    name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
 
 @pulumi.input_type
 class InnoDBClusterSpecImagePullSecretsPatchArgs:
     def __init__(__self__, *,
-                 name: Optional[pulumi.Input[_builtins.str]] = None):
+                 name: pulumi.Input[Optional[_builtins.str]] = None):
         if name is not None:
             pulumi.set(__self__, "name", name)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecImagePullSecretsArgsDict(TypedDict):
-        name: NotRequired[pulumi.Input[_builtins.str]]
-elif False:
-    InnoDBClusterSpecImagePullSecretsArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecImagePullSecretsArgsDict(TypedDict):
+    name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
 
 @pulumi.input_type
 class InnoDBClusterSpecImagePullSecretsArgs:
     def __init__(__self__, *,
-                 name: Optional[pulumi.Input[_builtins.str]] = None):
+                 name: pulumi.Input[Optional[_builtins.str]] = None):
         if name is not None:
             pulumi.set(__self__, "name", name)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecInstanceServicePatchArgsDict(TypedDict):
-        """
-        Configuration of the Service used by the InnoDB Cluster GR members internally
-        """
-        annotations: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Custom annotations for the Service
-        """
-        labels: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Custom labels for the Service
-        """
-elif False:
-    InnoDBClusterSpecInstanceServicePatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecInstanceServicePatchArgsDict(TypedDict):
+    """
+    Configuration of the Service used by the InnoDB Cluster GR members internally
+    """
+    annotations: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Custom annotations for the Service
+    """
+    labels: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Custom labels for the Service
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecInstanceServicePatchArgs:
     def __init__(__self__, *,
-                 annotations: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, Any]]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, Any]]] = None):
         """
         Configuration of the Service used by the InnoDB Cluster GR members internally
+
         :param pulumi.Input[Mapping[str, Any]] annotations: Custom annotations for the Service
         :param pulumi.Input[Mapping[str, Any]] labels: Custom labels for the Service
         """
@@ -333,52 +329,50 @@ class InnoDBClusterSpecInstanceServicePatchArgs:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Custom annotations for the Service
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Custom labels for the Service
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "labels", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecInstanceServiceArgsDict(TypedDict):
-        """
-        Configuration of the Service used by the InnoDB Cluster GR members internally
-        """
-        annotations: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Custom annotations for the Service
-        """
-        labels: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Custom labels for the Service
-        """
-elif False:
-    InnoDBClusterSpecInstanceServiceArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecInstanceServiceArgsDict(TypedDict):
+    """
+    Configuration of the Service used by the InnoDB Cluster GR members internally
+    """
+    annotations: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Custom annotations for the Service
+    """
+    labels: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Custom labels for the Service
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecInstanceServiceArgs:
     def __init__(__self__, *,
-                 annotations: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, Any]]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, Any]]] = None):
         """
         Configuration of the Service used by the InnoDB Cluster GR members internally
+
         :param pulumi.Input[Mapping[str, Any]] annotations: Custom annotations for the Service
         :param pulumi.Input[Mapping[str, Any]] labels: Custom labels for the Service
         """
@@ -389,62 +383,60 @@ class InnoDBClusterSpecInstanceServiceArgs:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Custom annotations for the Service
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Custom labels for the Service
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "labels", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecKeyringEncryptedFilePatchArgsDict(TypedDict):
-        """
-        Keyring 'Encrypted File' specification
-        """
-        file_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Path to the keyring file name inside the storage volume (will be prefixed by mount path)
-        """
-        password: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of a secret that contains password for the keyring in the key 'keyring_password'
-        """
-        read_only: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether to open the keyring file in read-only mode
-        """
-        storage: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Specification of the volume to be mounted where the keyring file resides
-        """
-elif False:
-    InnoDBClusterSpecKeyringEncryptedFilePatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecKeyringEncryptedFilePatchArgsDict(TypedDict):
+    """
+    Keyring 'Encrypted File' specification
+    """
+    file_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Path to the keyring file name inside the storage volume (will be prefixed by mount path)
+    """
+    password: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of a secret that contains password for the keyring in the key 'keyring_password'
+    """
+    read_only: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether to open the keyring file in read-only mode
+    """
+    storage: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Specification of the volume to be mounted where the keyring file resides
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecKeyringEncryptedFilePatchArgs:
     def __init__(__self__, *,
-                 file_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 password: Optional[pulumi.Input[_builtins.str]] = None,
-                 read_only: Optional[pulumi.Input[_builtins.bool]] = None,
-                 storage: Optional[pulumi.Input[Mapping[str, Any]]] = None):
+                 file_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 password: pulumi.Input[Optional[_builtins.str]] = None,
+                 read_only: pulumi.Input[Optional[_builtins.bool]] = None,
+                 storage: pulumi.Input[Optional[Mapping[str, Any]]] = None):
         """
         Keyring 'Encrypted File' specification
+
         :param pulumi.Input[_builtins.str] file_name: Path to the keyring file name inside the storage volume (will be prefixed by mount path)
         :param pulumi.Input[_builtins.str] password: Name of a secret that contains password for the keyring in the key 'keyring_password'
         :param pulumi.Input[_builtins.bool] read_only: Whether to open the keyring file in read-only mode
@@ -461,86 +453,84 @@ class InnoDBClusterSpecKeyringEncryptedFilePatchArgs:
 
     @_builtins.property
     @pulumi.getter(name="fileName")
-    def file_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def file_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Path to the keyring file name inside the storage volume (will be prefixed by mount path)
         """
         return pulumi.get(self, "file_name")
 
     @file_name.setter
-    def file_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def file_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "file_name", value)
 
     @_builtins.property
     @pulumi.getter
-    def password(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def password(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of a secret that contains password for the keyring in the key 'keyring_password'
         """
         return pulumi.get(self, "password")
 
     @password.setter
-    def password(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def password(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "password", value)
 
     @_builtins.property
     @pulumi.getter(name="readOnly")
-    def read_only(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def read_only(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether to open the keyring file in read-only mode
         """
         return pulumi.get(self, "read_only")
 
     @read_only.setter
-    def read_only(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def read_only(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "read_only", value)
 
     @_builtins.property
     @pulumi.getter
-    def storage(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def storage(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Specification of the volume to be mounted where the keyring file resides
         """
         return pulumi.get(self, "storage")
 
     @storage.setter
-    def storage(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def storage(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "storage", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecKeyringEncryptedFileArgsDict(TypedDict):
-        """
-        Keyring 'Encrypted File' specification
-        """
-        file_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Path to the keyring file name inside the storage volume (will be prefixed by mount path)
-        """
-        password: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of a secret that contains password for the keyring in the key 'keyring_password'
-        """
-        read_only: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether to open the keyring file in read-only mode
-        """
-        storage: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Specification of the volume to be mounted where the keyring file resides
-        """
-elif False:
-    InnoDBClusterSpecKeyringEncryptedFileArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecKeyringEncryptedFileArgsDict(TypedDict):
+    """
+    Keyring 'Encrypted File' specification
+    """
+    file_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Path to the keyring file name inside the storage volume (will be prefixed by mount path)
+    """
+    password: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of a secret that contains password for the keyring in the key 'keyring_password'
+    """
+    read_only: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether to open the keyring file in read-only mode
+    """
+    storage: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Specification of the volume to be mounted where the keyring file resides
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecKeyringEncryptedFileArgs:
     def __init__(__self__, *,
-                 file_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 password: Optional[pulumi.Input[_builtins.str]] = None,
-                 read_only: Optional[pulumi.Input[_builtins.bool]] = None,
-                 storage: Optional[pulumi.Input[Mapping[str, Any]]] = None):
+                 file_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 password: pulumi.Input[Optional[_builtins.str]] = None,
+                 read_only: pulumi.Input[Optional[_builtins.bool]] = None,
+                 storage: pulumi.Input[Optional[Mapping[str, Any]]] = None):
         """
         Keyring 'Encrypted File' specification
+
         :param pulumi.Input[_builtins.str] file_name: Path to the keyring file name inside the storage volume (will be prefixed by mount path)
         :param pulumi.Input[_builtins.str] password: Name of a secret that contains password for the keyring in the key 'keyring_password'
         :param pulumi.Input[_builtins.bool] read_only: Whether to open the keyring file in read-only mode
@@ -557,81 +547,79 @@ class InnoDBClusterSpecKeyringEncryptedFileArgs:
 
     @_builtins.property
     @pulumi.getter(name="fileName")
-    def file_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def file_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Path to the keyring file name inside the storage volume (will be prefixed by mount path)
         """
         return pulumi.get(self, "file_name")
 
     @file_name.setter
-    def file_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def file_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "file_name", value)
 
     @_builtins.property
     @pulumi.getter
-    def password(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def password(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of a secret that contains password for the keyring in the key 'keyring_password'
         """
         return pulumi.get(self, "password")
 
     @password.setter
-    def password(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def password(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "password", value)
 
     @_builtins.property
     @pulumi.getter(name="readOnly")
-    def read_only(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def read_only(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether to open the keyring file in read-only mode
         """
         return pulumi.get(self, "read_only")
 
     @read_only.setter
-    def read_only(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def read_only(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "read_only", value)
 
     @_builtins.property
     @pulumi.getter
-    def storage(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def storage(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Specification of the volume to be mounted where the keyring file resides
         """
         return pulumi.get(self, "storage")
 
     @storage.setter
-    def storage(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def storage(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "storage", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecKeyringFilePatchArgsDict(TypedDict):
-        """
-        Keyring 'File' specification
-        """
-        file_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Path to the keyring file name inside the storage volume (will be prefixed by mount path)
-        """
-        read_only: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether to open the keyring file in read-only mode
-        """
-        storage: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Specification of the volume to be mounted where the keyring file resides
-        """
-elif False:
-    InnoDBClusterSpecKeyringFilePatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecKeyringFilePatchArgsDict(TypedDict):
+    """
+    Keyring 'File' specification
+    """
+    file_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Path to the keyring file name inside the storage volume (will be prefixed by mount path)
+    """
+    read_only: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether to open the keyring file in read-only mode
+    """
+    storage: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Specification of the volume to be mounted where the keyring file resides
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecKeyringFilePatchArgs:
     def __init__(__self__, *,
-                 file_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 read_only: Optional[pulumi.Input[_builtins.bool]] = None,
-                 storage: Optional[pulumi.Input[Mapping[str, Any]]] = None):
+                 file_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 read_only: pulumi.Input[Optional[_builtins.bool]] = None,
+                 storage: pulumi.Input[Optional[Mapping[str, Any]]] = None):
         """
         Keyring 'File' specification
+
         :param pulumi.Input[_builtins.str] file_name: Path to the keyring file name inside the storage volume (will be prefixed by mount path)
         :param pulumi.Input[_builtins.bool] read_only: Whether to open the keyring file in read-only mode
         :param pulumi.Input[Mapping[str, Any]] storage: Specification of the volume to be mounted where the keyring file resides
@@ -645,69 +633,67 @@ class InnoDBClusterSpecKeyringFilePatchArgs:
 
     @_builtins.property
     @pulumi.getter(name="fileName")
-    def file_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def file_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Path to the keyring file name inside the storage volume (will be prefixed by mount path)
         """
         return pulumi.get(self, "file_name")
 
     @file_name.setter
-    def file_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def file_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "file_name", value)
 
     @_builtins.property
     @pulumi.getter(name="readOnly")
-    def read_only(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def read_only(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether to open the keyring file in read-only mode
         """
         return pulumi.get(self, "read_only")
 
     @read_only.setter
-    def read_only(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def read_only(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "read_only", value)
 
     @_builtins.property
     @pulumi.getter
-    def storage(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def storage(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Specification of the volume to be mounted where the keyring file resides
         """
         return pulumi.get(self, "storage")
 
     @storage.setter
-    def storage(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def storage(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "storage", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecKeyringFileArgsDict(TypedDict):
-        """
-        Keyring 'File' specification
-        """
-        file_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Path to the keyring file name inside the storage volume (will be prefixed by mount path)
-        """
-        read_only: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether to open the keyring file in read-only mode
-        """
-        storage: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Specification of the volume to be mounted where the keyring file resides
-        """
-elif False:
-    InnoDBClusterSpecKeyringFileArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecKeyringFileArgsDict(TypedDict):
+    """
+    Keyring 'File' specification
+    """
+    file_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Path to the keyring file name inside the storage volume (will be prefixed by mount path)
+    """
+    read_only: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether to open the keyring file in read-only mode
+    """
+    storage: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Specification of the volume to be mounted where the keyring file resides
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecKeyringFileArgs:
     def __init__(__self__, *,
-                 file_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 read_only: Optional[pulumi.Input[_builtins.bool]] = None,
-                 storage: Optional[pulumi.Input[Mapping[str, Any]]] = None):
+                 file_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 read_only: pulumi.Input[Optional[_builtins.bool]] = None,
+                 storage: pulumi.Input[Optional[Mapping[str, Any]]] = None):
         """
         Keyring 'File' specification
+
         :param pulumi.Input[_builtins.str] file_name: Path to the keyring file name inside the storage volume (will be prefixed by mount path)
         :param pulumi.Input[_builtins.bool] read_only: Whether to open the keyring file in read-only mode
         :param pulumi.Input[Mapping[str, Any]] storage: Specification of the volume to be mounted where the keyring file resides
@@ -721,74 +707,72 @@ class InnoDBClusterSpecKeyringFileArgs:
 
     @_builtins.property
     @pulumi.getter(name="fileName")
-    def file_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def file_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Path to the keyring file name inside the storage volume (will be prefixed by mount path)
         """
         return pulumi.get(self, "file_name")
 
     @file_name.setter
-    def file_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def file_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "file_name", value)
 
     @_builtins.property
     @pulumi.getter(name="readOnly")
-    def read_only(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def read_only(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether to open the keyring file in read-only mode
         """
         return pulumi.get(self, "read_only")
 
     @read_only.setter
-    def read_only(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def read_only(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "read_only", value)
 
     @_builtins.property
     @pulumi.getter
-    def storage(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def storage(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Specification of the volume to be mounted where the keyring file resides
         """
         return pulumi.get(self, "storage")
 
     @storage.setter
-    def storage(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def storage(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "storage", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecKeyringKmipPatchArgsDict(TypedDict):
-        """
-        Keyring 'KMIP' specification
-        """
-        cache_keys: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether the keys are cached by the MySQL Server in RAM in plaintext. If set to false the keys are decrypted on every access
-        """
-        configuration: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of a secret that contains TLS certificates
-        """
-        server: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Primary OKV Server host with port number in the format <host>:<port>
-        """
-        standby_server: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        A list of standby servers in the format <host>:<port>
-        """
-elif False:
-    InnoDBClusterSpecKeyringKmipPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecKeyringKmipPatchArgsDict(TypedDict):
+    """
+    Keyring 'KMIP' specification
+    """
+    cache_keys: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether the keys are cached by the MySQL Server in RAM in plaintext. If set to false the keys are decrypted on every access
+    """
+    configuration: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of a secret that contains TLS certificates
+    """
+    server: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Primary OKV Server host with port number in the format <host>:<port>
+    """
+    standby_server: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    """
+    A list of standby servers in the format <host>:<port>
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecKeyringKmipPatchArgs:
     def __init__(__self__, *,
-                 cache_keys: Optional[pulumi.Input[_builtins.bool]] = None,
-                 configuration: Optional[pulumi.Input[_builtins.str]] = None,
-                 server: Optional[pulumi.Input[_builtins.str]] = None,
-                 standby_server: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
+                 cache_keys: pulumi.Input[Optional[_builtins.bool]] = None,
+                 configuration: pulumi.Input[Optional[_builtins.str]] = None,
+                 server: pulumi.Input[Optional[_builtins.str]] = None,
+                 standby_server: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None):
         """
         Keyring 'KMIP' specification
+
         :param pulumi.Input[_builtins.bool] cache_keys: Whether the keys are cached by the MySQL Server in RAM in plaintext. If set to false the keys are decrypted on every access
         :param pulumi.Input[_builtins.str] configuration: Name of a secret that contains TLS certificates
         :param pulumi.Input[_builtins.str] server: Primary OKV Server host with port number in the format <host>:<port>
@@ -805,86 +789,84 @@ class InnoDBClusterSpecKeyringKmipPatchArgs:
 
     @_builtins.property
     @pulumi.getter(name="cacheKeys")
-    def cache_keys(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def cache_keys(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether the keys are cached by the MySQL Server in RAM in plaintext. If set to false the keys are decrypted on every access
         """
         return pulumi.get(self, "cache_keys")
 
     @cache_keys.setter
-    def cache_keys(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def cache_keys(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "cache_keys", value)
 
     @_builtins.property
     @pulumi.getter
-    def configuration(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def configuration(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of a secret that contains TLS certificates
         """
         return pulumi.get(self, "configuration")
 
     @configuration.setter
-    def configuration(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def configuration(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "configuration", value)
 
     @_builtins.property
     @pulumi.getter
-    def server(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def server(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Primary OKV Server host with port number in the format <host>:<port>
         """
         return pulumi.get(self, "server")
 
     @server.setter
-    def server(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def server(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "server", value)
 
     @_builtins.property
     @pulumi.getter(name="standbyServer")
-    def standby_server(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def standby_server(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         A list of standby servers in the format <host>:<port>
         """
         return pulumi.get(self, "standby_server")
 
     @standby_server.setter
-    def standby_server(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def standby_server(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "standby_server", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecKeyringKmipArgsDict(TypedDict):
-        """
-        Keyring 'KMIP' specification
-        """
-        cache_keys: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether the keys are cached by the MySQL Server in RAM in plaintext. If set to false the keys are decrypted on every access
-        """
-        configuration: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of a secret that contains TLS certificates
-        """
-        server: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Primary OKV Server host with port number in the format <host>:<port>
-        """
-        standby_server: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        A list of standby servers in the format <host>:<port>
-        """
-elif False:
-    InnoDBClusterSpecKeyringKmipArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecKeyringKmipArgsDict(TypedDict):
+    """
+    Keyring 'KMIP' specification
+    """
+    cache_keys: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether the keys are cached by the MySQL Server in RAM in plaintext. If set to false the keys are decrypted on every access
+    """
+    configuration: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of a secret that contains TLS certificates
+    """
+    server: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Primary OKV Server host with port number in the format <host>:<port>
+    """
+    standby_server: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    """
+    A list of standby servers in the format <host>:<port>
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecKeyringKmipArgs:
     def __init__(__self__, *,
-                 cache_keys: Optional[pulumi.Input[_builtins.bool]] = None,
-                 configuration: Optional[pulumi.Input[_builtins.str]] = None,
-                 server: Optional[pulumi.Input[_builtins.str]] = None,
-                 standby_server: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
+                 cache_keys: pulumi.Input[Optional[_builtins.bool]] = None,
+                 configuration: pulumi.Input[Optional[_builtins.str]] = None,
+                 server: pulumi.Input[Optional[_builtins.str]] = None,
+                 standby_server: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None):
         """
         Keyring 'KMIP' specification
+
         :param pulumi.Input[_builtins.bool] cache_keys: Whether the keys are cached by the MySQL Server in RAM in plaintext. If set to false the keys are decrypted on every access
         :param pulumi.Input[_builtins.str] configuration: Name of a secret that contains TLS certificates
         :param pulumi.Input[_builtins.str] server: Primary OKV Server host with port number in the format <host>:<port>
@@ -901,81 +883,78 @@ class InnoDBClusterSpecKeyringKmipArgs:
 
     @_builtins.property
     @pulumi.getter(name="cacheKeys")
-    def cache_keys(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def cache_keys(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether the keys are cached by the MySQL Server in RAM in plaintext. If set to false the keys are decrypted on every access
         """
         return pulumi.get(self, "cache_keys")
 
     @cache_keys.setter
-    def cache_keys(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def cache_keys(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "cache_keys", value)
 
     @_builtins.property
     @pulumi.getter
-    def configuration(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def configuration(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of a secret that contains TLS certificates
         """
         return pulumi.get(self, "configuration")
 
     @configuration.setter
-    def configuration(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def configuration(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "configuration", value)
 
     @_builtins.property
     @pulumi.getter
-    def server(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def server(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Primary OKV Server host with port number in the format <host>:<port>
         """
         return pulumi.get(self, "server")
 
     @server.setter
-    def server(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def server(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "server", value)
 
     @_builtins.property
     @pulumi.getter(name="standbyServer")
-    def standby_server(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def standby_server(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         A list of standby servers in the format <host>:<port>
         """
         return pulumi.get(self, "standby_server")
 
     @standby_server.setter
-    def standby_server(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def standby_server(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "standby_server", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecKeyringOciEndpointsPatchArgsDict(TypedDict):
-        encryption: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Encryption endpoint URI like {identifier}-crypto.kms.{region}.oraclecloud.com
-        """
-        management: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Management endpoint URI like {identifier}-management.kms.{region}.oraclecloud.com
-        """
-        secrets: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Secrets endpoint URI like secrets.vaults.{region}.oci.oraclecloud.com
-        """
-        vaults: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Vaults endpoint URI like vaults.{region}.oci.oraclecloud.com
-        """
-elif False:
-    InnoDBClusterSpecKeyringOciEndpointsPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecKeyringOciEndpointsPatchArgsDict(TypedDict):
+    encryption: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Encryption endpoint URI like {identifier}-crypto.kms.{region}.oraclecloud.com
+    """
+    management: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Management endpoint URI like {identifier}-management.kms.{region}.oraclecloud.com
+    """
+    secrets: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Secrets endpoint URI like secrets.vaults.{region}.oci.oraclecloud.com
+    """
+    vaults: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Vaults endpoint URI like vaults.{region}.oci.oraclecloud.com
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecKeyringOciEndpointsPatchArgs:
     def __init__(__self__, *,
-                 encryption: Optional[pulumi.Input[_builtins.str]] = None,
-                 management: Optional[pulumi.Input[_builtins.str]] = None,
-                 secrets: Optional[pulumi.Input[_builtins.str]] = None,
-                 vaults: Optional[pulumi.Input[_builtins.str]] = None):
+                 encryption: pulumi.Input[Optional[_builtins.str]] = None,
+                 management: pulumi.Input[Optional[_builtins.str]] = None,
+                 secrets: pulumi.Input[Optional[_builtins.str]] = None,
+                 vaults: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] encryption: Encryption endpoint URI like {identifier}-crypto.kms.{region}.oraclecloud.com
         :param pulumi.Input[_builtins.str] management: Management endpoint URI like {identifier}-management.kms.{region}.oraclecloud.com
@@ -993,81 +972,78 @@ class InnoDBClusterSpecKeyringOciEndpointsPatchArgs:
 
     @_builtins.property
     @pulumi.getter
-    def encryption(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def encryption(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Encryption endpoint URI like {identifier}-crypto.kms.{region}.oraclecloud.com
         """
         return pulumi.get(self, "encryption")
 
     @encryption.setter
-    def encryption(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def encryption(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "encryption", value)
 
     @_builtins.property
     @pulumi.getter
-    def management(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def management(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Management endpoint URI like {identifier}-management.kms.{region}.oraclecloud.com
         """
         return pulumi.get(self, "management")
 
     @management.setter
-    def management(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def management(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "management", value)
 
     @_builtins.property
     @pulumi.getter
-    def secrets(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def secrets(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Secrets endpoint URI like secrets.vaults.{region}.oci.oraclecloud.com
         """
         return pulumi.get(self, "secrets")
 
     @secrets.setter
-    def secrets(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def secrets(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "secrets", value)
 
     @_builtins.property
     @pulumi.getter
-    def vaults(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def vaults(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Vaults endpoint URI like vaults.{region}.oci.oraclecloud.com
         """
         return pulumi.get(self, "vaults")
 
     @vaults.setter
-    def vaults(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def vaults(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "vaults", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecKeyringOciEndpointsArgsDict(TypedDict):
-        encryption: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Encryption endpoint URI like {identifier}-crypto.kms.{region}.oraclecloud.com
-        """
-        management: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Management endpoint URI like {identifier}-management.kms.{region}.oraclecloud.com
-        """
-        secrets: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Secrets endpoint URI like secrets.vaults.{region}.oci.oraclecloud.com
-        """
-        vaults: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Vaults endpoint URI like vaults.{region}.oci.oraclecloud.com
-        """
-elif False:
-    InnoDBClusterSpecKeyringOciEndpointsArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecKeyringOciEndpointsArgsDict(TypedDict):
+    encryption: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Encryption endpoint URI like {identifier}-crypto.kms.{region}.oraclecloud.com
+    """
+    management: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Management endpoint URI like {identifier}-management.kms.{region}.oraclecloud.com
+    """
+    secrets: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Secrets endpoint URI like secrets.vaults.{region}.oci.oraclecloud.com
+    """
+    vaults: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Vaults endpoint URI like vaults.{region}.oci.oraclecloud.com
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecKeyringOciEndpointsArgs:
     def __init__(__self__, *,
-                 encryption: Optional[pulumi.Input[_builtins.str]] = None,
-                 management: Optional[pulumi.Input[_builtins.str]] = None,
-                 secrets: Optional[pulumi.Input[_builtins.str]] = None,
-                 vaults: Optional[pulumi.Input[_builtins.str]] = None):
+                 encryption: pulumi.Input[Optional[_builtins.str]] = None,
+                 management: pulumi.Input[Optional[_builtins.str]] = None,
+                 secrets: pulumi.Input[Optional[_builtins.str]] = None,
+                 vaults: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] encryption: Encryption endpoint URI like {identifier}-crypto.kms.{region}.oraclecloud.com
         :param pulumi.Input[_builtins.str] management: Management endpoint URI like {identifier}-management.kms.{region}.oraclecloud.com
@@ -1085,108 +1061,106 @@ class InnoDBClusterSpecKeyringOciEndpointsArgs:
 
     @_builtins.property
     @pulumi.getter
-    def encryption(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def encryption(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Encryption endpoint URI like {identifier}-crypto.kms.{region}.oraclecloud.com
         """
         return pulumi.get(self, "encryption")
 
     @encryption.setter
-    def encryption(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def encryption(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "encryption", value)
 
     @_builtins.property
     @pulumi.getter
-    def management(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def management(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Management endpoint URI like {identifier}-management.kms.{region}.oraclecloud.com
         """
         return pulumi.get(self, "management")
 
     @management.setter
-    def management(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def management(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "management", value)
 
     @_builtins.property
     @pulumi.getter
-    def secrets(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def secrets(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Secrets endpoint URI like secrets.vaults.{region}.oci.oraclecloud.com
         """
         return pulumi.get(self, "secrets")
 
     @secrets.setter
-    def secrets(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def secrets(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "secrets", value)
 
     @_builtins.property
     @pulumi.getter
-    def vaults(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def vaults(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Vaults endpoint URI like vaults.{region}.oci.oraclecloud.com
         """
         return pulumi.get(self, "vaults")
 
     @vaults.setter
-    def vaults(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def vaults(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "vaults", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecKeyringOciPatchArgsDict(TypedDict):
-        """
-        Keyring 'OCI' specification
-        """
-        ca_certificate: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Secret that contains ca.crt field with CA certificate bundle file that the keyring_oci plugin uses for Oracle Cloud Infrastructure certificate verification
-        """
-        compartment: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Compartment identifier in the form ocid1.compartment.oc1...
-        """
-        endpoints: NotRequired[pulumi.Input['InnoDBClusterSpecKeyringOciEndpointsPatchArgsDict']]
-        key_fingerprint: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Private key fingerprint
-        """
-        key_secret: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        A secret that contains the private key under the field 'privatekey'
-        """
-        master_key: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Master key identified in the form ocid1.key.oc1...
-        """
-        tenancy: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Tenancy identifier in the form ocid1.tenancy.oc1...
-        """
-        user: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        User identifier in the form of ocid1.user.oc1...
-        """
-        virtual_vault: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Vault identifier in the form ocid1.vault.oc1...
-        """
-elif False:
-    InnoDBClusterSpecKeyringOciPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecKeyringOciPatchArgsDict(TypedDict):
+    """
+    Keyring 'OCI' specification
+    """
+    ca_certificate: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Secret that contains ca.crt field with CA certificate bundle file that the keyring_oci plugin uses for Oracle Cloud Infrastructure certificate verification
+    """
+    compartment: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Compartment identifier in the form ocid1.compartment.oc1...
+    """
+    endpoints: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecKeyringOciEndpointsPatchArgs']]]
+    key_fingerprint: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Private key fingerprint
+    """
+    key_secret: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    A secret that contains the private key under the field 'privatekey'
+    """
+    master_key: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Master key identified in the form ocid1.key.oc1...
+    """
+    tenancy: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Tenancy identifier in the form ocid1.tenancy.oc1...
+    """
+    user: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    User identifier in the form of ocid1.user.oc1...
+    """
+    virtual_vault: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Vault identifier in the form ocid1.vault.oc1...
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecKeyringOciPatchArgs:
     def __init__(__self__, *,
-                 ca_certificate: Optional[pulumi.Input[_builtins.str]] = None,
-                 compartment: Optional[pulumi.Input[_builtins.str]] = None,
-                 endpoints: Optional[pulumi.Input['InnoDBClusterSpecKeyringOciEndpointsPatchArgs']] = None,
-                 key_fingerprint: Optional[pulumi.Input[_builtins.str]] = None,
-                 key_secret: Optional[pulumi.Input[_builtins.str]] = None,
-                 master_key: Optional[pulumi.Input[_builtins.str]] = None,
-                 tenancy: Optional[pulumi.Input[_builtins.str]] = None,
-                 user: Optional[pulumi.Input[_builtins.str]] = None,
-                 virtual_vault: Optional[pulumi.Input[_builtins.str]] = None):
+                 ca_certificate: pulumi.Input[Optional[_builtins.str]] = None,
+                 compartment: pulumi.Input[Optional[_builtins.str]] = None,
+                 endpoints: pulumi.Input[Optional['InnoDBClusterSpecKeyringOciEndpointsPatchArgs']] = None,
+                 key_fingerprint: pulumi.Input[Optional[_builtins.str]] = None,
+                 key_secret: pulumi.Input[Optional[_builtins.str]] = None,
+                 master_key: pulumi.Input[Optional[_builtins.str]] = None,
+                 tenancy: pulumi.Input[Optional[_builtins.str]] = None,
+                 user: pulumi.Input[Optional[_builtins.str]] = None,
+                 virtual_vault: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Keyring 'OCI' specification
+
         :param pulumi.Input[_builtins.str] ca_certificate: Secret that contains ca.crt field with CA certificate bundle file that the keyring_oci plugin uses for Oracle Cloud Infrastructure certificate verification
         :param pulumi.Input[_builtins.str] compartment: Compartment identifier in the form ocid1.compartment.oc1...
         :param pulumi.Input[_builtins.str] key_fingerprint: Private key fingerprint
@@ -1217,165 +1191,163 @@ class InnoDBClusterSpecKeyringOciPatchArgs:
 
     @_builtins.property
     @pulumi.getter(name="caCertificate")
-    def ca_certificate(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def ca_certificate(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Secret that contains ca.crt field with CA certificate bundle file that the keyring_oci plugin uses for Oracle Cloud Infrastructure certificate verification
         """
         return pulumi.get(self, "ca_certificate")
 
     @ca_certificate.setter
-    def ca_certificate(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def ca_certificate(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "ca_certificate", value)
 
     @_builtins.property
     @pulumi.getter
-    def compartment(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def compartment(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Compartment identifier in the form ocid1.compartment.oc1...
         """
         return pulumi.get(self, "compartment")
 
     @compartment.setter
-    def compartment(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def compartment(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "compartment", value)
 
     @_builtins.property
     @pulumi.getter
-    def endpoints(self) -> Optional[pulumi.Input['InnoDBClusterSpecKeyringOciEndpointsPatchArgs']]:
+    def endpoints(self) -> pulumi.Input[Optional['InnoDBClusterSpecKeyringOciEndpointsPatchArgs']]:
         return pulumi.get(self, "endpoints")
 
     @endpoints.setter
-    def endpoints(self, value: Optional[pulumi.Input['InnoDBClusterSpecKeyringOciEndpointsPatchArgs']]):
+    def endpoints(self, value: pulumi.Input[Optional['InnoDBClusterSpecKeyringOciEndpointsPatchArgs']]):
         pulumi.set(self, "endpoints", value)
 
     @_builtins.property
     @pulumi.getter(name="keyFingerprint")
-    def key_fingerprint(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def key_fingerprint(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Private key fingerprint
         """
         return pulumi.get(self, "key_fingerprint")
 
     @key_fingerprint.setter
-    def key_fingerprint(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def key_fingerprint(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "key_fingerprint", value)
 
     @_builtins.property
     @pulumi.getter(name="keySecret")
-    def key_secret(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def key_secret(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         A secret that contains the private key under the field 'privatekey'
         """
         return pulumi.get(self, "key_secret")
 
     @key_secret.setter
-    def key_secret(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def key_secret(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "key_secret", value)
 
     @_builtins.property
     @pulumi.getter(name="masterKey")
-    def master_key(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def master_key(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Master key identified in the form ocid1.key.oc1...
         """
         return pulumi.get(self, "master_key")
 
     @master_key.setter
-    def master_key(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def master_key(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "master_key", value)
 
     @_builtins.property
     @pulumi.getter
-    def tenancy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def tenancy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Tenancy identifier in the form ocid1.tenancy.oc1...
         """
         return pulumi.get(self, "tenancy")
 
     @tenancy.setter
-    def tenancy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def tenancy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "tenancy", value)
 
     @_builtins.property
     @pulumi.getter
-    def user(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def user(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         User identifier in the form of ocid1.user.oc1...
         """
         return pulumi.get(self, "user")
 
     @user.setter
-    def user(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def user(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "user", value)
 
     @_builtins.property
     @pulumi.getter(name="virtualVault")
-    def virtual_vault(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def virtual_vault(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Vault identifier in the form ocid1.vault.oc1...
         """
         return pulumi.get(self, "virtual_vault")
 
     @virtual_vault.setter
-    def virtual_vault(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def virtual_vault(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "virtual_vault", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecKeyringOciArgsDict(TypedDict):
-        """
-        Keyring 'OCI' specification
-        """
-        ca_certificate: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Secret that contains ca.crt field with CA certificate bundle file that the keyring_oci plugin uses for Oracle Cloud Infrastructure certificate verification
-        """
-        compartment: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Compartment identifier in the form ocid1.compartment.oc1...
-        """
-        endpoints: NotRequired[pulumi.Input['InnoDBClusterSpecKeyringOciEndpointsArgsDict']]
-        key_fingerprint: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Private key fingerprint
-        """
-        key_secret: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        A secret that contains the private key under the field 'privatekey'
-        """
-        master_key: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Master key identified in the form ocid1.key.oc1...
-        """
-        tenancy: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Tenancy identifier in the form ocid1.tenancy.oc1...
-        """
-        user: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        User identifier in the form of ocid1.user.oc1...
-        """
-        virtual_vault: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Vault identifier in the form ocid1.vault.oc1...
-        """
-elif False:
-    InnoDBClusterSpecKeyringOciArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecKeyringOciArgsDict(TypedDict):
+    """
+    Keyring 'OCI' specification
+    """
+    ca_certificate: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Secret that contains ca.crt field with CA certificate bundle file that the keyring_oci plugin uses for Oracle Cloud Infrastructure certificate verification
+    """
+    compartment: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Compartment identifier in the form ocid1.compartment.oc1...
+    """
+    endpoints: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecKeyringOciEndpointsArgs']]]
+    key_fingerprint: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Private key fingerprint
+    """
+    key_secret: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    A secret that contains the private key under the field 'privatekey'
+    """
+    master_key: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Master key identified in the form ocid1.key.oc1...
+    """
+    tenancy: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Tenancy identifier in the form ocid1.tenancy.oc1...
+    """
+    user: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    User identifier in the form of ocid1.user.oc1...
+    """
+    virtual_vault: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Vault identifier in the form ocid1.vault.oc1...
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecKeyringOciArgs:
     def __init__(__self__, *,
-                 ca_certificate: Optional[pulumi.Input[_builtins.str]] = None,
-                 compartment: Optional[pulumi.Input[_builtins.str]] = None,
-                 endpoints: Optional[pulumi.Input['InnoDBClusterSpecKeyringOciEndpointsArgs']] = None,
-                 key_fingerprint: Optional[pulumi.Input[_builtins.str]] = None,
-                 key_secret: Optional[pulumi.Input[_builtins.str]] = None,
-                 master_key: Optional[pulumi.Input[_builtins.str]] = None,
-                 tenancy: Optional[pulumi.Input[_builtins.str]] = None,
-                 user: Optional[pulumi.Input[_builtins.str]] = None,
-                 virtual_vault: Optional[pulumi.Input[_builtins.str]] = None):
+                 ca_certificate: pulumi.Input[Optional[_builtins.str]] = None,
+                 compartment: pulumi.Input[Optional[_builtins.str]] = None,
+                 endpoints: pulumi.Input[Optional['InnoDBClusterSpecKeyringOciEndpointsArgs']] = None,
+                 key_fingerprint: pulumi.Input[Optional[_builtins.str]] = None,
+                 key_secret: pulumi.Input[Optional[_builtins.str]] = None,
+                 master_key: pulumi.Input[Optional[_builtins.str]] = None,
+                 tenancy: pulumi.Input[Optional[_builtins.str]] = None,
+                 user: pulumi.Input[Optional[_builtins.str]] = None,
+                 virtual_vault: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Keyring 'OCI' specification
+
         :param pulumi.Input[_builtins.str] ca_certificate: Secret that contains ca.crt field with CA certificate bundle file that the keyring_oci plugin uses for Oracle Cloud Infrastructure certificate verification
         :param pulumi.Input[_builtins.str] compartment: Compartment identifier in the form ocid1.compartment.oc1...
         :param pulumi.Input[_builtins.str] key_fingerprint: Private key fingerprint
@@ -1406,129 +1378,126 @@ class InnoDBClusterSpecKeyringOciArgs:
 
     @_builtins.property
     @pulumi.getter(name="caCertificate")
-    def ca_certificate(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def ca_certificate(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Secret that contains ca.crt field with CA certificate bundle file that the keyring_oci plugin uses for Oracle Cloud Infrastructure certificate verification
         """
         return pulumi.get(self, "ca_certificate")
 
     @ca_certificate.setter
-    def ca_certificate(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def ca_certificate(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "ca_certificate", value)
 
     @_builtins.property
     @pulumi.getter
-    def compartment(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def compartment(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Compartment identifier in the form ocid1.compartment.oc1...
         """
         return pulumi.get(self, "compartment")
 
     @compartment.setter
-    def compartment(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def compartment(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "compartment", value)
 
     @_builtins.property
     @pulumi.getter
-    def endpoints(self) -> Optional[pulumi.Input['InnoDBClusterSpecKeyringOciEndpointsArgs']]:
+    def endpoints(self) -> pulumi.Input[Optional['InnoDBClusterSpecKeyringOciEndpointsArgs']]:
         return pulumi.get(self, "endpoints")
 
     @endpoints.setter
-    def endpoints(self, value: Optional[pulumi.Input['InnoDBClusterSpecKeyringOciEndpointsArgs']]):
+    def endpoints(self, value: pulumi.Input[Optional['InnoDBClusterSpecKeyringOciEndpointsArgs']]):
         pulumi.set(self, "endpoints", value)
 
     @_builtins.property
     @pulumi.getter(name="keyFingerprint")
-    def key_fingerprint(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def key_fingerprint(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Private key fingerprint
         """
         return pulumi.get(self, "key_fingerprint")
 
     @key_fingerprint.setter
-    def key_fingerprint(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def key_fingerprint(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "key_fingerprint", value)
 
     @_builtins.property
     @pulumi.getter(name="keySecret")
-    def key_secret(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def key_secret(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         A secret that contains the private key under the field 'privatekey'
         """
         return pulumi.get(self, "key_secret")
 
     @key_secret.setter
-    def key_secret(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def key_secret(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "key_secret", value)
 
     @_builtins.property
     @pulumi.getter(name="masterKey")
-    def master_key(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def master_key(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Master key identified in the form ocid1.key.oc1...
         """
         return pulumi.get(self, "master_key")
 
     @master_key.setter
-    def master_key(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def master_key(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "master_key", value)
 
     @_builtins.property
     @pulumi.getter
-    def tenancy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def tenancy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Tenancy identifier in the form ocid1.tenancy.oc1...
         """
         return pulumi.get(self, "tenancy")
 
     @tenancy.setter
-    def tenancy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def tenancy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "tenancy", value)
 
     @_builtins.property
     @pulumi.getter
-    def user(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def user(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         User identifier in the form of ocid1.user.oc1...
         """
         return pulumi.get(self, "user")
 
     @user.setter
-    def user(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def user(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "user", value)
 
     @_builtins.property
     @pulumi.getter(name="virtualVault")
-    def virtual_vault(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def virtual_vault(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Vault identifier in the form ocid1.vault.oc1...
         """
         return pulumi.get(self, "virtual_vault")
 
     @virtual_vault.setter
-    def virtual_vault(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def virtual_vault(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "virtual_vault", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecKeyringPatchArgsDict(TypedDict):
-        """
-        Keyring specification
-        """
-        encrypted_file: NotRequired[pulumi.Input['InnoDBClusterSpecKeyringEncryptedFilePatchArgsDict']]
-        file: NotRequired[pulumi.Input['InnoDBClusterSpecKeyringFilePatchArgsDict']]
-        kmip: NotRequired[pulumi.Input['InnoDBClusterSpecKeyringKmipPatchArgsDict']]
-        oci: NotRequired[pulumi.Input['InnoDBClusterSpecKeyringOciPatchArgsDict']]
-elif False:
-    InnoDBClusterSpecKeyringPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecKeyringPatchArgsDict(TypedDict):
+    """
+    Keyring specification
+    """
+    encrypted_file: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecKeyringEncryptedFilePatchArgs']]]
+    file: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecKeyringFilePatchArgs']]]
+    kmip: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecKeyringKmipPatchArgs']]]
+    oci: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecKeyringOciPatchArgs']]]
 
 @pulumi.input_type
 class InnoDBClusterSpecKeyringPatchArgs:
     def __init__(__self__, *,
-                 encrypted_file: Optional[pulumi.Input['InnoDBClusterSpecKeyringEncryptedFilePatchArgs']] = None,
-                 file: Optional[pulumi.Input['InnoDBClusterSpecKeyringFilePatchArgs']] = None,
-                 kmip: Optional[pulumi.Input['InnoDBClusterSpecKeyringKmipPatchArgs']] = None,
-                 oci: Optional[pulumi.Input['InnoDBClusterSpecKeyringOciPatchArgs']] = None):
+                 encrypted_file: pulumi.Input[Optional['InnoDBClusterSpecKeyringEncryptedFilePatchArgs']] = None,
+                 file: pulumi.Input[Optional['InnoDBClusterSpecKeyringFilePatchArgs']] = None,
+                 kmip: pulumi.Input[Optional['InnoDBClusterSpecKeyringKmipPatchArgs']] = None,
+                 oci: pulumi.Input[Optional['InnoDBClusterSpecKeyringOciPatchArgs']] = None):
         """
         Keyring specification
         """
@@ -1543,60 +1512,57 @@ class InnoDBClusterSpecKeyringPatchArgs:
 
     @_builtins.property
     @pulumi.getter(name="encryptedFile")
-    def encrypted_file(self) -> Optional[pulumi.Input['InnoDBClusterSpecKeyringEncryptedFilePatchArgs']]:
+    def encrypted_file(self) -> pulumi.Input[Optional['InnoDBClusterSpecKeyringEncryptedFilePatchArgs']]:
         return pulumi.get(self, "encrypted_file")
 
     @encrypted_file.setter
-    def encrypted_file(self, value: Optional[pulumi.Input['InnoDBClusterSpecKeyringEncryptedFilePatchArgs']]):
+    def encrypted_file(self, value: pulumi.Input[Optional['InnoDBClusterSpecKeyringEncryptedFilePatchArgs']]):
         pulumi.set(self, "encrypted_file", value)
 
     @_builtins.property
     @pulumi.getter
-    def file(self) -> Optional[pulumi.Input['InnoDBClusterSpecKeyringFilePatchArgs']]:
+    def file(self) -> pulumi.Input[Optional['InnoDBClusterSpecKeyringFilePatchArgs']]:
         return pulumi.get(self, "file")
 
     @file.setter
-    def file(self, value: Optional[pulumi.Input['InnoDBClusterSpecKeyringFilePatchArgs']]):
+    def file(self, value: pulumi.Input[Optional['InnoDBClusterSpecKeyringFilePatchArgs']]):
         pulumi.set(self, "file", value)
 
     @_builtins.property
     @pulumi.getter
-    def kmip(self) -> Optional[pulumi.Input['InnoDBClusterSpecKeyringKmipPatchArgs']]:
+    def kmip(self) -> pulumi.Input[Optional['InnoDBClusterSpecKeyringKmipPatchArgs']]:
         return pulumi.get(self, "kmip")
 
     @kmip.setter
-    def kmip(self, value: Optional[pulumi.Input['InnoDBClusterSpecKeyringKmipPatchArgs']]):
+    def kmip(self, value: pulumi.Input[Optional['InnoDBClusterSpecKeyringKmipPatchArgs']]):
         pulumi.set(self, "kmip", value)
 
     @_builtins.property
     @pulumi.getter
-    def oci(self) -> Optional[pulumi.Input['InnoDBClusterSpecKeyringOciPatchArgs']]:
+    def oci(self) -> pulumi.Input[Optional['InnoDBClusterSpecKeyringOciPatchArgs']]:
         return pulumi.get(self, "oci")
 
     @oci.setter
-    def oci(self, value: Optional[pulumi.Input['InnoDBClusterSpecKeyringOciPatchArgs']]):
+    def oci(self, value: pulumi.Input[Optional['InnoDBClusterSpecKeyringOciPatchArgs']]):
         pulumi.set(self, "oci", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecKeyringArgsDict(TypedDict):
-        """
-        Keyring specification
-        """
-        encrypted_file: NotRequired[pulumi.Input['InnoDBClusterSpecKeyringEncryptedFileArgsDict']]
-        file: NotRequired[pulumi.Input['InnoDBClusterSpecKeyringFileArgsDict']]
-        kmip: NotRequired[pulumi.Input['InnoDBClusterSpecKeyringKmipArgsDict']]
-        oci: NotRequired[pulumi.Input['InnoDBClusterSpecKeyringOciArgsDict']]
-elif False:
-    InnoDBClusterSpecKeyringArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecKeyringArgsDict(TypedDict):
+    """
+    Keyring specification
+    """
+    encrypted_file: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecKeyringEncryptedFileArgs']]]
+    file: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecKeyringFileArgs']]]
+    kmip: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecKeyringKmipArgs']]]
+    oci: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecKeyringOciArgs']]]
 
 @pulumi.input_type
 class InnoDBClusterSpecKeyringArgs:
     def __init__(__self__, *,
-                 encrypted_file: Optional[pulumi.Input['InnoDBClusterSpecKeyringEncryptedFileArgs']] = None,
-                 file: Optional[pulumi.Input['InnoDBClusterSpecKeyringFileArgs']] = None,
-                 kmip: Optional[pulumi.Input['InnoDBClusterSpecKeyringKmipArgs']] = None,
-                 oci: Optional[pulumi.Input['InnoDBClusterSpecKeyringOciArgs']] = None):
+                 encrypted_file: pulumi.Input[Optional['InnoDBClusterSpecKeyringEncryptedFileArgs']] = None,
+                 file: pulumi.Input[Optional['InnoDBClusterSpecKeyringFileArgs']] = None,
+                 kmip: pulumi.Input[Optional['InnoDBClusterSpecKeyringKmipArgs']] = None,
+                 oci: pulumi.Input[Optional['InnoDBClusterSpecKeyringOciArgs']] = None):
         """
         Keyring specification
         """
@@ -1611,59 +1577,56 @@ class InnoDBClusterSpecKeyringArgs:
 
     @_builtins.property
     @pulumi.getter(name="encryptedFile")
-    def encrypted_file(self) -> Optional[pulumi.Input['InnoDBClusterSpecKeyringEncryptedFileArgs']]:
+    def encrypted_file(self) -> pulumi.Input[Optional['InnoDBClusterSpecKeyringEncryptedFileArgs']]:
         return pulumi.get(self, "encrypted_file")
 
     @encrypted_file.setter
-    def encrypted_file(self, value: Optional[pulumi.Input['InnoDBClusterSpecKeyringEncryptedFileArgs']]):
+    def encrypted_file(self, value: pulumi.Input[Optional['InnoDBClusterSpecKeyringEncryptedFileArgs']]):
         pulumi.set(self, "encrypted_file", value)
 
     @_builtins.property
     @pulumi.getter
-    def file(self) -> Optional[pulumi.Input['InnoDBClusterSpecKeyringFileArgs']]:
+    def file(self) -> pulumi.Input[Optional['InnoDBClusterSpecKeyringFileArgs']]:
         return pulumi.get(self, "file")
 
     @file.setter
-    def file(self, value: Optional[pulumi.Input['InnoDBClusterSpecKeyringFileArgs']]):
+    def file(self, value: pulumi.Input[Optional['InnoDBClusterSpecKeyringFileArgs']]):
         pulumi.set(self, "file", value)
 
     @_builtins.property
     @pulumi.getter
-    def kmip(self) -> Optional[pulumi.Input['InnoDBClusterSpecKeyringKmipArgs']]:
+    def kmip(self) -> pulumi.Input[Optional['InnoDBClusterSpecKeyringKmipArgs']]:
         return pulumi.get(self, "kmip")
 
     @kmip.setter
-    def kmip(self, value: Optional[pulumi.Input['InnoDBClusterSpecKeyringKmipArgs']]):
+    def kmip(self, value: pulumi.Input[Optional['InnoDBClusterSpecKeyringKmipArgs']]):
         pulumi.set(self, "kmip", value)
 
     @_builtins.property
     @pulumi.getter
-    def oci(self) -> Optional[pulumi.Input['InnoDBClusterSpecKeyringOciArgs']]:
+    def oci(self) -> pulumi.Input[Optional['InnoDBClusterSpecKeyringOciArgs']]:
         return pulumi.get(self, "oci")
 
     @oci.setter
-    def oci(self, value: Optional[pulumi.Input['InnoDBClusterSpecKeyringOciArgs']]):
+    def oci(self, value: pulumi.Input[Optional['InnoDBClusterSpecKeyringOciArgs']]):
         pulumi.set(self, "oci", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdErrorLogPatchArgsDict(TypedDict):
-        options: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        fluentd specific options for the error log
-        """
-        tag: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Tag for the error log records
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdErrorLogPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdErrorLogPatchArgsDict(TypedDict):
+    options: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    fluentd specific options for the error log
+    """
+    tag: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Tag for the error log records
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdErrorLogPatchArgs:
     def __init__(__self__, *,
-                 options: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 tag: Optional[pulumi.Input[_builtins.str]] = None):
+                 options: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 tag: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[Mapping[str, Any]] options: fluentd specific options for the error log
         :param pulumi.Input[_builtins.str] tag: Tag for the error log records
@@ -1675,47 +1638,44 @@ class InnoDBClusterSpecLogsCollectorFluentdErrorLogPatchArgs:
 
     @_builtins.property
     @pulumi.getter
-    def options(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def options(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         fluentd specific options for the error log
         """
         return pulumi.get(self, "options")
 
     @options.setter
-    def options(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def options(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "options", value)
 
     @_builtins.property
     @pulumi.getter
-    def tag(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def tag(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Tag for the error log records
         """
         return pulumi.get(self, "tag")
 
     @tag.setter
-    def tag(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def tag(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "tag", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdErrorLogArgsDict(TypedDict):
-        options: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        fluentd specific options for the error log
-        """
-        tag: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Tag for the error log records
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdErrorLogArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdErrorLogArgsDict(TypedDict):
+    options: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    fluentd specific options for the error log
+    """
+    tag: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Tag for the error log records
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdErrorLogArgs:
     def __init__(__self__, *,
-                 options: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 tag: Optional[pulumi.Input[_builtins.str]] = None):
+                 options: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 tag: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[Mapping[str, Any]] options: fluentd specific options for the error log
         :param pulumi.Input[_builtins.str] tag: Tag for the error log records
@@ -1727,47 +1687,44 @@ class InnoDBClusterSpecLogsCollectorFluentdErrorLogArgs:
 
     @_builtins.property
     @pulumi.getter
-    def options(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def options(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         fluentd specific options for the error log
         """
         return pulumi.get(self, "options")
 
     @options.setter
-    def options(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def options(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "options", value)
 
     @_builtins.property
     @pulumi.getter
-    def tag(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def tag(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Tag for the error log records
         """
         return pulumi.get(self, "tag")
 
     @tag.setter
-    def tag(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def tag(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "tag", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdGeneralLogPatchArgsDict(TypedDict):
-        options: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        fluentd specific options for the general log
-        """
-        tag: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Tag for the general log records
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdGeneralLogPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdGeneralLogPatchArgsDict(TypedDict):
+    options: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    fluentd specific options for the general log
+    """
+    tag: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Tag for the general log records
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdGeneralLogPatchArgs:
     def __init__(__self__, *,
-                 options: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 tag: Optional[pulumi.Input[_builtins.str]] = None):
+                 options: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 tag: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[Mapping[str, Any]] options: fluentd specific options for the general log
         :param pulumi.Input[_builtins.str] tag: Tag for the general log records
@@ -1779,47 +1736,44 @@ class InnoDBClusterSpecLogsCollectorFluentdGeneralLogPatchArgs:
 
     @_builtins.property
     @pulumi.getter
-    def options(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def options(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         fluentd specific options for the general log
         """
         return pulumi.get(self, "options")
 
     @options.setter
-    def options(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def options(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "options", value)
 
     @_builtins.property
     @pulumi.getter
-    def tag(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def tag(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Tag for the general log records
         """
         return pulumi.get(self, "tag")
 
     @tag.setter
-    def tag(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def tag(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "tag", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdGeneralLogArgsDict(TypedDict):
-        options: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        fluentd specific options for the general log
-        """
-        tag: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Tag for the general log records
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdGeneralLogArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdGeneralLogArgsDict(TypedDict):
+    options: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    fluentd specific options for the general log
+    """
+    tag: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Tag for the general log records
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdGeneralLogArgs:
     def __init__(__self__, *,
-                 options: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 tag: Optional[pulumi.Input[_builtins.str]] = None):
+                 options: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 tag: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[Mapping[str, Any]] options: fluentd specific options for the general log
         :param pulumi.Input[_builtins.str] tag: Tag for the general log records
@@ -1831,57 +1785,55 @@ class InnoDBClusterSpecLogsCollectorFluentdGeneralLogArgs:
 
     @_builtins.property
     @pulumi.getter
-    def options(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def options(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         fluentd specific options for the general log
         """
         return pulumi.get(self, "options")
 
     @options.setter
-    def options(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def options(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "options", value)
 
     @_builtins.property
     @pulumi.getter
-    def tag(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def tag(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Tag for the general log records
         """
         return pulumi.get(self, "tag")
 
     @tag.setter
-    def tag(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def tag(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "tag", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdPatchArgsDict(TypedDict):
-        """
-        Properties of the fluentd log collector
-        """
-        additional_filter_configuration: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Raw configuration of additional Fluentd filters to be added to the configuration file
-        """
-        error_log: NotRequired[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdErrorLogPatchArgsDict']]
-        general_log: NotRequired[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdGeneralLogPatchArgsDict']]
-        record_augmentation: NotRequired[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPatchArgsDict']]
-        sinks: NotRequired[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]
-        slow_query_log: NotRequired[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogPatchArgsDict']]
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdPatchArgsDict(TypedDict):
+    """
+    Properties of the fluentd log collector
+    """
+    additional_filter_configuration: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Raw configuration of additional Fluentd filters to be added to the configuration file
+    """
+    error_log: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdErrorLogPatchArgs']]]
+    general_log: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdGeneralLogPatchArgs']]]
+    record_augmentation: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPatchArgs']]]
+    sinks: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]]
+    slow_query_log: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogPatchArgs']]]
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdPatchArgs:
     def __init__(__self__, *,
-                 additional_filter_configuration: Optional[pulumi.Input[_builtins.str]] = None,
-                 error_log: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdErrorLogPatchArgs']] = None,
-                 general_log: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdGeneralLogPatchArgs']] = None,
-                 record_augmentation: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPatchArgs']] = None,
-                 sinks: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]] = None,
-                 slow_query_log: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogPatchArgs']] = None):
+                 additional_filter_configuration: pulumi.Input[Optional[_builtins.str]] = None,
+                 error_log: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdErrorLogPatchArgs']] = None,
+                 general_log: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdGeneralLogPatchArgs']] = None,
+                 record_augmentation: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPatchArgs']] = None,
+                 sinks: pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]] = None,
+                 slow_query_log: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogPatchArgs']] = None):
         """
         Properties of the fluentd log collector
+
         :param pulumi.Input[_builtins.str] additional_filter_configuration: Raw configuration of additional Fluentd filters to be added to the configuration file
         """
         if additional_filter_configuration is not None:
@@ -1899,80 +1851,77 @@ class InnoDBClusterSpecLogsCollectorFluentdPatchArgs:
 
     @_builtins.property
     @pulumi.getter(name="additionalFilterConfiguration")
-    def additional_filter_configuration(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def additional_filter_configuration(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Raw configuration of additional Fluentd filters to be added to the configuration file
         """
         return pulumi.get(self, "additional_filter_configuration")
 
     @additional_filter_configuration.setter
-    def additional_filter_configuration(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def additional_filter_configuration(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "additional_filter_configuration", value)
 
     @_builtins.property
     @pulumi.getter(name="errorLog")
-    def error_log(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdErrorLogPatchArgs']]:
+    def error_log(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdErrorLogPatchArgs']]:
         return pulumi.get(self, "error_log")
 
     @error_log.setter
-    def error_log(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdErrorLogPatchArgs']]):
+    def error_log(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdErrorLogPatchArgs']]):
         pulumi.set(self, "error_log", value)
 
     @_builtins.property
     @pulumi.getter(name="generalLog")
-    def general_log(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdGeneralLogPatchArgs']]:
+    def general_log(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdGeneralLogPatchArgs']]:
         return pulumi.get(self, "general_log")
 
     @general_log.setter
-    def general_log(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdGeneralLogPatchArgs']]):
+    def general_log(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdGeneralLogPatchArgs']]):
         pulumi.set(self, "general_log", value)
 
     @_builtins.property
     @pulumi.getter(name="recordAugmentation")
-    def record_augmentation(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPatchArgs']]:
+    def record_augmentation(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPatchArgs']]:
         return pulumi.get(self, "record_augmentation")
 
     @record_augmentation.setter
-    def record_augmentation(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPatchArgs']]):
+    def record_augmentation(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPatchArgs']]):
         pulumi.set(self, "record_augmentation", value)
 
     @_builtins.property
     @pulumi.getter
-    def sinks(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]:
+    def sinks(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]:
         return pulumi.get(self, "sinks")
 
     @sinks.setter
-    def sinks(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]):
+    def sinks(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]):
         pulumi.set(self, "sinks", value)
 
     @_builtins.property
     @pulumi.getter(name="slowQueryLog")
-    def slow_query_log(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogPatchArgs']]:
+    def slow_query_log(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogPatchArgs']]:
         return pulumi.get(self, "slow_query_log")
 
     @slow_query_log.setter
-    def slow_query_log(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogPatchArgs']]):
+    def slow_query_log(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogPatchArgs']]):
         pulumi.set(self, "slow_query_log", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsPatchArgsDict(TypedDict):
-        annotation_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of the pod label that holds the value to be stored under fieldName in the log record
-        """
-        field_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of the field added to the log record with value from annotationName
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsPatchArgsDict(TypedDict):
+    annotation_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the pod label that holds the value to be stored under fieldName in the log record
+    """
+    field_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the field added to the log record with value from annotationName
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsPatchArgs:
     def __init__(__self__, *,
-                 annotation_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 field_name: Optional[pulumi.Input[_builtins.str]] = None):
+                 annotation_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 field_name: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] annotation_name: Name of the pod label that holds the value to be stored under fieldName in the log record
         :param pulumi.Input[_builtins.str] field_name: Name of the field added to the log record with value from annotationName
@@ -1984,47 +1933,44 @@ class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsPatchArg
 
     @_builtins.property
     @pulumi.getter(name="annotationName")
-    def annotation_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def annotation_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the pod label that holds the value to be stored under fieldName in the log record
         """
         return pulumi.get(self, "annotation_name")
 
     @annotation_name.setter
-    def annotation_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def annotation_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "annotation_name", value)
 
     @_builtins.property
     @pulumi.getter(name="fieldName")
-    def field_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def field_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the field added to the log record with value from annotationName
         """
         return pulumi.get(self, "field_name")
 
     @field_name.setter
-    def field_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def field_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "field_name", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsArgsDict(TypedDict):
-        annotation_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of the pod label that holds the value to be stored under fieldName in the log record
-        """
-        field_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of the field added to the log record with value from annotationName
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsArgsDict(TypedDict):
+    annotation_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the pod label that holds the value to be stored under fieldName in the log record
+    """
+    field_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the field added to the log record with value from annotationName
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsArgs:
     def __init__(__self__, *,
-                 annotation_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 field_name: Optional[pulumi.Input[_builtins.str]] = None):
+                 annotation_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 field_name: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] annotation_name: Name of the pod label that holds the value to be stored under fieldName in the log record
         :param pulumi.Input[_builtins.str] field_name: Name of the field added to the log record with value from annotationName
@@ -2036,47 +1982,44 @@ class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsArgs:
 
     @_builtins.property
     @pulumi.getter(name="annotationName")
-    def annotation_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def annotation_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the pod label that holds the value to be stored under fieldName in the log record
         """
         return pulumi.get(self, "annotation_name")
 
     @annotation_name.setter
-    def annotation_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def annotation_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "annotation_name", value)
 
     @_builtins.property
     @pulumi.getter(name="fieldName")
-    def field_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def field_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the field added to the log record with value from annotationName
         """
         return pulumi.get(self, "field_name")
 
     @field_name.setter
-    def field_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def field_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "field_name", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsPatchArgsDict(TypedDict):
-        field_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of the field added to the log record with value from labelName
-        """
-        label_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of the pod label that holds the value to be stored under fieldName in the log record
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsPatchArgsDict(TypedDict):
+    field_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the field added to the log record with value from labelName
+    """
+    label_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the pod label that holds the value to be stored under fieldName in the log record
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsPatchArgs:
     def __init__(__self__, *,
-                 field_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 label_name: Optional[pulumi.Input[_builtins.str]] = None):
+                 field_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 label_name: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] field_name: Name of the field added to the log record with value from labelName
         :param pulumi.Input[_builtins.str] label_name: Name of the pod label that holds the value to be stored under fieldName in the log record
@@ -2088,47 +2031,44 @@ class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsPatchArgs:
 
     @_builtins.property
     @pulumi.getter(name="fieldName")
-    def field_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def field_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the field added to the log record with value from labelName
         """
         return pulumi.get(self, "field_name")
 
     @field_name.setter
-    def field_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def field_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "field_name", value)
 
     @_builtins.property
     @pulumi.getter(name="labelName")
-    def label_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def label_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the pod label that holds the value to be stored under fieldName in the log record
         """
         return pulumi.get(self, "label_name")
 
     @label_name.setter
-    def label_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def label_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "label_name", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsArgsDict(TypedDict):
-        field_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of the field added to the log record with value from labelName
-        """
-        label_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of the pod label that holds the value to be stored under fieldName in the log record
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsArgsDict(TypedDict):
+    field_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the field added to the log record with value from labelName
+    """
+    label_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the pod label that holds the value to be stored under fieldName in the log record
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsArgs:
     def __init__(__self__, *,
-                 field_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 label_name: Optional[pulumi.Input[_builtins.str]] = None):
+                 field_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 label_name: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] field_name: Name of the field added to the log record with value from labelName
         :param pulumi.Input[_builtins.str] label_name: Name of the pod label that holds the value to be stored under fieldName in the log record
@@ -2140,52 +2080,49 @@ class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsArgs:
 
     @_builtins.property
     @pulumi.getter(name="fieldName")
-    def field_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def field_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the field added to the log record with value from labelName
         """
         return pulumi.get(self, "field_name")
 
     @field_name.setter
-    def field_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def field_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "field_name", value)
 
     @_builtins.property
     @pulumi.getter(name="labelName")
-    def label_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def label_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the pod label that holds the value to be stored under fieldName in the log record
         """
         return pulumi.get(self, "label_name")
 
     @label_name.setter
-    def label_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def label_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "label_name", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPatchArgsDict(TypedDict):
-        annotations: NotRequired[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsPatchArgsDict']]]]
-        enabled: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether to enable record augmentation with additional data
-        """
-        labels: NotRequired[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsPatchArgsDict']]]]
-        pod_fields: NotRequired[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsPatchArgsDict']]]]
-        resource_fields: NotRequired[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsPatchArgsDict']]]]
-        static_fields: NotRequired[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsPatchArgsDict']]]]
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPatchArgsDict(TypedDict):
+    annotations: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsPatchArgs']]]]]
+    enabled: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether to enable record augmentation with additional data
+    """
+    labels: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsPatchArgs']]]]]
+    pod_fields: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsPatchArgs']]]]]
+    resource_fields: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsPatchArgs']]]]]
+    static_fields: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsPatchArgs']]]]]
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPatchArgs:
     def __init__(__self__, *,
-                 annotations: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsPatchArgs']]]] = None,
-                 enabled: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsPatchArgs']]]] = None,
-                 pod_fields: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsPatchArgs']]]] = None,
-                 resource_fields: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsPatchArgs']]]] = None,
-                 static_fields: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsPatchArgs']]]] = None):
+                 annotations: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsPatchArgs']]]] = None,
+                 enabled: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsPatchArgs']]]] = None,
+                 pod_fields: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsPatchArgs']]]] = None,
+                 resource_fields: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsPatchArgs']]]] = None,
+                 static_fields: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsPatchArgs']]]] = None):
         """
         :param pulumi.Input[_builtins.bool] enabled: Whether to enable record augmentation with additional data
         """
@@ -2204,80 +2141,77 @@ class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPatchArgs:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsPatchArgs']]]]:
+    def annotations(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsPatchArgs']]]]:
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsPatchArgs']]]]):
+    def annotations(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsPatchArgs']]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter
-    def enabled(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def enabled(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether to enable record augmentation with additional data
         """
         return pulumi.get(self, "enabled")
 
     @enabled.setter
-    def enabled(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def enabled(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "enabled", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsPatchArgs']]]]:
+    def labels(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsPatchArgs']]]]:
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsPatchArgs']]]]):
+    def labels(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsPatchArgs']]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter(name="podFields")
-    def pod_fields(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsPatchArgs']]]]:
+    def pod_fields(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsPatchArgs']]]]:
         return pulumi.get(self, "pod_fields")
 
     @pod_fields.setter
-    def pod_fields(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsPatchArgs']]]]):
+    def pod_fields(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsPatchArgs']]]]):
         pulumi.set(self, "pod_fields", value)
 
     @_builtins.property
     @pulumi.getter(name="resourceFields")
-    def resource_fields(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsPatchArgs']]]]:
+    def resource_fields(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsPatchArgs']]]]:
         return pulumi.get(self, "resource_fields")
 
     @resource_fields.setter
-    def resource_fields(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsPatchArgs']]]]):
+    def resource_fields(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsPatchArgs']]]]):
         pulumi.set(self, "resource_fields", value)
 
     @_builtins.property
     @pulumi.getter(name="staticFields")
-    def static_fields(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsPatchArgs']]]]:
+    def static_fields(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsPatchArgs']]]]:
         return pulumi.get(self, "static_fields")
 
     @static_fields.setter
-    def static_fields(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsPatchArgs']]]]):
+    def static_fields(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsPatchArgs']]]]):
         pulumi.set(self, "static_fields", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsPatchArgsDict(TypedDict):
-        field_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of the field added to the log record with value taken from a field with path stored in fieldPath
-        """
-        field_path: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Value for the field fieldName. The path should be of the same syntax as the one used for mounting environment variables from field reference - valueFrom.fieldRef.fieldPath . The field will be mounted in the pod as a environment variable, prefixed with a prefix and used then added to the log record. Examples for fieldRef are : spec.nodeName, metadata.namespace, status.podIP, etc.
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsPatchArgsDict(TypedDict):
+    field_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the field added to the log record with value taken from a field with path stored in fieldPath
+    """
+    field_path: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Value for the field fieldName. The path should be of the same syntax as the one used for mounting environment variables from field reference - valueFrom.fieldRef.fieldPath . The field will be mounted in the pod as a environment variable, prefixed with a prefix and used then added to the log record. Examples for fieldRef are : spec.nodeName, metadata.namespace, status.podIP, etc.
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsPatchArgs:
     def __init__(__self__, *,
-                 field_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 field_path: Optional[pulumi.Input[_builtins.str]] = None):
+                 field_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 field_path: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] field_name: Name of the field added to the log record with value taken from a field with path stored in fieldPath
         :param pulumi.Input[_builtins.str] field_path: Value for the field fieldName. The path should be of the same syntax as the one used for mounting environment variables from field reference - valueFrom.fieldRef.fieldPath . The field will be mounted in the pod as a environment variable, prefixed with a prefix and used then added to the log record. Examples for fieldRef are : spec.nodeName, metadata.namespace, status.podIP, etc.
@@ -2289,47 +2223,44 @@ class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsPatchArgs:
 
     @_builtins.property
     @pulumi.getter(name="fieldName")
-    def field_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def field_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the field added to the log record with value taken from a field with path stored in fieldPath
         """
         return pulumi.get(self, "field_name")
 
     @field_name.setter
-    def field_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def field_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "field_name", value)
 
     @_builtins.property
     @pulumi.getter(name="fieldPath")
-    def field_path(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def field_path(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Value for the field fieldName. The path should be of the same syntax as the one used for mounting environment variables from field reference - valueFrom.fieldRef.fieldPath . The field will be mounted in the pod as a environment variable, prefixed with a prefix and used then added to the log record. Examples for fieldRef are : spec.nodeName, metadata.namespace, status.podIP, etc.
         """
         return pulumi.get(self, "field_path")
 
     @field_path.setter
-    def field_path(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def field_path(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "field_path", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsArgsDict(TypedDict):
-        field_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of the field added to the log record with value taken from a field with path stored in fieldPath
-        """
-        field_path: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Value for the field fieldName. The path should be of the same syntax as the one used for mounting environment variables from field reference - valueFrom.fieldRef.fieldPath . The field will be mounted in the pod as a environment variable, prefixed with a prefix and used then added to the log record. Examples for fieldRef are : spec.nodeName, metadata.namespace, status.podIP, etc.
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsArgsDict(TypedDict):
+    field_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the field added to the log record with value taken from a field with path stored in fieldPath
+    """
+    field_path: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Value for the field fieldName. The path should be of the same syntax as the one used for mounting environment variables from field reference - valueFrom.fieldRef.fieldPath . The field will be mounted in the pod as a environment variable, prefixed with a prefix and used then added to the log record. Examples for fieldRef are : spec.nodeName, metadata.namespace, status.podIP, etc.
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsArgs:
     def __init__(__self__, *,
-                 field_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 field_path: Optional[pulumi.Input[_builtins.str]] = None):
+                 field_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 field_path: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] field_name: Name of the field added to the log record with value taken from a field with path stored in fieldPath
         :param pulumi.Input[_builtins.str] field_path: Value for the field fieldName. The path should be of the same syntax as the one used for mounting environment variables from field reference - valueFrom.fieldRef.fieldPath . The field will be mounted in the pod as a environment variable, prefixed with a prefix and used then added to the log record. Examples for fieldRef are : spec.nodeName, metadata.namespace, status.podIP, etc.
@@ -2341,49 +2272,46 @@ class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsArgs:
 
     @_builtins.property
     @pulumi.getter(name="fieldName")
-    def field_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def field_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the field added to the log record with value taken from a field with path stored in fieldPath
         """
         return pulumi.get(self, "field_name")
 
     @field_name.setter
-    def field_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def field_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "field_name", value)
 
     @_builtins.property
     @pulumi.getter(name="fieldPath")
-    def field_path(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def field_path(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Value for the field fieldName. The path should be of the same syntax as the one used for mounting environment variables from field reference - valueFrom.fieldRef.fieldPath . The field will be mounted in the pod as a environment variable, prefixed with a prefix and used then added to the log record. Examples for fieldRef are : spec.nodeName, metadata.namespace, status.podIP, etc.
         """
         return pulumi.get(self, "field_path")
 
     @field_path.setter
-    def field_path(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def field_path(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "field_path", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsPatchArgsDict(TypedDict):
-        container_name: NotRequired[pulumi.Input[_builtins.str]]
-        field_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of the field added to the log record with value taken from a field with path stored in fieldPath
-        """
-        resource: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        See https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/#use-container-fields-as-values-for-environment-variables
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsPatchArgsDict(TypedDict):
+    container_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    field_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the field added to the log record with value taken from a field with path stored in fieldPath
+    """
+    resource: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    See https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/#use-container-fields-as-values-for-environment-variables
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsPatchArgs:
     def __init__(__self__, *,
-                 container_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 field_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 resource: Optional[pulumi.Input[_builtins.str]] = None):
+                 container_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 field_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 resource: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] field_name: Name of the field added to the log record with value taken from a field with path stored in fieldPath
         :param pulumi.Input[_builtins.str] resource: See https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/#use-container-fields-as-values-for-environment-variables
@@ -2397,58 +2325,55 @@ class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsPatch
 
     @_builtins.property
     @pulumi.getter(name="containerName")
-    def container_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def container_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "container_name")
 
     @container_name.setter
-    def container_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def container_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "container_name", value)
 
     @_builtins.property
     @pulumi.getter(name="fieldName")
-    def field_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def field_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the field added to the log record with value taken from a field with path stored in fieldPath
         """
         return pulumi.get(self, "field_name")
 
     @field_name.setter
-    def field_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def field_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "field_name", value)
 
     @_builtins.property
     @pulumi.getter
-    def resource(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def resource(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         See https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/#use-container-fields-as-values-for-environment-variables
         """
         return pulumi.get(self, "resource")
 
     @resource.setter
-    def resource(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def resource(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "resource", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsArgsDict(TypedDict):
-        container_name: NotRequired[pulumi.Input[_builtins.str]]
-        field_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of the field added to the log record with value taken from a field with path stored in fieldPath
-        """
-        resource: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        See https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/#use-container-fields-as-values-for-environment-variables
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsArgsDict(TypedDict):
+    container_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    field_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the field added to the log record with value taken from a field with path stored in fieldPath
+    """
+    resource: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    See https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/#use-container-fields-as-values-for-environment-variables
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsArgs:
     def __init__(__self__, *,
-                 container_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 field_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 resource: Optional[pulumi.Input[_builtins.str]] = None):
+                 container_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 field_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 resource: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] field_name: Name of the field added to the log record with value taken from a field with path stored in fieldPath
         :param pulumi.Input[_builtins.str] resource: See https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/#use-container-fields-as-values-for-environment-variables
@@ -2462,56 +2387,53 @@ class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsArgs:
 
     @_builtins.property
     @pulumi.getter(name="containerName")
-    def container_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def container_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "container_name")
 
     @container_name.setter
-    def container_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def container_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "container_name", value)
 
     @_builtins.property
     @pulumi.getter(name="fieldName")
-    def field_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def field_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the field added to the log record with value taken from a field with path stored in fieldPath
         """
         return pulumi.get(self, "field_name")
 
     @field_name.setter
-    def field_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def field_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "field_name", value)
 
     @_builtins.property
     @pulumi.getter
-    def resource(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def resource(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         See https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/#use-container-fields-as-values-for-environment-variables
         """
         return pulumi.get(self, "resource")
 
     @resource.setter
-    def resource(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def resource(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "resource", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsPatchArgsDict(TypedDict):
-        field_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of the field added to the log record with value from fieldValue
-        """
-        field_value: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Value for the static field with name taken from fieldName
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsPatchArgsDict(TypedDict):
+    field_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the field added to the log record with value from fieldValue
+    """
+    field_value: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Value for the static field with name taken from fieldName
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsPatchArgs:
     def __init__(__self__, *,
-                 field_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 field_value: Optional[pulumi.Input[_builtins.str]] = None):
+                 field_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 field_value: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] field_name: Name of the field added to the log record with value from fieldValue
         :param pulumi.Input[_builtins.str] field_value: Value for the static field with name taken from fieldName
@@ -2523,47 +2445,44 @@ class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsPatchAr
 
     @_builtins.property
     @pulumi.getter(name="fieldName")
-    def field_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def field_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the field added to the log record with value from fieldValue
         """
         return pulumi.get(self, "field_name")
 
     @field_name.setter
-    def field_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def field_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "field_name", value)
 
     @_builtins.property
     @pulumi.getter(name="fieldValue")
-    def field_value(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def field_value(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Value for the static field with name taken from fieldName
         """
         return pulumi.get(self, "field_value")
 
     @field_value.setter
-    def field_value(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def field_value(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "field_value", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsArgsDict(TypedDict):
-        field_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of the field added to the log record with value from fieldValue
-        """
-        field_value: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Value for the static field with name taken from fieldName
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsArgsDict(TypedDict):
+    field_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the field added to the log record with value from fieldValue
+    """
+    field_value: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Value for the static field with name taken from fieldName
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsArgs:
     def __init__(__self__, *,
-                 field_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 field_value: Optional[pulumi.Input[_builtins.str]] = None):
+                 field_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 field_value: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] field_name: Name of the field added to the log record with value from fieldValue
         :param pulumi.Input[_builtins.str] field_value: Value for the static field with name taken from fieldName
@@ -2575,52 +2494,49 @@ class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsArgs:
 
     @_builtins.property
     @pulumi.getter(name="fieldName")
-    def field_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def field_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the field added to the log record with value from fieldValue
         """
         return pulumi.get(self, "field_name")
 
     @field_name.setter
-    def field_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def field_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "field_name", value)
 
     @_builtins.property
     @pulumi.getter(name="fieldValue")
-    def field_value(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def field_value(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Value for the static field with name taken from fieldName
         """
         return pulumi.get(self, "field_value")
 
     @field_value.setter
-    def field_value(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def field_value(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "field_value", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationArgsDict(TypedDict):
-        annotations: NotRequired[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsArgsDict']]]]
-        enabled: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether to enable record augmentation with additional data
-        """
-        labels: NotRequired[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsArgsDict']]]]
-        pod_fields: NotRequired[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsArgsDict']]]]
-        resource_fields: NotRequired[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsArgsDict']]]]
-        static_fields: NotRequired[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsArgsDict']]]]
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationArgsDict(TypedDict):
+    annotations: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsArgs']]]]]
+    enabled: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether to enable record augmentation with additional data
+    """
+    labels: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsArgs']]]]]
+    pod_fields: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsArgs']]]]]
+    resource_fields: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsArgs']]]]]
+    static_fields: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsArgs']]]]]
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationArgs:
     def __init__(__self__, *,
-                 annotations: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsArgs']]]] = None,
-                 enabled: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsArgs']]]] = None,
-                 pod_fields: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsArgs']]]] = None,
-                 resource_fields: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsArgs']]]] = None,
-                 static_fields: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsArgs']]]] = None):
+                 annotations: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsArgs']]]] = None,
+                 enabled: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsArgs']]]] = None,
+                 pod_fields: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsArgs']]]] = None,
+                 resource_fields: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsArgs']]]] = None,
+                 static_fields: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsArgs']]]] = None):
         """
         :param pulumi.Input[_builtins.bool] enabled: Whether to enable record augmentation with additional data
         """
@@ -2639,80 +2555,77 @@ class InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationArgs:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsArgs']]]]:
+    def annotations(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsArgs']]]]:
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsArgs']]]]):
+    def annotations(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationAnnotationsArgs']]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter
-    def enabled(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def enabled(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether to enable record augmentation with additional data
         """
         return pulumi.get(self, "enabled")
 
     @enabled.setter
-    def enabled(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def enabled(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "enabled", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsArgs']]]]:
+    def labels(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsArgs']]]]:
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsArgs']]]]):
+    def labels(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationLabelsArgs']]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter(name="podFields")
-    def pod_fields(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsArgs']]]]:
+    def pod_fields(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsArgs']]]]:
         return pulumi.get(self, "pod_fields")
 
     @pod_fields.setter
-    def pod_fields(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsArgs']]]]):
+    def pod_fields(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationPodFieldsArgs']]]]):
         pulumi.set(self, "pod_fields", value)
 
     @_builtins.property
     @pulumi.getter(name="resourceFields")
-    def resource_fields(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsArgs']]]]:
+    def resource_fields(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsArgs']]]]:
         return pulumi.get(self, "resource_fields")
 
     @resource_fields.setter
-    def resource_fields(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsArgs']]]]):
+    def resource_fields(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationResourceFieldsArgs']]]]):
         pulumi.set(self, "resource_fields", value)
 
     @_builtins.property
     @pulumi.getter(name="staticFields")
-    def static_fields(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsArgs']]]]:
+    def static_fields(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsArgs']]]]:
         return pulumi.get(self, "static_fields")
 
     @static_fields.setter
-    def static_fields(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsArgs']]]]):
+    def static_fields(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationStaticFieldsArgs']]]]):
         pulumi.set(self, "static_fields", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogPatchArgsDict(TypedDict):
-        options: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        fluentd specific options for the slow log
-        """
-        tag: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Tag for the slow log records
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogPatchArgsDict(TypedDict):
+    options: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    fluentd specific options for the slow log
+    """
+    tag: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Tag for the slow log records
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogPatchArgs:
     def __init__(__self__, *,
-                 options: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 tag: Optional[pulumi.Input[_builtins.str]] = None):
+                 options: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 tag: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[Mapping[str, Any]] options: fluentd specific options for the slow log
         :param pulumi.Input[_builtins.str] tag: Tag for the slow log records
@@ -2724,47 +2637,44 @@ class InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogPatchArgs:
 
     @_builtins.property
     @pulumi.getter
-    def options(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def options(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         fluentd specific options for the slow log
         """
         return pulumi.get(self, "options")
 
     @options.setter
-    def options(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def options(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "options", value)
 
     @_builtins.property
     @pulumi.getter
-    def tag(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def tag(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Tag for the slow log records
         """
         return pulumi.get(self, "tag")
 
     @tag.setter
-    def tag(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def tag(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "tag", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogArgsDict(TypedDict):
-        options: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        fluentd specific options for the slow log
-        """
-        tag: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Tag for the slow log records
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogArgsDict(TypedDict):
+    options: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    fluentd specific options for the slow log
+    """
+    tag: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Tag for the slow log records
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogArgs:
     def __init__(__self__, *,
-                 options: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 tag: Optional[pulumi.Input[_builtins.str]] = None):
+                 options: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 tag: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[Mapping[str, Any]] options: fluentd specific options for the slow log
         :param pulumi.Input[_builtins.str] tag: Tag for the slow log records
@@ -2776,57 +2686,55 @@ class InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogArgs:
 
     @_builtins.property
     @pulumi.getter
-    def options(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def options(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         fluentd specific options for the slow log
         """
         return pulumi.get(self, "options")
 
     @options.setter
-    def options(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def options(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "options", value)
 
     @_builtins.property
     @pulumi.getter
-    def tag(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def tag(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Tag for the slow log records
         """
         return pulumi.get(self, "tag")
 
     @tag.setter
-    def tag(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def tag(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "tag", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorFluentdArgsDict(TypedDict):
-        """
-        Properties of the fluentd log collector
-        """
-        additional_filter_configuration: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Raw configuration of additional Fluentd filters to be added to the configuration file
-        """
-        error_log: NotRequired[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdErrorLogArgsDict']]
-        general_log: NotRequired[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdGeneralLogArgsDict']]
-        record_augmentation: NotRequired[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationArgsDict']]
-        sinks: NotRequired[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]
-        slow_query_log: NotRequired[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogArgsDict']]
-elif False:
-    InnoDBClusterSpecLogsCollectorFluentdArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorFluentdArgsDict(TypedDict):
+    """
+    Properties of the fluentd log collector
+    """
+    additional_filter_configuration: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Raw configuration of additional Fluentd filters to be added to the configuration file
+    """
+    error_log: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdErrorLogArgs']]]
+    general_log: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdGeneralLogArgs']]]
+    record_augmentation: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationArgs']]]
+    sinks: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]]
+    slow_query_log: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogArgs']]]
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorFluentdArgs:
     def __init__(__self__, *,
-                 additional_filter_configuration: Optional[pulumi.Input[_builtins.str]] = None,
-                 error_log: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdErrorLogArgs']] = None,
-                 general_log: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdGeneralLogArgs']] = None,
-                 record_augmentation: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationArgs']] = None,
-                 sinks: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]] = None,
-                 slow_query_log: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogArgs']] = None):
+                 additional_filter_configuration: pulumi.Input[Optional[_builtins.str]] = None,
+                 error_log: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdErrorLogArgs']] = None,
+                 general_log: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdGeneralLogArgs']] = None,
+                 record_augmentation: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationArgs']] = None,
+                 sinks: pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]] = None,
+                 slow_query_log: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogArgs']] = None):
         """
         Properties of the fluentd log collector
+
         :param pulumi.Input[_builtins.str] additional_filter_configuration: Raw configuration of additional Fluentd filters to be added to the configuration file
         """
         if additional_filter_configuration is not None:
@@ -2844,84 +2752,81 @@ class InnoDBClusterSpecLogsCollectorFluentdArgs:
 
     @_builtins.property
     @pulumi.getter(name="additionalFilterConfiguration")
-    def additional_filter_configuration(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def additional_filter_configuration(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Raw configuration of additional Fluentd filters to be added to the configuration file
         """
         return pulumi.get(self, "additional_filter_configuration")
 
     @additional_filter_configuration.setter
-    def additional_filter_configuration(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def additional_filter_configuration(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "additional_filter_configuration", value)
 
     @_builtins.property
     @pulumi.getter(name="errorLog")
-    def error_log(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdErrorLogArgs']]:
+    def error_log(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdErrorLogArgs']]:
         return pulumi.get(self, "error_log")
 
     @error_log.setter
-    def error_log(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdErrorLogArgs']]):
+    def error_log(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdErrorLogArgs']]):
         pulumi.set(self, "error_log", value)
 
     @_builtins.property
     @pulumi.getter(name="generalLog")
-    def general_log(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdGeneralLogArgs']]:
+    def general_log(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdGeneralLogArgs']]:
         return pulumi.get(self, "general_log")
 
     @general_log.setter
-    def general_log(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdGeneralLogArgs']]):
+    def general_log(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdGeneralLogArgs']]):
         pulumi.set(self, "general_log", value)
 
     @_builtins.property
     @pulumi.getter(name="recordAugmentation")
-    def record_augmentation(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationArgs']]:
+    def record_augmentation(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationArgs']]:
         return pulumi.get(self, "record_augmentation")
 
     @record_augmentation.setter
-    def record_augmentation(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationArgs']]):
+    def record_augmentation(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdRecordAugmentationArgs']]):
         pulumi.set(self, "record_augmentation", value)
 
     @_builtins.property
     @pulumi.getter
-    def sinks(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]:
+    def sinks(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]:
         return pulumi.get(self, "sinks")
 
     @sinks.setter
-    def sinks(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]):
+    def sinks(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]):
         pulumi.set(self, "sinks", value)
 
     @_builtins.property
     @pulumi.getter(name="slowQueryLog")
-    def slow_query_log(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogArgs']]:
+    def slow_query_log(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogArgs']]:
         return pulumi.get(self, "slow_query_log")
 
     @slow_query_log.setter
-    def slow_query_log(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogArgs']]):
+    def slow_query_log(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdSlowQueryLogArgs']]):
         pulumi.set(self, "slow_query_log", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorPatchArgsDict(TypedDict):
-        container_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of the collector container sidecar
-        """
-        env: NotRequired[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]
-        fluentd: NotRequired[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdPatchArgsDict']]
-        image: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of an image, including registry and repository, to be used for the log collector sidecar. If provided it needs to be an image for the configured collector type.
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorPatchArgsDict(TypedDict):
+    container_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the collector container sidecar
+    """
+    env: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]]
+    fluentd: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdPatchArgs']]]
+    image: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of an image, including registry and repository, to be used for the log collector sidecar. If provided it needs to be an image for the configured collector type.
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorPatchArgs:
     def __init__(__self__, *,
-                 container_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 env: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]] = None,
-                 fluentd: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdPatchArgs']] = None,
-                 image: Optional[pulumi.Input[_builtins.str]] = None):
+                 container_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 env: pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]] = None,
+                 fluentd: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdPatchArgs']] = None,
+                 image: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] container_name: Name of the collector container sidecar
         :param pulumi.Input[_builtins.str] image: Name of an image, including registry and repository, to be used for the log collector sidecar. If provided it needs to be an image for the configured collector type.
@@ -2937,69 +2842,66 @@ class InnoDBClusterSpecLogsCollectorPatchArgs:
 
     @_builtins.property
     @pulumi.getter(name="containerName")
-    def container_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def container_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the collector container sidecar
         """
         return pulumi.get(self, "container_name")
 
     @container_name.setter
-    def container_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def container_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "container_name", value)
 
     @_builtins.property
     @pulumi.getter
-    def env(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]:
+    def env(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]:
         return pulumi.get(self, "env")
 
     @env.setter
-    def env(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]):
+    def env(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]):
         pulumi.set(self, "env", value)
 
     @_builtins.property
     @pulumi.getter
-    def fluentd(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdPatchArgs']]:
+    def fluentd(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdPatchArgs']]:
         return pulumi.get(self, "fluentd")
 
     @fluentd.setter
-    def fluentd(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdPatchArgs']]):
+    def fluentd(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdPatchArgs']]):
         pulumi.set(self, "fluentd", value)
 
     @_builtins.property
     @pulumi.getter
-    def image(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def image(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of an image, including registry and repository, to be used for the log collector sidecar. If provided it needs to be an image for the configured collector type.
         """
         return pulumi.get(self, "image")
 
     @image.setter
-    def image(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def image(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "image", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsCollectorArgsDict(TypedDict):
-        container_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of the collector container sidecar
-        """
-        env: NotRequired[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]
-        fluentd: NotRequired[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdArgsDict']]
-        image: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of an image, including registry and repository, to be used for the log collector sidecar. If provided it needs to be an image for the configured collector type.
-        """
-elif False:
-    InnoDBClusterSpecLogsCollectorArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsCollectorArgsDict(TypedDict):
+    container_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the collector container sidecar
+    """
+    env: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]]
+    fluentd: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdArgs']]]
+    image: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of an image, including registry and repository, to be used for the log collector sidecar. If provided it needs to be an image for the configured collector type.
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsCollectorArgs:
     def __init__(__self__, *,
-                 container_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 env: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]] = None,
-                 fluentd: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdArgs']] = None,
-                 image: Optional[pulumi.Input[_builtins.str]] = None):
+                 container_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 env: pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]] = None,
+                 fluentd: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdArgs']] = None,
+                 image: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] container_name: Name of the collector container sidecar
         :param pulumi.Input[_builtins.str] image: Name of an image, including registry and repository, to be used for the log collector sidecar. If provided it needs to be an image for the configured collector type.
@@ -3015,65 +2917,62 @@ class InnoDBClusterSpecLogsCollectorArgs:
 
     @_builtins.property
     @pulumi.getter(name="containerName")
-    def container_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def container_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the collector container sidecar
         """
         return pulumi.get(self, "container_name")
 
     @container_name.setter
-    def container_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def container_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "container_name", value)
 
     @_builtins.property
     @pulumi.getter
-    def env(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]:
+    def env(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]:
         return pulumi.get(self, "env")
 
     @env.setter
-    def env(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]):
+    def env(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]):
         pulumi.set(self, "env", value)
 
     @_builtins.property
     @pulumi.getter
-    def fluentd(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdArgs']]:
+    def fluentd(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdArgs']]:
         return pulumi.get(self, "fluentd")
 
     @fluentd.setter
-    def fluentd(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorFluentdArgs']]):
+    def fluentd(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorFluentdArgs']]):
         pulumi.set(self, "fluentd", value)
 
     @_builtins.property
     @pulumi.getter
-    def image(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def image(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of an image, including registry and repository, to be used for the log collector sidecar. If provided it needs to be an image for the configured collector type.
         """
         return pulumi.get(self, "image")
 
     @image.setter
-    def image(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def image(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "image", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsErrorPatchArgsDict(TypedDict):
-        collect: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether error logging data should be collected. Implies that the logging should be enabled. If enabled the error log will be switched to JSON format output
-        """
-        verbosity: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Log error verbosity. For details, see the MySQL Server --log-error-verbosity documentation.
-        """
-elif False:
-    InnoDBClusterSpecLogsErrorPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsErrorPatchArgsDict(TypedDict):
+    collect: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether error logging data should be collected. Implies that the logging should be enabled. If enabled the error log will be switched to JSON format output
+    """
+    verbosity: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Log error verbosity. For details, see the MySQL Server --log-error-verbosity documentation.
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsErrorPatchArgs:
     def __init__(__self__, *,
-                 collect: Optional[pulumi.Input[_builtins.bool]] = None,
-                 verbosity: Optional[pulumi.Input[_builtins.int]] = None):
+                 collect: pulumi.Input[Optional[_builtins.bool]] = None,
+                 verbosity: pulumi.Input[Optional[_builtins.int]] = None):
         """
         :param pulumi.Input[_builtins.bool] collect: Whether error logging data should be collected. Implies that the logging should be enabled. If enabled the error log will be switched to JSON format output
         :param pulumi.Input[_builtins.int] verbosity: Log error verbosity. For details, see the MySQL Server --log-error-verbosity documentation.
@@ -3085,47 +2984,44 @@ class InnoDBClusterSpecLogsErrorPatchArgs:
 
     @_builtins.property
     @pulumi.getter
-    def collect(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def collect(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether error logging data should be collected. Implies that the logging should be enabled. If enabled the error log will be switched to JSON format output
         """
         return pulumi.get(self, "collect")
 
     @collect.setter
-    def collect(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def collect(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "collect", value)
 
     @_builtins.property
     @pulumi.getter
-    def verbosity(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def verbosity(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Log error verbosity. For details, see the MySQL Server --log-error-verbosity documentation.
         """
         return pulumi.get(self, "verbosity")
 
     @verbosity.setter
-    def verbosity(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def verbosity(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "verbosity", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsErrorArgsDict(TypedDict):
-        collect: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether error logging data should be collected. Implies that the logging should be enabled. If enabled the error log will be switched to JSON format output
-        """
-        verbosity: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Log error verbosity. For details, see the MySQL Server --log-error-verbosity documentation.
-        """
-elif False:
-    InnoDBClusterSpecLogsErrorArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsErrorArgsDict(TypedDict):
+    collect: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether error logging data should be collected. Implies that the logging should be enabled. If enabled the error log will be switched to JSON format output
+    """
+    verbosity: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Log error verbosity. For details, see the MySQL Server --log-error-verbosity documentation.
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsErrorArgs:
     def __init__(__self__, *,
-                 collect: Optional[pulumi.Input[_builtins.bool]] = None,
-                 verbosity: Optional[pulumi.Input[_builtins.int]] = None):
+                 collect: pulumi.Input[Optional[_builtins.bool]] = None,
+                 verbosity: pulumi.Input[Optional[_builtins.int]] = None):
         """
         :param pulumi.Input[_builtins.bool] collect: Whether error logging data should be collected. Implies that the logging should be enabled. If enabled the error log will be switched to JSON format output
         :param pulumi.Input[_builtins.int] verbosity: Log error verbosity. For details, see the MySQL Server --log-error-verbosity documentation.
@@ -3137,47 +3033,44 @@ class InnoDBClusterSpecLogsErrorArgs:
 
     @_builtins.property
     @pulumi.getter
-    def collect(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def collect(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether error logging data should be collected. Implies that the logging should be enabled. If enabled the error log will be switched to JSON format output
         """
         return pulumi.get(self, "collect")
 
     @collect.setter
-    def collect(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def collect(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "collect", value)
 
     @_builtins.property
     @pulumi.getter
-    def verbosity(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def verbosity(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Log error verbosity. For details, see the MySQL Server --log-error-verbosity documentation.
         """
         return pulumi.get(self, "verbosity")
 
     @verbosity.setter
-    def verbosity(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def verbosity(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "verbosity", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsGeneralPatchArgsDict(TypedDict):
-        collect: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether general logging data should be collected. Implies that the logging should be enabled.
-        """
-        enabled: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether general logging should be enabled
-        """
-elif False:
-    InnoDBClusterSpecLogsGeneralPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsGeneralPatchArgsDict(TypedDict):
+    collect: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether general logging data should be collected. Implies that the logging should be enabled.
+    """
+    enabled: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether general logging should be enabled
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsGeneralPatchArgs:
     def __init__(__self__, *,
-                 collect: Optional[pulumi.Input[_builtins.bool]] = None,
-                 enabled: Optional[pulumi.Input[_builtins.bool]] = None):
+                 collect: pulumi.Input[Optional[_builtins.bool]] = None,
+                 enabled: pulumi.Input[Optional[_builtins.bool]] = None):
         """
         :param pulumi.Input[_builtins.bool] collect: Whether general logging data should be collected. Implies that the logging should be enabled.
         :param pulumi.Input[_builtins.bool] enabled: Whether general logging should be enabled
@@ -3189,47 +3082,44 @@ class InnoDBClusterSpecLogsGeneralPatchArgs:
 
     @_builtins.property
     @pulumi.getter
-    def collect(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def collect(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether general logging data should be collected. Implies that the logging should be enabled.
         """
         return pulumi.get(self, "collect")
 
     @collect.setter
-    def collect(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def collect(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "collect", value)
 
     @_builtins.property
     @pulumi.getter
-    def enabled(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def enabled(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether general logging should be enabled
         """
         return pulumi.get(self, "enabled")
 
     @enabled.setter
-    def enabled(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def enabled(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "enabled", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsGeneralArgsDict(TypedDict):
-        collect: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether general logging data should be collected. Implies that the logging should be enabled.
-        """
-        enabled: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether general logging should be enabled
-        """
-elif False:
-    InnoDBClusterSpecLogsGeneralArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsGeneralArgsDict(TypedDict):
+    collect: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether general logging data should be collected. Implies that the logging should be enabled.
+    """
+    enabled: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether general logging should be enabled
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsGeneralArgs:
     def __init__(__self__, *,
-                 collect: Optional[pulumi.Input[_builtins.bool]] = None,
-                 enabled: Optional[pulumi.Input[_builtins.bool]] = None):
+                 collect: pulumi.Input[Optional[_builtins.bool]] = None,
+                 enabled: pulumi.Input[Optional[_builtins.bool]] = None):
         """
         :param pulumi.Input[_builtins.bool] collect: Whether general logging data should be collected. Implies that the logging should be enabled.
         :param pulumi.Input[_builtins.bool] enabled: Whether general logging should be enabled
@@ -3241,45 +3131,42 @@ class InnoDBClusterSpecLogsGeneralArgs:
 
     @_builtins.property
     @pulumi.getter
-    def collect(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def collect(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether general logging data should be collected. Implies that the logging should be enabled.
         """
         return pulumi.get(self, "collect")
 
     @collect.setter
-    def collect(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def collect(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "collect", value)
 
     @_builtins.property
     @pulumi.getter
-    def enabled(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def enabled(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether general logging should be enabled
         """
         return pulumi.get(self, "enabled")
 
     @enabled.setter
-    def enabled(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def enabled(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "enabled", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsPatchArgsDict(TypedDict):
-        collector: NotRequired[pulumi.Input['InnoDBClusterSpecLogsCollectorPatchArgsDict']]
-        error: NotRequired[pulumi.Input['InnoDBClusterSpecLogsErrorPatchArgsDict']]
-        general: NotRequired[pulumi.Input['InnoDBClusterSpecLogsGeneralPatchArgsDict']]
-        slow_query: NotRequired[pulumi.Input['InnoDBClusterSpecLogsSlowQueryPatchArgsDict']]
-elif False:
-    InnoDBClusterSpecLogsPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsPatchArgsDict(TypedDict):
+    collector: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorPatchArgs']]]
+    error: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsErrorPatchArgs']]]
+    general: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsGeneralPatchArgs']]]
+    slow_query: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsSlowQueryPatchArgs']]]
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsPatchArgs:
     def __init__(__self__, *,
-                 collector: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorPatchArgs']] = None,
-                 error: Optional[pulumi.Input['InnoDBClusterSpecLogsErrorPatchArgs']] = None,
-                 general: Optional[pulumi.Input['InnoDBClusterSpecLogsGeneralPatchArgs']] = None,
-                 slow_query: Optional[pulumi.Input['InnoDBClusterSpecLogsSlowQueryPatchArgs']] = None):
+                 collector: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorPatchArgs']] = None,
+                 error: pulumi.Input[Optional['InnoDBClusterSpecLogsErrorPatchArgs']] = None,
+                 general: pulumi.Input[Optional['InnoDBClusterSpecLogsGeneralPatchArgs']] = None,
+                 slow_query: pulumi.Input[Optional['InnoDBClusterSpecLogsSlowQueryPatchArgs']] = None):
         if collector is not None:
             pulumi.set(__self__, "collector", collector)
         if error is not None:
@@ -3291,64 +3178,61 @@ class InnoDBClusterSpecLogsPatchArgs:
 
     @_builtins.property
     @pulumi.getter
-    def collector(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorPatchArgs']]:
+    def collector(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorPatchArgs']]:
         return pulumi.get(self, "collector")
 
     @collector.setter
-    def collector(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorPatchArgs']]):
+    def collector(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorPatchArgs']]):
         pulumi.set(self, "collector", value)
 
     @_builtins.property
     @pulumi.getter
-    def error(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsErrorPatchArgs']]:
+    def error(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsErrorPatchArgs']]:
         return pulumi.get(self, "error")
 
     @error.setter
-    def error(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsErrorPatchArgs']]):
+    def error(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsErrorPatchArgs']]):
         pulumi.set(self, "error", value)
 
     @_builtins.property
     @pulumi.getter
-    def general(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsGeneralPatchArgs']]:
+    def general(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsGeneralPatchArgs']]:
         return pulumi.get(self, "general")
 
     @general.setter
-    def general(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsGeneralPatchArgs']]):
+    def general(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsGeneralPatchArgs']]):
         pulumi.set(self, "general", value)
 
     @_builtins.property
     @pulumi.getter(name="slowQuery")
-    def slow_query(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsSlowQueryPatchArgs']]:
+    def slow_query(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsSlowQueryPatchArgs']]:
         return pulumi.get(self, "slow_query")
 
     @slow_query.setter
-    def slow_query(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsSlowQueryPatchArgs']]):
+    def slow_query(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsSlowQueryPatchArgs']]):
         pulumi.set(self, "slow_query", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsSlowQueryPatchArgsDict(TypedDict):
-        collect: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether slow query logging data should be collected. Implies that the logging should be enabled.
-        """
-        enabled: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether slow query logging should be enabled
-        """
-        long_query_time: NotRequired[pulumi.Input[_builtins.float]]
-        """
-        Long query time threshold
-        """
-elif False:
-    InnoDBClusterSpecLogsSlowQueryPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsSlowQueryPatchArgsDict(TypedDict):
+    collect: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether slow query logging data should be collected. Implies that the logging should be enabled.
+    """
+    enabled: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether slow query logging should be enabled
+    """
+    long_query_time: NotRequired[pulumi.Input[Optional[_builtins.float]]]
+    """
+    Long query time threshold
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsSlowQueryPatchArgs:
     def __init__(__self__, *,
-                 collect: Optional[pulumi.Input[_builtins.bool]] = None,
-                 enabled: Optional[pulumi.Input[_builtins.bool]] = None,
-                 long_query_time: Optional[pulumi.Input[_builtins.float]] = None):
+                 collect: pulumi.Input[Optional[_builtins.bool]] = None,
+                 enabled: pulumi.Input[Optional[_builtins.bool]] = None,
+                 long_query_time: pulumi.Input[Optional[_builtins.float]] = None):
         """
         :param pulumi.Input[_builtins.bool] collect: Whether slow query logging data should be collected. Implies that the logging should be enabled.
         :param pulumi.Input[_builtins.bool] enabled: Whether slow query logging should be enabled
@@ -3363,64 +3247,61 @@ class InnoDBClusterSpecLogsSlowQueryPatchArgs:
 
     @_builtins.property
     @pulumi.getter
-    def collect(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def collect(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether slow query logging data should be collected. Implies that the logging should be enabled.
         """
         return pulumi.get(self, "collect")
 
     @collect.setter
-    def collect(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def collect(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "collect", value)
 
     @_builtins.property
     @pulumi.getter
-    def enabled(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def enabled(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether slow query logging should be enabled
         """
         return pulumi.get(self, "enabled")
 
     @enabled.setter
-    def enabled(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def enabled(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "enabled", value)
 
     @_builtins.property
     @pulumi.getter(name="longQueryTime")
-    def long_query_time(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def long_query_time(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         Long query time threshold
         """
         return pulumi.get(self, "long_query_time")
 
     @long_query_time.setter
-    def long_query_time(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def long_query_time(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "long_query_time", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsSlowQueryArgsDict(TypedDict):
-        collect: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether slow query logging data should be collected. Implies that the logging should be enabled.
-        """
-        enabled: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Whether slow query logging should be enabled
-        """
-        long_query_time: NotRequired[pulumi.Input[_builtins.float]]
-        """
-        Long query time threshold
-        """
-elif False:
-    InnoDBClusterSpecLogsSlowQueryArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsSlowQueryArgsDict(TypedDict):
+    collect: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether slow query logging data should be collected. Implies that the logging should be enabled.
+    """
+    enabled: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether slow query logging should be enabled
+    """
+    long_query_time: NotRequired[pulumi.Input[Optional[_builtins.float]]]
+    """
+    Long query time threshold
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsSlowQueryArgs:
     def __init__(__self__, *,
-                 collect: Optional[pulumi.Input[_builtins.bool]] = None,
-                 enabled: Optional[pulumi.Input[_builtins.bool]] = None,
-                 long_query_time: Optional[pulumi.Input[_builtins.float]] = None):
+                 collect: pulumi.Input[Optional[_builtins.bool]] = None,
+                 enabled: pulumi.Input[Optional[_builtins.bool]] = None,
+                 long_query_time: pulumi.Input[Optional[_builtins.float]] = None):
         """
         :param pulumi.Input[_builtins.bool] collect: Whether slow query logging data should be collected. Implies that the logging should be enabled.
         :param pulumi.Input[_builtins.bool] enabled: Whether slow query logging should be enabled
@@ -3435,57 +3316,54 @@ class InnoDBClusterSpecLogsSlowQueryArgs:
 
     @_builtins.property
     @pulumi.getter
-    def collect(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def collect(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether slow query logging data should be collected. Implies that the logging should be enabled.
         """
         return pulumi.get(self, "collect")
 
     @collect.setter
-    def collect(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def collect(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "collect", value)
 
     @_builtins.property
     @pulumi.getter
-    def enabled(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def enabled(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether slow query logging should be enabled
         """
         return pulumi.get(self, "enabled")
 
     @enabled.setter
-    def enabled(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def enabled(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "enabled", value)
 
     @_builtins.property
     @pulumi.getter(name="longQueryTime")
-    def long_query_time(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def long_query_time(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         Long query time threshold
         """
         return pulumi.get(self, "long_query_time")
 
     @long_query_time.setter
-    def long_query_time(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def long_query_time(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "long_query_time", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecLogsArgsDict(TypedDict):
-        collector: NotRequired[pulumi.Input['InnoDBClusterSpecLogsCollectorArgsDict']]
-        error: NotRequired[pulumi.Input['InnoDBClusterSpecLogsErrorArgsDict']]
-        general: NotRequired[pulumi.Input['InnoDBClusterSpecLogsGeneralArgsDict']]
-        slow_query: NotRequired[pulumi.Input['InnoDBClusterSpecLogsSlowQueryArgsDict']]
-elif False:
-    InnoDBClusterSpecLogsArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecLogsArgsDict(TypedDict):
+    collector: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorArgs']]]
+    error: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsErrorArgs']]]
+    general: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsGeneralArgs']]]
+    slow_query: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsSlowQueryArgs']]]
 
 @pulumi.input_type
 class InnoDBClusterSpecLogsArgs:
     def __init__(__self__, *,
-                 collector: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorArgs']] = None,
-                 error: Optional[pulumi.Input['InnoDBClusterSpecLogsErrorArgs']] = None,
-                 general: Optional[pulumi.Input['InnoDBClusterSpecLogsGeneralArgs']] = None,
-                 slow_query: Optional[pulumi.Input['InnoDBClusterSpecLogsSlowQueryArgs']] = None):
+                 collector: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorArgs']] = None,
+                 error: pulumi.Input[Optional['InnoDBClusterSpecLogsErrorArgs']] = None,
+                 general: pulumi.Input[Optional['InnoDBClusterSpecLogsGeneralArgs']] = None,
+                 slow_query: pulumi.Input[Optional['InnoDBClusterSpecLogsSlowQueryArgs']] = None):
         if collector is not None:
             pulumi.set(__self__, "collector", collector)
         if error is not None:
@@ -3497,89 +3375,87 @@ class InnoDBClusterSpecLogsArgs:
 
     @_builtins.property
     @pulumi.getter
-    def collector(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorArgs']]:
+    def collector(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorArgs']]:
         return pulumi.get(self, "collector")
 
     @collector.setter
-    def collector(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsCollectorArgs']]):
+    def collector(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsCollectorArgs']]):
         pulumi.set(self, "collector", value)
 
     @_builtins.property
     @pulumi.getter
-    def error(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsErrorArgs']]:
+    def error(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsErrorArgs']]:
         return pulumi.get(self, "error")
 
     @error.setter
-    def error(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsErrorArgs']]):
+    def error(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsErrorArgs']]):
         pulumi.set(self, "error", value)
 
     @_builtins.property
     @pulumi.getter
-    def general(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsGeneralArgs']]:
+    def general(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsGeneralArgs']]:
         return pulumi.get(self, "general")
 
     @general.setter
-    def general(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsGeneralArgs']]):
+    def general(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsGeneralArgs']]):
         pulumi.set(self, "general", value)
 
     @_builtins.property
     @pulumi.getter(name="slowQuery")
-    def slow_query(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsSlowQueryArgs']]:
+    def slow_query(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsSlowQueryArgs']]:
         return pulumi.get(self, "slow_query")
 
     @slow_query.setter
-    def slow_query(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsSlowQueryArgs']]):
+    def slow_query(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsSlowQueryArgs']]):
         pulumi.set(self, "slow_query", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecMetricsPatchArgsDict(TypedDict):
-        """
-        Configuration of a Prometheus-style metrics provider
-        """
-        enable: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Toggle to enable or disable the metrics sidecar
-        """
-        image: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of an image to be used for the metrics sidecar, if provided metrics will be enabled
-        """
-        monitor: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Create a ServiceMonitor for Prometheus Operator
-        """
-        monitor_spec: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Custom configuration for the ServiceMonitor object
-        """
-        options: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        Options passed to the metrics provider as command line arguments
-        """
-        tls_secret: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of a Secret with TLS certificate, key and CA, which will be mounted at /tls into the container an can be used from webConfig
-        """
-        web_config: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of a ConfigMap with a web.config file, if this option is provided a command line option --web.config.file is added
-        """
-elif False:
-    InnoDBClusterSpecMetricsPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecMetricsPatchArgsDict(TypedDict):
+    """
+    Configuration of a Prometheus-style metrics provider
+    """
+    enable: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Toggle to enable or disable the metrics sidecar
+    """
+    image: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of an image to be used for the metrics sidecar, if provided metrics will be enabled
+    """
+    monitor: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Create a ServiceMonitor for Prometheus Operator
+    """
+    monitor_spec: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Custom configuration for the ServiceMonitor object
+    """
+    options: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    """
+    Options passed to the metrics provider as command line arguments
+    """
+    tls_secret: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of a Secret with TLS certificate, key and CA, which will be mounted at /tls into the container an can be used from webConfig
+    """
+    web_config: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of a ConfigMap with a web.config file, if this option is provided a command line option --web.config.file is added
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecMetricsPatchArgs:
     def __init__(__self__, *,
-                 enable: Optional[pulumi.Input[_builtins.bool]] = None,
-                 image: Optional[pulumi.Input[_builtins.str]] = None,
-                 monitor: Optional[pulumi.Input[_builtins.bool]] = None,
-                 monitor_spec: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 options: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 tls_secret: Optional[pulumi.Input[_builtins.str]] = None,
-                 web_config: Optional[pulumi.Input[_builtins.str]] = None):
+                 enable: pulumi.Input[Optional[_builtins.bool]] = None,
+                 image: pulumi.Input[Optional[_builtins.str]] = None,
+                 monitor: pulumi.Input[Optional[_builtins.bool]] = None,
+                 monitor_spec: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 options: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 tls_secret: pulumi.Input[Optional[_builtins.str]] = None,
+                 web_config: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Configuration of a Prometheus-style metrics provider
+
         :param pulumi.Input[_builtins.bool] enable: Toggle to enable or disable the metrics sidecar
         :param pulumi.Input[_builtins.str] image: Name of an image to be used for the metrics sidecar, if provided metrics will be enabled
         :param pulumi.Input[_builtins.bool] monitor: Create a ServiceMonitor for Prometheus Operator
@@ -3605,137 +3481,135 @@ class InnoDBClusterSpecMetricsPatchArgs:
 
     @_builtins.property
     @pulumi.getter
-    def enable(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def enable(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Toggle to enable or disable the metrics sidecar
         """
         return pulumi.get(self, "enable")
 
     @enable.setter
-    def enable(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def enable(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "enable", value)
 
     @_builtins.property
     @pulumi.getter
-    def image(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def image(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of an image to be used for the metrics sidecar, if provided metrics will be enabled
         """
         return pulumi.get(self, "image")
 
     @image.setter
-    def image(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def image(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "image", value)
 
     @_builtins.property
     @pulumi.getter
-    def monitor(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def monitor(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Create a ServiceMonitor for Prometheus Operator
         """
         return pulumi.get(self, "monitor")
 
     @monitor.setter
-    def monitor(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def monitor(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "monitor", value)
 
     @_builtins.property
     @pulumi.getter(name="monitorSpec")
-    def monitor_spec(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def monitor_spec(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Custom configuration for the ServiceMonitor object
         """
         return pulumi.get(self, "monitor_spec")
 
     @monitor_spec.setter
-    def monitor_spec(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def monitor_spec(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "monitor_spec", value)
 
     @_builtins.property
     @pulumi.getter
-    def options(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def options(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         Options passed to the metrics provider as command line arguments
         """
         return pulumi.get(self, "options")
 
     @options.setter
-    def options(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def options(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "options", value)
 
     @_builtins.property
     @pulumi.getter(name="tlsSecret")
-    def tls_secret(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def tls_secret(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of a Secret with TLS certificate, key and CA, which will be mounted at /tls into the container an can be used from webConfig
         """
         return pulumi.get(self, "tls_secret")
 
     @tls_secret.setter
-    def tls_secret(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def tls_secret(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "tls_secret", value)
 
     @_builtins.property
     @pulumi.getter(name="webConfig")
-    def web_config(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def web_config(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of a ConfigMap with a web.config file, if this option is provided a command line option --web.config.file is added
         """
         return pulumi.get(self, "web_config")
 
     @web_config.setter
-    def web_config(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def web_config(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "web_config", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecMetricsArgsDict(TypedDict):
-        """
-        Configuration of a Prometheus-style metrics provider
-        """
-        enable: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Toggle to enable or disable the metrics sidecar
-        """
-        image: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of an image to be used for the metrics sidecar, if provided metrics will be enabled
-        """
-        monitor: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Create a ServiceMonitor for Prometheus Operator
-        """
-        monitor_spec: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Custom configuration for the ServiceMonitor object
-        """
-        options: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        Options passed to the metrics provider as command line arguments
-        """
-        tls_secret: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of a Secret with TLS certificate, key and CA, which will be mounted at /tls into the container an can be used from webConfig
-        """
-        web_config: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of a ConfigMap with a web.config file, if this option is provided a command line option --web.config.file is added
-        """
-elif False:
-    InnoDBClusterSpecMetricsArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecMetricsArgsDict(TypedDict):
+    """
+    Configuration of a Prometheus-style metrics provider
+    """
+    enable: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Toggle to enable or disable the metrics sidecar
+    """
+    image: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of an image to be used for the metrics sidecar, if provided metrics will be enabled
+    """
+    monitor: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Create a ServiceMonitor for Prometheus Operator
+    """
+    monitor_spec: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Custom configuration for the ServiceMonitor object
+    """
+    options: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    """
+    Options passed to the metrics provider as command line arguments
+    """
+    tls_secret: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of a Secret with TLS certificate, key and CA, which will be mounted at /tls into the container an can be used from webConfig
+    """
+    web_config: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of a ConfigMap with a web.config file, if this option is provided a command line option --web.config.file is added
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecMetricsArgs:
     def __init__(__self__, *,
-                 enable: Optional[pulumi.Input[_builtins.bool]] = None,
-                 image: Optional[pulumi.Input[_builtins.str]] = None,
-                 monitor: Optional[pulumi.Input[_builtins.bool]] = None,
-                 monitor_spec: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 options: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 tls_secret: Optional[pulumi.Input[_builtins.str]] = None,
-                 web_config: Optional[pulumi.Input[_builtins.str]] = None):
+                 enable: pulumi.Input[Optional[_builtins.bool]] = None,
+                 image: pulumi.Input[Optional[_builtins.str]] = None,
+                 monitor: pulumi.Input[Optional[_builtins.bool]] = None,
+                 monitor_spec: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 options: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 tls_secret: pulumi.Input[Optional[_builtins.str]] = None,
+                 web_config: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Configuration of a Prometheus-style metrics provider
+
         :param pulumi.Input[_builtins.bool] enable: Toggle to enable or disable the metrics sidecar
         :param pulumi.Input[_builtins.str] image: Name of an image to be used for the metrics sidecar, if provided metrics will be enabled
         :param pulumi.Input[_builtins.bool] monitor: Create a ServiceMonitor for Prometheus Operator
@@ -3761,203 +3635,200 @@ class InnoDBClusterSpecMetricsArgs:
 
     @_builtins.property
     @pulumi.getter
-    def enable(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def enable(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Toggle to enable or disable the metrics sidecar
         """
         return pulumi.get(self, "enable")
 
     @enable.setter
-    def enable(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def enable(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "enable", value)
 
     @_builtins.property
     @pulumi.getter
-    def image(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def image(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of an image to be used for the metrics sidecar, if provided metrics will be enabled
         """
         return pulumi.get(self, "image")
 
     @image.setter
-    def image(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def image(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "image", value)
 
     @_builtins.property
     @pulumi.getter
-    def monitor(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def monitor(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Create a ServiceMonitor for Prometheus Operator
         """
         return pulumi.get(self, "monitor")
 
     @monitor.setter
-    def monitor(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def monitor(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "monitor", value)
 
     @_builtins.property
     @pulumi.getter(name="monitorSpec")
-    def monitor_spec(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def monitor_spec(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Custom configuration for the ServiceMonitor object
         """
         return pulumi.get(self, "monitor_spec")
 
     @monitor_spec.setter
-    def monitor_spec(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def monitor_spec(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "monitor_spec", value)
 
     @_builtins.property
     @pulumi.getter
-    def options(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def options(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         Options passed to the metrics provider as command line arguments
         """
         return pulumi.get(self, "options")
 
     @options.setter
-    def options(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def options(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "options", value)
 
     @_builtins.property
     @pulumi.getter(name="tlsSecret")
-    def tls_secret(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def tls_secret(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of a Secret with TLS certificate, key and CA, which will be mounted at /tls into the container an can be used from webConfig
         """
         return pulumi.get(self, "tls_secret")
 
     @tls_secret.setter
-    def tls_secret(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def tls_secret(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "tls_secret", value)
 
     @_builtins.property
     @pulumi.getter(name="webConfig")
-    def web_config(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def web_config(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of a ConfigMap with a web.config file, if this option is provided a command line option --web.config.file is added
         """
         return pulumi.get(self, "web_config")
 
     @web_config.setter
-    def web_config(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def web_config(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "web_config", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecPatchArgsDict(TypedDict):
-        backup_profiles: NotRequired[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]
-        """
-        Backup profile specifications for the cluster, which can be referenced from backup schedules and one-off backup jobs
-        """
-        backup_schedules: NotRequired[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]
-        """
-        Schedules for periodically executed backups
-        """
-        base_server_id: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Base value for MySQL server_id for instances in the cluster
-        """
-        datadir_permissions: NotRequired[pulumi.Input['InnoDBClusterSpecDatadirPermissionsPatchArgsDict']]
-        datadir_volume_claim_template: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Template for a PersistentVolumeClaim, to be used as datadir
-        """
-        edition: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        MySQL Server Edition (community or enterprise)
-        """
-        image_pull_policy: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Defaults to Always, but set to IfNotPresent in deploy-operator.yaml when deploying Operator
-        """
-        image_pull_secrets: NotRequired[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecImagePullSecretsPatchArgsDict']]]]
-        image_repository: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Repository where images are pulled from; defaults to container-registry.oracle.com/mysql
-        """
-        init_db: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        instance_service: NotRequired[pulumi.Input['InnoDBClusterSpecInstanceServicePatchArgsDict']]
-        instances: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Number of MySQL replica instances for the cluster
-        """
-        keyring: NotRequired[pulumi.Input['InnoDBClusterSpecKeyringPatchArgsDict']]
-        logs: NotRequired[pulumi.Input['InnoDBClusterSpecLogsPatchArgsDict']]
-        metrics: NotRequired[pulumi.Input['InnoDBClusterSpecMetricsPatchArgsDict']]
-        mycnf: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Custom configuration additions for my.cnf
-        """
-        pod_annotations: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        pod_labels: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        pod_spec: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Customization specification to be merged into the InnoDBCluster StatefulSet pod template. IMPORTANT: podSpec is regarded only during StatefulSet buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the InnoDBCluster StatefulSet will not be updated
-        """
-        read_replicas: NotRequired[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecReadReplicasPatchArgsDict']]]]
-        router: NotRequired[pulumi.Input['InnoDBClusterSpecRouterPatchArgsDict']]
-        secret_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of a generic type Secret containing root/default account password
-        """
-        service: NotRequired[pulumi.Input['InnoDBClusterSpecServicePatchArgsDict']]
-        service_account_name: NotRequired[pulumi.Input[_builtins.str]]
-        service_fqdn_template: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Template for a FQDN resolving to the cluster's headless instance Service and individual Pods
-        """
-        tls_ca_secret_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of a generic type Secret containing CA (ca.pem) and optional CRL (crl.pem) for SSL
-        """
-        tls_secret_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of a TLS type Secret containing Server certificate and private key for SSL
-        """
-        tls_use_self_signed: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Enables use of self-signed TLS certificates, reducing or disabling TLS based security verifications
-        """
-        version: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        MySQL Server version
-        """
-elif False:
-    InnoDBClusterSpecPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecPatchArgsDict(TypedDict):
+    backup_profiles: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]]
+    """
+    Backup profile specifications for the cluster, which can be referenced from backup schedules and one-off backup jobs
+    """
+    backup_schedules: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]]
+    """
+    Schedules for periodically executed backups
+    """
+    base_server_id: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Base value for MySQL server_id for instances in the cluster
+    """
+    datadir_permissions: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecDatadirPermissionsPatchArgs']]]
+    datadir_volume_claim_template: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Template for a PersistentVolumeClaim, to be used as datadir
+    """
+    edition: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    MySQL Server Edition (community or enterprise)
+    """
+    image_pull_policy: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Defaults to Always, but set to IfNotPresent in deploy-operator.yaml when deploying Operator
+    """
+    image_pull_secrets: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecImagePullSecretsPatchArgs']]]]]
+    image_repository: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Repository where images are pulled from; defaults to container-registry.oracle.com/mysql
+    """
+    init_db: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    instance_service: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecInstanceServicePatchArgs']]]
+    instances: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Number of MySQL replica instances for the cluster
+    """
+    keyring: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecKeyringPatchArgs']]]
+    logs: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsPatchArgs']]]
+    metrics: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecMetricsPatchArgs']]]
+    mycnf: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Custom configuration additions for my.cnf
+    """
+    pod_annotations: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    pod_labels: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    pod_spec: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Customization specification to be merged into the InnoDBCluster StatefulSet pod template. IMPORTANT: podSpec is regarded only during StatefulSet buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the InnoDBCluster StatefulSet will not be updated
+    """
+    read_replicas: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecReadReplicasPatchArgs']]]]]
+    router: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecRouterPatchArgs']]]
+    secret_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of a generic type Secret containing root/default account password
+    """
+    service: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecServicePatchArgs']]]
+    service_account_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    service_fqdn_template: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Template for a FQDN resolving to the cluster's headless instance Service and individual Pods
+    """
+    tls_ca_secret_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of a generic type Secret containing CA (ca.pem) and optional CRL (crl.pem) for SSL
+    """
+    tls_secret_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of a TLS type Secret containing Server certificate and private key for SSL
+    """
+    tls_use_self_signed: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Enables use of self-signed TLS certificates, reducing or disabling TLS based security verifications
+    """
+    version: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    MySQL Server version
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecPatchArgs:
     def __init__(__self__, *,
-                 backup_profiles: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]] = None,
-                 backup_schedules: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]] = None,
-                 base_server_id: Optional[pulumi.Input[_builtins.int]] = None,
-                 datadir_permissions: Optional[pulumi.Input['InnoDBClusterSpecDatadirPermissionsPatchArgs']] = None,
-                 datadir_volume_claim_template: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 edition: Optional[pulumi.Input[_builtins.str]] = None,
-                 image_pull_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 image_pull_secrets: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecImagePullSecretsPatchArgs']]]] = None,
-                 image_repository: Optional[pulumi.Input[_builtins.str]] = None,
-                 init_db: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 instance_service: Optional[pulumi.Input['InnoDBClusterSpecInstanceServicePatchArgs']] = None,
-                 instances: Optional[pulumi.Input[_builtins.int]] = None,
-                 keyring: Optional[pulumi.Input['InnoDBClusterSpecKeyringPatchArgs']] = None,
-                 logs: Optional[pulumi.Input['InnoDBClusterSpecLogsPatchArgs']] = None,
-                 metrics: Optional[pulumi.Input['InnoDBClusterSpecMetricsPatchArgs']] = None,
-                 mycnf: Optional[pulumi.Input[_builtins.str]] = None,
-                 pod_annotations: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 pod_labels: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 pod_spec: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecReadReplicasPatchArgs']]]] = None,
-                 router: Optional[pulumi.Input['InnoDBClusterSpecRouterPatchArgs']] = None,
-                 secret_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 service: Optional[pulumi.Input['InnoDBClusterSpecServicePatchArgs']] = None,
-                 service_account_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 service_fqdn_template: Optional[pulumi.Input[_builtins.str]] = None,
-                 tls_ca_secret_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 tls_secret_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 tls_use_self_signed: Optional[pulumi.Input[_builtins.bool]] = None,
-                 version: Optional[pulumi.Input[_builtins.str]] = None):
+                 backup_profiles: pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]] = None,
+                 backup_schedules: pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]] = None,
+                 base_server_id: pulumi.Input[Optional[_builtins.int]] = None,
+                 datadir_permissions: pulumi.Input[Optional['InnoDBClusterSpecDatadirPermissionsPatchArgs']] = None,
+                 datadir_volume_claim_template: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 edition: pulumi.Input[Optional[_builtins.str]] = None,
+                 image_pull_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 image_pull_secrets: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecImagePullSecretsPatchArgs']]]] = None,
+                 image_repository: pulumi.Input[Optional[_builtins.str]] = None,
+                 init_db: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 instance_service: pulumi.Input[Optional['InnoDBClusterSpecInstanceServicePatchArgs']] = None,
+                 instances: pulumi.Input[Optional[_builtins.int]] = None,
+                 keyring: pulumi.Input[Optional['InnoDBClusterSpecKeyringPatchArgs']] = None,
+                 logs: pulumi.Input[Optional['InnoDBClusterSpecLogsPatchArgs']] = None,
+                 metrics: pulumi.Input[Optional['InnoDBClusterSpecMetricsPatchArgs']] = None,
+                 mycnf: pulumi.Input[Optional[_builtins.str]] = None,
+                 pod_annotations: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 pod_labels: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 pod_spec: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 read_replicas: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecReadReplicasPatchArgs']]]] = None,
+                 router: pulumi.Input[Optional['InnoDBClusterSpecRouterPatchArgs']] = None,
+                 secret_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 service: pulumi.Input[Optional['InnoDBClusterSpecServicePatchArgs']] = None,
+                 service_account_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 service_fqdn_template: pulumi.Input[Optional[_builtins.str]] = None,
+                 tls_ca_secret_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 tls_secret_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 tls_use_self_signed: pulumi.Input[Optional[_builtins.bool]] = None,
+                 version: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]] backup_profiles: Backup profile specifications for the cluster, which can be referenced from backup schedules and one-off backup jobs
         :param pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]] backup_schedules: Schedules for periodically executed backups
@@ -4037,358 +3908,355 @@ class InnoDBClusterSpecPatchArgs:
 
     @_builtins.property
     @pulumi.getter(name="backupProfiles")
-    def backup_profiles(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]:
+    def backup_profiles(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]:
         """
         Backup profile specifications for the cluster, which can be referenced from backup schedules and one-off backup jobs
         """
         return pulumi.get(self, "backup_profiles")
 
     @backup_profiles.setter
-    def backup_profiles(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]):
+    def backup_profiles(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]):
         pulumi.set(self, "backup_profiles", value)
 
     @_builtins.property
     @pulumi.getter(name="backupSchedules")
-    def backup_schedules(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]:
+    def backup_schedules(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]:
         """
         Schedules for periodically executed backups
         """
         return pulumi.get(self, "backup_schedules")
 
     @backup_schedules.setter
-    def backup_schedules(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]):
+    def backup_schedules(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]):
         pulumi.set(self, "backup_schedules", value)
 
     @_builtins.property
     @pulumi.getter(name="baseServerId")
-    def base_server_id(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def base_server_id(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Base value for MySQL server_id for instances in the cluster
         """
         return pulumi.get(self, "base_server_id")
 
     @base_server_id.setter
-    def base_server_id(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def base_server_id(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "base_server_id", value)
 
     @_builtins.property
     @pulumi.getter(name="datadirPermissions")
-    def datadir_permissions(self) -> Optional[pulumi.Input['InnoDBClusterSpecDatadirPermissionsPatchArgs']]:
+    def datadir_permissions(self) -> pulumi.Input[Optional['InnoDBClusterSpecDatadirPermissionsPatchArgs']]:
         return pulumi.get(self, "datadir_permissions")
 
     @datadir_permissions.setter
-    def datadir_permissions(self, value: Optional[pulumi.Input['InnoDBClusterSpecDatadirPermissionsPatchArgs']]):
+    def datadir_permissions(self, value: pulumi.Input[Optional['InnoDBClusterSpecDatadirPermissionsPatchArgs']]):
         pulumi.set(self, "datadir_permissions", value)
 
     @_builtins.property
     @pulumi.getter(name="datadirVolumeClaimTemplate")
-    def datadir_volume_claim_template(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def datadir_volume_claim_template(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Template for a PersistentVolumeClaim, to be used as datadir
         """
         return pulumi.get(self, "datadir_volume_claim_template")
 
     @datadir_volume_claim_template.setter
-    def datadir_volume_claim_template(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def datadir_volume_claim_template(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "datadir_volume_claim_template", value)
 
     @_builtins.property
     @pulumi.getter
-    def edition(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def edition(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         MySQL Server Edition (community or enterprise)
         """
         return pulumi.get(self, "edition")
 
     @edition.setter
-    def edition(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def edition(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "edition", value)
 
     @_builtins.property
     @pulumi.getter(name="imagePullPolicy")
-    def image_pull_policy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def image_pull_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Defaults to Always, but set to IfNotPresent in deploy-operator.yaml when deploying Operator
         """
         return pulumi.get(self, "image_pull_policy")
 
     @image_pull_policy.setter
-    def image_pull_policy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def image_pull_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "image_pull_policy", value)
 
     @_builtins.property
     @pulumi.getter(name="imagePullSecrets")
-    def image_pull_secrets(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecImagePullSecretsPatchArgs']]]]:
+    def image_pull_secrets(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecImagePullSecretsPatchArgs']]]]:
         return pulumi.get(self, "image_pull_secrets")
 
     @image_pull_secrets.setter
-    def image_pull_secrets(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecImagePullSecretsPatchArgs']]]]):
+    def image_pull_secrets(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecImagePullSecretsPatchArgs']]]]):
         pulumi.set(self, "image_pull_secrets", value)
 
     @_builtins.property
     @pulumi.getter(name="imageRepository")
-    def image_repository(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def image_repository(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Repository where images are pulled from; defaults to container-registry.oracle.com/mysql
         """
         return pulumi.get(self, "image_repository")
 
     @image_repository.setter
-    def image_repository(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def image_repository(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "image_repository", value)
 
     @_builtins.property
     @pulumi.getter(name="initDB")
-    def init_db(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def init_db(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         return pulumi.get(self, "init_db")
 
     @init_db.setter
-    def init_db(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def init_db(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "init_db", value)
 
     @_builtins.property
     @pulumi.getter(name="instanceService")
-    def instance_service(self) -> Optional[pulumi.Input['InnoDBClusterSpecInstanceServicePatchArgs']]:
+    def instance_service(self) -> pulumi.Input[Optional['InnoDBClusterSpecInstanceServicePatchArgs']]:
         return pulumi.get(self, "instance_service")
 
     @instance_service.setter
-    def instance_service(self, value: Optional[pulumi.Input['InnoDBClusterSpecInstanceServicePatchArgs']]):
+    def instance_service(self, value: pulumi.Input[Optional['InnoDBClusterSpecInstanceServicePatchArgs']]):
         pulumi.set(self, "instance_service", value)
 
     @_builtins.property
     @pulumi.getter
-    def instances(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def instances(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Number of MySQL replica instances for the cluster
         """
         return pulumi.get(self, "instances")
 
     @instances.setter
-    def instances(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def instances(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "instances", value)
 
     @_builtins.property
     @pulumi.getter
-    def keyring(self) -> Optional[pulumi.Input['InnoDBClusterSpecKeyringPatchArgs']]:
+    def keyring(self) -> pulumi.Input[Optional['InnoDBClusterSpecKeyringPatchArgs']]:
         return pulumi.get(self, "keyring")
 
     @keyring.setter
-    def keyring(self, value: Optional[pulumi.Input['InnoDBClusterSpecKeyringPatchArgs']]):
+    def keyring(self, value: pulumi.Input[Optional['InnoDBClusterSpecKeyringPatchArgs']]):
         pulumi.set(self, "keyring", value)
 
     @_builtins.property
     @pulumi.getter
-    def logs(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsPatchArgs']]:
+    def logs(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsPatchArgs']]:
         return pulumi.get(self, "logs")
 
     @logs.setter
-    def logs(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsPatchArgs']]):
+    def logs(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsPatchArgs']]):
         pulumi.set(self, "logs", value)
 
     @_builtins.property
     @pulumi.getter
-    def metrics(self) -> Optional[pulumi.Input['InnoDBClusterSpecMetricsPatchArgs']]:
+    def metrics(self) -> pulumi.Input[Optional['InnoDBClusterSpecMetricsPatchArgs']]:
         return pulumi.get(self, "metrics")
 
     @metrics.setter
-    def metrics(self, value: Optional[pulumi.Input['InnoDBClusterSpecMetricsPatchArgs']]):
+    def metrics(self, value: pulumi.Input[Optional['InnoDBClusterSpecMetricsPatchArgs']]):
         pulumi.set(self, "metrics", value)
 
     @_builtins.property
     @pulumi.getter
-    def mycnf(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def mycnf(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Custom configuration additions for my.cnf
         """
         return pulumi.get(self, "mycnf")
 
     @mycnf.setter
-    def mycnf(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def mycnf(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "mycnf", value)
 
     @_builtins.property
     @pulumi.getter(name="podAnnotations")
-    def pod_annotations(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_annotations(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         return pulumi.get(self, "pod_annotations")
 
     @pod_annotations.setter
-    def pod_annotations(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_annotations(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="podLabels")
-    def pod_labels(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_labels(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         return pulumi.get(self, "pod_labels")
 
     @pod_labels.setter
-    def pod_labels(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_labels(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_labels", value)
 
     @_builtins.property
     @pulumi.getter(name="podSpec")
-    def pod_spec(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_spec(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Customization specification to be merged into the InnoDBCluster StatefulSet pod template. IMPORTANT: podSpec is regarded only during StatefulSet buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the InnoDBCluster StatefulSet will not be updated
         """
         return pulumi.get(self, "pod_spec")
 
     @pod_spec.setter
-    def pod_spec(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_spec(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_spec", value)
 
     @_builtins.property
     @pulumi.getter(name="readReplicas")
-    def read_replicas(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecReadReplicasPatchArgs']]]]:
+    def read_replicas(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecReadReplicasPatchArgs']]]]:
         return pulumi.get(self, "read_replicas")
 
     @read_replicas.setter
-    def read_replicas(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecReadReplicasPatchArgs']]]]):
+    def read_replicas(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecReadReplicasPatchArgs']]]]):
         pulumi.set(self, "read_replicas", value)
 
     @_builtins.property
     @pulumi.getter
-    def router(self) -> Optional[pulumi.Input['InnoDBClusterSpecRouterPatchArgs']]:
+    def router(self) -> pulumi.Input[Optional['InnoDBClusterSpecRouterPatchArgs']]:
         return pulumi.get(self, "router")
 
     @router.setter
-    def router(self, value: Optional[pulumi.Input['InnoDBClusterSpecRouterPatchArgs']]):
+    def router(self, value: pulumi.Input[Optional['InnoDBClusterSpecRouterPatchArgs']]):
         pulumi.set(self, "router", value)
 
     @_builtins.property
     @pulumi.getter(name="secretName")
-    def secret_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def secret_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of a generic type Secret containing root/default account password
         """
         return pulumi.get(self, "secret_name")
 
     @secret_name.setter
-    def secret_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def secret_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "secret_name", value)
 
     @_builtins.property
     @pulumi.getter
-    def service(self) -> Optional[pulumi.Input['InnoDBClusterSpecServicePatchArgs']]:
+    def service(self) -> pulumi.Input[Optional['InnoDBClusterSpecServicePatchArgs']]:
         return pulumi.get(self, "service")
 
     @service.setter
-    def service(self, value: Optional[pulumi.Input['InnoDBClusterSpecServicePatchArgs']]):
+    def service(self, value: pulumi.Input[Optional['InnoDBClusterSpecServicePatchArgs']]):
         pulumi.set(self, "service", value)
 
     @_builtins.property
     @pulumi.getter(name="serviceAccountName")
-    def service_account_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def service_account_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "service_account_name")
 
     @service_account_name.setter
-    def service_account_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def service_account_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "service_account_name", value)
 
     @_builtins.property
     @pulumi.getter(name="serviceFqdnTemplate")
-    def service_fqdn_template(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def service_fqdn_template(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Template for a FQDN resolving to the cluster's headless instance Service and individual Pods
         """
         return pulumi.get(self, "service_fqdn_template")
 
     @service_fqdn_template.setter
-    def service_fqdn_template(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def service_fqdn_template(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "service_fqdn_template", value)
 
     @_builtins.property
     @pulumi.getter(name="tlsCASecretName")
-    def tls_ca_secret_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def tls_ca_secret_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of a generic type Secret containing CA (ca.pem) and optional CRL (crl.pem) for SSL
         """
         return pulumi.get(self, "tls_ca_secret_name")
 
     @tls_ca_secret_name.setter
-    def tls_ca_secret_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def tls_ca_secret_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "tls_ca_secret_name", value)
 
     @_builtins.property
     @pulumi.getter(name="tlsSecretName")
-    def tls_secret_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def tls_secret_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of a TLS type Secret containing Server certificate and private key for SSL
         """
         return pulumi.get(self, "tls_secret_name")
 
     @tls_secret_name.setter
-    def tls_secret_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def tls_secret_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "tls_secret_name", value)
 
     @_builtins.property
     @pulumi.getter(name="tlsUseSelfSigned")
-    def tls_use_self_signed(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def tls_use_self_signed(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Enables use of self-signed TLS certificates, reducing or disabling TLS based security verifications
         """
         return pulumi.get(self, "tls_use_self_signed")
 
     @tls_use_self_signed.setter
-    def tls_use_self_signed(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def tls_use_self_signed(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "tls_use_self_signed", value)
 
     @_builtins.property
     @pulumi.getter
-    def version(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def version(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         MySQL Server version
         """
         return pulumi.get(self, "version")
 
     @version.setter
-    def version(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def version(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "version", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecReadReplicasPatchArgsDict(TypedDict):
-        base_server_id: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Base value for MySQL server_id for instances of the readReplica, if 0 it will be assigned automatically
-        """
-        datadir_volume_claim_template: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Template for a PersistentVolumeClaim, to be used as datadir
-        """
-        instances: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Number of MySQL instances for the set of read replica
-        """
-        mycnf: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Custom configuration additions for my.cnf
-        """
-        name: NotRequired[pulumi.Input[_builtins.str]]
-        pod_annotations: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        pod_labels: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        pod_spec: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Customization specification to be merged into the InnoDBCluster StatefulSet pod template. IMPORTANT: podSpec is regarded only during StatefulSet buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the InnoDBCluster StatefulSet will not be updated
-        """
-        version: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        MySQL Server version
-        """
-elif False:
-    InnoDBClusterSpecReadReplicasPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecReadReplicasPatchArgsDict(TypedDict):
+    base_server_id: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Base value for MySQL server_id for instances of the readReplica, if 0 it will be assigned automatically
+    """
+    datadir_volume_claim_template: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Template for a PersistentVolumeClaim, to be used as datadir
+    """
+    instances: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Number of MySQL instances for the set of read replica
+    """
+    mycnf: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Custom configuration additions for my.cnf
+    """
+    name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    pod_annotations: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    pod_labels: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    pod_spec: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Customization specification to be merged into the InnoDBCluster StatefulSet pod template. IMPORTANT: podSpec is regarded only during StatefulSet buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the InnoDBCluster StatefulSet will not be updated
+    """
+    version: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    MySQL Server version
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecReadReplicasPatchArgs:
     def __init__(__self__, *,
-                 base_server_id: Optional[pulumi.Input[_builtins.int]] = None,
-                 datadir_volume_claim_template: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 instances: Optional[pulumi.Input[_builtins.int]] = None,
-                 mycnf: Optional[pulumi.Input[_builtins.str]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 pod_annotations: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 pod_labels: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 pod_spec: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 version: Optional[pulumi.Input[_builtins.str]] = None):
+                 base_server_id: pulumi.Input[Optional[_builtins.int]] = None,
+                 datadir_volume_claim_template: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 instances: pulumi.Input[Optional[_builtins.int]] = None,
+                 mycnf: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 pod_annotations: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 pod_labels: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 pod_spec: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 version: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.int] base_server_id: Base value for MySQL server_id for instances of the readReplica, if 0 it will be assigned automatically
         :param pulumi.Input[Mapping[str, Any]] datadir_volume_claim_template: Template for a PersistentVolumeClaim, to be used as datadir
@@ -4418,148 +4286,145 @@ class InnoDBClusterSpecReadReplicasPatchArgs:
 
     @_builtins.property
     @pulumi.getter(name="baseServerId")
-    def base_server_id(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def base_server_id(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Base value for MySQL server_id for instances of the readReplica, if 0 it will be assigned automatically
         """
         return pulumi.get(self, "base_server_id")
 
     @base_server_id.setter
-    def base_server_id(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def base_server_id(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "base_server_id", value)
 
     @_builtins.property
     @pulumi.getter(name="datadirVolumeClaimTemplate")
-    def datadir_volume_claim_template(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def datadir_volume_claim_template(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Template for a PersistentVolumeClaim, to be used as datadir
         """
         return pulumi.get(self, "datadir_volume_claim_template")
 
     @datadir_volume_claim_template.setter
-    def datadir_volume_claim_template(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def datadir_volume_claim_template(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "datadir_volume_claim_template", value)
 
     @_builtins.property
     @pulumi.getter
-    def instances(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def instances(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Number of MySQL instances for the set of read replica
         """
         return pulumi.get(self, "instances")
 
     @instances.setter
-    def instances(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def instances(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "instances", value)
 
     @_builtins.property
     @pulumi.getter
-    def mycnf(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def mycnf(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Custom configuration additions for my.cnf
         """
         return pulumi.get(self, "mycnf")
 
     @mycnf.setter
-    def mycnf(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def mycnf(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "mycnf", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="podAnnotations")
-    def pod_annotations(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_annotations(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         return pulumi.get(self, "pod_annotations")
 
     @pod_annotations.setter
-    def pod_annotations(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_annotations(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="podLabels")
-    def pod_labels(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_labels(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         return pulumi.get(self, "pod_labels")
 
     @pod_labels.setter
-    def pod_labels(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_labels(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_labels", value)
 
     @_builtins.property
     @pulumi.getter(name="podSpec")
-    def pod_spec(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_spec(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Customization specification to be merged into the InnoDBCluster StatefulSet pod template. IMPORTANT: podSpec is regarded only during StatefulSet buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the InnoDBCluster StatefulSet will not be updated
         """
         return pulumi.get(self, "pod_spec")
 
     @pod_spec.setter
-    def pod_spec(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_spec(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_spec", value)
 
     @_builtins.property
     @pulumi.getter
-    def version(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def version(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         MySQL Server version
         """
         return pulumi.get(self, "version")
 
     @version.setter
-    def version(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def version(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "version", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecReadReplicasArgsDict(TypedDict):
-        base_server_id: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Base value for MySQL server_id for instances of the readReplica, if 0 it will be assigned automatically
-        """
-        datadir_volume_claim_template: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Template for a PersistentVolumeClaim, to be used as datadir
-        """
-        instances: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Number of MySQL instances for the set of read replica
-        """
-        mycnf: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Custom configuration additions for my.cnf
-        """
-        name: NotRequired[pulumi.Input[_builtins.str]]
-        pod_annotations: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        pod_labels: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        pod_spec: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Customization specification to be merged into the InnoDBCluster StatefulSet pod template. IMPORTANT: podSpec is regarded only during StatefulSet buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the InnoDBCluster StatefulSet will not be updated
-        """
-        version: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        MySQL Server version
-        """
-elif False:
-    InnoDBClusterSpecReadReplicasArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecReadReplicasArgsDict(TypedDict):
+    base_server_id: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Base value for MySQL server_id for instances of the readReplica, if 0 it will be assigned automatically
+    """
+    datadir_volume_claim_template: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Template for a PersistentVolumeClaim, to be used as datadir
+    """
+    instances: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Number of MySQL instances for the set of read replica
+    """
+    mycnf: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Custom configuration additions for my.cnf
+    """
+    name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    pod_annotations: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    pod_labels: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    pod_spec: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Customization specification to be merged into the InnoDBCluster StatefulSet pod template. IMPORTANT: podSpec is regarded only during StatefulSet buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the InnoDBCluster StatefulSet will not be updated
+    """
+    version: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    MySQL Server version
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecReadReplicasArgs:
     def __init__(__self__, *,
-                 base_server_id: Optional[pulumi.Input[_builtins.int]] = None,
-                 datadir_volume_claim_template: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 instances: Optional[pulumi.Input[_builtins.int]] = None,
-                 mycnf: Optional[pulumi.Input[_builtins.str]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 pod_annotations: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 pod_labels: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 pod_spec: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 version: Optional[pulumi.Input[_builtins.str]] = None):
+                 base_server_id: pulumi.Input[Optional[_builtins.int]] = None,
+                 datadir_volume_claim_template: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 instances: pulumi.Input[Optional[_builtins.int]] = None,
+                 mycnf: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 pod_annotations: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 pod_labels: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 pod_spec: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 version: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.int] base_server_id: Base value for MySQL server_id for instances of the readReplica, if 0 it will be assigned automatically
         :param pulumi.Input[Mapping[str, Any]] datadir_volume_claim_template: Template for a PersistentVolumeClaim, to be used as datadir
@@ -4589,153 +4454,151 @@ class InnoDBClusterSpecReadReplicasArgs:
 
     @_builtins.property
     @pulumi.getter(name="baseServerId")
-    def base_server_id(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def base_server_id(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Base value for MySQL server_id for instances of the readReplica, if 0 it will be assigned automatically
         """
         return pulumi.get(self, "base_server_id")
 
     @base_server_id.setter
-    def base_server_id(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def base_server_id(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "base_server_id", value)
 
     @_builtins.property
     @pulumi.getter(name="datadirVolumeClaimTemplate")
-    def datadir_volume_claim_template(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def datadir_volume_claim_template(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Template for a PersistentVolumeClaim, to be used as datadir
         """
         return pulumi.get(self, "datadir_volume_claim_template")
 
     @datadir_volume_claim_template.setter
-    def datadir_volume_claim_template(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def datadir_volume_claim_template(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "datadir_volume_claim_template", value)
 
     @_builtins.property
     @pulumi.getter
-    def instances(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def instances(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Number of MySQL instances for the set of read replica
         """
         return pulumi.get(self, "instances")
 
     @instances.setter
-    def instances(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def instances(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "instances", value)
 
     @_builtins.property
     @pulumi.getter
-    def mycnf(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def mycnf(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Custom configuration additions for my.cnf
         """
         return pulumi.get(self, "mycnf")
 
     @mycnf.setter
-    def mycnf(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def mycnf(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "mycnf", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="podAnnotations")
-    def pod_annotations(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_annotations(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         return pulumi.get(self, "pod_annotations")
 
     @pod_annotations.setter
-    def pod_annotations(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_annotations(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="podLabels")
-    def pod_labels(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_labels(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         return pulumi.get(self, "pod_labels")
 
     @pod_labels.setter
-    def pod_labels(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_labels(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_labels", value)
 
     @_builtins.property
     @pulumi.getter(name="podSpec")
-    def pod_spec(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_spec(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Customization specification to be merged into the InnoDBCluster StatefulSet pod template. IMPORTANT: podSpec is regarded only during StatefulSet buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the InnoDBCluster StatefulSet will not be updated
         """
         return pulumi.get(self, "pod_spec")
 
     @pod_spec.setter
-    def pod_spec(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_spec(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_spec", value)
 
     @_builtins.property
     @pulumi.getter
-    def version(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def version(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         MySQL Server version
         """
         return pulumi.get(self, "version")
 
     @version.setter
-    def version(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def version(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "version", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecRouterPatchArgsDict(TypedDict):
-        """
-        MySQL Router specification
-        """
-        bootstrap_options: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        Command line options passed to MySQL Router while bootstrapping
-        """
-        instances: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Number of MySQL Router instances to deploy
-        """
-        options: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        Command line options passed to MySQL Router while running
-        """
-        pod_annotations: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        pod_labels: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        pod_spec: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Customization specification to be merged into the Router Deployment pod template. IMPORTANT: podSpec is regarded only during Deployment buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the Router Deployment will not be updated
-        """
-        routing_options: NotRequired[pulumi.Input['InnoDBClusterSpecRouterRoutingOptionsPatchArgsDict']]
-        tls_secret_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of a TLS type Secret containing MySQL Router certificate and private key used for SSL
-        """
-        version: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Override MySQL Router version
-        """
-elif False:
-    InnoDBClusterSpecRouterPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecRouterPatchArgsDict(TypedDict):
+    """
+    MySQL Router specification
+    """
+    bootstrap_options: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    """
+    Command line options passed to MySQL Router while bootstrapping
+    """
+    instances: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Number of MySQL Router instances to deploy
+    """
+    options: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    """
+    Command line options passed to MySQL Router while running
+    """
+    pod_annotations: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    pod_labels: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    pod_spec: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Customization specification to be merged into the Router Deployment pod template. IMPORTANT: podSpec is regarded only during Deployment buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the Router Deployment will not be updated
+    """
+    routing_options: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecRouterRoutingOptionsPatchArgs']]]
+    tls_secret_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of a TLS type Secret containing MySQL Router certificate and private key used for SSL
+    """
+    version: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Override MySQL Router version
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecRouterPatchArgs:
     def __init__(__self__, *,
-                 bootstrap_options: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 instances: Optional[pulumi.Input[_builtins.int]] = None,
-                 options: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 pod_annotations: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 pod_labels: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 pod_spec: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 routing_options: Optional[pulumi.Input['InnoDBClusterSpecRouterRoutingOptionsPatchArgs']] = None,
-                 tls_secret_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 version: Optional[pulumi.Input[_builtins.str]] = None):
+                 bootstrap_options: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 instances: pulumi.Input[Optional[_builtins.int]] = None,
+                 options: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 pod_annotations: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 pod_labels: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 pod_spec: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 routing_options: pulumi.Input[Optional['InnoDBClusterSpecRouterRoutingOptionsPatchArgs']] = None,
+                 tls_secret_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 version: pulumi.Input[Optional[_builtins.str]] = None):
         """
         MySQL Router specification
+
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] bootstrap_options: Command line options passed to MySQL Router while bootstrapping
         :param pulumi.Input[_builtins.int] instances: Number of MySQL Router instances to deploy
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] options: Command line options passed to MySQL Router while running
@@ -4764,121 +4627,118 @@ class InnoDBClusterSpecRouterPatchArgs:
 
     @_builtins.property
     @pulumi.getter(name="bootstrapOptions")
-    def bootstrap_options(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def bootstrap_options(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         Command line options passed to MySQL Router while bootstrapping
         """
         return pulumi.get(self, "bootstrap_options")
 
     @bootstrap_options.setter
-    def bootstrap_options(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def bootstrap_options(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "bootstrap_options", value)
 
     @_builtins.property
     @pulumi.getter
-    def instances(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def instances(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Number of MySQL Router instances to deploy
         """
         return pulumi.get(self, "instances")
 
     @instances.setter
-    def instances(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def instances(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "instances", value)
 
     @_builtins.property
     @pulumi.getter
-    def options(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def options(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         Command line options passed to MySQL Router while running
         """
         return pulumi.get(self, "options")
 
     @options.setter
-    def options(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def options(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "options", value)
 
     @_builtins.property
     @pulumi.getter(name="podAnnotations")
-    def pod_annotations(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_annotations(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         return pulumi.get(self, "pod_annotations")
 
     @pod_annotations.setter
-    def pod_annotations(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_annotations(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="podLabels")
-    def pod_labels(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_labels(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         return pulumi.get(self, "pod_labels")
 
     @pod_labels.setter
-    def pod_labels(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_labels(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_labels", value)
 
     @_builtins.property
     @pulumi.getter(name="podSpec")
-    def pod_spec(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_spec(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Customization specification to be merged into the Router Deployment pod template. IMPORTANT: podSpec is regarded only during Deployment buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the Router Deployment will not be updated
         """
         return pulumi.get(self, "pod_spec")
 
     @pod_spec.setter
-    def pod_spec(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_spec(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_spec", value)
 
     @_builtins.property
     @pulumi.getter(name="routingOptions")
-    def routing_options(self) -> Optional[pulumi.Input['InnoDBClusterSpecRouterRoutingOptionsPatchArgs']]:
+    def routing_options(self) -> pulumi.Input[Optional['InnoDBClusterSpecRouterRoutingOptionsPatchArgs']]:
         return pulumi.get(self, "routing_options")
 
     @routing_options.setter
-    def routing_options(self, value: Optional[pulumi.Input['InnoDBClusterSpecRouterRoutingOptionsPatchArgs']]):
+    def routing_options(self, value: pulumi.Input[Optional['InnoDBClusterSpecRouterRoutingOptionsPatchArgs']]):
         pulumi.set(self, "routing_options", value)
 
     @_builtins.property
     @pulumi.getter(name="tlsSecretName")
-    def tls_secret_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def tls_secret_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of a TLS type Secret containing MySQL Router certificate and private key used for SSL
         """
         return pulumi.get(self, "tls_secret_name")
 
     @tls_secret_name.setter
-    def tls_secret_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def tls_secret_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "tls_secret_name", value)
 
     @_builtins.property
     @pulumi.getter
-    def version(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def version(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Override MySQL Router version
         """
         return pulumi.get(self, "version")
 
     @version.setter
-    def version(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def version(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "version", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecRouterRoutingOptionsPatchArgsDict(TypedDict):
-        """
-        Set routing options for the cluster
-        """
-        invalidated_cluster_policy: NotRequired[pulumi.Input[_builtins.str]]
-        read_only_targets: NotRequired[pulumi.Input[_builtins.str]]
-        stats_updates_frequency: NotRequired[pulumi.Input[_builtins.int]]
-elif False:
-    InnoDBClusterSpecRouterRoutingOptionsPatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecRouterRoutingOptionsPatchArgsDict(TypedDict):
+    """
+    Set routing options for the cluster
+    """
+    invalidated_cluster_policy: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    read_only_targets: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    stats_updates_frequency: NotRequired[pulumi.Input[Optional[_builtins.int]]]
 
 @pulumi.input_type
 class InnoDBClusterSpecRouterRoutingOptionsPatchArgs:
     def __init__(__self__, *,
-                 invalidated_cluster_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 read_only_targets: Optional[pulumi.Input[_builtins.str]] = None,
-                 stats_updates_frequency: Optional[pulumi.Input[_builtins.int]] = None):
+                 invalidated_cluster_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 read_only_targets: pulumi.Input[Optional[_builtins.str]] = None,
+                 stats_updates_frequency: pulumi.Input[Optional[_builtins.int]] = None):
         """
         Set routing options for the cluster
         """
@@ -4891,49 +4751,46 @@ class InnoDBClusterSpecRouterRoutingOptionsPatchArgs:
 
     @_builtins.property
     @pulumi.getter
-    def invalidated_cluster_policy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def invalidated_cluster_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "invalidated_cluster_policy")
 
     @invalidated_cluster_policy.setter
-    def invalidated_cluster_policy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def invalidated_cluster_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "invalidated_cluster_policy", value)
 
     @_builtins.property
     @pulumi.getter
-    def read_only_targets(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def read_only_targets(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "read_only_targets")
 
     @read_only_targets.setter
-    def read_only_targets(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def read_only_targets(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "read_only_targets", value)
 
     @_builtins.property
     @pulumi.getter
-    def stats_updates_frequency(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def stats_updates_frequency(self) -> pulumi.Input[Optional[_builtins.int]]:
         return pulumi.get(self, "stats_updates_frequency")
 
     @stats_updates_frequency.setter
-    def stats_updates_frequency(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def stats_updates_frequency(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "stats_updates_frequency", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecRouterRoutingOptionsArgsDict(TypedDict):
-        """
-        Set routing options for the cluster
-        """
-        invalidated_cluster_policy: NotRequired[pulumi.Input[_builtins.str]]
-        read_only_targets: NotRequired[pulumi.Input[_builtins.str]]
-        stats_updates_frequency: NotRequired[pulumi.Input[_builtins.int]]
-elif False:
-    InnoDBClusterSpecRouterRoutingOptionsArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecRouterRoutingOptionsArgsDict(TypedDict):
+    """
+    Set routing options for the cluster
+    """
+    invalidated_cluster_policy: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    read_only_targets: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    stats_updates_frequency: NotRequired[pulumi.Input[Optional[_builtins.int]]]
 
 @pulumi.input_type
 class InnoDBClusterSpecRouterRoutingOptionsArgs:
     def __init__(__self__, *,
-                 invalidated_cluster_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 read_only_targets: Optional[pulumi.Input[_builtins.str]] = None,
-                 stats_updates_frequency: Optional[pulumi.Input[_builtins.int]] = None):
+                 invalidated_cluster_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 read_only_targets: pulumi.Input[Optional[_builtins.str]] = None,
+                 stats_updates_frequency: pulumi.Input[Optional[_builtins.int]] = None):
         """
         Set routing options for the cluster
         """
@@ -4946,81 +4803,79 @@ class InnoDBClusterSpecRouterRoutingOptionsArgs:
 
     @_builtins.property
     @pulumi.getter
-    def invalidated_cluster_policy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def invalidated_cluster_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "invalidated_cluster_policy")
 
     @invalidated_cluster_policy.setter
-    def invalidated_cluster_policy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def invalidated_cluster_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "invalidated_cluster_policy", value)
 
     @_builtins.property
     @pulumi.getter
-    def read_only_targets(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def read_only_targets(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "read_only_targets")
 
     @read_only_targets.setter
-    def read_only_targets(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def read_only_targets(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "read_only_targets", value)
 
     @_builtins.property
     @pulumi.getter
-    def stats_updates_frequency(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def stats_updates_frequency(self) -> pulumi.Input[Optional[_builtins.int]]:
         return pulumi.get(self, "stats_updates_frequency")
 
     @stats_updates_frequency.setter
-    def stats_updates_frequency(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def stats_updates_frequency(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "stats_updates_frequency", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecRouterArgsDict(TypedDict):
-        """
-        MySQL Router specification
-        """
-        bootstrap_options: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        Command line options passed to MySQL Router while bootstrapping
-        """
-        instances: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Number of MySQL Router instances to deploy
-        """
-        options: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        Command line options passed to MySQL Router while running
-        """
-        pod_annotations: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        pod_labels: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        pod_spec: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Customization specification to be merged into the Router Deployment pod template. IMPORTANT: podSpec is regarded only during Deployment buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the Router Deployment will not be updated
-        """
-        routing_options: NotRequired[pulumi.Input['InnoDBClusterSpecRouterRoutingOptionsArgsDict']]
-        tls_secret_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of a TLS type Secret containing MySQL Router certificate and private key used for SSL
-        """
-        version: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Override MySQL Router version
-        """
-elif False:
-    InnoDBClusterSpecRouterArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecRouterArgsDict(TypedDict):
+    """
+    MySQL Router specification
+    """
+    bootstrap_options: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    """
+    Command line options passed to MySQL Router while bootstrapping
+    """
+    instances: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Number of MySQL Router instances to deploy
+    """
+    options: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    """
+    Command line options passed to MySQL Router while running
+    """
+    pod_annotations: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    pod_labels: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    pod_spec: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Customization specification to be merged into the Router Deployment pod template. IMPORTANT: podSpec is regarded only during Deployment buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the Router Deployment will not be updated
+    """
+    routing_options: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecRouterRoutingOptionsArgs']]]
+    tls_secret_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of a TLS type Secret containing MySQL Router certificate and private key used for SSL
+    """
+    version: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Override MySQL Router version
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecRouterArgs:
     def __init__(__self__, *,
-                 bootstrap_options: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 instances: Optional[pulumi.Input[_builtins.int]] = None,
-                 options: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 pod_annotations: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 pod_labels: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 pod_spec: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 routing_options: Optional[pulumi.Input['InnoDBClusterSpecRouterRoutingOptionsArgs']] = None,
-                 tls_secret_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 version: Optional[pulumi.Input[_builtins.str]] = None):
+                 bootstrap_options: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 instances: pulumi.Input[Optional[_builtins.int]] = None,
+                 options: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 pod_annotations: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 pod_labels: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 pod_spec: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 routing_options: pulumi.Input[Optional['InnoDBClusterSpecRouterRoutingOptionsArgs']] = None,
+                 tls_secret_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 version: pulumi.Input[Optional[_builtins.str]] = None):
         """
         MySQL Router specification
+
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] bootstrap_options: Command line options passed to MySQL Router while bootstrapping
         :param pulumi.Input[_builtins.int] instances: Number of MySQL Router instances to deploy
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] options: Command line options passed to MySQL Router while running
@@ -5049,134 +4904,132 @@ class InnoDBClusterSpecRouterArgs:
 
     @_builtins.property
     @pulumi.getter(name="bootstrapOptions")
-    def bootstrap_options(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def bootstrap_options(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         Command line options passed to MySQL Router while bootstrapping
         """
         return pulumi.get(self, "bootstrap_options")
 
     @bootstrap_options.setter
-    def bootstrap_options(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def bootstrap_options(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "bootstrap_options", value)
 
     @_builtins.property
     @pulumi.getter
-    def instances(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def instances(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Number of MySQL Router instances to deploy
         """
         return pulumi.get(self, "instances")
 
     @instances.setter
-    def instances(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def instances(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "instances", value)
 
     @_builtins.property
     @pulumi.getter
-    def options(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def options(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         Command line options passed to MySQL Router while running
         """
         return pulumi.get(self, "options")
 
     @options.setter
-    def options(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def options(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "options", value)
 
     @_builtins.property
     @pulumi.getter(name="podAnnotations")
-    def pod_annotations(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_annotations(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         return pulumi.get(self, "pod_annotations")
 
     @pod_annotations.setter
-    def pod_annotations(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_annotations(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="podLabels")
-    def pod_labels(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_labels(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         return pulumi.get(self, "pod_labels")
 
     @pod_labels.setter
-    def pod_labels(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_labels(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_labels", value)
 
     @_builtins.property
     @pulumi.getter(name="podSpec")
-    def pod_spec(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_spec(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Customization specification to be merged into the Router Deployment pod template. IMPORTANT: podSpec is regarded only during Deployment buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the Router Deployment will not be updated
         """
         return pulumi.get(self, "pod_spec")
 
     @pod_spec.setter
-    def pod_spec(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_spec(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_spec", value)
 
     @_builtins.property
     @pulumi.getter(name="routingOptions")
-    def routing_options(self) -> Optional[pulumi.Input['InnoDBClusterSpecRouterRoutingOptionsArgs']]:
+    def routing_options(self) -> pulumi.Input[Optional['InnoDBClusterSpecRouterRoutingOptionsArgs']]:
         return pulumi.get(self, "routing_options")
 
     @routing_options.setter
-    def routing_options(self, value: Optional[pulumi.Input['InnoDBClusterSpecRouterRoutingOptionsArgs']]):
+    def routing_options(self, value: pulumi.Input[Optional['InnoDBClusterSpecRouterRoutingOptionsArgs']]):
         pulumi.set(self, "routing_options", value)
 
     @_builtins.property
     @pulumi.getter(name="tlsSecretName")
-    def tls_secret_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def tls_secret_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of a TLS type Secret containing MySQL Router certificate and private key used for SSL
         """
         return pulumi.get(self, "tls_secret_name")
 
     @tls_secret_name.setter
-    def tls_secret_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def tls_secret_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "tls_secret_name", value)
 
     @_builtins.property
     @pulumi.getter
-    def version(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def version(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Override MySQL Router version
         """
         return pulumi.get(self, "version")
 
     @version.setter
-    def version(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def version(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "version", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecServicePatchArgsDict(TypedDict):
-        """
-        Configuration of the Service used by applications connecting to the InnoDB Cluster
-        """
-        annotations: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Custom annotations for the Service
-        """
-        default_port: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Target for the Service's default (3306) port. If mysql-rw traffic will go to the primary and allow read and write operations, with mysql-ro traffic goes to the replica and allows only read operations, with mysql-rw-split the router's read-write-splitting will be targeted
-        """
-        labels: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Custom labels for the Service
-        """
-        type: NotRequired[pulumi.Input[_builtins.str]]
-elif False:
-    InnoDBClusterSpecServicePatchArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecServicePatchArgsDict(TypedDict):
+    """
+    Configuration of the Service used by applications connecting to the InnoDB Cluster
+    """
+    annotations: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Custom annotations for the Service
+    """
+    default_port: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Target for the Service's default (3306) port. If mysql-rw traffic will go to the primary and allow read and write operations, with mysql-ro traffic goes to the replica and allows only read operations, with mysql-rw-split the router's read-write-splitting will be targeted
+    """
+    labels: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Custom labels for the Service
+    """
+    type: NotRequired[pulumi.Input[Optional[_builtins.str]]]
 
 @pulumi.input_type
 class InnoDBClusterSpecServicePatchArgs:
     def __init__(__self__, *,
-                 annotations: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 default_port: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 type: Optional[pulumi.Input[_builtins.str]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 default_port: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 type: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Configuration of the Service used by applications connecting to the InnoDB Cluster
+
         :param pulumi.Input[Mapping[str, Any]] annotations: Custom annotations for the Service
         :param pulumi.Input[_builtins.str] default_port: Target for the Service's default (3306) port. If mysql-rw traffic will go to the primary and allow read and write operations, with mysql-ro traffic goes to the replica and allows only read operations, with mysql-rw-split the router's read-write-splitting will be targeted
         :param pulumi.Input[Mapping[str, Any]] labels: Custom labels for the Service
@@ -5192,80 +5045,78 @@ class InnoDBClusterSpecServicePatchArgs:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Custom annotations for the Service
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="defaultPort")
-    def default_port(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def default_port(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Target for the Service's default (3306) port. If mysql-rw traffic will go to the primary and allow read and write operations, with mysql-ro traffic goes to the replica and allows only read operations, with mysql-rw-split the router's read-write-splitting will be targeted
         """
         return pulumi.get(self, "default_port")
 
     @default_port.setter
-    def default_port(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def default_port(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "default_port", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Custom labels for the Service
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def type(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def type(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "type")
 
     @type.setter
-    def type(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def type(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "type", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecServiceArgsDict(TypedDict):
-        """
-        Configuration of the Service used by applications connecting to the InnoDB Cluster
-        """
-        annotations: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Custom annotations for the Service
-        """
-        default_port: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Target for the Service's default (3306) port. If mysql-rw traffic will go to the primary and allow read and write operations, with mysql-ro traffic goes to the replica and allows only read operations, with mysql-rw-split the router's read-write-splitting will be targeted
-        """
-        labels: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Custom labels for the Service
-        """
-        type: NotRequired[pulumi.Input[_builtins.str]]
-elif False:
-    InnoDBClusterSpecServiceArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecServiceArgsDict(TypedDict):
+    """
+    Configuration of the Service used by applications connecting to the InnoDB Cluster
+    """
+    annotations: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Custom annotations for the Service
+    """
+    default_port: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Target for the Service's default (3306) port. If mysql-rw traffic will go to the primary and allow read and write operations, with mysql-ro traffic goes to the replica and allows only read operations, with mysql-rw-split the router's read-write-splitting will be targeted
+    """
+    labels: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Custom labels for the Service
+    """
+    type: NotRequired[pulumi.Input[Optional[_builtins.str]]]
 
 @pulumi.input_type
 class InnoDBClusterSpecServiceArgs:
     def __init__(__self__, *,
-                 annotations: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 default_port: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 type: Optional[pulumi.Input[_builtins.str]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 default_port: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 type: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Configuration of the Service used by applications connecting to the InnoDB Cluster
+
         :param pulumi.Input[Mapping[str, Any]] annotations: Custom annotations for the Service
         :param pulumi.Input[_builtins.str] default_port: Target for the Service's default (3306) port. If mysql-rw traffic will go to the primary and allow read and write operations, with mysql-ro traffic goes to the replica and allows only read operations, with mysql-rw-split the router's read-write-splitting will be targeted
         :param pulumi.Input[Mapping[str, Any]] labels: Custom labels for the Service
@@ -5281,164 +5132,161 @@ class InnoDBClusterSpecServiceArgs:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Custom annotations for the Service
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="defaultPort")
-    def default_port(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def default_port(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Target for the Service's default (3306) port. If mysql-rw traffic will go to the primary and allow read and write operations, with mysql-ro traffic goes to the replica and allows only read operations, with mysql-rw-split the router's read-write-splitting will be targeted
         """
         return pulumi.get(self, "default_port")
 
     @default_port.setter
-    def default_port(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def default_port(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "default_port", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Custom labels for the Service
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def type(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def type(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "type")
 
     @type.setter
-    def type(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def type(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "type", value)
 
 
-if not MYPY:
-    class InnoDBClusterSpecArgsDict(TypedDict):
-        backup_profiles: NotRequired[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]
-        """
-        Backup profile specifications for the cluster, which can be referenced from backup schedules and one-off backup jobs
-        """
-        backup_schedules: NotRequired[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]
-        """
-        Schedules for periodically executed backups
-        """
-        base_server_id: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Base value for MySQL server_id for instances in the cluster
-        """
-        datadir_permissions: NotRequired[pulumi.Input['InnoDBClusterSpecDatadirPermissionsArgsDict']]
-        datadir_volume_claim_template: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Template for a PersistentVolumeClaim, to be used as datadir
-        """
-        edition: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        MySQL Server Edition (community or enterprise)
-        """
-        image_pull_policy: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Defaults to Always, but set to IfNotPresent in deploy-operator.yaml when deploying Operator
-        """
-        image_pull_secrets: NotRequired[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecImagePullSecretsArgsDict']]]]
-        image_repository: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Repository where images are pulled from; defaults to container-registry.oracle.com/mysql
-        """
-        init_db: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        instance_service: NotRequired[pulumi.Input['InnoDBClusterSpecInstanceServiceArgsDict']]
-        instances: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Number of MySQL replica instances for the cluster
-        """
-        keyring: NotRequired[pulumi.Input['InnoDBClusterSpecKeyringArgsDict']]
-        logs: NotRequired[pulumi.Input['InnoDBClusterSpecLogsArgsDict']]
-        metrics: NotRequired[pulumi.Input['InnoDBClusterSpecMetricsArgsDict']]
-        mycnf: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Custom configuration additions for my.cnf
-        """
-        pod_annotations: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        pod_labels: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        pod_spec: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        Customization specification to be merged into the InnoDBCluster StatefulSet pod template. IMPORTANT: podSpec is regarded only during StatefulSet buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the InnoDBCluster StatefulSet will not be updated
-        """
-        read_replicas: NotRequired[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecReadReplicasArgsDict']]]]
-        router: NotRequired[pulumi.Input['InnoDBClusterSpecRouterArgsDict']]
-        secret_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of a generic type Secret containing root/default account password
-        """
-        service: NotRequired[pulumi.Input['InnoDBClusterSpecServiceArgsDict']]
-        service_account_name: NotRequired[pulumi.Input[_builtins.str]]
-        service_fqdn_template: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Template for a FQDN resolving to the cluster's headless instance Service and individual Pods
-        """
-        tls_ca_secret_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of a generic type Secret containing CA (ca.pem) and optional CRL (crl.pem) for SSL
-        """
-        tls_secret_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Name of a TLS type Secret containing Server certificate and private key for SSL
-        """
-        tls_use_self_signed: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Enables use of self-signed TLS certificates, reducing or disabling TLS based security verifications
-        """
-        version: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        MySQL Server version
-        """
-elif False:
-    InnoDBClusterSpecArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterSpecArgsDict(TypedDict):
+    backup_profiles: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]]
+    """
+    Backup profile specifications for the cluster, which can be referenced from backup schedules and one-off backup jobs
+    """
+    backup_schedules: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]]
+    """
+    Schedules for periodically executed backups
+    """
+    base_server_id: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Base value for MySQL server_id for instances in the cluster
+    """
+    datadir_permissions: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecDatadirPermissionsArgs']]]
+    datadir_volume_claim_template: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Template for a PersistentVolumeClaim, to be used as datadir
+    """
+    edition: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    MySQL Server Edition (community or enterprise)
+    """
+    image_pull_policy: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Defaults to Always, but set to IfNotPresent in deploy-operator.yaml when deploying Operator
+    """
+    image_pull_secrets: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecImagePullSecretsArgs']]]]]
+    image_repository: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Repository where images are pulled from; defaults to container-registry.oracle.com/mysql
+    """
+    init_db: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    instance_service: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecInstanceServiceArgs']]]
+    instances: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Number of MySQL replica instances for the cluster
+    """
+    keyring: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecKeyringArgs']]]
+    logs: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecLogsArgs']]]
+    metrics: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecMetricsArgs']]]
+    mycnf: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Custom configuration additions for my.cnf
+    """
+    pod_annotations: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    pod_labels: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    pod_spec: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    Customization specification to be merged into the InnoDBCluster StatefulSet pod template. IMPORTANT: podSpec is regarded only during StatefulSet buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the InnoDBCluster StatefulSet will not be updated
+    """
+    read_replicas: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecReadReplicasArgs']]]]]
+    router: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecRouterArgs']]]
+    secret_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of a generic type Secret containing root/default account password
+    """
+    service: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecServiceArgs']]]
+    service_account_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    service_fqdn_template: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Template for a FQDN resolving to the cluster's headless instance Service and individual Pods
+    """
+    tls_ca_secret_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of a generic type Secret containing CA (ca.pem) and optional CRL (crl.pem) for SSL
+    """
+    tls_secret_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of a TLS type Secret containing Server certificate and private key for SSL
+    """
+    tls_use_self_signed: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Enables use of self-signed TLS certificates, reducing or disabling TLS based security verifications
+    """
+    version: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    MySQL Server version
+    """
 
 @pulumi.input_type
 class InnoDBClusterSpecArgs:
     def __init__(__self__, *,
-                 backup_profiles: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]] = None,
-                 backup_schedules: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]] = None,
-                 base_server_id: Optional[pulumi.Input[_builtins.int]] = None,
-                 datadir_permissions: Optional[pulumi.Input['InnoDBClusterSpecDatadirPermissionsArgs']] = None,
-                 datadir_volume_claim_template: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 edition: Optional[pulumi.Input[_builtins.str]] = None,
-                 image_pull_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 image_pull_secrets: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecImagePullSecretsArgs']]]] = None,
-                 image_repository: Optional[pulumi.Input[_builtins.str]] = None,
-                 init_db: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 instance_service: Optional[pulumi.Input['InnoDBClusterSpecInstanceServiceArgs']] = None,
-                 instances: Optional[pulumi.Input[_builtins.int]] = None,
-                 keyring: Optional[pulumi.Input['InnoDBClusterSpecKeyringArgs']] = None,
-                 logs: Optional[pulumi.Input['InnoDBClusterSpecLogsArgs']] = None,
-                 metrics: Optional[pulumi.Input['InnoDBClusterSpecMetricsArgs']] = None,
-                 mycnf: Optional[pulumi.Input[_builtins.str]] = None,
-                 pod_annotations: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 pod_labels: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 pod_spec: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecReadReplicasArgs']]]] = None,
-                 router: Optional[pulumi.Input['InnoDBClusterSpecRouterArgs']] = None,
-                 secret_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 service: Optional[pulumi.Input['InnoDBClusterSpecServiceArgs']] = None,
-                 service_account_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 service_fqdn_template: Optional[pulumi.Input[_builtins.str]] = None,
-                 tls_ca_secret_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 tls_secret_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 tls_use_self_signed: Optional[pulumi.Input[_builtins.bool]] = None,
-                 version: Optional[pulumi.Input[_builtins.str]] = None):
+                 backup_profiles: pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]] = None,
+                 backup_schedules: pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]] = None,
+                 base_server_id: pulumi.Input[Optional[_builtins.int]] = None,
+                 datadir_permissions: pulumi.Input[Optional['InnoDBClusterSpecDatadirPermissionsArgs']] = None,
+                 datadir_volume_claim_template: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 edition: pulumi.Input[Optional[_builtins.str]] = None,
+                 image_pull_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 image_pull_secrets: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecImagePullSecretsArgs']]]] = None,
+                 image_repository: pulumi.Input[Optional[_builtins.str]] = None,
+                 init_db: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 instance_service: pulumi.Input[Optional['InnoDBClusterSpecInstanceServiceArgs']] = None,
+                 instances: pulumi.Input[Optional[_builtins.int]] = None,
+                 keyring: pulumi.Input[Optional['InnoDBClusterSpecKeyringArgs']] = None,
+                 logs: pulumi.Input[Optional['InnoDBClusterSpecLogsArgs']] = None,
+                 metrics: pulumi.Input[Optional['InnoDBClusterSpecMetricsArgs']] = None,
+                 mycnf: pulumi.Input[Optional[_builtins.str]] = None,
+                 pod_annotations: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 pod_labels: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 pod_spec: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 read_replicas: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecReadReplicasArgs']]]] = None,
+                 router: pulumi.Input[Optional['InnoDBClusterSpecRouterArgs']] = None,
+                 secret_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 service: pulumi.Input[Optional['InnoDBClusterSpecServiceArgs']] = None,
+                 service_account_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 service_fqdn_template: pulumi.Input[Optional[_builtins.str]] = None,
+                 tls_ca_secret_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 tls_secret_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 tls_use_self_signed: pulumi.Input[Optional[_builtins.bool]] = None,
+                 version: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]] backup_profiles: Backup profile specifications for the cluster, which can be referenced from backup schedules and one-off backup jobs
         :param pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]] backup_schedules: Schedules for periodically executed backups
@@ -5518,341 +5366,338 @@ class InnoDBClusterSpecArgs:
 
     @_builtins.property
     @pulumi.getter(name="backupProfiles")
-    def backup_profiles(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]:
+    def backup_profiles(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]:
         """
         Backup profile specifications for the cluster, which can be referenced from backup schedules and one-off backup jobs
         """
         return pulumi.get(self, "backup_profiles")
 
     @backup_profiles.setter
-    def backup_profiles(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]):
+    def backup_profiles(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]):
         pulumi.set(self, "backup_profiles", value)
 
     @_builtins.property
     @pulumi.getter(name="backupSchedules")
-    def backup_schedules(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]:
+    def backup_schedules(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]:
         """
         Schedules for periodically executed backups
         """
         return pulumi.get(self, "backup_schedules")
 
     @backup_schedules.setter
-    def backup_schedules(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]]):
+    def backup_schedules(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[Mapping[str, Any]]]]]):
         pulumi.set(self, "backup_schedules", value)
 
     @_builtins.property
     @pulumi.getter(name="baseServerId")
-    def base_server_id(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def base_server_id(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Base value for MySQL server_id for instances in the cluster
         """
         return pulumi.get(self, "base_server_id")
 
     @base_server_id.setter
-    def base_server_id(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def base_server_id(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "base_server_id", value)
 
     @_builtins.property
     @pulumi.getter(name="datadirPermissions")
-    def datadir_permissions(self) -> Optional[pulumi.Input['InnoDBClusterSpecDatadirPermissionsArgs']]:
+    def datadir_permissions(self) -> pulumi.Input[Optional['InnoDBClusterSpecDatadirPermissionsArgs']]:
         return pulumi.get(self, "datadir_permissions")
 
     @datadir_permissions.setter
-    def datadir_permissions(self, value: Optional[pulumi.Input['InnoDBClusterSpecDatadirPermissionsArgs']]):
+    def datadir_permissions(self, value: pulumi.Input[Optional['InnoDBClusterSpecDatadirPermissionsArgs']]):
         pulumi.set(self, "datadir_permissions", value)
 
     @_builtins.property
     @pulumi.getter(name="datadirVolumeClaimTemplate")
-    def datadir_volume_claim_template(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def datadir_volume_claim_template(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Template for a PersistentVolumeClaim, to be used as datadir
         """
         return pulumi.get(self, "datadir_volume_claim_template")
 
     @datadir_volume_claim_template.setter
-    def datadir_volume_claim_template(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def datadir_volume_claim_template(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "datadir_volume_claim_template", value)
 
     @_builtins.property
     @pulumi.getter
-    def edition(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def edition(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         MySQL Server Edition (community or enterprise)
         """
         return pulumi.get(self, "edition")
 
     @edition.setter
-    def edition(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def edition(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "edition", value)
 
     @_builtins.property
     @pulumi.getter(name="imagePullPolicy")
-    def image_pull_policy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def image_pull_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Defaults to Always, but set to IfNotPresent in deploy-operator.yaml when deploying Operator
         """
         return pulumi.get(self, "image_pull_policy")
 
     @image_pull_policy.setter
-    def image_pull_policy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def image_pull_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "image_pull_policy", value)
 
     @_builtins.property
     @pulumi.getter(name="imagePullSecrets")
-    def image_pull_secrets(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecImagePullSecretsArgs']]]]:
+    def image_pull_secrets(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecImagePullSecretsArgs']]]]:
         return pulumi.get(self, "image_pull_secrets")
 
     @image_pull_secrets.setter
-    def image_pull_secrets(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecImagePullSecretsArgs']]]]):
+    def image_pull_secrets(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecImagePullSecretsArgs']]]]):
         pulumi.set(self, "image_pull_secrets", value)
 
     @_builtins.property
     @pulumi.getter(name="imageRepository")
-    def image_repository(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def image_repository(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Repository where images are pulled from; defaults to container-registry.oracle.com/mysql
         """
         return pulumi.get(self, "image_repository")
 
     @image_repository.setter
-    def image_repository(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def image_repository(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "image_repository", value)
 
     @_builtins.property
     @pulumi.getter(name="initDB")
-    def init_db(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def init_db(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         return pulumi.get(self, "init_db")
 
     @init_db.setter
-    def init_db(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def init_db(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "init_db", value)
 
     @_builtins.property
     @pulumi.getter(name="instanceService")
-    def instance_service(self) -> Optional[pulumi.Input['InnoDBClusterSpecInstanceServiceArgs']]:
+    def instance_service(self) -> pulumi.Input[Optional['InnoDBClusterSpecInstanceServiceArgs']]:
         return pulumi.get(self, "instance_service")
 
     @instance_service.setter
-    def instance_service(self, value: Optional[pulumi.Input['InnoDBClusterSpecInstanceServiceArgs']]):
+    def instance_service(self, value: pulumi.Input[Optional['InnoDBClusterSpecInstanceServiceArgs']]):
         pulumi.set(self, "instance_service", value)
 
     @_builtins.property
     @pulumi.getter
-    def instances(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def instances(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Number of MySQL replica instances for the cluster
         """
         return pulumi.get(self, "instances")
 
     @instances.setter
-    def instances(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def instances(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "instances", value)
 
     @_builtins.property
     @pulumi.getter
-    def keyring(self) -> Optional[pulumi.Input['InnoDBClusterSpecKeyringArgs']]:
+    def keyring(self) -> pulumi.Input[Optional['InnoDBClusterSpecKeyringArgs']]:
         return pulumi.get(self, "keyring")
 
     @keyring.setter
-    def keyring(self, value: Optional[pulumi.Input['InnoDBClusterSpecKeyringArgs']]):
+    def keyring(self, value: pulumi.Input[Optional['InnoDBClusterSpecKeyringArgs']]):
         pulumi.set(self, "keyring", value)
 
     @_builtins.property
     @pulumi.getter
-    def logs(self) -> Optional[pulumi.Input['InnoDBClusterSpecLogsArgs']]:
+    def logs(self) -> pulumi.Input[Optional['InnoDBClusterSpecLogsArgs']]:
         return pulumi.get(self, "logs")
 
     @logs.setter
-    def logs(self, value: Optional[pulumi.Input['InnoDBClusterSpecLogsArgs']]):
+    def logs(self, value: pulumi.Input[Optional['InnoDBClusterSpecLogsArgs']]):
         pulumi.set(self, "logs", value)
 
     @_builtins.property
     @pulumi.getter
-    def metrics(self) -> Optional[pulumi.Input['InnoDBClusterSpecMetricsArgs']]:
+    def metrics(self) -> pulumi.Input[Optional['InnoDBClusterSpecMetricsArgs']]:
         return pulumi.get(self, "metrics")
 
     @metrics.setter
-    def metrics(self, value: Optional[pulumi.Input['InnoDBClusterSpecMetricsArgs']]):
+    def metrics(self, value: pulumi.Input[Optional['InnoDBClusterSpecMetricsArgs']]):
         pulumi.set(self, "metrics", value)
 
     @_builtins.property
     @pulumi.getter
-    def mycnf(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def mycnf(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Custom configuration additions for my.cnf
         """
         return pulumi.get(self, "mycnf")
 
     @mycnf.setter
-    def mycnf(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def mycnf(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "mycnf", value)
 
     @_builtins.property
     @pulumi.getter(name="podAnnotations")
-    def pod_annotations(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_annotations(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         return pulumi.get(self, "pod_annotations")
 
     @pod_annotations.setter
-    def pod_annotations(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_annotations(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="podLabels")
-    def pod_labels(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_labels(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         return pulumi.get(self, "pod_labels")
 
     @pod_labels.setter
-    def pod_labels(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_labels(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_labels", value)
 
     @_builtins.property
     @pulumi.getter(name="podSpec")
-    def pod_spec(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def pod_spec(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         Customization specification to be merged into the InnoDBCluster StatefulSet pod template. IMPORTANT: podSpec is regarded only during StatefulSet buildup and the operator neither checks the values in podSpec nor later watches for changes of this field. Thus if changes are made to this field the InnoDBCluster StatefulSet will not be updated
         """
         return pulumi.get(self, "pod_spec")
 
     @pod_spec.setter
-    def pod_spec(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def pod_spec(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "pod_spec", value)
 
     @_builtins.property
     @pulumi.getter(name="readReplicas")
-    def read_replicas(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecReadReplicasArgs']]]]:
+    def read_replicas(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecReadReplicasArgs']]]]:
         return pulumi.get(self, "read_replicas")
 
     @read_replicas.setter
-    def read_replicas(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InnoDBClusterSpecReadReplicasArgs']]]]):
+    def read_replicas(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['InnoDBClusterSpecReadReplicasArgs']]]]):
         pulumi.set(self, "read_replicas", value)
 
     @_builtins.property
     @pulumi.getter
-    def router(self) -> Optional[pulumi.Input['InnoDBClusterSpecRouterArgs']]:
+    def router(self) -> pulumi.Input[Optional['InnoDBClusterSpecRouterArgs']]:
         return pulumi.get(self, "router")
 
     @router.setter
-    def router(self, value: Optional[pulumi.Input['InnoDBClusterSpecRouterArgs']]):
+    def router(self, value: pulumi.Input[Optional['InnoDBClusterSpecRouterArgs']]):
         pulumi.set(self, "router", value)
 
     @_builtins.property
     @pulumi.getter(name="secretName")
-    def secret_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def secret_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of a generic type Secret containing root/default account password
         """
         return pulumi.get(self, "secret_name")
 
     @secret_name.setter
-    def secret_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def secret_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "secret_name", value)
 
     @_builtins.property
     @pulumi.getter
-    def service(self) -> Optional[pulumi.Input['InnoDBClusterSpecServiceArgs']]:
+    def service(self) -> pulumi.Input[Optional['InnoDBClusterSpecServiceArgs']]:
         return pulumi.get(self, "service")
 
     @service.setter
-    def service(self, value: Optional[pulumi.Input['InnoDBClusterSpecServiceArgs']]):
+    def service(self, value: pulumi.Input[Optional['InnoDBClusterSpecServiceArgs']]):
         pulumi.set(self, "service", value)
 
     @_builtins.property
     @pulumi.getter(name="serviceAccountName")
-    def service_account_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def service_account_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "service_account_name")
 
     @service_account_name.setter
-    def service_account_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def service_account_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "service_account_name", value)
 
     @_builtins.property
     @pulumi.getter(name="serviceFqdnTemplate")
-    def service_fqdn_template(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def service_fqdn_template(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Template for a FQDN resolving to the cluster's headless instance Service and individual Pods
         """
         return pulumi.get(self, "service_fqdn_template")
 
     @service_fqdn_template.setter
-    def service_fqdn_template(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def service_fqdn_template(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "service_fqdn_template", value)
 
     @_builtins.property
     @pulumi.getter(name="tlsCASecretName")
-    def tls_ca_secret_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def tls_ca_secret_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of a generic type Secret containing CA (ca.pem) and optional CRL (crl.pem) for SSL
         """
         return pulumi.get(self, "tls_ca_secret_name")
 
     @tls_ca_secret_name.setter
-    def tls_ca_secret_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def tls_ca_secret_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "tls_ca_secret_name", value)
 
     @_builtins.property
     @pulumi.getter(name="tlsSecretName")
-    def tls_secret_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def tls_secret_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of a TLS type Secret containing Server certificate and private key for SSL
         """
         return pulumi.get(self, "tls_secret_name")
 
     @tls_secret_name.setter
-    def tls_secret_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def tls_secret_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "tls_secret_name", value)
 
     @_builtins.property
     @pulumi.getter(name="tlsUseSelfSigned")
-    def tls_use_self_signed(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def tls_use_self_signed(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Enables use of self-signed TLS certificates, reducing or disabling TLS based security verifications
         """
         return pulumi.get(self, "tls_use_self_signed")
 
     @tls_use_self_signed.setter
-    def tls_use_self_signed(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def tls_use_self_signed(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "tls_use_self_signed", value)
 
     @_builtins.property
     @pulumi.getter
-    def version(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def version(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         MySQL Server version
         """
         return pulumi.get(self, "version")
 
     @version.setter
-    def version(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def version(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "version", value)
 
 
-if not MYPY:
-    class InnoDBClusterArgsDict(TypedDict):
-        api_version: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-        """
-        kind: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-        """
-        metadata: NotRequired[pulumi.Input['_meta.v1.ObjectMetaArgsDict']]
-        """
-        Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-        """
-        spec: NotRequired[pulumi.Input['InnoDBClusterSpecArgsDict']]
-        status: NotRequired[pulumi.Input[Mapping[str, Any]]]
-elif False:
-    InnoDBClusterArgsDict: TypeAlias = Mapping[str, Any]
+class InnoDBClusterArgsDict(TypedDict):
+    api_version: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+    """
+    kind: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+    """
+    metadata: NotRequired[pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']]]
+    """
+    Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+    """
+    spec: NotRequired[pulumi.Input[Optional['InnoDBClusterSpecArgs']]]
+    status: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
 
 @pulumi.input_type
 class InnoDBClusterArgs:
     def __init__(__self__, *,
-                 api_version: Optional[pulumi.Input[_builtins.str]] = None,
-                 kind: Optional[pulumi.Input[_builtins.str]] = None,
-                 metadata: Optional[pulumi.Input['_meta.v1.ObjectMetaArgs']] = None,
-                 spec: Optional[pulumi.Input['InnoDBClusterSpecArgs']] = None,
-                 status: Optional[pulumi.Input[Mapping[str, Any]]] = None):
+                 api_version: pulumi.Input[Optional[_builtins.str]] = None,
+                 kind: pulumi.Input[Optional[_builtins.str]] = None,
+                 metadata: pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']] = None,
+                 spec: pulumi.Input[Optional['InnoDBClusterSpecArgs']] = None,
+                 status: pulumi.Input[Optional[Mapping[str, Any]]] = None):
         """
         :param pulumi.Input[_builtins.str] api_version: APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
         :param pulumi.Input[_builtins.str] kind: Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
@@ -5871,90 +5716,87 @@ class InnoDBClusterArgs:
 
     @_builtins.property
     @pulumi.getter(name="apiVersion")
-    def api_version(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def api_version(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
         """
         return pulumi.get(self, "api_version")
 
     @api_version.setter
-    def api_version(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def api_version(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "api_version", value)
 
     @_builtins.property
     @pulumi.getter
-    def kind(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def kind(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
         """
         return pulumi.get(self, "kind")
 
     @kind.setter
-    def kind(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def kind(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "kind", value)
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['_meta.v1.ObjectMetaArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']]:
         """
         Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['_meta.v1.ObjectMetaArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def spec(self) -> Optional[pulumi.Input['InnoDBClusterSpecArgs']]:
+    def spec(self) -> pulumi.Input[Optional['InnoDBClusterSpecArgs']]:
         return pulumi.get(self, "spec")
 
     @spec.setter
-    def spec(self, value: Optional[pulumi.Input['InnoDBClusterSpecArgs']]):
+    def spec(self, value: pulumi.Input[Optional['InnoDBClusterSpecArgs']]):
         pulumi.set(self, "spec", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def status(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def status(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "status", value)
 
 
-if not MYPY:
-    class MySQLBackupSpecPatchArgsDict(TypedDict):
-        add_timestamp_to_backup_directory: NotRequired[pulumi.Input[_builtins.bool]]
-        backup_profile: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        backupProfile specification if backupProfileName is not specified
-        """
-        backup_profile_name: NotRequired[pulumi.Input[_builtins.str]]
-        cluster_name: NotRequired[pulumi.Input[_builtins.str]]
-        delete_backup_data: NotRequired[pulumi.Input[_builtins.bool]]
-        incremental: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        MySQL Enterprise Backup only: Request taking an incremental backup
-        """
-        incremental_base: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        MySQL Enterprise Backup only: Base for incremental backup,  either last_backup or last_full_backup
-        """
-elif False:
-    MySQLBackupSpecPatchArgsDict: TypeAlias = Mapping[str, Any]
+class MySQLBackupSpecPatchArgsDict(TypedDict):
+    add_timestamp_to_backup_directory: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    backup_profile: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    backupProfile specification if backupProfileName is not specified
+    """
+    backup_profile_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    cluster_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    delete_backup_data: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    incremental: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    MySQL Enterprise Backup only: Request taking an incremental backup
+    """
+    incremental_base: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    MySQL Enterprise Backup only: Base for incremental backup,  either last_backup or last_full_backup
+    """
 
 @pulumi.input_type
 class MySQLBackupSpecPatchArgs:
     def __init__(__self__, *,
-                 add_timestamp_to_backup_directory: Optional[pulumi.Input[_builtins.bool]] = None,
-                 backup_profile: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 backup_profile_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 cluster_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 delete_backup_data: Optional[pulumi.Input[_builtins.bool]] = None,
-                 incremental: Optional[pulumi.Input[_builtins.bool]] = None,
-                 incremental_base: Optional[pulumi.Input[_builtins.str]] = None):
+                 add_timestamp_to_backup_directory: pulumi.Input[Optional[_builtins.bool]] = None,
+                 backup_profile: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 backup_profile_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 cluster_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 delete_backup_data: pulumi.Input[Optional[_builtins.bool]] = None,
+                 incremental: pulumi.Input[Optional[_builtins.bool]] = None,
+                 incremental_base: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[Mapping[str, Any]] backup_profile: backupProfile specification if backupProfileName is not specified
         :param pulumi.Input[_builtins.bool] incremental: MySQL Enterprise Backup only: Request taking an incremental backup
@@ -5977,108 +5819,105 @@ class MySQLBackupSpecPatchArgs:
 
     @_builtins.property
     @pulumi.getter(name="addTimestampToBackupDirectory")
-    def add_timestamp_to_backup_directory(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def add_timestamp_to_backup_directory(self) -> pulumi.Input[Optional[_builtins.bool]]:
         return pulumi.get(self, "add_timestamp_to_backup_directory")
 
     @add_timestamp_to_backup_directory.setter
-    def add_timestamp_to_backup_directory(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def add_timestamp_to_backup_directory(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "add_timestamp_to_backup_directory", value)
 
     @_builtins.property
     @pulumi.getter(name="backupProfile")
-    def backup_profile(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def backup_profile(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         backupProfile specification if backupProfileName is not specified
         """
         return pulumi.get(self, "backup_profile")
 
     @backup_profile.setter
-    def backup_profile(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def backup_profile(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "backup_profile", value)
 
     @_builtins.property
     @pulumi.getter(name="backupProfileName")
-    def backup_profile_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def backup_profile_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "backup_profile_name")
 
     @backup_profile_name.setter
-    def backup_profile_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def backup_profile_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "backup_profile_name", value)
 
     @_builtins.property
     @pulumi.getter(name="clusterName")
-    def cluster_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def cluster_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "cluster_name")
 
     @cluster_name.setter
-    def cluster_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def cluster_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "cluster_name", value)
 
     @_builtins.property
     @pulumi.getter(name="deleteBackupData")
-    def delete_backup_data(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def delete_backup_data(self) -> pulumi.Input[Optional[_builtins.bool]]:
         return pulumi.get(self, "delete_backup_data")
 
     @delete_backup_data.setter
-    def delete_backup_data(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def delete_backup_data(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "delete_backup_data", value)
 
     @_builtins.property
     @pulumi.getter
-    def incremental(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def incremental(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         MySQL Enterprise Backup only: Request taking an incremental backup
         """
         return pulumi.get(self, "incremental")
 
     @incremental.setter
-    def incremental(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def incremental(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "incremental", value)
 
     @_builtins.property
     @pulumi.getter(name="incrementalBase")
-    def incremental_base(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def incremental_base(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         MySQL Enterprise Backup only: Base for incremental backup,  either last_backup or last_full_backup
         """
         return pulumi.get(self, "incremental_base")
 
     @incremental_base.setter
-    def incremental_base(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def incremental_base(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "incremental_base", value)
 
 
-if not MYPY:
-    class MySQLBackupSpecArgsDict(TypedDict):
-        add_timestamp_to_backup_directory: NotRequired[pulumi.Input[_builtins.bool]]
-        backup_profile: NotRequired[pulumi.Input[Mapping[str, Any]]]
-        """
-        backupProfile specification if backupProfileName is not specified
-        """
-        backup_profile_name: NotRequired[pulumi.Input[_builtins.str]]
-        cluster_name: NotRequired[pulumi.Input[_builtins.str]]
-        delete_backup_data: NotRequired[pulumi.Input[_builtins.bool]]
-        incremental: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        MySQL Enterprise Backup only: Request taking an incremental backup
-        """
-        incremental_base: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        MySQL Enterprise Backup only: Base for incremental backup,  either last_backup or last_full_backup
-        """
-elif False:
-    MySQLBackupSpecArgsDict: TypeAlias = Mapping[str, Any]
+class MySQLBackupSpecArgsDict(TypedDict):
+    add_timestamp_to_backup_directory: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    backup_profile: NotRequired[pulumi.Input[Optional[Mapping[str, Any]]]]
+    """
+    backupProfile specification if backupProfileName is not specified
+    """
+    backup_profile_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    cluster_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    delete_backup_data: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    incremental: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    MySQL Enterprise Backup only: Request taking an incremental backup
+    """
+    incremental_base: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    MySQL Enterprise Backup only: Base for incremental backup,  either last_backup or last_full_backup
+    """
 
 @pulumi.input_type
 class MySQLBackupSpecArgs:
     def __init__(__self__, *,
-                 add_timestamp_to_backup_directory: Optional[pulumi.Input[_builtins.bool]] = None,
-                 backup_profile: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 backup_profile_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 cluster_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 delete_backup_data: Optional[pulumi.Input[_builtins.bool]] = None,
-                 incremental: Optional[pulumi.Input[_builtins.bool]] = None,
-                 incremental_base: Optional[pulumi.Input[_builtins.str]] = None):
+                 add_timestamp_to_backup_directory: pulumi.Input[Optional[_builtins.bool]] = None,
+                 backup_profile: pulumi.Input[Optional[Mapping[str, Any]]] = None,
+                 backup_profile_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 cluster_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 delete_backup_data: pulumi.Input[Optional[_builtins.bool]] = None,
+                 incremental: pulumi.Input[Optional[_builtins.bool]] = None,
+                 incremental_base: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[Mapping[str, Any]] backup_profile: backupProfile specification if backupProfileName is not specified
         :param pulumi.Input[_builtins.bool] incremental: MySQL Enterprise Backup only: Request taking an incremental backup
@@ -6101,111 +5940,108 @@ class MySQLBackupSpecArgs:
 
     @_builtins.property
     @pulumi.getter(name="addTimestampToBackupDirectory")
-    def add_timestamp_to_backup_directory(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def add_timestamp_to_backup_directory(self) -> pulumi.Input[Optional[_builtins.bool]]:
         return pulumi.get(self, "add_timestamp_to_backup_directory")
 
     @add_timestamp_to_backup_directory.setter
-    def add_timestamp_to_backup_directory(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def add_timestamp_to_backup_directory(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "add_timestamp_to_backup_directory", value)
 
     @_builtins.property
     @pulumi.getter(name="backupProfile")
-    def backup_profile(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def backup_profile(self) -> pulumi.Input[Optional[Mapping[str, Any]]]:
         """
         backupProfile specification if backupProfileName is not specified
         """
         return pulumi.get(self, "backup_profile")
 
     @backup_profile.setter
-    def backup_profile(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def backup_profile(self, value: pulumi.Input[Optional[Mapping[str, Any]]]):
         pulumi.set(self, "backup_profile", value)
 
     @_builtins.property
     @pulumi.getter(name="backupProfileName")
-    def backup_profile_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def backup_profile_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "backup_profile_name")
 
     @backup_profile_name.setter
-    def backup_profile_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def backup_profile_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "backup_profile_name", value)
 
     @_builtins.property
     @pulumi.getter(name="clusterName")
-    def cluster_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def cluster_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "cluster_name")
 
     @cluster_name.setter
-    def cluster_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def cluster_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "cluster_name", value)
 
     @_builtins.property
     @pulumi.getter(name="deleteBackupData")
-    def delete_backup_data(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def delete_backup_data(self) -> pulumi.Input[Optional[_builtins.bool]]:
         return pulumi.get(self, "delete_backup_data")
 
     @delete_backup_data.setter
-    def delete_backup_data(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def delete_backup_data(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "delete_backup_data", value)
 
     @_builtins.property
     @pulumi.getter
-    def incremental(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def incremental(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         MySQL Enterprise Backup only: Request taking an incremental backup
         """
         return pulumi.get(self, "incremental")
 
     @incremental.setter
-    def incremental(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def incremental(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "incremental", value)
 
     @_builtins.property
     @pulumi.getter(name="incrementalBase")
-    def incremental_base(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def incremental_base(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         MySQL Enterprise Backup only: Base for incremental backup,  either last_backup or last_full_backup
         """
         return pulumi.get(self, "incremental_base")
 
     @incremental_base.setter
-    def incremental_base(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def incremental_base(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "incremental_base", value)
 
 
-if not MYPY:
-    class MySQLBackupStatusArgsDict(TypedDict):
-        bucket: NotRequired[pulumi.Input[_builtins.str]]
-        completion_time: NotRequired[pulumi.Input[_builtins.str]]
-        container: NotRequired[pulumi.Input[_builtins.str]]
-        elapsed_time: NotRequired[pulumi.Input[_builtins.str]]
-        message: NotRequired[pulumi.Input[_builtins.str]]
-        method: NotRequired[pulumi.Input[_builtins.str]]
-        oci_tenancy: NotRequired[pulumi.Input[_builtins.str]]
-        output: NotRequired[pulumi.Input[_builtins.str]]
-        size: NotRequired[pulumi.Input[_builtins.str]]
-        source: NotRequired[pulumi.Input[_builtins.str]]
-        space_available: NotRequired[pulumi.Input[_builtins.str]]
-        start_time: NotRequired[pulumi.Input[_builtins.str]]
-        status: NotRequired[pulumi.Input[_builtins.str]]
-elif False:
-    MySQLBackupStatusArgsDict: TypeAlias = Mapping[str, Any]
+class MySQLBackupStatusArgsDict(TypedDict):
+    bucket: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    completion_time: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    container: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    elapsed_time: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    message: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    method: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    oci_tenancy: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    output: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    size: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    source: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    space_available: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    start_time: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    status: NotRequired[pulumi.Input[Optional[_builtins.str]]]
 
 @pulumi.input_type
 class MySQLBackupStatusArgs:
     def __init__(__self__, *,
-                 bucket: Optional[pulumi.Input[_builtins.str]] = None,
-                 completion_time: Optional[pulumi.Input[_builtins.str]] = None,
-                 container: Optional[pulumi.Input[_builtins.str]] = None,
-                 elapsed_time: Optional[pulumi.Input[_builtins.str]] = None,
-                 message: Optional[pulumi.Input[_builtins.str]] = None,
-                 method: Optional[pulumi.Input[_builtins.str]] = None,
-                 oci_tenancy: Optional[pulumi.Input[_builtins.str]] = None,
-                 output: Optional[pulumi.Input[_builtins.str]] = None,
-                 size: Optional[pulumi.Input[_builtins.str]] = None,
-                 source: Optional[pulumi.Input[_builtins.str]] = None,
-                 space_available: Optional[pulumi.Input[_builtins.str]] = None,
-                 start_time: Optional[pulumi.Input[_builtins.str]] = None,
-                 status: Optional[pulumi.Input[_builtins.str]] = None):
+                 bucket: pulumi.Input[Optional[_builtins.str]] = None,
+                 completion_time: pulumi.Input[Optional[_builtins.str]] = None,
+                 container: pulumi.Input[Optional[_builtins.str]] = None,
+                 elapsed_time: pulumi.Input[Optional[_builtins.str]] = None,
+                 message: pulumi.Input[Optional[_builtins.str]] = None,
+                 method: pulumi.Input[Optional[_builtins.str]] = None,
+                 oci_tenancy: pulumi.Input[Optional[_builtins.str]] = None,
+                 output: pulumi.Input[Optional[_builtins.str]] = None,
+                 size: pulumi.Input[Optional[_builtins.str]] = None,
+                 source: pulumi.Input[Optional[_builtins.str]] = None,
+                 space_available: pulumi.Input[Optional[_builtins.str]] = None,
+                 start_time: pulumi.Input[Optional[_builtins.str]] = None,
+                 status: pulumi.Input[Optional[_builtins.str]] = None):
         if bucket is not None:
             pulumi.set(__self__, "bucket", bucket)
         if completion_time is not None:
@@ -6235,149 +6071,146 @@ class MySQLBackupStatusArgs:
 
     @_builtins.property
     @pulumi.getter
-    def bucket(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def bucket(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "bucket")
 
     @bucket.setter
-    def bucket(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def bucket(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "bucket", value)
 
     @_builtins.property
     @pulumi.getter(name="completionTime")
-    def completion_time(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def completion_time(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "completion_time")
 
     @completion_time.setter
-    def completion_time(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def completion_time(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "completion_time", value)
 
     @_builtins.property
     @pulumi.getter
-    def container(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def container(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "container")
 
     @container.setter
-    def container(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def container(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "container", value)
 
     @_builtins.property
     @pulumi.getter(name="elapsedTime")
-    def elapsed_time(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def elapsed_time(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "elapsed_time")
 
     @elapsed_time.setter
-    def elapsed_time(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def elapsed_time(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "elapsed_time", value)
 
     @_builtins.property
     @pulumi.getter
-    def message(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def message(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "message")
 
     @message.setter
-    def message(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def message(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "message", value)
 
     @_builtins.property
     @pulumi.getter
-    def method(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def method(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "method")
 
     @method.setter
-    def method(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def method(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "method", value)
 
     @_builtins.property
     @pulumi.getter(name="ociTenancy")
-    def oci_tenancy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def oci_tenancy(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "oci_tenancy")
 
     @oci_tenancy.setter
-    def oci_tenancy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def oci_tenancy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "oci_tenancy", value)
 
     @_builtins.property
     @pulumi.getter
-    def output(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def output(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "output")
 
     @output.setter
-    def output(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def output(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "output", value)
 
     @_builtins.property
     @pulumi.getter
-    def size(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def size(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "size")
 
     @size.setter
-    def size(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def size(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "size", value)
 
     @_builtins.property
     @pulumi.getter
-    def source(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def source(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "source")
 
     @source.setter
-    def source(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def source(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "source", value)
 
     @_builtins.property
     @pulumi.getter(name="spaceAvailable")
-    def space_available(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def space_available(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "space_available")
 
     @space_available.setter
-    def space_available(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def space_available(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "space_available", value)
 
     @_builtins.property
     @pulumi.getter(name="startTime")
-    def start_time(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def start_time(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "start_time")
 
     @start_time.setter
-    def start_time(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def start_time(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "start_time", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def status(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def status(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "status", value)
 
 
-if not MYPY:
-    class MySQLBackupArgsDict(TypedDict):
-        api_version: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-        """
-        kind: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-        """
-        metadata: NotRequired[pulumi.Input['_meta.v1.ObjectMetaArgsDict']]
-        """
-        Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-        """
-        spec: NotRequired[pulumi.Input['MySQLBackupSpecArgsDict']]
-        status: NotRequired[pulumi.Input['MySQLBackupStatusArgsDict']]
-elif False:
-    MySQLBackupArgsDict: TypeAlias = Mapping[str, Any]
+class MySQLBackupArgsDict(TypedDict):
+    api_version: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+    """
+    kind: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+    """
+    metadata: NotRequired[pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']]]
+    """
+    Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+    """
+    spec: NotRequired[pulumi.Input[Optional['MySQLBackupSpecArgs']]]
+    status: NotRequired[pulumi.Input[Optional['MySQLBackupStatusArgs']]]
 
 @pulumi.input_type
 class MySQLBackupArgs:
     def __init__(__self__, *,
-                 api_version: Optional[pulumi.Input[_builtins.str]] = None,
-                 kind: Optional[pulumi.Input[_builtins.str]] = None,
-                 metadata: Optional[pulumi.Input['_meta.v1.ObjectMetaArgs']] = None,
-                 spec: Optional[pulumi.Input['MySQLBackupSpecArgs']] = None,
-                 status: Optional[pulumi.Input['MySQLBackupStatusArgs']] = None):
+                 api_version: pulumi.Input[Optional[_builtins.str]] = None,
+                 kind: pulumi.Input[Optional[_builtins.str]] = None,
+                 metadata: pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']] = None,
+                 spec: pulumi.Input[Optional['MySQLBackupSpecArgs']] = None,
+                 status: pulumi.Input[Optional['MySQLBackupStatusArgs']] = None):
         """
         :param pulumi.Input[_builtins.str] api_version: APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
         :param pulumi.Input[_builtins.str] kind: Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
@@ -6396,54 +6229,366 @@ class MySQLBackupArgs:
 
     @_builtins.property
     @pulumi.getter(name="apiVersion")
-    def api_version(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def api_version(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
         """
         return pulumi.get(self, "api_version")
 
     @api_version.setter
-    def api_version(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def api_version(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "api_version", value)
 
     @_builtins.property
     @pulumi.getter
-    def kind(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def kind(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
         """
         return pulumi.get(self, "kind")
 
     @kind.setter
-    def kind(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def kind(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "kind", value)
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['_meta.v1.ObjectMetaArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']]:
         """
         Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['_meta.v1.ObjectMetaArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def spec(self) -> Optional[pulumi.Input['MySQLBackupSpecArgs']]:
+    def spec(self) -> pulumi.Input[Optional['MySQLBackupSpecArgs']]:
         return pulumi.get(self, "spec")
 
     @spec.setter
-    def spec(self, value: Optional[pulumi.Input['MySQLBackupSpecArgs']]):
+    def spec(self, value: pulumi.Input[Optional['MySQLBackupSpecArgs']]):
         pulumi.set(self, "spec", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input['MySQLBackupStatusArgs']]:
+    def status(self) -> pulumi.Input[Optional['MySQLBackupStatusArgs']]:
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input['MySQLBackupStatusArgs']]):
+    def status(self, value: pulumi.Input[Optional['MySQLBackupStatusArgs']]):
+        pulumi.set(self, "status", value)
+
+
+class MySQLClusterSetFailoverSpecOptionsPatchArgsDict(TypedDict):
+    invalidate_replica_clusters: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    timeout: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+
+@pulumi.input_type
+class MySQLClusterSetFailoverSpecOptionsPatchArgs:
+    def __init__(__self__, *,
+                 invalidate_replica_clusters: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 timeout: pulumi.Input[Optional[_builtins.int]] = None):
+        if invalidate_replica_clusters is not None:
+            pulumi.set(__self__, "invalidate_replica_clusters", invalidate_replica_clusters)
+        if timeout is not None:
+            pulumi.set(__self__, "timeout", timeout)
+
+    @_builtins.property
+    @pulumi.getter(name="invalidateReplicaClusters")
+    def invalidate_replica_clusters(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
+        return pulumi.get(self, "invalidate_replica_clusters")
+
+    @invalidate_replica_clusters.setter
+    def invalidate_replica_clusters(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "invalidate_replica_clusters", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def timeout(self) -> pulumi.Input[Optional[_builtins.int]]:
+        return pulumi.get(self, "timeout")
+
+    @timeout.setter
+    def timeout(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "timeout", value)
+
+
+class MySQLClusterSetFailoverSpecOptionsArgsDict(TypedDict):
+    invalidate_replica_clusters: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    timeout: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+
+@pulumi.input_type
+class MySQLClusterSetFailoverSpecOptionsArgs:
+    def __init__(__self__, *,
+                 invalidate_replica_clusters: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 timeout: pulumi.Input[Optional[_builtins.int]] = None):
+        if invalidate_replica_clusters is not None:
+            pulumi.set(__self__, "invalidate_replica_clusters", invalidate_replica_clusters)
+        if timeout is not None:
+            pulumi.set(__self__, "timeout", timeout)
+
+    @_builtins.property
+    @pulumi.getter(name="invalidateReplicaClusters")
+    def invalidate_replica_clusters(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
+        return pulumi.get(self, "invalidate_replica_clusters")
+
+    @invalidate_replica_clusters.setter
+    def invalidate_replica_clusters(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "invalidate_replica_clusters", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def timeout(self) -> pulumi.Input[Optional[_builtins.int]]:
+        return pulumi.get(self, "timeout")
+
+    @timeout.setter
+    def timeout(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "timeout", value)
+
+
+class MySQLClusterSetFailoverSpecPatchArgsDict(TypedDict):
+    cluster_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    force: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    options: NotRequired[pulumi.Input[Optional['MySQLClusterSetFailoverSpecOptionsPatchArgs']]]
+
+@pulumi.input_type
+class MySQLClusterSetFailoverSpecPatchArgs:
+    def __init__(__self__, *,
+                 cluster_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 force: pulumi.Input[Optional[_builtins.bool]] = None,
+                 options: pulumi.Input[Optional['MySQLClusterSetFailoverSpecOptionsPatchArgs']] = None):
+        if cluster_name is not None:
+            pulumi.set(__self__, "cluster_name", cluster_name)
+        if force is not None:
+            pulumi.set(__self__, "force", force)
+        if options is not None:
+            pulumi.set(__self__, "options", options)
+
+    @_builtins.property
+    @pulumi.getter(name="clusterName")
+    def cluster_name(self) -> pulumi.Input[Optional[_builtins.str]]:
+        return pulumi.get(self, "cluster_name")
+
+    @cluster_name.setter
+    def cluster_name(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "cluster_name", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def force(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        return pulumi.get(self, "force")
+
+    @force.setter
+    def force(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "force", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def options(self) -> pulumi.Input[Optional['MySQLClusterSetFailoverSpecOptionsPatchArgs']]:
+        return pulumi.get(self, "options")
+
+    @options.setter
+    def options(self, value: pulumi.Input[Optional['MySQLClusterSetFailoverSpecOptionsPatchArgs']]):
+        pulumi.set(self, "options", value)
+
+
+class MySQLClusterSetFailoverSpecArgsDict(TypedDict):
+    cluster_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    force: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    options: NotRequired[pulumi.Input[Optional['MySQLClusterSetFailoverSpecOptionsArgs']]]
+
+@pulumi.input_type
+class MySQLClusterSetFailoverSpecArgs:
+    def __init__(__self__, *,
+                 cluster_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 force: pulumi.Input[Optional[_builtins.bool]] = None,
+                 options: pulumi.Input[Optional['MySQLClusterSetFailoverSpecOptionsArgs']] = None):
+        if cluster_name is not None:
+            pulumi.set(__self__, "cluster_name", cluster_name)
+        if force is not None:
+            pulumi.set(__self__, "force", force)
+        if options is not None:
+            pulumi.set(__self__, "options", options)
+
+    @_builtins.property
+    @pulumi.getter(name="clusterName")
+    def cluster_name(self) -> pulumi.Input[Optional[_builtins.str]]:
+        return pulumi.get(self, "cluster_name")
+
+    @cluster_name.setter
+    def cluster_name(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "cluster_name", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def force(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        return pulumi.get(self, "force")
+
+    @force.setter
+    def force(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "force", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def options(self) -> pulumi.Input[Optional['MySQLClusterSetFailoverSpecOptionsArgs']]:
+        return pulumi.get(self, "options")
+
+    @options.setter
+    def options(self, value: pulumi.Input[Optional['MySQLClusterSetFailoverSpecOptionsArgs']]):
+        pulumi.set(self, "options", value)
+
+
+class MySQLClusterSetFailoverStatusArgsDict(TypedDict):
+    completion_time: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    elapsed_time: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    start_time: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    status: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+
+@pulumi.input_type
+class MySQLClusterSetFailoverStatusArgs:
+    def __init__(__self__, *,
+                 completion_time: pulumi.Input[Optional[_builtins.str]] = None,
+                 elapsed_time: pulumi.Input[Optional[_builtins.str]] = None,
+                 start_time: pulumi.Input[Optional[_builtins.str]] = None,
+                 status: pulumi.Input[Optional[_builtins.str]] = None):
+        if completion_time is not None:
+            pulumi.set(__self__, "completion_time", completion_time)
+        if elapsed_time is not None:
+            pulumi.set(__self__, "elapsed_time", elapsed_time)
+        if start_time is not None:
+            pulumi.set(__self__, "start_time", start_time)
+        if status is not None:
+            pulumi.set(__self__, "status", status)
+
+    @_builtins.property
+    @pulumi.getter(name="completionTime")
+    def completion_time(self) -> pulumi.Input[Optional[_builtins.str]]:
+        return pulumi.get(self, "completion_time")
+
+    @completion_time.setter
+    def completion_time(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "completion_time", value)
+
+    @_builtins.property
+    @pulumi.getter(name="elapsedTime")
+    def elapsed_time(self) -> pulumi.Input[Optional[_builtins.str]]:
+        return pulumi.get(self, "elapsed_time")
+
+    @elapsed_time.setter
+    def elapsed_time(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "elapsed_time", value)
+
+    @_builtins.property
+    @pulumi.getter(name="startTime")
+    def start_time(self) -> pulumi.Input[Optional[_builtins.str]]:
+        return pulumi.get(self, "start_time")
+
+    @start_time.setter
+    def start_time(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "start_time", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def status(self) -> pulumi.Input[Optional[_builtins.str]]:
+        return pulumi.get(self, "status")
+
+    @status.setter
+    def status(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "status", value)
+
+
+class MySQLClusterSetFailoverArgsDict(TypedDict):
+    api_version: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+    """
+    kind: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+    """
+    metadata: NotRequired[pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']]]
+    """
+    Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+    """
+    spec: NotRequired[pulumi.Input[Optional['MySQLClusterSetFailoverSpecArgs']]]
+    status: NotRequired[pulumi.Input[Optional['MySQLClusterSetFailoverStatusArgs']]]
+
+@pulumi.input_type
+class MySQLClusterSetFailoverArgs:
+    def __init__(__self__, *,
+                 api_version: pulumi.Input[Optional[_builtins.str]] = None,
+                 kind: pulumi.Input[Optional[_builtins.str]] = None,
+                 metadata: pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']] = None,
+                 spec: pulumi.Input[Optional['MySQLClusterSetFailoverSpecArgs']] = None,
+                 status: pulumi.Input[Optional['MySQLClusterSetFailoverStatusArgs']] = None):
+        """
+        :param pulumi.Input[_builtins.str] api_version: APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+        :param pulumi.Input[_builtins.str] kind: Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+        :param pulumi.Input['_meta.v1.ObjectMetaArgs'] metadata: Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+        """
+        if api_version is not None:
+            pulumi.set(__self__, "api_version", 'mysql.oracle.com/v2')
+        if kind is not None:
+            pulumi.set(__self__, "kind", 'MySQLClusterSetFailover')
+        if metadata is not None:
+            pulumi.set(__self__, "metadata", metadata)
+        if spec is not None:
+            pulumi.set(__self__, "spec", spec)
+        if status is not None:
+            pulumi.set(__self__, "status", status)
+
+    @_builtins.property
+    @pulumi.getter(name="apiVersion")
+    def api_version(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+        """
+        return pulumi.get(self, "api_version")
+
+    @api_version.setter
+    def api_version(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "api_version", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def kind(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+        """
+        return pulumi.get(self, "kind")
+
+    @kind.setter
+    def kind(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "kind", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def metadata(self) -> pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']]:
+        """
+        Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+        """
+        return pulumi.get(self, "metadata")
+
+    @metadata.setter
+    def metadata(self, value: pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']]):
+        pulumi.set(self, "metadata", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def spec(self) -> pulumi.Input[Optional['MySQLClusterSetFailoverSpecArgs']]:
+        return pulumi.get(self, "spec")
+
+    @spec.setter
+    def spec(self, value: pulumi.Input[Optional['MySQLClusterSetFailoverSpecArgs']]):
+        pulumi.set(self, "spec", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def status(self) -> pulumi.Input[Optional['MySQLClusterSetFailoverStatusArgs']]:
+        return pulumi.get(self, "status")
+
+    @status.setter
+    def status(self, value: pulumi.Input[Optional['MySQLClusterSetFailoverStatusArgs']]):
         pulumi.set(self, "status", value)

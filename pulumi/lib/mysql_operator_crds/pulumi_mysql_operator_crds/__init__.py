@@ -34,7 +34,10 @@ _utilities.register(
    "kubernetes:mysql.oracle.com/v2:InnoDBClusterPatch": "InnoDBClusterPatch",
    "kubernetes:mysql.oracle.com/v2:MySQLBackup": "MySQLBackup",
    "kubernetes:mysql.oracle.com/v2:MySQLBackupList": "MySQLBackupList",
-   "kubernetes:mysql.oracle.com/v2:MySQLBackupPatch": "MySQLBackupPatch"
+   "kubernetes:mysql.oracle.com/v2:MySQLBackupPatch": "MySQLBackupPatch",
+   "kubernetes:mysql.oracle.com/v2:MySQLClusterSetFailover": "MySQLClusterSetFailover",
+   "kubernetes:mysql.oracle.com/v2:MySQLClusterSetFailoverList": "MySQLClusterSetFailoverList",
+   "kubernetes:mysql.oracle.com/v2:MySQLClusterSetFailoverPatch": "MySQLClusterSetFailoverPatch"
   }
  },
  {

@@ -86,6 +86,7 @@ class SparkConnect(dict):
                  status: Optional['outputs.SparkConnectStatus'] = None):
         """
         SparkConnect is the Schema for the sparkconnections API.
+
         :param _builtins.str api_version: APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
         :param _builtins.str kind: Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
         :param '_meta.v1.ObjectMetaArgs' metadata: Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
@@ -174,6 +175,7 @@ class SparkConnectSpec(dict):
                  spark_version: Optional[_builtins.str] = None):
         """
         SparkConnectSpec defines the desired state of SparkConnect.
+
         :param Mapping[str, _builtins.str] hadoop_conf: HadoopConf carries user-specified Hadoop configuration properties as they would use the "--conf" option
                in spark-submit. The SparkApplication controller automatically adds prefix "spark.hadoop." to Hadoop
                configuration properties.
@@ -291,6 +293,7 @@ class SparkConnectSpecDynamicAllocation(dict):
         """
         DynamicAllocation configures dynamic allocation that becomes available for the Kubernetes
         scheduler backend since Spark 3.0.
+
         :param _builtins.bool enabled: Enabled controls whether dynamic allocation is enabled or not.
         :param _builtins.int initial_executors: InitialExecutors is the initial number of executors to request. If .spec.executor.instances
                is also set, the initial number of executors is set to the bigger of that and this option.
@@ -411,6 +414,7 @@ class SparkConnectSpecDynamicAllocationPatch(dict):
         """
         DynamicAllocation configures dynamic allocation that becomes available for the Kubernetes
         scheduler backend since Spark 3.0.
+
         :param _builtins.bool enabled: Enabled controls whether dynamic allocation is enabled or not.
         :param _builtins.int initial_executors: InitialExecutors is the initial number of executors to request. If .spec.executor.instances
                is also set, the initial number of executors is set to the bigger of that and this option.
@@ -502,6 +506,7 @@ class SparkConnectSpecExecutor(dict):
                  template: Optional[Mapping[str, Any]] = None):
         """
         Executor is the Spark executor specification.
+
         :param _builtins.int cores: Cores maps to `spark.driver.cores` or `spark.executor.cores` for the driver and executors, respectively.
         :param _builtins.int instances: Instances is the number of executor instances.
         :param _builtins.str memory: Memory is the amount of memory to request for the pod.
@@ -565,6 +570,7 @@ class SparkConnectSpecExecutorPatch(dict):
                  template: Optional[Mapping[str, Any]] = None):
         """
         Executor is the Spark executor specification.
+
         :param _builtins.int cores: Cores maps to `spark.driver.cores` or `spark.executor.cores` for the driver and executors, respectively.
         :param _builtins.int instances: Instances is the number of executor instances.
         :param _builtins.str memory: Memory is the amount of memory to request for the pod.
@@ -654,6 +660,7 @@ class SparkConnectSpecPatch(dict):
                  spark_version: Optional[_builtins.str] = None):
         """
         SparkConnectSpec defines the desired state of SparkConnect.
+
         :param Mapping[str, _builtins.str] hadoop_conf: HadoopConf carries user-specified Hadoop configuration properties as they would use the "--conf" option
                in spark-submit. The SparkApplication controller automatically adds prefix "spark.hadoop." to Hadoop
                configuration properties.
@@ -742,6 +749,7 @@ class SparkConnectSpecServer(dict):
                  template: Optional[Mapping[str, Any]] = None):
         """
         Server is the Spark connect server specification.
+
         :param _builtins.int cores: Cores maps to `spark.driver.cores` or `spark.executor.cores` for the driver and executors, respectively.
         :param _builtins.str memory: Memory is the amount of memory to request for the pod.
         :param Mapping[str, Any] template: Template is a pod template that can be used to define the driver or executor pod configurations that Spark configurations do not support.
@@ -801,6 +809,7 @@ class SparkConnectSpecServerPatch(dict):
                  template: Optional[Mapping[str, Any]] = None):
         """
         Server is the Spark connect server specification.
+
         :param _builtins.int cores: Cores maps to `spark.driver.cores` or `spark.executor.cores` for the driver and executors, respectively.
         :param _builtins.str memory: Memory is the amount of memory to request for the pod.
         :param Mapping[str, Any] template: Template is a pod template that can be used to define the driver or executor pod configurations that Spark configurations do not support.
@@ -878,6 +887,7 @@ class SparkConnectSpecServerService(dict):
                  status: Optional['outputs.SparkConnectSpecServerServiceStatus'] = None):
         """
         Service exposes the Spark connect server.
+
         :param _builtins.str api_version: APIVersion defines the versioned schema of this representation of an object.
                Servers should convert recognized schemas to the latest internal value, and
                may reject unrecognized values.
@@ -1074,6 +1084,7 @@ class SparkConnectSpecServerServicePatch(dict):
                  status: Optional['outputs.SparkConnectSpecServerServiceStatusPatch'] = None):
         """
         Service exposes the Spark connect server.
+
         :param _builtins.str api_version: APIVersion defines the versioned schema of this representation of an object.
                Servers should convert recognized schemas to the latest internal value, and
                may reject unrecognized values.
@@ -1213,6 +1224,7 @@ class SparkConnectSpecServerServiceSpec(dict):
         """
         Spec defines the behavior of a service.
         https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
         :param _builtins.bool allocate_load_balancer_node_ports: allocateLoadBalancerNodePorts defines if NodePorts will be automatically
                allocated for services with type LoadBalancer.  Default is "true". It
                may be set to "false" if the cluster load-balancer does not rely on
@@ -1817,6 +1829,7 @@ class SparkConnectSpecServerServiceSpecPatch(dict):
         """
         Spec defines the behavior of a service.
         https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
         :param _builtins.bool allocate_load_balancer_node_ports: allocateLoadBalancerNodePorts defines if NodePorts will be automatically
                allocated for services with type LoadBalancer.  Default is "true". It
                may be set to "false" if the cluster load-balancer does not rely on
@@ -2377,6 +2390,7 @@ class SparkConnectSpecServerServiceSpecPorts(dict):
                  target_port: Optional[Any] = None):
         """
         ServicePort contains information on service's port.
+
         :param _builtins.str app_protocol: The application protocol for this port.
                This is used as a hint for implementations to offer richer behavior for protocols that they understand.
                This field follows standard Kubernetes label syntax.
@@ -2549,6 +2563,7 @@ class SparkConnectSpecServerServiceSpecPortsPatch(dict):
                  target_port: Optional[Any] = None):
         """
         ServicePort contains information on service's port.
+
         :param _builtins.str app_protocol: The application protocol for this port.
                This is used as a hint for implementations to offer richer behavior for protocols that they understand.
                This field follows standard Kubernetes label syntax.
@@ -2748,6 +2763,7 @@ class SparkConnectSpecServerServiceSpecSessionAffinityConfigClientIP(dict):
                  timeout_seconds: Optional[_builtins.int] = None):
         """
         clientIP contains the configurations of Client IP based session affinity.
+
         :param _builtins.int timeout_seconds: timeoutSeconds specifies the seconds of ClientIP type session sticky time.
                The value must be >0 && <=86400(for 1 day) if ServiceAffinity == "ClientIP".
                Default value is 10800(for 3 hours).
@@ -2792,6 +2808,7 @@ class SparkConnectSpecServerServiceSpecSessionAffinityConfigClientIPPatch(dict):
                  timeout_seconds: Optional[_builtins.int] = None):
         """
         clientIP contains the configurations of Client IP based session affinity.
+
         :param _builtins.int timeout_seconds: timeoutSeconds specifies the seconds of ClientIP type session sticky time.
                The value must be >0 && <=86400(for 1 day) if ServiceAffinity == "ClientIP".
                Default value is 10800(for 3 hours).
@@ -2879,6 +2896,7 @@ class SparkConnectSpecServerServiceStatus(dict):
         Populated by the system.
         Read-only.
         More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
         :param Sequence['SparkConnectSpecServerServiceStatusConditionsArgs'] conditions: Current service state
         """
         if conditions is not None:
@@ -2933,6 +2951,7 @@ class SparkConnectSpecServerServiceStatusConditions(dict):
                  type: Optional[_builtins.str] = None):
         """
         Condition contains details for one aspect of the current state of this API Resource.
+
         :param _builtins.str last_transition_time: lastTransitionTime is the last time the condition transitioned from one status to another.
                This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
         :param _builtins.str message: message is a human readable message indicating details about the transition.
@@ -3051,6 +3070,7 @@ class SparkConnectSpecServerServiceStatusConditionsPatch(dict):
                  type: Optional[_builtins.str] = None):
         """
         Condition contains details for one aspect of the current state of this API Resource.
+
         :param _builtins.str last_transition_time: lastTransitionTime is the last time the condition transitioned from one status to another.
                This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
         :param _builtins.str message: message is a human readable message indicating details about the transition.
@@ -3147,6 +3167,7 @@ class SparkConnectSpecServerServiceStatusLoadBalancer(dict):
         """
         LoadBalancer contains the current status of the load-balancer,
         if one is present.
+
         :param Sequence['SparkConnectSpecServerServiceStatusLoadBalancerIngressArgs'] ingress: Ingress is a list containing ingress points for the load-balancer.
                Traffic intended for the service should be sent to these ingress points.
         """
@@ -3194,6 +3215,7 @@ class SparkConnectSpecServerServiceStatusLoadBalancerIngress(dict):
         """
         LoadBalancerIngress represents the status of a load-balancer ingress point:
         traffic intended for the service should be sent to an ingress point.
+
         :param _builtins.str hostname: Hostname is set for load-balancer ingress points that are DNS based
                (typically AWS load-balancers)
         :param _builtins.str ip: IP is set for load-balancer ingress points that are IP based
@@ -3288,6 +3310,7 @@ class SparkConnectSpecServerServiceStatusLoadBalancerIngressPatch(dict):
         """
         LoadBalancerIngress represents the status of a load-balancer ingress point:
         traffic intended for the service should be sent to an ingress point.
+
         :param _builtins.str hostname: Hostname is set for load-balancer ingress points that are DNS based
                (typically AWS load-balancers)
         :param _builtins.str ip: IP is set for load-balancer ingress points that are IP based
@@ -3362,6 +3385,7 @@ class SparkConnectSpecServerServiceStatusLoadBalancerIngressPorts(dict):
                  protocol: Optional[_builtins.str] = None):
         """
         PortStatus represents the error condition of a service port
+
         :param _builtins.str error: Error is to record the problem with the service port
                The format of the error shall comply with the following rules:
                - built-in error values shall be specified in this file and those shall use
@@ -3421,6 +3445,7 @@ class SparkConnectSpecServerServiceStatusLoadBalancerIngressPortsPatch(dict):
                  protocol: Optional[_builtins.str] = None):
         """
         PortStatus represents the error condition of a service port
+
         :param _builtins.str error: Error is to record the problem with the service port
                The format of the error shall comply with the following rules:
                - built-in error values shall be specified in this file and those shall use
@@ -3480,6 +3505,7 @@ class SparkConnectSpecServerServiceStatusLoadBalancerPatch(dict):
         """
         LoadBalancer contains the current status of the load-balancer,
         if one is present.
+
         :param Sequence['SparkConnectSpecServerServiceStatusLoadBalancerIngressPatchArgs'] ingress: Ingress is a list containing ingress points for the load-balancer.
                Traffic intended for the service should be sent to these ingress points.
         """
@@ -3529,6 +3555,7 @@ class SparkConnectSpecServerServiceStatusPatch(dict):
         Populated by the system.
         Read-only.
         More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
         :param Sequence['SparkConnectSpecServerServiceStatusConditionsPatchArgs'] conditions: Current service state
         """
         if conditions is not None:
@@ -3583,6 +3610,7 @@ class SparkConnectStatus(dict):
                  state: Optional[_builtins.str] = None):
         """
         SparkConnectStatus defines the observed state of SparkConnect.
+
         :param Sequence['SparkConnectStatusConditionsArgs'] conditions: Represents the latest available observations of a SparkConnect's current state.
         :param Mapping[str, _builtins.int] executors: Executors represents the current state of the SparkConnect executors.
         :param _builtins.str last_update_time: LastUpdateTime is the time at which the SparkConnect controller last updated the SparkConnect.
@@ -3681,6 +3709,7 @@ class SparkConnectStatusConditions(dict):
                  type: Optional[_builtins.str] = None):
         """
         Condition contains details for one aspect of the current state of this API Resource.
+
         :param _builtins.str last_transition_time: lastTransitionTime is the last time the condition transitioned from one status to another.
                This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
         :param _builtins.str message: message is a human readable message indicating details about the transition.
@@ -3799,6 +3828,7 @@ class SparkConnectStatusConditionsPatch(dict):
                  type: Optional[_builtins.str] = None):
         """
         Condition contains details for one aspect of the current state of this API Resource.
+
         :param _builtins.str last_transition_time: lastTransitionTime is the last time the condition transitioned from one status to another.
                This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
         :param _builtins.str message: message is a human readable message indicating details about the transition.
@@ -3917,6 +3947,7 @@ class SparkConnectStatusPatch(dict):
                  state: Optional[_builtins.str] = None):
         """
         SparkConnectStatus defines the observed state of SparkConnect.
+
         :param Sequence['SparkConnectStatusConditionsPatchArgs'] conditions: Represents the latest available observations of a SparkConnect's current state.
         :param Mapping[str, _builtins.int] executors: Executors represents the current state of the SparkConnect executors.
         :param _builtins.str last_update_time: LastUpdateTime is the time at which the SparkConnect controller last updated the SparkConnect.
@@ -4014,6 +4045,7 @@ class SparkConnectStatusServer(dict):
                  service_name: Optional[_builtins.str] = None):
         """
         Server represents the current state of the SparkConnect server.
+
         :param _builtins.str pod_ip: PodIP is the IP address of the pod that is running the Spark Connect server.
         :param _builtins.str pod_name: PodName is the name of the pod that is running the Spark Connect server.
         :param _builtins.str service_name: ServiceName is the name of the service that is exposing the Spark Connect server.
@@ -4082,6 +4114,7 @@ class SparkConnectStatusServerPatch(dict):
                  service_name: Optional[_builtins.str] = None):
         """
         Server represents the current state of the SparkConnect server.
+
         :param _builtins.str pod_ip: PodIP is the IP address of the pod that is running the Spark Connect server.
         :param _builtins.str pod_name: PodName is the name of the pod that is running the Spark Connect server.
         :param _builtins.str service_name: ServiceName is the name of the service that is exposing the Spark Connect server.

@@ -18,7 +18,7 @@ superset_chart = k8s.helm.v3.Release(
     repository_opts=k8s.helm.v3.RepositoryOptsArgs(
         repo="https://apache.github.io/superset"
     ),
-    version="0.15.2",
+    version="0.15.5",
     values={
         "configOverrides": {
             "secret": secret.base64.apply(lambda b: f"SECRET_KEY = '{b}'"),

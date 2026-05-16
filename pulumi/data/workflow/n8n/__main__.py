@@ -3,7 +3,7 @@ import pulumi_kubernetes as k8s
 import pulumi
 
 config = pulumi.Config("n8n")
-image = config.get("image") or "n8nio/n8n:2.19.2"
+image = config.get("image") or "n8nio/n8n:2.20.9"
 n8n_namespace = k8s.core.v1.Namespace(
     "n8n-namespace",
     metadata=k8s.meta.v1.ObjectMetaArgs(

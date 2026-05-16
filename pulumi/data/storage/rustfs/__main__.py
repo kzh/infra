@@ -3,7 +3,7 @@ import pulumi_random as random
 
 import pulumi
 
-CHART_VERSION = "0.1.0"
+CHART_VERSION = "0.3.0"
 CONSOLE_HOSTNAME = "rustfs"
 S3_HOSTNAME = "rustfs-s3"
 

@@ -50,7 +50,7 @@ jupyterhub_chart = k8s.helm.v4.Chart(
     "jupyterhub",
     chart="jupyterhub",
     namespace=NAMESPACE,
-    version="4.3.4",
+    version="4.3.5",
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://hub.jupyter.org/helm-chart/",
     ),

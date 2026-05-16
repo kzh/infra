@@ -32,7 +32,7 @@ create_database = get_bool_config("create_database", True)
 postgres_admin_db = config.get("postgres_admin_db") or "postgres"
 postgres_sslmode = config.get("postgres_sslmode") or "disable"
 
-coder_chart_version = config.get("coder_chart_version") or "2.32.1"
+coder_chart_version = config.get("coder_chart_version") or "2.33.3"
 service_type = config.get("service_type") or "ClusterIP"
 workspace_namespace = config.get("workspace_namespace") or "coder-workspaces"
 workspace_create_namespace = get_bool_config("workspace_create_namespace", True)

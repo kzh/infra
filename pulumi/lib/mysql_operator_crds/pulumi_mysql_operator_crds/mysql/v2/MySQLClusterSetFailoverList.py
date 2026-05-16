@@ -13,29 +13,46 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import NotRequired, TypedDict, TypeAlias
 from ... import _utilities
+from . import outputs
 from ... import meta as _meta
+from ._inputs import *
 
-__all__ = ['ClusterKopfPeeringInitArgs', 'ClusterKopfPeering']
+__all__ = ['MySQLClusterSetFailoverListArgs', 'MySQLClusterSetFailoverList']
 
 @pulumi.input_type
-class ClusterKopfPeeringInitArgs:
+class MySQLClusterSetFailoverListArgs:
     def __init__(__self__, *,
+                 items: pulumi.Input[Sequence[pulumi.Input['MySQLClusterSetFailoverArgs']]],
                  api_version: pulumi.Input[Optional[_builtins.str]] = None,
                  kind: pulumi.Input[Optional[_builtins.str]] = None,
-                 metadata: pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']] = None):
+                 metadata: pulumi.Input[Optional['_meta.v1.ListMetaArgs']] = None):
         """
-        The set of arguments for constructing a ClusterKopfPeering resource.
+        The set of arguments for constructing a MySQLClusterSetFailoverList resource.
 
+        :param pulumi.Input[Sequence[pulumi.Input['MySQLClusterSetFailoverArgs']]] items: List of mysqlclustersetfailovers. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md
         :param pulumi.Input[_builtins.str] api_version: APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
         :param pulumi.Input[_builtins.str] kind: Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-        :param pulumi.Input['_meta.v1.ObjectMetaArgs'] metadata: Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+        :param pulumi.Input['_meta.v1.ListMetaArgs'] metadata: Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
         """
+        pulumi.set(__self__, "items", items)
         if api_version is not None:
-            pulumi.set(__self__, "api_version", 'zalando.org/v1')
+            pulumi.set(__self__, "api_version", 'mysql.oracle.com/v2')
         if kind is not None:
-            pulumi.set(__self__, "kind", 'ClusterKopfPeering')
+            pulumi.set(__self__, "kind", 'MySQLClusterSetFailoverList')
         if metadata is not None:
             pulumi.set(__self__, "metadata", metadata)
+
+    @_builtins.property
+    @pulumi.getter
+    def items(self) -> pulumi.Input[Sequence[pulumi.Input['MySQLClusterSetFailoverArgs']]]:
+        """
+        List of mysqlclustersetfailovers. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md
+        """
+        return pulumi.get(self, "items")
+
+    @items.setter
+    def items(self, value: pulumi.Input[Sequence[pulumi.Input['MySQLClusterSetFailoverArgs']]]):
+        pulumi.set(self, "items", value)
 
     @_builtins.property
     @pulumi.getter(name="apiVersion")
@@ -63,52 +80,56 @@ class ClusterKopfPeeringInitArgs:
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['_meta.v1.ListMetaArgs']]:
         """
-        Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+        Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: pulumi.Input[Optional['_meta.v1.ObjectMetaArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['_meta.v1.ListMetaArgs']]):
         pulumi.set(self, "metadata", value)
 
 
-@pulumi.type_token("kubernetes:zalando.org/v1:ClusterKopfPeering")
-class ClusterKopfPeering(pulumi.CustomResource):
+@pulumi.type_token("kubernetes:mysql.oracle.com/v2:MySQLClusterSetFailoverList")
+class MySQLClusterSetFailoverList(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  api_version: pulumi.Input[Optional[_builtins.str]] = None,
+                 items: pulumi.Input[Optional[Sequence[pulumi.Input[Union['MySQLClusterSetFailoverArgs', 'MySQLClusterSetFailoverArgsDict']]]]] = None,
                  kind: pulumi.Input[Optional[_builtins.str]] = None,
-                 metadata: pulumi.Input[Optional[Union['_meta.v1.ObjectMetaArgs', '_meta.v1.ObjectMetaArgsDict']]] = None,
+                 metadata: pulumi.Input[Optional[Union['_meta.v1.ListMetaArgs', '_meta.v1.ListMetaArgsDict']]] = None,
                  __props__=None):
         """
-        Create a ClusterKopfPeering resource with the given unique name, props, and options.
+        MySQLClusterSetFailoverList is a list of MySQLClusterSetFailover
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] api_version: APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+        :param pulumi.Input[Sequence[pulumi.Input[Union['MySQLClusterSetFailoverArgs', 'MySQLClusterSetFailoverArgsDict']]]] items: List of mysqlclustersetfailovers. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md
         :param pulumi.Input[_builtins.str] kind: Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-        :param pulumi.Input[Union['_meta.v1.ObjectMetaArgs', '_meta.v1.ObjectMetaArgsDict']] metadata: Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+        :param pulumi.Input[Union['_meta.v1.ListMetaArgs', '_meta.v1.ListMetaArgsDict']] metadata: Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
         """
         ...
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: Optional[ClusterKopfPeeringInitArgs] = None,
+                 args: MySQLClusterSetFailoverListArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a ClusterKopfPeering resource with the given unique name, props, and options.
+        MySQLClusterSetFailoverList is a list of MySQLClusterSetFailover
+
 
         :param str resource_name: The name of the resource.
-        :param ClusterKopfPeeringInitArgs args: The arguments to use to populate this resource's properties.
+        :param MySQLClusterSetFailoverListArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
         """
         ...
     def __init__(__self__, resource_name: str, *args, **kwargs):
-        resource_args, opts = _utilities.get_resource_args_opts(ClusterKopfPeeringInitArgs, pulumi.ResourceOptions, *args, **kwargs)
+        resource_args, opts = _utilities.get_resource_args_opts(MySQLClusterSetFailoverListArgs, pulumi.ResourceOptions, *args, **kwargs)
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
@@ -118,8 +139,9 @@ class ClusterKopfPeering(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  api_version: pulumi.Input[Optional[_builtins.str]] = None,
+                 items: pulumi.Input[Optional[Sequence[pulumi.Input[Union['MySQLClusterSetFailoverArgs', 'MySQLClusterSetFailoverArgsDict']]]]] = None,
                  kind: pulumi.Input[Optional[_builtins.str]] = None,
-                 metadata: pulumi.Input[Optional[Union['_meta.v1.ObjectMetaArgs', '_meta.v1.ObjectMetaArgsDict']]] = None,
+                 metadata: pulumi.Input[Optional[Union['_meta.v1.ListMetaArgs', '_meta.v1.ListMetaArgsDict']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -127,14 +149,16 @@ class ClusterKopfPeering(pulumi.CustomResource):
         if opts.id is None:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
-            __props__ = ClusterKopfPeeringInitArgs.__new__(ClusterKopfPeeringInitArgs)
+            __props__ = MySQLClusterSetFailoverListArgs.__new__(MySQLClusterSetFailoverListArgs)
 
-            __props__.__dict__["api_version"] = 'zalando.org/v1'
-            __props__.__dict__["kind"] = 'ClusterKopfPeering'
+            __props__.__dict__["api_version"] = 'mysql.oracle.com/v2'
+            if items is None and not opts.urn:
+                raise TypeError("Missing required property 'items'")
+            __props__.__dict__["items"] = items
+            __props__.__dict__["kind"] = 'MySQLClusterSetFailoverList'
             __props__.__dict__["metadata"] = metadata
-            __props__.__dict__["status"] = None
-        super(ClusterKopfPeering, __self__).__init__(
-            'kubernetes:zalando.org/v1:ClusterKopfPeering',
+        super(MySQLClusterSetFailoverList, __self__).__init__(
+            'kubernetes:mysql.oracle.com/v2:MySQLClusterSetFailoverList',
             resource_name,
             __props__,
             opts)
@@ -142,9 +166,9 @@ class ClusterKopfPeering(pulumi.CustomResource):
     @staticmethod
     def get(resource_name: str,
             id: pulumi.Input[str],
-            opts: Optional[pulumi.ResourceOptions] = None) -> 'ClusterKopfPeering':
+            opts: Optional[pulumi.ResourceOptions] = None) -> 'MySQLClusterSetFailoverList':
         """
-        Get an existing ClusterKopfPeering resource's state with the given name, id, and optional extra
+        Get an existing MySQLClusterSetFailoverList resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
 
         :param str resource_name: The unique name of the resulting resource.
@@ -153,13 +177,13 @@ class ClusterKopfPeering(pulumi.CustomResource):
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
-        __props__ = ClusterKopfPeeringInitArgs.__new__(ClusterKopfPeeringInitArgs)
+        __props__ = MySQLClusterSetFailoverListArgs.__new__(MySQLClusterSetFailoverListArgs)
 
         __props__.__dict__["api_version"] = None
+        __props__.__dict__["items"] = None
         __props__.__dict__["kind"] = None
         __props__.__dict__["metadata"] = None
-        __props__.__dict__["status"] = None
-        return ClusterKopfPeering(resource_name, opts=opts, __props__=__props__)
+        return MySQLClusterSetFailoverList(resource_name, opts=opts, __props__=__props__)
 
     @_builtins.property
     @pulumi.getter(name="apiVersion")
@@ -171,6 +195,14 @@ class ClusterKopfPeering(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
+    def items(self) -> pulumi.Output[Sequence['outputs.MySQLClusterSetFailover']]:
+        """
+        List of mysqlclustersetfailovers. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md
+        """
+        return pulumi.get(self, "items")
+
+    @_builtins.property
+    @pulumi.getter
     def kind(self) -> pulumi.Output[_builtins.str]:
         """
         Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
@@ -179,13 +211,8 @@ class ClusterKopfPeering(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> pulumi.Output['_meta.v1.outputs.ObjectMeta']:
+    def metadata(self) -> pulumi.Output['_meta.v1.outputs.ListMeta']:
         """
-        Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+        Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
         """
         return pulumi.get(self, "metadata")
-
-    @_builtins.property
-    @pulumi.getter
-    def status(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
-        return pulumi.get(self, "status")

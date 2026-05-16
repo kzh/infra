@@ -64,7 +64,7 @@ pg_chart = k8s.helm.v4.Chart(
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://cloudnative-pg.github.io/charts",
     ),
-    version="0.6.0",
+    version="0.6.1",
     values={
         "version": {
             "postgresql": "18",

@@ -7,7 +7,7 @@ REPO_ROOT="$(cd "$PROJECT_DIR/../../../.." && pwd)"
 
 CHART_NAME="mysql-operator"
 CHART_REPO="https://mysql.github.io/mysql-operator/"
-GENERATED_PROVIDER_VERSION="4.30.0"
+GENERATED_PROVIDER_VERSION="4.31.0"
 STACK_CONFIG="$PROJECT_DIR/Pulumi.mx.yaml"
 CHART_VERSION="${1:-}"
 
@@ -60,7 +60,8 @@ crd2pulumi \
     --version "$GENERATED_PROVIDER_VERSION" \
     "$CRD_FILE"
 
-perl -0pi -e 's/"pulumi>=3\.165\.0,<4\.0\.0"/"pulumi>=3.234.0,<4.0.0"/g; s/"pulumi-kubernetes==4\.23\.0"/"pulumi-kubernetes>=4.30.0,<5.0.0"/g' "$OUT_DIR/pyproject.toml"
+perl -0pi -e 's/"pulumi>=3\.[0-9]+\.0,<4\.0\.0"/"pulumi>=3.239.0,<4.0.0"/g; s/"pulumi-kubernetes(?:==|>=)4\.[0-9]+\.0(?:,<5\.0\.0)?"/"pulumi-kubernetes>=4.31.0,<5.0.0"/g' "$OUT_DIR/pyproject.toml"
+find "$OUT_DIR" -name '*.py' -exec perl -0pi -e 's/[ \t]+$//mg; s/\n+\z/\n/' {} +
 printf '%s\n' \
     '# MySQL Operator CRDs' \
     '' \

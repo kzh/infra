@@ -126,7 +126,7 @@ db_secret = k8s.core.v1.Secret(
 immich = k8s.helm.v4.Chart(
     "immich",
     chart="immich",
-    version="0.11.1",
+    version="0.12.0",
     namespace=immich_namespace.metadata.name,
     repository_opts=k8s.helm.v4.RepositoryOptsArgs(
         repo="https://immich-app.github.io/immich-charts",

@@ -224,10 +224,10 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "pulumi", specifier = ">=3.234.0,<4.0.0" },
-    { name = "pulumi-kubernetes", specifier = ">=4.30.0,<5.0.0" },
+    { name = "pulumi", specifier = ">=3.239.0,<4.0.0" },
+    { name = "pulumi-kubernetes", specifier = ">=4.31.0,<5.0.0" },
     { name = "pulumi-postgresql", specifier = ">=3.16.3,<4.0.0" },
-    { name = "pulumi-random", specifier = ">=4.19.2,<5.0.0" },
+    { name = "pulumi-random", specifier = ">=4.20.0,<5.0.0" },
 ]
 
 [[package]]

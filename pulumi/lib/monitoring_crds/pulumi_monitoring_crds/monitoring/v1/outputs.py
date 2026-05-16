@@ -221,6 +221,7 @@ class PodMonitor(dict):
         * Target and metric relabeling.
 
         `Prometheus` and `PrometheusAgent` objects select `PodMonitor` objects using label and namespace selectors.
+
         :param _builtins.str api_version: APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
         :param _builtins.str kind: Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
         :param '_meta.v1.ObjectMetaArgs' metadata: Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
@@ -358,6 +359,7 @@ class PodMonitorSpec(dict):
                  target_limit: Optional[_builtins.int] = None):
         """
         spec defines the specification of desired Pod selection for target discovery by Prometheus.
+
         :param _builtins.str body_size_limit: bodySizeLimit when defined specifies a job level limit on the size
                of uncompressed response body that will be accepted by Prometheus.
 
@@ -696,6 +698,7 @@ class PodMonitorSpecAttachMetadata(dict):
         discovered targets.
 
         It requires Prometheus >= v2.35.0.
+
         :param _builtins.bool node: node when set to true, Prometheus attaches node metadata to the discovered
                targets.
 
@@ -733,6 +736,7 @@ class PodMonitorSpecAttachMetadataPatch(dict):
         discovered targets.
 
         It requires Prometheus >= v2.35.0.
+
         :param _builtins.bool node: node when set to true, Prometheus attaches node metadata to the discovered
                targets.
 
@@ -784,6 +788,7 @@ class PodMonitorSpecNamespaceSelector(dict):
         """
         namespaceSelector defines in which namespace(s) Prometheus should discover the pods.
         By default, the pods are discovered in the same namespace as the `PodMonitor` object but it is possible to select pods across different/all namespaces.
+
         :param _builtins.bool any: any defines the boolean describing whether all namespaces are selected in contrast to a
                list restricting them.
         :param Sequence[_builtins.str] match_names: matchNames defines the list of namespace names to select from.
@@ -840,6 +845,7 @@ class PodMonitorSpecNamespaceSelectorPatch(dict):
         """
         namespaceSelector defines in which namespace(s) Prometheus should discover the pods.
         By default, the pods are discovered in the same namespace as the `PodMonitor` object but it is possible to select pods across different/all namespaces.
+
         :param _builtins.bool any: any defines the boolean describing whether all namespaces are selected in contrast to a
                list restricting them.
         :param Sequence[_builtins.str] match_names: matchNames defines the list of namespace names to select from.
@@ -954,6 +960,7 @@ class PodMonitorSpecPatch(dict):
                  target_limit: Optional[_builtins.int] = None):
         """
         spec defines the specification of desired Pod selection for target discovery by Prometheus.
+
         :param _builtins.str body_size_limit: bodySizeLimit when defined specifies a job level limit on the size
                of uncompressed response body that will be accepted by Prometheus.
 
@@ -1361,6 +1368,7 @@ class PodMonitorSpecPodMetricsEndpoints(dict):
         """
         PodMetricsEndpoint defines an endpoint serving Prometheus metrics to be scraped by
         Prometheus.
+
         :param _builtins.bool enable_http2: enableHttp2 can be used to disable HTTP2.
         :param _builtins.bool filter_running: filterRunning when true, the pods which are not running (e.g. either in Failed or
                Succeeded state) are dropped during the target discovery.
@@ -1755,6 +1763,7 @@ class PodMonitorSpecPodMetricsEndpointsAuthorization(dict):
         the client.
 
         Cannot be set at the same time as `basicAuth`, `bearerTokenSecret` or `oauth2`.
+
         :param _builtins.str type: type defines the authentication type. The value is case-insensitive.
 
                "Basic" is not a supported value.
@@ -1795,6 +1804,7 @@ class PodMonitorSpecPodMetricsEndpointsAuthorizationCredentials(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         credentials defines a key of a Secret in the namespace that contains the credentials for authentication.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -1850,6 +1860,7 @@ class PodMonitorSpecPodMetricsEndpointsAuthorizationCredentialsPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         credentials defines a key of a Secret in the namespace that contains the credentials for authentication.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -1910,6 +1921,7 @@ class PodMonitorSpecPodMetricsEndpointsAuthorizationPatch(dict):
         the client.
 
         Cannot be set at the same time as `basicAuth`, `bearerTokenSecret` or `oauth2`.
+
         :param _builtins.str type: type defines the authentication type. The value is case-insensitive.
 
                "Basic" is not a supported value.
@@ -1985,6 +1997,7 @@ class PodMonitorSpecPodMetricsEndpointsBasicAuthPassword(dict):
         """
         password defines a key of a Secret containing the password for
         authentication.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -2042,6 +2055,7 @@ class PodMonitorSpecPodMetricsEndpointsBasicAuthPasswordPatch(dict):
         """
         password defines a key of a Secret containing the password for
         authentication.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -2132,6 +2146,7 @@ class PodMonitorSpecPodMetricsEndpointsBasicAuthUsername(dict):
         """
         username defines a key of a Secret containing the username for
         authentication.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -2189,6 +2204,7 @@ class PodMonitorSpecPodMetricsEndpointsBasicAuthUsernamePatch(dict):
         """
         username defines a key of a Secret containing the username for
         authentication.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -2258,6 +2274,7 @@ class PodMonitorSpecPodMetricsEndpointsBearerTokenSecret(dict):
         Cannot be set at the same time as `authorization`, `basicAuth` or `oauth2`.
 
         Deprecated: use `authorization` instead.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -2327,6 +2344,7 @@ class PodMonitorSpecPodMetricsEndpointsBearerTokenSecretPatch(dict):
         Cannot be set at the same time as `authorization`, `basicAuth` or `oauth2`.
 
         Deprecated: use `authorization` instead.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -2411,6 +2429,7 @@ class PodMonitorSpecPodMetricsEndpointsMetricRelabelings(dict):
         scraped samples and remote write samples.
 
         More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+
         :param _builtins.str action: action to perform based on the regex matching.
 
                `Uppercase` and `Lowercase` actions require Prometheus >= v2.36.0.
@@ -2565,6 +2584,7 @@ class PodMonitorSpecPodMetricsEndpointsMetricRelabelingsPatch(dict):
         scraped samples and remote write samples.
 
         More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+
         :param _builtins.str action: action to perform based on the regex matching.
 
                `Uppercase` and `Lowercase` actions require Prometheus >= v2.36.0.
@@ -2738,6 +2758,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2(dict):
         It requires Prometheus >= 2.27.0.
 
         Cannot be set at the same time as `authorization`, `basicAuth` or `bearerTokenSecret`.
+
         :param Mapping[str, _builtins.str] endpoint_params: endpointParams configures the HTTP parameters to append to the token
                URL.
         :param _builtins.str no_proxy: noProxy defines a comma-separated string that can contain IPs, CIDR notation, domain names
@@ -2916,6 +2937,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2ClientIdConfigMap(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -2971,6 +2993,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2ClientIdConfigMapPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -3072,6 +3095,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2ClientIdSecret(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -3127,6 +3151,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2ClientIdSecretPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -3184,6 +3209,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2ClientSecret(dict):
         """
         clientSecret defines a key of a Secret containing the OAuth2
         client's secret.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -3241,6 +3267,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2ClientSecretPatch(dict):
         """
         clientSecret defines a key of a Secret containing the OAuth2
         client's secret.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -3344,6 +3371,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2Patch(dict):
         It requires Prometheus >= 2.27.0.
 
         Cannot be set at the same time as `authorization`, `basicAuth` or `bearerTokenSecret`.
+
         :param Mapping[str, _builtins.str] endpoint_params: endpointParams configures the HTTP parameters to append to the token
                URL.
         :param _builtins.str no_proxy: noProxy defines a comma-separated string that can contain IPs, CIDR notation, domain names
@@ -3476,6 +3504,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2ProxyConnectHeader(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         SecretKeySelector selects a key of a Secret.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -3562,6 +3591,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2TlsConfig(dict):
         """
         tlsConfig defines the TLS configuration to use when connecting to the OAuth2 server.
         It requires Prometheus >= v2.43.0.
+
         :param _builtins.bool insecure_skip_verify: insecureSkipVerify defines how to disable target certificate validation.
         :param _builtins.str max_version: maxVersion defines the maximum acceptable TLS version.
 
@@ -3693,6 +3723,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2TlsConfigCaConfigMap(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -3748,6 +3779,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2TlsConfigCaConfigMapPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -3847,6 +3879,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2TlsConfigCaSecret(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -3902,6 +3935,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2TlsConfigCaSecretPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -4001,6 +4035,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2TlsConfigCertConfigMap(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -4056,6 +4091,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2TlsConfigCertConfigMapPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -4155,6 +4191,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2TlsConfigCertSecret(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -4210,6 +4247,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2TlsConfigCertSecretPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -4265,6 +4303,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2TlsConfigKeySecret(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         keySecret defines the Secret containing the client key file for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -4320,6 +4359,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2TlsConfigKeySecretPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         keySecret defines the Secret containing the client key file for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -4406,6 +4446,7 @@ class PodMonitorSpecPodMetricsEndpointsOauth2TlsConfigPatch(dict):
         """
         tlsConfig defines the TLS configuration to use when connecting to the OAuth2 server.
         It requires Prometheus >= v2.43.0.
+
         :param _builtins.bool insecure_skip_verify: insecureSkipVerify defines how to disable target certificate validation.
         :param _builtins.str max_version: maxVersion defines the maximum acceptable TLS version.
 
@@ -4566,6 +4607,7 @@ class PodMonitorSpecPodMetricsEndpointsPatch(dict):
         """
         PodMetricsEndpoint defines an endpoint serving Prometheus metrics to be scraped by
         Prometheus.
+
         :param _builtins.bool enable_http2: enableHttp2 can be used to disable HTTP2.
         :param _builtins.bool filter_running: filterRunning when true, the pods which are not running (e.g. either in Failed or
                Succeeded state) are dropped during the target discovery.
@@ -4955,6 +4997,7 @@ class PodMonitorSpecPodMetricsEndpointsProxyConnectHeader(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         SecretKeySelector selects a key of a Secret.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -5039,6 +5082,7 @@ class PodMonitorSpecPodMetricsEndpointsRelabelings(dict):
         scraped samples and remote write samples.
 
         More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+
         :param _builtins.str action: action to perform based on the regex matching.
 
                `Uppercase` and `Lowercase` actions require Prometheus >= v2.36.0.
@@ -5193,6 +5237,7 @@ class PodMonitorSpecPodMetricsEndpointsRelabelingsPatch(dict):
         scraped samples and remote write samples.
 
         More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+
         :param _builtins.str action: action to perform based on the regex matching.
 
                `Uppercase` and `Lowercase` actions require Prometheus >= v2.36.0.
@@ -5347,6 +5392,7 @@ class PodMonitorSpecPodMetricsEndpointsTlsConfig(dict):
                  server_name: Optional[_builtins.str] = None):
         """
         tlsConfig defines the TLS configuration used by the client.
+
         :param _builtins.bool insecure_skip_verify: insecureSkipVerify defines how to disable target certificate validation.
         :param _builtins.str max_version: maxVersion defines the maximum acceptable TLS version.
 
@@ -5478,6 +5524,7 @@ class PodMonitorSpecPodMetricsEndpointsTlsConfigCaConfigMap(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -5533,6 +5580,7 @@ class PodMonitorSpecPodMetricsEndpointsTlsConfigCaConfigMapPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -5632,6 +5680,7 @@ class PodMonitorSpecPodMetricsEndpointsTlsConfigCaSecret(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -5687,6 +5736,7 @@ class PodMonitorSpecPodMetricsEndpointsTlsConfigCaSecretPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -5786,6 +5836,7 @@ class PodMonitorSpecPodMetricsEndpointsTlsConfigCertConfigMap(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -5841,6 +5892,7 @@ class PodMonitorSpecPodMetricsEndpointsTlsConfigCertConfigMapPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -5940,6 +5992,7 @@ class PodMonitorSpecPodMetricsEndpointsTlsConfigCertSecret(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -5995,6 +6048,7 @@ class PodMonitorSpecPodMetricsEndpointsTlsConfigCertSecretPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -6050,6 +6104,7 @@ class PodMonitorSpecPodMetricsEndpointsTlsConfigKeySecret(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         keySecret defines the Secret containing the client key file for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -6105,6 +6160,7 @@ class PodMonitorSpecPodMetricsEndpointsTlsConfigKeySecretPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         keySecret defines the Secret containing the client key file for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -6189,6 +6245,7 @@ class PodMonitorSpecPodMetricsEndpointsTlsConfigPatch(dict):
                  server_name: Optional[_builtins.str] = None):
         """
         tlsConfig defines the TLS configuration used by the client.
+
         :param _builtins.bool insecure_skip_verify: insecureSkipVerify defines how to disable target certificate validation.
         :param _builtins.str max_version: maxVersion defines the maximum acceptable TLS version.
 
@@ -6294,6 +6351,7 @@ class PodMonitorSpecSelector(dict):
                  match_labels: Optional[Mapping[str, _builtins.str]] = None):
         """
         selector defines the label selector to select the Kubernetes `Pod` objects to scrape metrics from.
+
         :param Sequence['PodMonitorSpecSelectorMatchExpressionsArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -6336,6 +6394,7 @@ class PodMonitorSpecSelectorMatchExpressions(dict):
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -6393,6 +6452,7 @@ class PodMonitorSpecSelectorMatchExpressionsPatch(dict):
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -6466,6 +6526,7 @@ class PodMonitorSpecSelectorPatch(dict):
                  match_labels: Optional[Mapping[str, _builtins.str]] = None):
         """
         selector defines the label selector to select the Kubernetes `Pod` objects to scrape metrics from.
+
         :param Sequence['PodMonitorSpecSelectorMatchExpressionsPatchArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -6514,6 +6575,7 @@ class PodMonitorStatus(dict):
         Most recent observed status of the PodMonitor. Read-only.
         More info:
         https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
         :param Sequence['PodMonitorStatusBindingsArgs'] bindings: bindings defines the list of workload resources (Prometheus, PrometheusAgent, ThanosRuler or Alertmanager) which select the configuration resource.
         """
         if bindings is not None:
@@ -6541,6 +6603,7 @@ class PodMonitorStatusBindings(dict):
                  resource: Optional[_builtins.str] = None):
         """
         WorkloadBinding is a link between a configuration resource and a workload resource.
+
         :param Sequence['PodMonitorStatusBindingsConditionsArgs'] conditions: conditions defines the current state of the configuration resource when bound to the referenced Workload object.
         :param _builtins.str group: group defines the group of the referenced resource.
         :param _builtins.str name: name defines the name of the referenced object.
@@ -6632,6 +6695,7 @@ class PodMonitorStatusBindingsConditions(dict):
                  type: Optional[_builtins.str] = None):
         """
         ConfigResourceCondition describes the status of configuration resources linked to Prometheus, PrometheusAgent, Alertmanager or ThanosRuler.
+
         :param _builtins.str last_transition_time: lastTransitionTime defines the time of the last update to the current status property.
         :param _builtins.str message: message defines the human-readable message indicating details for the condition's last transition.
         :param _builtins.int observed_generation: observedGeneration defines the .metadata.generation that the
@@ -6742,6 +6806,7 @@ class PodMonitorStatusBindingsConditionsPatch(dict):
                  type: Optional[_builtins.str] = None):
         """
         ConfigResourceCondition describes the status of configuration resources linked to Prometheus, PrometheusAgent, Alertmanager or ThanosRuler.
+
         :param _builtins.str last_transition_time: lastTransitionTime defines the time of the last update to the current status property.
         :param _builtins.str message: message defines the human-readable message indicating details for the condition's last transition.
         :param _builtins.int observed_generation: observedGeneration defines the .metadata.generation that the
@@ -6832,6 +6897,7 @@ class PodMonitorStatusBindingsPatch(dict):
                  resource: Optional[_builtins.str] = None):
         """
         WorkloadBinding is a link between a configuration resource and a workload resource.
+
         :param Sequence['PodMonitorStatusBindingsConditionsPatchArgs'] conditions: conditions defines the current state of the configuration resource when bound to the referenced Workload object.
         :param _builtins.str group: group defines the group of the referenced resource.
         :param _builtins.str name: name defines the name of the referenced object.
@@ -6909,6 +6975,7 @@ class PodMonitorStatusPatch(dict):
         Most recent observed status of the PodMonitor. Read-only.
         More info:
         https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
         :param Sequence['PodMonitorStatusBindingsPatchArgs'] bindings: bindings defines the list of workload resources (Prometheus, PrometheusAgent, ThanosRuler or Alertmanager) which select the configuration resource.
         """
         if bindings is not None:
@@ -6967,6 +7034,7 @@ class ServiceMonitor(dict):
         * Target and metric relabeling.
 
         `Prometheus` and `PrometheusAgent` objects select `ServiceMonitor` objects using label and namespace selectors.
+
         :param _builtins.str api_version: APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
         :param _builtins.str kind: Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
         :param '_meta.v1.ObjectMetaArgs' metadata: Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
@@ -7110,6 +7178,7 @@ class ServiceMonitorSpec(dict):
         """
         spec defines the specification of desired Service selection for target discovery by
         Prometheus.
+
         :param _builtins.str body_size_limit: bodySizeLimit when defined, bodySizeLimit specifies a job level limit on the size
                of uncompressed response body that will be accepted by Prometheus.
 
@@ -7484,6 +7553,7 @@ class ServiceMonitorSpecAttachMetadata(dict):
         discovered targets.
 
         It requires Prometheus >= v2.37.0.
+
         :param _builtins.bool node: node when set to true, Prometheus attaches node metadata to the discovered
                targets.
 
@@ -7521,6 +7591,7 @@ class ServiceMonitorSpecAttachMetadataPatch(dict):
         discovered targets.
 
         It requires Prometheus >= v2.37.0.
+
         :param _builtins.bool node: node when set to true, Prometheus attaches node metadata to the discovered
                targets.
 
@@ -7627,6 +7698,7 @@ class ServiceMonitorSpecEndpoints(dict):
         """
         Endpoint defines an endpoint serving Prometheus metrics to be scraped by
         Prometheus.
+
         :param _builtins.str bearer_token_file: bearerTokenFile defines the file to read bearer token for scraping the target.
 
                Deprecated: use `authorization` instead.
@@ -7985,6 +8057,7 @@ class ServiceMonitorSpecEndpointsAuthorization(dict):
         the client.
 
         Cannot be set at the same time as `basicAuth`, `bearerTokenSecret` or `oauth2`.
+
         :param _builtins.str type: type defines the authentication type. The value is case-insensitive.
 
                "Basic" is not a supported value.
@@ -8025,6 +8098,7 @@ class ServiceMonitorSpecEndpointsAuthorizationCredentials(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         credentials defines a key of a Secret in the namespace that contains the credentials for authentication.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -8080,6 +8154,7 @@ class ServiceMonitorSpecEndpointsAuthorizationCredentialsPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         credentials defines a key of a Secret in the namespace that contains the credentials for authentication.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -8140,6 +8215,7 @@ class ServiceMonitorSpecEndpointsAuthorizationPatch(dict):
         the client.
 
         Cannot be set at the same time as `basicAuth`, `bearerTokenSecret` or `oauth2`.
+
         :param _builtins.str type: type defines the authentication type. The value is case-insensitive.
 
                "Basic" is not a supported value.
@@ -8215,6 +8291,7 @@ class ServiceMonitorSpecEndpointsBasicAuthPassword(dict):
         """
         password defines a key of a Secret containing the password for
         authentication.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -8272,6 +8349,7 @@ class ServiceMonitorSpecEndpointsBasicAuthPasswordPatch(dict):
         """
         password defines a key of a Secret containing the password for
         authentication.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -8362,6 +8440,7 @@ class ServiceMonitorSpecEndpointsBasicAuthUsername(dict):
         """
         username defines a key of a Secret containing the username for
         authentication.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -8419,6 +8498,7 @@ class ServiceMonitorSpecEndpointsBasicAuthUsernamePatch(dict):
         """
         username defines a key of a Secret containing the username for
         authentication.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -8488,6 +8568,7 @@ class ServiceMonitorSpecEndpointsBearerTokenSecret(dict):
         Cannot be set at the same time as `authorization`, `basicAuth` or `oauth2`.
 
         Deprecated: use `authorization` instead.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -8557,6 +8638,7 @@ class ServiceMonitorSpecEndpointsBearerTokenSecretPatch(dict):
         Cannot be set at the same time as `authorization`, `basicAuth` or `oauth2`.
 
         Deprecated: use `authorization` instead.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -8641,6 +8723,7 @@ class ServiceMonitorSpecEndpointsMetricRelabelings(dict):
         scraped samples and remote write samples.
 
         More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+
         :param _builtins.str action: action to perform based on the regex matching.
 
                `Uppercase` and `Lowercase` actions require Prometheus >= v2.36.0.
@@ -8795,6 +8878,7 @@ class ServiceMonitorSpecEndpointsMetricRelabelingsPatch(dict):
         scraped samples and remote write samples.
 
         More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+
         :param _builtins.str action: action to perform based on the regex matching.
 
                `Uppercase` and `Lowercase` actions require Prometheus >= v2.36.0.
@@ -8968,6 +9052,7 @@ class ServiceMonitorSpecEndpointsOauth2(dict):
         It requires Prometheus >= 2.27.0.
 
         Cannot be set at the same time as `authorization`, `basicAuth` or `bearerTokenSecret`.
+
         :param Mapping[str, _builtins.str] endpoint_params: endpointParams configures the HTTP parameters to append to the token
                URL.
         :param _builtins.str no_proxy: noProxy defines a comma-separated string that can contain IPs, CIDR notation, domain names
@@ -9146,6 +9231,7 @@ class ServiceMonitorSpecEndpointsOauth2ClientIdConfigMap(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -9201,6 +9287,7 @@ class ServiceMonitorSpecEndpointsOauth2ClientIdConfigMapPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -9302,6 +9389,7 @@ class ServiceMonitorSpecEndpointsOauth2ClientIdSecret(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -9357,6 +9445,7 @@ class ServiceMonitorSpecEndpointsOauth2ClientIdSecretPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -9414,6 +9503,7 @@ class ServiceMonitorSpecEndpointsOauth2ClientSecret(dict):
         """
         clientSecret defines a key of a Secret containing the OAuth2
         client's secret.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -9471,6 +9561,7 @@ class ServiceMonitorSpecEndpointsOauth2ClientSecretPatch(dict):
         """
         clientSecret defines a key of a Secret containing the OAuth2
         client's secret.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -9574,6 +9665,7 @@ class ServiceMonitorSpecEndpointsOauth2Patch(dict):
         It requires Prometheus >= 2.27.0.
 
         Cannot be set at the same time as `authorization`, `basicAuth` or `bearerTokenSecret`.
+
         :param Mapping[str, _builtins.str] endpoint_params: endpointParams configures the HTTP parameters to append to the token
                URL.
         :param _builtins.str no_proxy: noProxy defines a comma-separated string that can contain IPs, CIDR notation, domain names
@@ -9706,6 +9798,7 @@ class ServiceMonitorSpecEndpointsOauth2ProxyConnectHeader(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         SecretKeySelector selects a key of a Secret.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -9792,6 +9885,7 @@ class ServiceMonitorSpecEndpointsOauth2TlsConfig(dict):
         """
         tlsConfig defines the TLS configuration to use when connecting to the OAuth2 server.
         It requires Prometheus >= v2.43.0.
+
         :param _builtins.bool insecure_skip_verify: insecureSkipVerify defines how to disable target certificate validation.
         :param _builtins.str max_version: maxVersion defines the maximum acceptable TLS version.
 
@@ -9923,6 +10017,7 @@ class ServiceMonitorSpecEndpointsOauth2TlsConfigCaConfigMap(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -9978,6 +10073,7 @@ class ServiceMonitorSpecEndpointsOauth2TlsConfigCaConfigMapPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -10077,6 +10173,7 @@ class ServiceMonitorSpecEndpointsOauth2TlsConfigCaSecret(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -10132,6 +10229,7 @@ class ServiceMonitorSpecEndpointsOauth2TlsConfigCaSecretPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -10231,6 +10329,7 @@ class ServiceMonitorSpecEndpointsOauth2TlsConfigCertConfigMap(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -10286,6 +10385,7 @@ class ServiceMonitorSpecEndpointsOauth2TlsConfigCertConfigMapPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -10385,6 +10485,7 @@ class ServiceMonitorSpecEndpointsOauth2TlsConfigCertSecret(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -10440,6 +10541,7 @@ class ServiceMonitorSpecEndpointsOauth2TlsConfigCertSecretPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -10495,6 +10597,7 @@ class ServiceMonitorSpecEndpointsOauth2TlsConfigKeySecret(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         keySecret defines the Secret containing the client key file for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -10550,6 +10653,7 @@ class ServiceMonitorSpecEndpointsOauth2TlsConfigKeySecretPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         keySecret defines the Secret containing the client key file for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -10636,6 +10740,7 @@ class ServiceMonitorSpecEndpointsOauth2TlsConfigPatch(dict):
         """
         tlsConfig defines the TLS configuration to use when connecting to the OAuth2 server.
         It requires Prometheus >= v2.43.0.
+
         :param _builtins.bool insecure_skip_verify: insecureSkipVerify defines how to disable target certificate validation.
         :param _builtins.str max_version: maxVersion defines the maximum acceptable TLS version.
 
@@ -10796,6 +10901,7 @@ class ServiceMonitorSpecEndpointsPatch(dict):
         """
         Endpoint defines an endpoint serving Prometheus metrics to be scraped by
         Prometheus.
+
         :param _builtins.str bearer_token_file: bearerTokenFile defines the file to read bearer token for scraping the target.
 
                Deprecated: use `authorization` instead.
@@ -11149,6 +11255,7 @@ class ServiceMonitorSpecEndpointsProxyConnectHeader(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         SecretKeySelector selects a key of a Secret.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -11233,6 +11340,7 @@ class ServiceMonitorSpecEndpointsRelabelings(dict):
         scraped samples and remote write samples.
 
         More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+
         :param _builtins.str action: action to perform based on the regex matching.
 
                `Uppercase` and `Lowercase` actions require Prometheus >= v2.36.0.
@@ -11387,6 +11495,7 @@ class ServiceMonitorSpecEndpointsRelabelingsPatch(dict):
         scraped samples and remote write samples.
 
         More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+
         :param _builtins.str action: action to perform based on the regex matching.
 
                `Uppercase` and `Lowercase` actions require Prometheus >= v2.36.0.
@@ -11550,6 +11659,7 @@ class ServiceMonitorSpecEndpointsTlsConfig(dict):
                  server_name: Optional[_builtins.str] = None):
         """
         tlsConfig defines TLS configuration used by the client.
+
         :param _builtins.str ca_file: caFile defines the path to the CA cert in the Prometheus container to use for the targets.
         :param _builtins.str cert_file: certFile defines the path to the client cert file in the Prometheus container for the targets.
         :param _builtins.bool insecure_skip_verify: insecureSkipVerify defines how to disable target certificate validation.
@@ -11714,6 +11824,7 @@ class ServiceMonitorSpecEndpointsTlsConfigCaConfigMap(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -11769,6 +11880,7 @@ class ServiceMonitorSpecEndpointsTlsConfigCaConfigMapPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -11868,6 +11980,7 @@ class ServiceMonitorSpecEndpointsTlsConfigCaSecret(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -11923,6 +12036,7 @@ class ServiceMonitorSpecEndpointsTlsConfigCaSecretPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -12022,6 +12136,7 @@ class ServiceMonitorSpecEndpointsTlsConfigCertConfigMap(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -12077,6 +12192,7 @@ class ServiceMonitorSpecEndpointsTlsConfigCertConfigMapPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         configMap defines the ConfigMap containing data to use for the targets.
+
         :param _builtins.str key: The key to select.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -12176,6 +12292,7 @@ class ServiceMonitorSpecEndpointsTlsConfigCertSecret(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -12231,6 +12348,7 @@ class ServiceMonitorSpecEndpointsTlsConfigCertSecretPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         secret defines the Secret containing data to use for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -12286,6 +12404,7 @@ class ServiceMonitorSpecEndpointsTlsConfigKeySecret(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         keySecret defines the Secret containing the client key file for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -12341,6 +12460,7 @@ class ServiceMonitorSpecEndpointsTlsConfigKeySecretPatch(dict):
                  optional: Optional[_builtins.bool] = None):
         """
         keySecret defines the Secret containing the client key file for the targets.
+
         :param _builtins.str key: The key of the secret to select from.  Must be a valid secret key.
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
@@ -12434,6 +12554,7 @@ class ServiceMonitorSpecEndpointsTlsConfigPatch(dict):
                  server_name: Optional[_builtins.str] = None):
         """
         tlsConfig defines TLS configuration used by the client.
+
         :param _builtins.str ca_file: caFile defines the path to the CA cert in the Prometheus container to use for the targets.
         :param _builtins.str cert_file: certFile defines the path to the client cert file in the Prometheus container for the targets.
         :param _builtins.bool insecure_skip_verify: insecureSkipVerify defines how to disable target certificate validation.
@@ -12572,6 +12693,7 @@ class ServiceMonitorSpecNamespaceSelector(dict):
         """
         namespaceSelector defines in which namespace(s) Prometheus should discover the services.
         By default, the services are discovered in the same namespace as the `ServiceMonitor` object but it is possible to select pods across different/all namespaces.
+
         :param _builtins.bool any: any defines the boolean describing whether all namespaces are selected in contrast to a
                list restricting them.
         :param Sequence[_builtins.str] match_names: matchNames defines the list of namespace names to select from.
@@ -12628,6 +12750,7 @@ class ServiceMonitorSpecNamespaceSelectorPatch(dict):
         """
         namespaceSelector defines in which namespace(s) Prometheus should discover the services.
         By default, the services are discovered in the same namespace as the `ServiceMonitor` object but it is possible to select pods across different/all namespaces.
+
         :param _builtins.bool any: any defines the boolean describing whether all namespaces are selected in contrast to a
                list restricting them.
         :param Sequence[_builtins.str] match_names: matchNames defines the list of namespace names to select from.
@@ -12748,6 +12871,7 @@ class ServiceMonitorSpecPatch(dict):
         """
         spec defines the specification of desired Service selection for target discovery by
         Prometheus.
+
         :param _builtins.str body_size_limit: bodySizeLimit when defined, bodySizeLimit specifies a job level limit on the size
                of uncompressed response body that will be accepted by Prometheus.
 
@@ -13136,6 +13260,7 @@ class ServiceMonitorSpecSelector(dict):
                  match_labels: Optional[Mapping[str, _builtins.str]] = None):
         """
         selector defines the label selector to select the Kubernetes `Endpoints` objects to scrape metrics from.
+
         :param Sequence['ServiceMonitorSpecSelectorMatchExpressionsArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -13178,6 +13303,7 @@ class ServiceMonitorSpecSelectorMatchExpressions(dict):
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -13235,6 +13361,7 @@ class ServiceMonitorSpecSelectorMatchExpressionsPatch(dict):
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -13308,6 +13435,7 @@ class ServiceMonitorSpecSelectorPatch(dict):
                  match_labels: Optional[Mapping[str, _builtins.str]] = None):
         """
         selector defines the label selector to select the Kubernetes `Endpoints` objects to scrape metrics from.
+
         :param Sequence['ServiceMonitorSpecSelectorMatchExpressionsPatchArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -13356,6 +13484,7 @@ class ServiceMonitorStatus(dict):
         Most recent observed status of the ServiceMonitor. Read-only.
         More info:
         https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
         :param Sequence['ServiceMonitorStatusBindingsArgs'] bindings: bindings defines the list of workload resources (Prometheus, PrometheusAgent, ThanosRuler or Alertmanager) which select the configuration resource.
         """
         if bindings is not None:
@@ -13383,6 +13512,7 @@ class ServiceMonitorStatusBindings(dict):
                  resource: Optional[_builtins.str] = None):
         """
         WorkloadBinding is a link between a configuration resource and a workload resource.
+
         :param Sequence['ServiceMonitorStatusBindingsConditionsArgs'] conditions: conditions defines the current state of the configuration resource when bound to the referenced Workload object.
         :param _builtins.str group: group defines the group of the referenced resource.
         :param _builtins.str name: name defines the name of the referenced object.
@@ -13474,6 +13604,7 @@ class ServiceMonitorStatusBindingsConditions(dict):
                  type: Optional[_builtins.str] = None):
         """
         ConfigResourceCondition describes the status of configuration resources linked to Prometheus, PrometheusAgent, Alertmanager or ThanosRuler.
+
         :param _builtins.str last_transition_time: lastTransitionTime defines the time of the last update to the current status property.
         :param _builtins.str message: message defines the human-readable message indicating details for the condition's last transition.
         :param _builtins.int observed_generation: observedGeneration defines the .metadata.generation that the
@@ -13584,6 +13715,7 @@ class ServiceMonitorStatusBindingsConditionsPatch(dict):
                  type: Optional[_builtins.str] = None):
         """
         ConfigResourceCondition describes the status of configuration resources linked to Prometheus, PrometheusAgent, Alertmanager or ThanosRuler.
+
         :param _builtins.str last_transition_time: lastTransitionTime defines the time of the last update to the current status property.
         :param _builtins.str message: message defines the human-readable message indicating details for the condition's last transition.
         :param _builtins.int observed_generation: observedGeneration defines the .metadata.generation that the
@@ -13674,6 +13806,7 @@ class ServiceMonitorStatusBindingsPatch(dict):
                  resource: Optional[_builtins.str] = None):
         """
         WorkloadBinding is a link between a configuration resource and a workload resource.
+
         :param Sequence['ServiceMonitorStatusBindingsConditionsPatchArgs'] conditions: conditions defines the current state of the configuration resource when bound to the referenced Workload object.
         :param _builtins.str group: group defines the group of the referenced resource.
         :param _builtins.str name: name defines the name of the referenced object.
@@ -13751,6 +13884,7 @@ class ServiceMonitorStatusPatch(dict):
         Most recent observed status of the ServiceMonitor. Read-only.
         More info:
         https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
         :param Sequence['ServiceMonitorStatusBindingsPatchArgs'] bindings: bindings defines the list of workload resources (Prometheus, PrometheusAgent, ThanosRuler or Alertmanager) which select the configuration resource.
         """
         if bindings is not None:

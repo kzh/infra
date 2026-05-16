@@ -226,6 +226,7 @@ class ProxyClass(dict):
         ProxyClass is a cluster scoped resource.
         More info:
         https://tailscale.com/kb/1445/kubernetes-operator-customization#cluster-resource-customization-using-proxyclass-custom-resource
+
         :param _builtins.str api_version: APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
         :param _builtins.str kind: Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
         :param '_meta.v1.ObjectMetaArgs' metadata: Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
@@ -312,6 +313,7 @@ class ProxyClassSpec(dict):
         """
         Specification of the desired state of the ProxyClass resource.
         https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
         :param _builtins.bool use_lets_encrypt_staging_environment: Set UseLetsEncryptStagingEnvironment to true to issue TLS
                certificates for any HTTPS endpoints exposed to the tailnet from
                LetsEncrypt's staging environment.
@@ -415,6 +417,7 @@ class ProxyClassSpecMetrics(dict):
         annotation. Note that the metrics are currently considered unstable
         and will likely change in breaking ways in the future - we only
         recommend that you use those for debugging purposes.
+
         :param _builtins.bool enable: Setting enable to true will make the proxy serve Tailscale metrics
                at <pod-ip>:9002/metrics.
                A metrics Service named <proxy-statefulset>-metrics will also be created in the operator's namespace and will
@@ -491,6 +494,7 @@ class ProxyClassSpecMetricsPatch(dict):
         annotation. Note that the metrics are currently considered unstable
         and will likely change in breaking ways in the future - we only
         recommend that you use those for debugging purposes.
+
         :param _builtins.bool enable: Setting enable to true will make the proxy serve Tailscale metrics
                at <pod-ip>:9002/metrics.
                A metrics Service named <proxy-statefulset>-metrics will also be created in the operator's namespace and will
@@ -552,6 +556,7 @@ class ProxyClassSpecMetricsServiceMonitor(dict):
         ts_proxy_parent_name: name of the parent resource (i.e name of the Connector, Tailscale Ingress, Tailscale Service or ProxyGroup)
         ts_proxy_parent_namespace: namespace of the parent resource (if the parent resource is not cluster scoped)
         job: ts_<proxy type>_[<parent namespace>]_<parent_name>
+
         :param _builtins.bool enable: If Enable is set to true, a Prometheus ServiceMonitor will be created. Enable can only be set to true if metrics are enabled.
         :param Mapping[str, _builtins.str] labels: Labels to add to the ServiceMonitor.
                Labels must be valid Kubernetes labels.
@@ -603,6 +608,7 @@ class ProxyClassSpecMetricsServiceMonitorPatch(dict):
         ts_proxy_parent_name: name of the parent resource (i.e name of the Connector, Tailscale Ingress, Tailscale Service or ProxyGroup)
         ts_proxy_parent_namespace: namespace of the parent resource (if the parent resource is not cluster scoped)
         job: ts_<proxy type>_[<parent namespace>]_<parent_name>
+
         :param _builtins.bool enable: If Enable is set to true, a Prometheus ServiceMonitor will be created. Enable can only be set to true if metrics are enabled.
         :param Mapping[str, _builtins.str] labels: Labels to add to the ServiceMonitor.
                Labels must be valid Kubernetes labels.
@@ -668,6 +674,7 @@ class ProxyClassSpecPatch(dict):
         """
         Specification of the desired state of the ProxyClass resource.
         https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
         :param _builtins.bool use_lets_encrypt_staging_environment: Set UseLetsEncryptStagingEnvironment to true to issue TLS
                certificates for any HTTPS endpoints exposed to the tailnet from
                LetsEncrypt's staging environment.
@@ -749,6 +756,7 @@ class ProxyClassSpecStatefulSet(dict):
         Configuration parameters for the proxy's StatefulSet. Tailscale
         Kubernetes operator deploys a StatefulSet for each of the user
         configured proxies (Tailscale Ingress, Tailscale Service, Connector).
+
         :param Mapping[str, _builtins.str] annotations: Annotations that will be added to the StatefulSet created for the proxy.
                Any Annotations specified here will be merged with the default annotations
                applied to the StatefulSet by the Tailscale Kubernetes operator as
@@ -820,6 +828,7 @@ class ProxyClassSpecStatefulSetPatch(dict):
         Configuration parameters for the proxy's StatefulSet. Tailscale
         Kubernetes operator deploys a StatefulSet for each of the user
         configured proxies (Tailscale Ingress, Tailscale Service, Connector).
+
         :param Mapping[str, _builtins.str] annotations: Annotations that will be added to the StatefulSet created for the proxy.
                Any Annotations specified here will be merged with the default annotations
                applied to the StatefulSet by the Tailscale Kubernetes operator as
@@ -933,6 +942,7 @@ class ProxyClassSpecStatefulSetPod(dict):
                  topology_spread_constraints: Optional[Sequence['outputs.ProxyClassSpecStatefulSetPodTopologySpreadConstraints']] = None):
         """
         Configuration for the proxy Pod.
+
         :param Mapping[str, _builtins.str] annotations: Annotations that will be added to the proxy Pod.
                Any annotations specified here will be merged with the default
                annotations applied to the Pod by the Tailscale Kubernetes operator.
@@ -1203,6 +1213,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinity(dict):
                  required_during_scheduling_ignored_during_execution: Optional['outputs.ProxyClassSpecStatefulSetPodAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution'] = None):
         """
         Describes node affinity scheduling rules for the pod.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs'] preferred_during_scheduling_ignored_during_execution: The scheduler will prefer to schedule pods to nodes that satisfy
                the affinity expressions specified by this field, but it may choose
                a node that violates one or more of the expressions. The node that is
@@ -1269,6 +1280,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinityPatch(dict):
                  required_during_scheduling_ignored_during_execution: Optional['outputs.ProxyClassSpecStatefulSetPodAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPatch'] = None):
         """
         Describes node affinity scheduling rules for the pod.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPatchArgs'] preferred_during_scheduling_ignored_during_execution: The scheduler will prefer to schedule pods to nodes that satisfy
                the affinity expressions specified by this field, but it may choose
                a node that violates one or more of the expressions. The node that is
@@ -1318,6 +1330,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinityPreferredDuringSchedulingI
         """
         An empty preferred scheduling term matches all objects with implicit weight 0
         (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+
         :param _builtins.int weight: Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
         """
         if preference is not None:
@@ -1351,6 +1364,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinityPreferredDuringSchedulingI
         """
         An empty preferred scheduling term matches all objects with implicit weight 0
         (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+
         :param _builtins.int weight: Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
         """
         if preference is not None:
@@ -1401,6 +1415,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinityPreferredDuringSchedulingI
                  match_fields: Optional[Sequence['outputs.ProxyClassSpecStatefulSetPodAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields']] = None):
         """
         A node selector term, associated with the corresponding weight.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArgs'] match_expressions: A list of node selector requirements by node's labels.
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArgs'] match_fields: A list of node selector requirements by node's fields.
         """
@@ -1439,6 +1454,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinityPreferredDuringSchedulingI
         """
         A node selector requirement is a selector that contains values, a key, and an operator
         that relates the key and values.
+
         :param _builtins.str key: The label key that the selector applies to.
         :param _builtins.str operator: Represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
@@ -1498,6 +1514,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinityPreferredDuringSchedulingI
         """
         A node selector requirement is a selector that contains values, a key, and an operator
         that relates the key and values.
+
         :param _builtins.str key: The label key that the selector applies to.
         :param _builtins.str operator: Represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
@@ -1557,6 +1574,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinityPreferredDuringSchedulingI
         """
         A node selector requirement is a selector that contains values, a key, and an operator
         that relates the key and values.
+
         :param _builtins.str key: The label key that the selector applies to.
         :param _builtins.str operator: Represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
@@ -1616,6 +1634,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinityPreferredDuringSchedulingI
         """
         A node selector requirement is a selector that contains values, a key, and an operator
         that relates the key and values.
+
         :param _builtins.str key: The label key that the selector applies to.
         :param _builtins.str operator: Represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
@@ -1691,6 +1710,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinityPreferredDuringSchedulingI
                  match_fields: Optional[Sequence['outputs.ProxyClassSpecStatefulSetPodAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsPatch']] = None):
         """
         A node selector term, associated with the corresponding weight.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsPatchArgs'] match_expressions: A list of node selector requirements by node's labels.
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsPatchArgs'] match_fields: A list of node selector requirements by node's fields.
         """
@@ -1750,6 +1770,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinityRequiredDuringSchedulingIg
         If the affinity requirements specified by this field cease to be met
         at some point during pod execution (e.g. due to an update), the system
         may or may not try to eventually evict the pod from its node.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArgs'] node_selector_terms: Required. A list of node selector terms. The terms are ORed.
         """
         if node_selector_terms is not None:
@@ -1797,6 +1818,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinityRequiredDuringSchedulingIg
         A null or empty node selector term matches no objects. The requirements of
         them are ANDed.
         The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArgs'] match_expressions: A list of node selector requirements by node's labels.
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArgs'] match_fields: A list of node selector requirements by node's fields.
         """
@@ -1835,6 +1857,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinityRequiredDuringSchedulingIg
         """
         A node selector requirement is a selector that contains values, a key, and an operator
         that relates the key and values.
+
         :param _builtins.str key: The label key that the selector applies to.
         :param _builtins.str operator: Represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
@@ -1894,6 +1917,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinityRequiredDuringSchedulingIg
         """
         A node selector requirement is a selector that contains values, a key, and an operator
         that relates the key and values.
+
         :param _builtins.str key: The label key that the selector applies to.
         :param _builtins.str operator: Represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
@@ -1953,6 +1977,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinityRequiredDuringSchedulingIg
         """
         A node selector requirement is a selector that contains values, a key, and an operator
         that relates the key and values.
+
         :param _builtins.str key: The label key that the selector applies to.
         :param _builtins.str operator: Represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
@@ -2012,6 +2037,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinityRequiredDuringSchedulingIg
         """
         A node selector requirement is a selector that contains values, a key, and an operator
         that relates the key and values.
+
         :param _builtins.str key: The label key that the selector applies to.
         :param _builtins.str operator: Represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
@@ -2091,6 +2117,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinityRequiredDuringSchedulingIg
         A null or empty node selector term matches no objects. The requirements of
         them are ANDed.
         The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsPatchArgs'] match_expressions: A list of node selector requirements by node's labels.
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsPatchArgs'] match_fields: A list of node selector requirements by node's fields.
         """
@@ -2150,6 +2177,7 @@ class ProxyClassSpecStatefulSetPodAffinityNodeAffinityRequiredDuringSchedulingIg
         If the affinity requirements specified by this field cease to be met
         at some point during pod execution (e.g. due to an update), the system
         may or may not try to eventually evict the pod from its node.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsPatchArgs'] node_selector_terms: Required. A list of node selector terms. The terms are ORed.
         """
         if node_selector_terms is not None:
@@ -2253,6 +2281,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinity(dict):
                  required_during_scheduling_ignored_during_execution: Optional[Sequence['outputs.ProxyClassSpecStatefulSetPodAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution']] = None):
         """
         Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs'] preferred_during_scheduling_ignored_during_execution: The scheduler will prefer to schedule pods to nodes that satisfy
                the affinity expressions specified by this field, but it may choose
                a node that violates one or more of the expressions. The node that is
@@ -2335,6 +2364,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityPatch(dict):
                  required_during_scheduling_ignored_during_execution: Optional[Sequence['outputs.ProxyClassSpecStatefulSetPodAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionPatch']] = None):
         """
         Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPatchArgs'] preferred_during_scheduling_ignored_during_execution: The scheduler will prefer to schedule pods to nodes that satisfy
                the affinity expressions specified by this field, but it may choose
                a node that violates one or more of the expressions. The node that is
@@ -2415,6 +2445,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIg
                  weight: Optional[_builtins.int] = None):
         """
         The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+
         :param _builtins.int weight: weight associated with matching the corresponding podAffinityTerm,
                in the range 1-100.
         """
@@ -2465,6 +2496,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIg
                  weight: Optional[_builtins.int] = None):
         """
         The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+
         :param _builtins.int weight: weight associated with matching the corresponding podAffinityTerm,
                in the range 1-100.
         """
@@ -2527,6 +2559,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIg
                  topology_key: Optional[_builtins.str] = None):
         """
         Required. A pod affinity term, associated with the corresponding weight.
+
         :param Sequence[_builtins.str] match_label_keys: MatchLabelKeys is a set of pod label keys to select which pods will
                be taken into consideration. The keys are used to lookup values from the
                incoming pod labels, those key-value labels are merged with `labelSelector` as `key in (value)`
@@ -2661,6 +2694,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIg
         """
         A label query over a set of resources, in this case pods.
         If it's null, this PodAffinityTerm matches with no Pods.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -2703,6 +2737,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIg
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -2760,6 +2795,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIg
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -2835,6 +2871,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIg
         """
         A label query over a set of resources, in this case pods.
         If it's null, this PodAffinityTerm matches with no Pods.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsPatchArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -2901,6 +2938,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIg
         and the ones listed in the namespaces field.
         null selector and null or empty namespaces list means "this pod's namespace".
         An empty selector ({}) matches all namespaces.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermNamespaceSelectorMatchExpressionsArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -2943,6 +2981,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIg
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -3000,6 +3039,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIg
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -3081,6 +3121,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIg
         and the ones listed in the namespaces field.
         null selector and null or empty namespaces list means "this pod's namespace".
         An empty selector ({}) matches all namespaces.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermNamespaceSelectorMatchExpressionsPatchArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -3149,6 +3190,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityPreferredDuringSchedulingIg
                  topology_key: Optional[_builtins.str] = None):
         """
         Required. A pod affinity term, associated with the corresponding weight.
+
         :param Sequence[_builtins.str] match_label_keys: MatchLabelKeys is a set of pod label keys to select which pods will
                be taken into consideration. The keys are used to lookup values from the
                incoming pod labels, those key-value labels are merged with `labelSelector` as `key in (value)`
@@ -3301,6 +3343,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityRequiredDuringSchedulingIgn
         where co-located is defined as running on a node whose value of
         the label with key <topologyKey> matches that of any node on which
         a pod of the set of pods is running
+
         :param Sequence[_builtins.str] match_label_keys: MatchLabelKeys is a set of pod label keys to select which pods will
                be taken into consideration. The keys are used to lookup values from the
                incoming pod labels, those key-value labels are merged with `labelSelector` as `key in (value)`
@@ -3435,6 +3478,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityRequiredDuringSchedulingIgn
         """
         A label query over a set of resources, in this case pods.
         If it's null, this PodAffinityTerm matches with no Pods.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -3477,6 +3521,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityRequiredDuringSchedulingIgn
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -3534,6 +3579,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityRequiredDuringSchedulingIgn
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -3609,6 +3655,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityRequiredDuringSchedulingIgn
         """
         A label query over a set of resources, in this case pods.
         If it's null, this PodAffinityTerm matches with no Pods.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsPatchArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -3675,6 +3722,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityRequiredDuringSchedulingIgn
         and the ones listed in the namespaces field.
         null selector and null or empty namespaces list means "this pod's namespace".
         An empty selector ({}) matches all namespaces.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelectorMatchExpressionsArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -3717,6 +3765,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityRequiredDuringSchedulingIgn
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -3774,6 +3823,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityRequiredDuringSchedulingIgn
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -3855,6 +3905,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityRequiredDuringSchedulingIgn
         and the ones listed in the namespaces field.
         null selector and null or empty namespaces list means "this pod's namespace".
         An empty selector ({}) matches all namespaces.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelectorMatchExpressionsPatchArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -3933,6 +3984,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAffinityRequiredDuringSchedulingIgn
         where co-located is defined as running on a node whose value of
         the label with key <topologyKey> matches that of any node on which
         a pod of the set of pods is running
+
         :param Sequence[_builtins.str] match_label_keys: MatchLabelKeys is a set of pod label keys to select which pods will
                be taken into consideration. The keys are used to lookup values from the
                incoming pod labels, those key-value labels are merged with `labelSelector` as `key in (value)`
@@ -4065,6 +4117,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinity(dict):
                  required_during_scheduling_ignored_during_execution: Optional[Sequence['outputs.ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution']] = None):
         """
         Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs'] preferred_during_scheduling_ignored_during_execution: The scheduler will prefer to schedule pods to nodes that satisfy
                the anti-affinity expressions specified by this field, but it may choose
                a node that violates one or more of the expressions. The node that is
@@ -4147,6 +4200,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPatch(dict):
                  required_during_scheduling_ignored_during_execution: Optional[Sequence['outputs.ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionPatch']] = None):
         """
         Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPatchArgs'] preferred_during_scheduling_ignored_during_execution: The scheduler will prefer to schedule pods to nodes that satisfy
                the anti-affinity expressions specified by this field, but it may choose
                a node that violates one or more of the expressions. The node that is
@@ -4227,6 +4281,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringScheduli
                  weight: Optional[_builtins.int] = None):
         """
         The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+
         :param _builtins.int weight: weight associated with matching the corresponding podAffinityTerm,
                in the range 1-100.
         """
@@ -4277,6 +4332,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringScheduli
                  weight: Optional[_builtins.int] = None):
         """
         The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+
         :param _builtins.int weight: weight associated with matching the corresponding podAffinityTerm,
                in the range 1-100.
         """
@@ -4339,6 +4395,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringScheduli
                  topology_key: Optional[_builtins.str] = None):
         """
         Required. A pod affinity term, associated with the corresponding weight.
+
         :param Sequence[_builtins.str] match_label_keys: MatchLabelKeys is a set of pod label keys to select which pods will
                be taken into consideration. The keys are used to lookup values from the
                incoming pod labels, those key-value labels are merged with `labelSelector` as `key in (value)`
@@ -4473,6 +4530,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringScheduli
         """
         A label query over a set of resources, in this case pods.
         If it's null, this PodAffinityTerm matches with no Pods.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -4515,6 +4573,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringScheduli
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -4572,6 +4631,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringScheduli
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -4647,6 +4707,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringScheduli
         """
         A label query over a set of resources, in this case pods.
         If it's null, this PodAffinityTerm matches with no Pods.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsPatchArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -4713,6 +4774,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringScheduli
         and the ones listed in the namespaces field.
         null selector and null or empty namespaces list means "this pod's namespace".
         An empty selector ({}) matches all namespaces.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermNamespaceSelectorMatchExpressionsArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -4755,6 +4817,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringScheduli
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -4812,6 +4875,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringScheduli
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -4893,6 +4957,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringScheduli
         and the ones listed in the namespaces field.
         null selector and null or empty namespaces list means "this pod's namespace".
         An empty selector ({}) matches all namespaces.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermNamespaceSelectorMatchExpressionsPatchArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -4961,6 +5026,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityPreferredDuringScheduli
                  topology_key: Optional[_builtins.str] = None):
         """
         Required. A pod affinity term, associated with the corresponding weight.
+
         :param Sequence[_builtins.str] match_label_keys: MatchLabelKeys is a set of pod label keys to select which pods will
                be taken into consideration. The keys are used to lookup values from the
                incoming pod labels, those key-value labels are merged with `labelSelector` as `key in (value)`
@@ -5113,6 +5179,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityRequiredDuringSchedulin
         where co-located is defined as running on a node whose value of
         the label with key <topologyKey> matches that of any node on which
         a pod of the set of pods is running
+
         :param Sequence[_builtins.str] match_label_keys: MatchLabelKeys is a set of pod label keys to select which pods will
                be taken into consideration. The keys are used to lookup values from the
                incoming pod labels, those key-value labels are merged with `labelSelector` as `key in (value)`
@@ -5247,6 +5314,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityRequiredDuringSchedulin
         """
         A label query over a set of resources, in this case pods.
         If it's null, this PodAffinityTerm matches with no Pods.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -5289,6 +5357,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityRequiredDuringSchedulin
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -5346,6 +5415,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityRequiredDuringSchedulin
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -5421,6 +5491,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityRequiredDuringSchedulin
         """
         A label query over a set of resources, in this case pods.
         If it's null, this PodAffinityTerm matches with no Pods.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsPatchArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -5487,6 +5558,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityRequiredDuringSchedulin
         and the ones listed in the namespaces field.
         null selector and null or empty namespaces list means "this pod's namespace".
         An empty selector ({}) matches all namespaces.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelectorMatchExpressionsArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -5529,6 +5601,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityRequiredDuringSchedulin
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -5586,6 +5659,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityRequiredDuringSchedulin
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -5667,6 +5741,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityRequiredDuringSchedulin
         and the ones listed in the namespaces field.
         null selector and null or empty namespaces list means "this pod's namespace".
         An empty selector ({}) matches all namespaces.
+
         :param Sequence['ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelectorMatchExpressionsPatchArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -5745,6 +5820,7 @@ class ProxyClassSpecStatefulSetPodAffinityPodAntiAffinityRequiredDuringSchedulin
         where co-located is defined as running on a node whose value of
         the label with key <topologyKey> matches that of any node on which
         a pod of the set of pods is running
+
         :param Sequence[_builtins.str] match_label_keys: MatchLabelKeys is a set of pod label keys to select which pods will
                be taken into consideration. The keys are used to lookup values from the
                incoming pod labels, those key-value labels are merged with `labelSelector` as `key in (value)`
@@ -5863,6 +5939,7 @@ class ProxyClassSpecStatefulSetPodDnsConfig(dict):
         DNSConfig defines DNS parameters for the proxy Pod in addition to those generated from DNSPolicy.
         When DNSPolicy is set to "None", DNSConfig must be specified.
         https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config
+
         :param Sequence[_builtins.str] nameservers: A list of DNS name server IP addresses.
                This will be appended to the base nameservers generated from DNSPolicy.
                Duplicated nameservers will be removed.
@@ -5923,6 +6000,7 @@ class ProxyClassSpecStatefulSetPodDnsConfigOptions(dict):
                  value: Optional[_builtins.str] = None):
         """
         PodDNSConfigOption defines DNS resolver options of a pod.
+
         :param _builtins.str name: Name is this DNS resolver option's name.
                Required.
         :param _builtins.str value: Value is this DNS resolver option's value.
@@ -5960,6 +6038,7 @@ class ProxyClassSpecStatefulSetPodDnsConfigOptionsPatch(dict):
                  value: Optional[_builtins.str] = None):
         """
         PodDNSConfigOption defines DNS resolver options of a pod.
+
         :param _builtins.str name: Name is this DNS resolver option's name.
                Required.
         :param _builtins.str value: Value is this DNS resolver option's value.
@@ -6002,6 +6081,7 @@ class ProxyClassSpecStatefulSetPodDnsConfigPatch(dict):
         DNSConfig defines DNS parameters for the proxy Pod in addition to those generated from DNSPolicy.
         When DNSPolicy is set to "None", DNSConfig must be specified.
         https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config
+
         :param Sequence[_builtins.str] nameservers: A list of DNS name server IP addresses.
                This will be appended to the base nameservers generated from DNSPolicy.
                Duplicated nameservers will be removed.
@@ -6063,6 +6143,7 @@ class ProxyClassSpecStatefulSetPodImagePullSecrets(dict):
         """
         LocalObjectReference contains enough information to let you locate the
         referenced object inside the same namespace.
+
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
                allowed to be empty. Instances of this type with an empty value here are
@@ -6096,6 +6177,7 @@ class ProxyClassSpecStatefulSetPodImagePullSecretsPatch(dict):
         """
         LocalObjectReference contains enough information to let you locate the
         referenced object inside the same namespace.
+
         :param _builtins.str name: Name of the referent.
                This field is effectively required, but due to backwards compatibility is
                allowed to be empty. Instances of this type with an empty value here are
@@ -6175,6 +6257,7 @@ class ProxyClassSpecStatefulSetPodPatch(dict):
                  topology_spread_constraints: Optional[Sequence['outputs.ProxyClassSpecStatefulSetPodTopologySpreadConstraintsPatch']] = None):
         """
         Configuration for the proxy Pod.
+
         :param Mapping[str, _builtins.str] annotations: Annotations that will be added to the proxy Pod.
                Any annotations specified here will be merged with the default
                annotations applied to the Pod by the Tailscale Kubernetes operator.
@@ -6422,6 +6505,7 @@ class ProxyClassSpecStatefulSetPodSecurityContext(dict):
         By default Tailscale Kubernetes operator does not apply any Pod
         security context.
         https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context-2
+
         :param _builtins.int fs_group: A special supplemental group that applies to all containers in a pod.
                Some volume types allow the Kubelet to change the ownership of that volume
                to be owned by the pod:
@@ -6713,6 +6797,7 @@ class ProxyClassSpecStatefulSetPodSecurityContextAppArmorProfile(dict):
         """
         appArmorProfile is the AppArmor options to use by the containers in this pod.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str localhost_profile: localhostProfile indicates a profile loaded on the node that should be used.
                The profile must be preconfigured on the node to work.
                Must match the loaded name of the profile.
@@ -6781,6 +6866,7 @@ class ProxyClassSpecStatefulSetPodSecurityContextAppArmorProfilePatch(dict):
         """
         appArmorProfile is the AppArmor options to use by the containers in this pod.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str localhost_profile: localhostProfile indicates a profile loaded on the node that should be used.
                The profile must be preconfigured on the node to work.
                Must match the loaded name of the profile.
@@ -6886,6 +6972,7 @@ class ProxyClassSpecStatefulSetPodSecurityContextPatch(dict):
         By default Tailscale Kubernetes operator does not apply any Pod
         security context.
         https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context-2
+
         :param _builtins.int fs_group: A special supplemental group that applies to all containers in a pod.
                Some volume types allow the Kubelet to change the ownership of that volume
                to be owned by the pod:
@@ -7170,6 +7257,7 @@ class ProxyClassSpecStatefulSetPodSecurityContextSeLinuxOptions(dict):
         both SecurityContext and PodSecurityContext, the value specified in SecurityContext
         takes precedence for that container.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str level: Level is SELinux level label that applies to the container.
         :param _builtins.str role: Role is a SELinux role label that applies to the container.
         :param _builtins.str type: Type is a SELinux type label that applies to the container.
@@ -7239,6 +7327,7 @@ class ProxyClassSpecStatefulSetPodSecurityContextSeLinuxOptionsPatch(dict):
         both SecurityContext and PodSecurityContext, the value specified in SecurityContext
         takes precedence for that container.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str level: Level is SELinux level label that applies to the container.
         :param _builtins.str role: Role is a SELinux role label that applies to the container.
         :param _builtins.str type: Type is a SELinux type label that applies to the container.
@@ -7315,6 +7404,7 @@ class ProxyClassSpecStatefulSetPodSecurityContextSeccompProfile(dict):
         """
         The seccomp options to use by the containers in this pod.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str localhost_profile: localhostProfile indicates a profile defined in a file on the node should be used.
                The profile must be preconfigured on the node to work.
                Must be a descending path, relative to the kubelet's configured seccomp profile location.
@@ -7385,6 +7475,7 @@ class ProxyClassSpecStatefulSetPodSecurityContextSeccompProfilePatch(dict):
         """
         The seccomp options to use by the containers in this pod.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str localhost_profile: localhostProfile indicates a profile defined in a file on the node should be used.
                The profile must be preconfigured on the node to work.
                Must be a descending path, relative to the kubelet's configured seccomp profile location.
@@ -7436,6 +7527,7 @@ class ProxyClassSpecStatefulSetPodSecurityContextSysctls(dict):
                  value: Optional[_builtins.str] = None):
         """
         Sysctl defines a kernel parameter to be set
+
         :param _builtins.str name: Name of a property to set
         :param _builtins.str value: Value of a property to set
         """
@@ -7471,6 +7563,7 @@ class ProxyClassSpecStatefulSetPodSecurityContextSysctlsPatch(dict):
                  value: Optional[_builtins.str] = None):
         """
         Sysctl defines a kernel parameter to be set
+
         :param _builtins.str name: Name of a property to set
         :param _builtins.str value: Value of a property to set
         """
@@ -7537,6 +7630,7 @@ class ProxyClassSpecStatefulSetPodSecurityContextWindowsOptions(dict):
         If unspecified, the options within a container's SecurityContext will be used.
         If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         Note that this field cannot be set when spec.os.name is linux.
+
         :param _builtins.str gmsa_credential_spec: GMSACredentialSpec is where the GMSA admission webhook
                (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the
                GMSA credential spec named by the GMSACredentialSpecName field.
@@ -7641,6 +7735,7 @@ class ProxyClassSpecStatefulSetPodSecurityContextWindowsOptionsPatch(dict):
         If unspecified, the options within a container's SecurityContext will be used.
         If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         Note that this field cannot be set when spec.os.name is linux.
+
         :param _builtins.str gmsa_credential_spec: GMSACredentialSpec is where the GMSA admission webhook
                (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the
                GMSA credential spec named by the GMSACredentialSpecName field.
@@ -7737,6 +7832,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainer(dict):
                  security_context: Optional['outputs.ProxyClassSpecStatefulSetPodTailscaleContainerSecurityContext'] = None):
         """
         Configuration for the proxy container running tailscale.
+
         :param Sequence['ProxyClassSpecStatefulSetPodTailscaleContainerEnvArgs'] env: List of environment variables to set in the container.
                https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#environment-variables
                Note that environment variables provided here will take precedence
@@ -7849,6 +7945,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerDebug(dict):
         """
         Configuration for enabling extra debug information in the container.
         Not recommended for production use.
+
         :param _builtins.bool enable: Enable tailscaled's HTTP pprof endpoints at <pod-ip>:9001/debug/pprof/
                and internal debug metrics endpoint at <pod-ip>:9001/debug/metrics, where
                9001 is a container port named "debug". The endpoints and their responses
@@ -7892,6 +7989,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerDebugPatch(dict):
         """
         Configuration for enabling extra debug information in the container.
         Not recommended for production use.
+
         :param _builtins.bool enable: Enable tailscaled's HTTP pprof endpoints at <pod-ip>:9001/debug/pprof/
                and internal debug metrics endpoint at <pod-ip>:9001/debug/metrics, where
                9001 is a container port named "debug". The endpoints and their responses
@@ -8047,6 +8145,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerPatch(dict):
                  security_context: Optional['outputs.ProxyClassSpecStatefulSetPodTailscaleContainerSecurityContextPatch'] = None):
         """
         Configuration for the proxy container running tailscale.
+
         :param Sequence['ProxyClassSpecStatefulSetPodTailscaleContainerEnvPatchArgs'] env: List of environment variables to set in the container.
                https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#environment-variables
                Note that environment variables provided here will take precedence
@@ -8169,6 +8268,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerResources(dict):
         amount of resources the operator needs to parse, usage patterns and
         cluster size.
         https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#resources
+
         :param Sequence['ProxyClassSpecStatefulSetPodTailscaleContainerResourcesClaimsArgs'] claims: Claims lists the names of resources, defined in spec.resourceClaims,
                that are used by this container.
 
@@ -8235,6 +8335,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerResourcesClaims(dict):
                  request: Optional[_builtins.str] = None):
         """
         ResourceClaim references one entry in PodSpec.ResourceClaims.
+
         :param _builtins.str name: Name must match the name of one entry in pod.spec.resourceClaims of
                the Pod where this field is used. It makes that resource available
                inside a container.
@@ -8278,6 +8379,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerResourcesClaimsPatch(dict):
                  request: Optional[_builtins.str] = None):
         """
         ResourceClaim references one entry in PodSpec.ResourceClaims.
+
         :param _builtins.str name: Name must match the name of one entry in pod.spec.resourceClaims of
                the Pod where this field is used. It makes that resource available
                inside a container.
@@ -8332,6 +8434,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerResourcesPatch(dict):
         amount of resources the operator needs to parse, usage patterns and
         cluster size.
         https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#resources
+
         :param Sequence['ProxyClassSpecStatefulSetPodTailscaleContainerResourcesClaimsPatchArgs'] claims: Claims lists the names of resources, defined in spec.resourceClaims,
                that are used by this container.
 
@@ -8457,6 +8560,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerSecurityContext(dict):
         installing device plugin in your cluster and configuring the proxies tun device to be created
         by the device plugin, see  https://github.com/tailscale/tailscale/issues/10814#issuecomment-2479977752
         https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context
+
         :param _builtins.bool allow_privilege_escalation: AllowPrivilegeEscalation controls whether a process can gain more
                privileges than its parent process. This bool directly controls if
                the no_new_privs flag will be set on the container process.
@@ -8659,6 +8763,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerSecurityContextAppArmorProfi
         appArmorProfile is the AppArmor options to use by this container. If set, this profile
         overrides the pod's appArmorProfile.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str localhost_profile: localhostProfile indicates a profile loaded on the node that should be used.
                The profile must be preconfigured on the node to work.
                Must match the loaded name of the profile.
@@ -8729,6 +8834,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerSecurityContextAppArmorProfi
         appArmorProfile is the AppArmor options to use by this container. If set, this profile
         overrides the pod's appArmorProfile.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str localhost_profile: localhostProfile indicates a profile loaded on the node that should be used.
                The profile must be preconfigured on the node to work.
                Must match the loaded name of the profile.
@@ -8782,6 +8888,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerSecurityContextCapabilities(
         The capabilities to add/drop when running containers.
         Defaults to the default set of capabilities granted by the container runtime.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param Sequence[_builtins.str] add: Added capabilities
         :param Sequence[_builtins.str] drop: Removed capabilities
         """
@@ -8821,6 +8928,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerSecurityContextCapabilitiesP
         The capabilities to add/drop when running containers.
         Defaults to the default set of capabilities granted by the container runtime.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param Sequence[_builtins.str] add: Added capabilities
         :param Sequence[_builtins.str] drop: Removed capabilities
         """
@@ -8915,6 +9023,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerSecurityContextPatch(dict):
         installing device plugin in your cluster and configuring the proxies tun device to be created
         by the device plugin, see  https://github.com/tailscale/tailscale/issues/10814#issuecomment-2479977752
         https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context
+
         :param _builtins.bool allow_privilege_escalation: AllowPrivilegeEscalation controls whether a process can gain more
                privileges than its parent process. This bool directly controls if
                the no_new_privs flag will be set on the container process.
@@ -9106,6 +9215,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerSecurityContextSeLinuxOption
         container.  May also be set in PodSecurityContext.  If set in both SecurityContext and
         PodSecurityContext, the value specified in SecurityContext takes precedence.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str level: Level is SELinux level label that applies to the container.
         :param _builtins.str role: Role is a SELinux role label that applies to the container.
         :param _builtins.str type: Type is a SELinux type label that applies to the container.
@@ -9173,6 +9283,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerSecurityContextSeLinuxOption
         container.  May also be set in PodSecurityContext.  If set in both SecurityContext and
         PodSecurityContext, the value specified in SecurityContext takes precedence.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str level: Level is SELinux level label that applies to the container.
         :param _builtins.str role: Role is a SELinux role label that applies to the container.
         :param _builtins.str type: Type is a SELinux type label that applies to the container.
@@ -9253,6 +9364,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerSecurityContextSeccompProfil
         provided at both the pod & container level, the container options
         override the pod options.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str localhost_profile: localhostProfile indicates a profile defined in a file on the node should be used.
                The profile must be preconfigured on the node to work.
                Must be a descending path, relative to the kubelet's configured seccomp profile location.
@@ -9327,6 +9439,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerSecurityContextSeccompProfil
         provided at both the pod & container level, the container options
         override the pod options.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str localhost_profile: localhostProfile indicates a profile defined in a file on the node should be used.
                The profile must be preconfigured on the node to work.
                Must be a descending path, relative to the kubelet's configured seccomp profile location.
@@ -9409,6 +9522,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerSecurityContextWindowsOption
         If unspecified, the options from the PodSecurityContext will be used.
         If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         Note that this field cannot be set when spec.os.name is linux.
+
         :param _builtins.str gmsa_credential_spec: GMSACredentialSpec is where the GMSA admission webhook
                (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the
                GMSA credential spec named by the GMSACredentialSpecName field.
@@ -9513,6 +9627,7 @@ class ProxyClassSpecStatefulSetPodTailscaleContainerSecurityContextWindowsOption
         If unspecified, the options from the PodSecurityContext will be used.
         If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         Note that this field cannot be set when spec.os.name is linux.
+
         :param _builtins.str gmsa_credential_spec: GMSACredentialSpec is where the GMSA admission webhook
                (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the
                GMSA credential spec named by the GMSACredentialSpecName field.
@@ -9611,6 +9726,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainer(dict):
         """
         Configuration for the proxy init container that enables forwarding.
         Not valid to apply to ProxyGroups of type "kube-apiserver".
+
         :param Sequence['ProxyClassSpecStatefulSetPodTailscaleInitContainerEnvArgs'] env: List of environment variables to set in the container.
                https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#environment-variables
                Note that environment variables provided here will take precedence
@@ -9723,6 +9839,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerDebug(dict):
         """
         Configuration for enabling extra debug information in the container.
         Not recommended for production use.
+
         :param _builtins.bool enable: Enable tailscaled's HTTP pprof endpoints at <pod-ip>:9001/debug/pprof/
                and internal debug metrics endpoint at <pod-ip>:9001/debug/metrics, where
                9001 is a container port named "debug". The endpoints and their responses
@@ -9766,6 +9883,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerDebugPatch(dict):
         """
         Configuration for enabling extra debug information in the container.
         Not recommended for production use.
+
         :param _builtins.bool enable: Enable tailscaled's HTTP pprof endpoints at <pod-ip>:9001/debug/pprof/
                and internal debug metrics endpoint at <pod-ip>:9001/debug/metrics, where
                9001 is a container port named "debug". The endpoints and their responses
@@ -9923,6 +10041,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerPatch(dict):
         """
         Configuration for the proxy init container that enables forwarding.
         Not valid to apply to ProxyGroups of type "kube-apiserver".
+
         :param Sequence['ProxyClassSpecStatefulSetPodTailscaleInitContainerEnvPatchArgs'] env: List of environment variables to set in the container.
                https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#environment-variables
                Note that environment variables provided here will take precedence
@@ -10045,6 +10164,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerResources(dict):
         amount of resources the operator needs to parse, usage patterns and
         cluster size.
         https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#resources
+
         :param Sequence['ProxyClassSpecStatefulSetPodTailscaleInitContainerResourcesClaimsArgs'] claims: Claims lists the names of resources, defined in spec.resourceClaims,
                that are used by this container.
 
@@ -10111,6 +10231,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerResourcesClaims(dict):
                  request: Optional[_builtins.str] = None):
         """
         ResourceClaim references one entry in PodSpec.ResourceClaims.
+
         :param _builtins.str name: Name must match the name of one entry in pod.spec.resourceClaims of
                the Pod where this field is used. It makes that resource available
                inside a container.
@@ -10154,6 +10275,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerResourcesClaimsPatch(dic
                  request: Optional[_builtins.str] = None):
         """
         ResourceClaim references one entry in PodSpec.ResourceClaims.
+
         :param _builtins.str name: Name must match the name of one entry in pod.spec.resourceClaims of
                the Pod where this field is used. It makes that resource available
                inside a container.
@@ -10208,6 +10330,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerResourcesPatch(dict):
         amount of resources the operator needs to parse, usage patterns and
         cluster size.
         https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#resources
+
         :param Sequence['ProxyClassSpecStatefulSetPodTailscaleInitContainerResourcesClaimsPatchArgs'] claims: Claims lists the names of resources, defined in spec.resourceClaims,
                that are used by this container.
 
@@ -10333,6 +10456,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerSecurityContext(dict):
         installing device plugin in your cluster and configuring the proxies tun device to be created
         by the device plugin, see  https://github.com/tailscale/tailscale/issues/10814#issuecomment-2479977752
         https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context
+
         :param _builtins.bool allow_privilege_escalation: AllowPrivilegeEscalation controls whether a process can gain more
                privileges than its parent process. This bool directly controls if
                the no_new_privs flag will be set on the container process.
@@ -10535,6 +10659,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerSecurityContextAppArmorP
         appArmorProfile is the AppArmor options to use by this container. If set, this profile
         overrides the pod's appArmorProfile.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str localhost_profile: localhostProfile indicates a profile loaded on the node that should be used.
                The profile must be preconfigured on the node to work.
                Must match the loaded name of the profile.
@@ -10605,6 +10730,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerSecurityContextAppArmorP
         appArmorProfile is the AppArmor options to use by this container. If set, this profile
         overrides the pod's appArmorProfile.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str localhost_profile: localhostProfile indicates a profile loaded on the node that should be used.
                The profile must be preconfigured on the node to work.
                Must match the loaded name of the profile.
@@ -10658,6 +10784,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerSecurityContextCapabilit
         The capabilities to add/drop when running containers.
         Defaults to the default set of capabilities granted by the container runtime.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param Sequence[_builtins.str] add: Added capabilities
         :param Sequence[_builtins.str] drop: Removed capabilities
         """
@@ -10697,6 +10824,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerSecurityContextCapabilit
         The capabilities to add/drop when running containers.
         Defaults to the default set of capabilities granted by the container runtime.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param Sequence[_builtins.str] add: Added capabilities
         :param Sequence[_builtins.str] drop: Removed capabilities
         """
@@ -10791,6 +10919,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerSecurityContextPatch(dic
         installing device plugin in your cluster and configuring the proxies tun device to be created
         by the device plugin, see  https://github.com/tailscale/tailscale/issues/10814#issuecomment-2479977752
         https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#security-context
+
         :param _builtins.bool allow_privilege_escalation: AllowPrivilegeEscalation controls whether a process can gain more
                privileges than its parent process. This bool directly controls if
                the no_new_privs flag will be set on the container process.
@@ -10982,6 +11111,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerSecurityContextSeLinuxOp
         container.  May also be set in PodSecurityContext.  If set in both SecurityContext and
         PodSecurityContext, the value specified in SecurityContext takes precedence.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str level: Level is SELinux level label that applies to the container.
         :param _builtins.str role: Role is a SELinux role label that applies to the container.
         :param _builtins.str type: Type is a SELinux type label that applies to the container.
@@ -11049,6 +11179,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerSecurityContextSeLinuxOp
         container.  May also be set in PodSecurityContext.  If set in both SecurityContext and
         PodSecurityContext, the value specified in SecurityContext takes precedence.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str level: Level is SELinux level label that applies to the container.
         :param _builtins.str role: Role is a SELinux role label that applies to the container.
         :param _builtins.str type: Type is a SELinux type label that applies to the container.
@@ -11129,6 +11260,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerSecurityContextSeccompPr
         provided at both the pod & container level, the container options
         override the pod options.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str localhost_profile: localhostProfile indicates a profile defined in a file on the node should be used.
                The profile must be preconfigured on the node to work.
                Must be a descending path, relative to the kubelet's configured seccomp profile location.
@@ -11203,6 +11335,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerSecurityContextSeccompPr
         provided at both the pod & container level, the container options
         override the pod options.
         Note that this field cannot be set when spec.os.name is windows.
+
         :param _builtins.str localhost_profile: localhostProfile indicates a profile defined in a file on the node should be used.
                The profile must be preconfigured on the node to work.
                Must be a descending path, relative to the kubelet's configured seccomp profile location.
@@ -11285,6 +11418,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerSecurityContextWindowsOp
         If unspecified, the options from the PodSecurityContext will be used.
         If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         Note that this field cannot be set when spec.os.name is linux.
+
         :param _builtins.str gmsa_credential_spec: GMSACredentialSpec is where the GMSA admission webhook
                (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the
                GMSA credential spec named by the GMSACredentialSpecName field.
@@ -11389,6 +11523,7 @@ class ProxyClassSpecStatefulSetPodTailscaleInitContainerSecurityContextWindowsOp
         If unspecified, the options from the PodSecurityContext will be used.
         If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         Note that this field cannot be set when spec.os.name is linux.
+
         :param _builtins.str gmsa_credential_spec: GMSACredentialSpec is where the GMSA admission webhook
                (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the
                GMSA credential spec named by the GMSACredentialSpecName field.
@@ -11484,6 +11619,7 @@ class ProxyClassSpecStatefulSetPodTolerations(dict):
         """
         The pod this Toleration is attached to tolerates any taint that matches
         the triple <key,value,effect> using the matching operator <operator>.
+
         :param _builtins.str effect: Effect indicates the taint effect to match. Empty means match all taint effects.
                When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
         :param _builtins.str key: Key is the taint key that the toleration applies to. Empty means match all taint keys.
@@ -11592,6 +11728,7 @@ class ProxyClassSpecStatefulSetPodTolerationsPatch(dict):
         """
         The pod this Toleration is attached to tolerates any taint that matches
         the triple <key,value,effect> using the matching operator <operator>.
+
         :param _builtins.str effect: Effect indicates the taint effect to match. Empty means match all taint effects.
                When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
         :param _builtins.str key: Key is the taint key that the toleration applies to. Empty means match all taint keys.
@@ -11715,6 +11852,7 @@ class ProxyClassSpecStatefulSetPodTopologySpreadConstraints(dict):
                  when_unsatisfiable: Optional[_builtins.str] = None):
         """
         TopologySpreadConstraint specifies how to spread matching pods among the given topology.
+
         :param Sequence[_builtins.str] match_label_keys: MatchLabelKeys is a set of pod label keys to select the pods over which
                spreading will be calculated. The keys are used to lookup values from the
                incoming pod labels, those key-value labels are ANDed with labelSelector
@@ -11995,6 +12133,7 @@ class ProxyClassSpecStatefulSetPodTopologySpreadConstraintsLabelSelector(dict):
         LabelSelector is used to find matching pods.
         Pods that match this label selector are counted to determine the number of pods
         in their corresponding topology domain.
+
         :param Sequence['ProxyClassSpecStatefulSetPodTopologySpreadConstraintsLabelSelectorMatchExpressionsArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -12037,6 +12176,7 @@ class ProxyClassSpecStatefulSetPodTopologySpreadConstraintsLabelSelectorMatchExp
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -12094,6 +12234,7 @@ class ProxyClassSpecStatefulSetPodTopologySpreadConstraintsLabelSelectorMatchExp
         """
         A label selector requirement is a selector that contains values, a key, and an operator that
         relates the key and values.
+
         :param _builtins.str key: key is the label key that the selector applies to.
         :param _builtins.str operator: operator represents a key's relationship to a set of values.
                Valid operators are In, NotIn, Exists and DoesNotExist.
@@ -12171,6 +12312,7 @@ class ProxyClassSpecStatefulSetPodTopologySpreadConstraintsLabelSelectorPatch(di
         LabelSelector is used to find matching pods.
         Pods that match this label selector are counted to determine the number of pods
         in their corresponding topology domain.
+
         :param Sequence['ProxyClassSpecStatefulSetPodTopologySpreadConstraintsLabelSelectorMatchExpressionsPatchArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
         :param Mapping[str, _builtins.str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
                map is equivalent to an element of matchExpressions, whose key field is "key", the
@@ -12247,6 +12389,7 @@ class ProxyClassSpecStatefulSetPodTopologySpreadConstraintsPatch(dict):
                  when_unsatisfiable: Optional[_builtins.str] = None):
         """
         TopologySpreadConstraint specifies how to spread matching pods among the given topology.
+
         :param Sequence[_builtins.str] match_label_keys: MatchLabelKeys is a set of pod label keys to select the pods over which
                spreading will be calculated. The keys are used to lookup values from the
                incoming pod labels, those key-value labels are ANDed with labelSelector
@@ -12544,6 +12687,7 @@ class ProxyClassSpecStaticEndpointsNodePort(dict):
                  selector: Optional[Mapping[str, _builtins.str]] = None):
         """
         The configuration for static endpoints using NodePort Services.
+
         :param Sequence['ProxyClassSpecStaticEndpointsNodePortPortsArgs'] ports: The port ranges from which the operator will select NodePorts for the Services.
                You must ensure that firewall rules allow UDP ingress traffic for these ports
                to the node's external IPs.
@@ -12589,6 +12733,7 @@ class ProxyClassSpecStaticEndpointsNodePortPatch(dict):
                  selector: Optional[Mapping[str, _builtins.str]] = None):
         """
         The configuration for static endpoints using NodePort Services.
+
         :param Sequence['ProxyClassSpecStaticEndpointsNodePortPortsPatchArgs'] ports: The port ranges from which the operator will select NodePorts for the Services.
                You must ensure that firewall rules allow UDP ingress traffic for these ports
                to the node's external IPs.
@@ -12796,6 +12941,7 @@ class ProxyClassSpecTailscale(dict):
         """
         TailscaleConfig contains options to configure the tailscale-specific
         parameters of proxies.
+
         :param _builtins.bool accept_routes: AcceptRoutes can be set to true to make the proxy instance accept
                routes advertized by other nodes on the tailnet, such as subnet
                routes.
@@ -12848,6 +12994,7 @@ class ProxyClassSpecTailscalePatch(dict):
         """
         TailscaleConfig contains options to configure the tailscale-specific
         parameters of proxies.
+
         :param _builtins.bool accept_routes: AcceptRoutes can be set to true to make the proxy instance accept
                routes advertized by other nodes on the tailnet, such as subnet
                routes.
@@ -12883,6 +13030,7 @@ class ProxyClassStatus(dict):
         """
         Status of the ProxyClass. This is set and managed automatically.
         https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
         :param Sequence['ProxyClassStatusConditionsArgs'] conditions: List of status conditions to indicate the status of the ProxyClass.
                Known condition types are `ProxyClassReady`.
         """
@@ -12932,6 +13080,7 @@ class ProxyClassStatusConditions(dict):
                  type: Optional[_builtins.str] = None):
         """
         Condition contains details for one aspect of the current state of this API Resource.
+
         :param _builtins.str last_transition_time: lastTransitionTime is the last time the condition transitioned from one status to another.
                This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
         :param _builtins.str message: message is a human readable message indicating details about the transition.
@@ -13050,6 +13199,7 @@ class ProxyClassStatusConditionsPatch(dict):
                  type: Optional[_builtins.str] = None):
         """
         Condition contains details for one aspect of the current state of this API Resource.
+
         :param _builtins.str last_transition_time: lastTransitionTime is the last time the condition transitioned from one status to another.
                This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
         :param _builtins.str message: message is a human readable message indicating details about the transition.
@@ -13146,6 +13296,7 @@ class ProxyClassStatusPatch(dict):
         """
         Status of the ProxyClass. This is set and managed automatically.
         https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
         :param Sequence['ProxyClassStatusConditionsPatchArgs'] conditions: List of status conditions to indicate the status of the ProxyClass.
                Known condition types are `ProxyClassReady`.
         """

@@ -33,6 +33,7 @@ The root `Justfile` provides light wrappers around the per-project workflows:
 - `just sync <project>`: run `uv sync` inside a project.
 - `just preview <project> stack=<stack>`: run `pulumi preview`.
 - `just up <project> stack=<stack>`: run `pulumi up`.
+- `just preview-all`: preview every `mx` stack.
 - `just check-python`: syntax-check all Pulumi Python entrypoints.
 - `just lint`: run Ruff checks and formatting verification.
 - `just format`: format Pulumi Python entrypoints with Ruff.

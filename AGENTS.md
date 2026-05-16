@@ -59,9 +59,9 @@ Important command expectations:
   cluster.
 - `just lint` runs Ruff checks and format verification, excluding generated
   CRD packages under `pulumi/lib`.
-- `just preview-all` discovers local stacks, writes logs under
-  `/tmp/pulumi-previews-<timestamp>`, and may stop on failures that are caused
-  by missing config or live-state drift rather than code regressions.
+- `just preview-all` previews only stacks named `mx`, writes logs under
+  `/tmp/pulumi-mx-previews-<timestamp>`, and may stop on failures that are
+  caused by missing config or live-state drift rather than code regressions.
 - Do not run `pulumi up`, `pulumi destroy`, or `just up` unless the user
   explicitly asks for an apply/destructive action.
 
@@ -150,9 +150,11 @@ For a changed stack, also run a targeted preview:
 just preview pulumi/<area>/<service> stack=<stack>
 ```
 
-For broad sweeps, `just preview-all` is useful after the cheap gates pass. When
-reporting results, separate code regressions from environment or live-state
-blockers and include the log directory, not secret-bearing log excerpts.
+For broad sweeps, `just preview-all` is useful after the cheap gates pass. It is
+intentionally `mx`-only for this checkout; non-`mx` stacks are not managed from
+this repository. When reporting results, separate code regressions from
+environment or live-state blockers and include the log directory, not
+secret-bearing log excerpts.
 
 ## Security and Confidentiality
 

@@ -9,7 +9,7 @@ import pulumi
 
 config = pulumi.Config()
 namespace_name = config.get("namespace", "clickhouse")
-operator_chart_version = config.get("operatorChartVersion", "0.26.3")
+operator_chart_version = config.get("operatorChartVersion", "0.27.0")
 clickhouse_installation_name = config.get("installationName", "clickhouse")
 clickhouse_cluster_name = config.get("clusterName", "default")
 clickhouse_admin_username = config.get("adminUsername", "admin")
@@ -22,7 +22,7 @@ clickhouse_admin_networks = config.get_object(
 )
 clickhouse_image = config.get(
     "clickhouseImage",
-    "clickhouse/clickhouse-server:26.3.9.8",
+    "clickhouse/clickhouse-server:26.4.2.10",
 )
 storage_class_name = config.get("storageClassName", "local-path")
 storage_size = config.get("storageSize", "100Gi")

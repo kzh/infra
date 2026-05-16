@@ -8,8 +8,8 @@ Usage:
 
 Example:
   generate_crd_package.sh monitoring_crds "Monitoring CRDs" \
-    prometheus-operator-crds https://prometheus-community.github.io/helm-charts 28.0.1 \
-    pulumi/ops/monitoring/crds/prometheus-operator-crds-28.0.1.crds.yaml \
+    prometheus-operator-crds https://prometheus-community.github.io/helm-charts 29.0.0 \
+    pulumi/ops/monitoring/crds/prometheus-operator-crds-29.0.0.crds.yaml \
     pulumi/lib/monitoring_crds prometheus-operator-crds
 EOF
 }
@@ -27,7 +27,7 @@ CHART_VERSION="$5"
 CRD_FILE_ARG="$6"
 OUT_DIR_ARG="$7"
 RELEASE_NAME="${8:-$CHART_NAME}"
-GENERATED_PROVIDER_VERSION="4.30.0"
+GENERATED_PROVIDER_VERSION="4.31.0"
 
 REPO_ROOT="$(git rev-parse --show-toplevel)"
 
@@ -92,7 +92,8 @@ crd2pulumi \
     --version "$GENERATED_PROVIDER_VERSION" \
     "$CRD_FILE"
 
-perl -0pi -e 's/"pulumi>=3\.165\.0,<4\.0\.0"/"pulumi>=3.234.0,<4.0.0"/g; s/"pulumi-kubernetes==4\.23\.0"/"pulumi-kubernetes>=4.30.0,<5.0.0"/g' "$OUT_DIR/pyproject.toml"
+perl -0pi -e 's/"pulumi>=3\.[0-9]+\.0,<4\.0\.0"/"pulumi>=3.239.0,<4.0.0"/g; s/"pulumi-kubernetes(?:==|>=)4\.[0-9]+\.0(?:,<5\.0\.0)?"/"pulumi-kubernetes>=4.31.0,<5.0.0"/g' "$OUT_DIR/pyproject.toml"
+find "$OUT_DIR" -name '*.py' -exec perl -0pi -e 's/[ \t]+$//mg; s/\n+\z/\n/' {} +
 
 cat > "$OUT_DIR/README.md" <<EOF
 # ${TITLE}

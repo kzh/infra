@@ -6,7 +6,7 @@ config = pulumi.Config()
 
 namespace_name = config.get("namespace") or "mysql-operator"
 release_name = config.get("releaseName") or "mysql-operator"
-chart_version = config.get("chartVersion") or "2.2.7"
+chart_version = config.get("chartVersion") or "2.2.8"
 k8s_cluster_domain = config.get("k8sClusterDomain") or "cluster.local"
 
 mysql_operator_namespace = k8s.core.v1.Namespace(

@@ -59,7 +59,7 @@ def deploy_prometheus_stack_crds():
             fetch_opts=k8s.helm.v3.FetchOpts(
                 repo=PROMETHEUS_REPO,
             ),
-            version="28.0.1",
+            version="29.0.0",
         ),
     )
 
@@ -134,7 +134,7 @@ def deploy_prometheus_stack(crds_chart):
             fetch_opts=k8s.helm.v3.FetchOpts(
                 repo=PROMETHEUS_REPO,
             ),
-            version="84.5.0",
+            version="85.1.0",
             values=values,
             transformations=[
                 skip_await_for_grafana_pvc,

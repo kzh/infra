@@ -20,7 +20,7 @@ check-mysql-crds version="":
 	git diff --exit-code -- pulumi/core/operators/mysql/crds pulumi/lib/mysql_operator_crds
 
 # Regenerate typed Python bindings for Prometheus Operator monitoring CRDs.
-generate-monitoring-crds version="28.0.1":
+generate-monitoring-crds version="29.0.0":
 	just generate-crd-package monitoring_crds "Monitoring CRDs" prometheus-operator-crds https://prometheus-community.github.io/helm-charts "{{version}}" podmonitors.monitoring.coreos.com,servicemonitors.monitoring.coreos.com pulumi/ops/monitoring prometheus-operator-crds
 
 # Regenerate typed Python bindings for Tailscale operator CRDs.
@@ -36,7 +36,7 @@ generate-spark-crds version="2.5.0":
 	just generate-crd-package spark_operator_crds "Spark Operator CRDs" spark-operator https://kubeflow.github.io/spark-operator "{{version}}" sparkconnects.sparkoperator.k8s.io pulumi/data/analytics/spark spark-operator
 
 # Regenerate typed Python bindings for ClickHouse operator CRDs.
-generate-clickhouse-crds version="0.26.3":
+generate-clickhouse-crds version="0.27.0":
 	just generate-crd-package clickhouse_operator_crds "ClickHouse Operator CRDs" altinity-clickhouse-operator https://docs.altinity.com/clickhouse-operator "{{version}}" clickhouseinstallations.clickhouse.altinity.com pulumi/data/analytics/clickhouse altinity-clickhouse-operator
 
 # Generate one typed CRD package from a Helm chart. Use crd_names="-" to include every CRD in the chart.
@@ -67,7 +67,7 @@ check-crds:
 preview project stack="":
 	cd {{project}} && if [ -n "{{stack}}" ]; then pulumi preview --stack "{{stack}}"; else pulumi preview; fi
 
-# Preview every Pulumi stack discovered for every local project.
+# Preview every mx stack managed by this checkout.
 preview-all mode="normal":
 	@set -euo pipefail; \
 	if [ "{{mode}}" = "normal" ]; then \
@@ -78,23 +78,23 @@ preview-all mode="normal":
 		echo "mode must be normal or refresh" >&2; \
 		exit 2; \
 	fi; \
-	logdir="/tmp/pulumi-previews-$(date +%Y%m%d%H%M%S)"; \
+	stack="mx"; \
+	logdir="/tmp/pulumi-${stack}-previews-$(date +%Y%m%d%H%M%S)"; \
 	mkdir -p "$logdir"; \
 	failed=0; \
 	while IFS= read -r project; do \
-		while IFS= read -r stack; do \
-			name="$(printf '%s__%s' "$project" "$stack" | tr '/' '_')"; \
-			logfile="$logdir/$name.log"; \
-			printf '\n== %s [%s] ==\n' "$project" "$stack"; \
-			if (cd "$project" && pulumi preview --stack "$stack" "${flags[@]}") >"$logfile" 2>&1; then \
-				awk '/Resources:/,/Duration:/' "$logfile" | tail -25; \
-			else \
-				rc=$?; \
-				printf 'FAILED exit=%s\n' "$rc"; \
-				grep -E '^(Diagnostics:|error:|Resources:|Duration:|Previewing|  pulumi:|  kubernetes:)' "$logfile" | tail -80 || true; \
-				failed=1; \
-			fi; \
-		done < <(cd "$project" && pulumi stack ls --json | jq -r '.[].name'); \
+		if ! (cd "$project" && pulumi stack ls --json | jq -e --arg stack "$stack" '.[] | select(.name == $stack)' >/dev/null); then continue; fi; \
+		name="$(printf '%s__%s' "$project" "$stack" | tr '/' '_')"; \
+		logfile="$logdir/$name.log"; \
+		printf '\n== %s [%s] ==\n' "$project" "$stack"; \
+		if (cd "$project" && pulumi preview --stack "$stack" "${flags[@]}") >"$logfile" 2>&1; then \
+			awk '/Resources:/,/Duration:/' "$logfile" | tail -25; \
+		else \
+			rc=$?; \
+			printf 'FAILED exit=%s\n' "$rc"; \
+			grep -E '^(Diagnostics:|error:|Resources:|Duration:|Previewing|  pulumi:|  kubernetes:)' "$logfile" | tail -80 || true; \
+			failed=1; \
+		fi; \
 	done < <(just projects); \
 	printf '\nLOGDIR %s\n' "$logdir"; \
 	exit "$failed"

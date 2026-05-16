@@ -23,6 +23,7 @@ __all__ = [
     'ObjectMetaPatch',
     'OwnerReference',
     'OwnerReferencePatch',
+    'ShardInfo',
 ]
 
 @pulumi.output_type
@@ -41,6 +42,8 @@ class ListMeta(dict):
             suggest = "resource_version"
         elif key == "selfLink":
             suggest = "self_link"
+        elif key == "shardInfo":
+            suggest = "shard_info"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in ListMeta. Access the value via the '{suggest}' property getter instead.")
@@ -57,13 +60,18 @@ class ListMeta(dict):
                  continue_: Optional[_builtins.str] = None,
                  remaining_item_count: Optional[_builtins.int] = None,
                  resource_version: Optional[_builtins.str] = None,
-                 self_link: Optional[_builtins.str] = None):
+                 self_link: Optional[_builtins.str] = None,
+                 shard_info: Optional['outputs.ShardInfo'] = None):
         """
         ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}.
+
         :param _builtins.str continue_: continue may be set if the user set a limit on the number of items returned, and indicates that the server has more data available. The value is opaque and may be used to issue another request to the endpoint that served this list to retrieve the next set of available objects. Continuing a consistent list may not be possible if the server configuration has changed or more than a few minutes have passed. The resourceVersion field returned when using this continue value will be identical to the value in the first response, unless you have received this token from an error message.
         :param _builtins.int remaining_item_count: remainingItemCount is the number of subsequent items in the list which are not included in this list response. If the list request contained label or field selectors, then the number of remaining items is unknown and the field will be left unset and omitted during serialization. If the list is complete (either because it is not chunking or because this is the last chunk), then there are no more remaining items and this field will be left unset and omitted during serialization. Servers older than v1.15 do not set this field. The intended use of the remainingItemCount is *estimating* the size of a collection. Clients should not rely on the remainingItemCount to be set or to be exact.
         :param _builtins.str resource_version: String that identifies the server's internal version of this object that can be used by clients to determine when objects have changed. Value must be treated as opaque by clients and passed unmodified back to the server. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
         :param _builtins.str self_link: Deprecated: selfLink is a legacy read-only field that is no longer populated by the system.
+        :param 'ShardInfoArgs' shard_info: shardInfo is set when the list is a filtered subset of the full collection, as selected by a shard selector on the request. It echoes back the selector so clients can verify which shard they received and merge sharded responses. Clients should not cache sharded list responses as a full representation of the collection.
+
+               This is an alpha field and requires enabling the ShardedListAndWatch feature gate.
         """
         if continue_ is not None:
             pulumi.set(__self__, "continue_", continue_)
@@ -73,6 +81,8 @@ class ListMeta(dict):
             pulumi.set(__self__, "resource_version", resource_version)
         if self_link is not None:
             pulumi.set(__self__, "self_link", self_link)
+        if shard_info is not None:
+            pulumi.set(__self__, "shard_info", shard_info)
 
     @_builtins.property
     @pulumi.getter(name="continue")
@@ -105,6 +115,16 @@ class ListMeta(dict):
         Deprecated: selfLink is a legacy read-only field that is no longer populated by the system.
         """
         return pulumi.get(self, "self_link")
+
+    @_builtins.property
+    @pulumi.getter(name="shardInfo")
+    def shard_info(self) -> Optional['outputs.ShardInfo']:
+        """
+        shardInfo is set when the list is a filtered subset of the full collection, as selected by a shard selector on the request. It echoes back the selector so clients can verify which shard they received and merge sharded responses. Clients should not cache sharded list responses as a full representation of the collection.
+
+        This is an alpha field and requires enabling the ShardedListAndWatch feature gate.
+        """
+        return pulumi.get(self, "shard_info")
 
 
 @pulumi.output_type
@@ -143,6 +163,7 @@ class ManagedFieldsEntry(dict):
                  time: Optional[_builtins.str] = None):
         """
         ManagedFieldsEntry is a workflow-id, a FieldSet and the group version of the resource that the fieldset applies to.
+
         :param _builtins.str api_version: APIVersion defines the version of this resource that this field set applies to. The format is "group/version" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.
         :param _builtins.str fields_type: FieldsType is the discriminator for the different fields format and version. There is currently only one possible value: "FieldsV1"
         :param Any fields_v1: FieldsV1 holds the first JSON version format as described in the "FieldsV1" type.
@@ -259,6 +280,7 @@ class ManagedFieldsEntryPatch(dict):
                  time: Optional[_builtins.str] = None):
         """
         ManagedFieldsEntry is a workflow-id, a FieldSet and the group version of the resource that the fieldset applies to.
+
         :param _builtins.str api_version: APIVersion defines the version of this resource that this field set applies to. The format is "group/version" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.
         :param _builtins.str fields_type: FieldsType is the discriminator for the different fields format and version. There is currently only one possible value: "FieldsV1"
         :param Any fields_v1: FieldsV1 holds the first JSON version format as described in the "FieldsV1" type.
@@ -393,6 +415,7 @@ class ObjectMeta(dict):
                  uid: Optional[_builtins.str] = None):
         """
         ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+
         :param Mapping[str, _builtins.str] annotations: Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations
         :param _builtins.str creation_timestamp: CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.
 
@@ -643,6 +666,7 @@ class ObjectMetaPatch(dict):
                  uid: Optional[_builtins.str] = None):
         """
         ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+
         :param Mapping[str, _builtins.str] annotations: Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations
         :param _builtins.str creation_timestamp: CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.
 
@@ -872,6 +896,7 @@ class OwnerReference(dict):
                  controller: Optional[_builtins.bool] = None):
         """
         OwnerReference contains enough information to let you identify an owning object. An owning object must be in the same namespace as the dependent, or be cluster-scoped, so there is no namespace field.
+
         :param _builtins.str api_version: API version of the referent.
         :param _builtins.str kind: Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
         :param _builtins.str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names
@@ -970,6 +995,7 @@ class OwnerReferencePatch(dict):
                  uid: Optional[_builtins.str] = None):
         """
         OwnerReference contains enough information to let you identify an owning object. An owning object must be in the same namespace as the dependent, or be cluster-scoped, so there is no namespace field.
+
         :param _builtins.str api_version: API version of the referent.
         :param _builtins.bool block_owner_deletion: If true, AND if the owner has the "foregroundDeletion" finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs "delete" permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.
         :param _builtins.bool controller: If true, this reference points to the managing controller.
@@ -1037,3 +1063,26 @@ class OwnerReferencePatch(dict):
         UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids
         """
         return pulumi.get(self, "uid")
+
+
+@pulumi.output_type
+class ShardInfo(dict):
+    """
+    ShardInfo describes the shard selector that was applied to produce a list response. Its presence on a list response indicates the list is a filtered subset.
+    """
+    def __init__(__self__, *,
+                 selector: _builtins.str):
+        """
+        ShardInfo describes the shard selector that was applied to produce a list response. Its presence on a list response indicates the list is a filtered subset.
+
+        :param _builtins.str selector: selector is the shard selector string from the request, echoed back so clients can verify which shard they received and merge responses from multiple shards.
+        """
+        pulumi.set(__self__, "selector", selector)
+
+    @_builtins.property
+    @pulumi.getter
+    def selector(self) -> _builtins.str:
+        """
+        selector is the shard selector string from the request, echoed back so clients can verify which shard they received and merge responses from multiple shards.
+        """
+        return pulumi.get(self, "selector")

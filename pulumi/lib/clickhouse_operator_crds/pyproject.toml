@@ -1,11 +1,11 @@
 [project]
   name = "pulumi_clickhouse_operator_crds"
   description = "A Pulumi package for creating and managing Kubernetes resources."
-  dependencies = ["parver>=0.2.1", "pulumi>=3.234.0,<4.0.0", "pulumi-kubernetes>=4.30.0,<5.0.0", "requests>=2.21,<3.0", "semver>=2.8.1", "typing-extensions>=4.11,<5; python_version < \"3.11\""]
+  dependencies = ["parver>=0.2.1", "pulumi>=3.239.0,<4.0.0", "pulumi-kubernetes>=4.31.0,<5.0.0", "requests>=2.21,<3.0", "semver>=2.8.1", "typing-extensions>=4.11,<5; python_version < \"3.11\""]
   keywords = ["pulumi", "kubernetes", "category/cloud", "kind/native"]
   readme = "README.md"
   requires-python = ">=3.9"
-  version = "4.30.0"
+  version = "4.31.0"
   [project.license]
     text = "Apache-2.0"
   [project.urls]
