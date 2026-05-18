@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pulumi_kubernetes as k8s
+from infra_helpers.grafana import dashboard_config_maps
 
 import pulumi
 
@@ -115,24 +116,14 @@ slurm_cluster = k8s.helm.v3.Release(
     opts=pulumi.ResourceOptions(depends_on=[slurm_operator, slurm_namespace]),
 )
 
-for dashboard_file in dashboard_files:
-    dashboard_name = dashboard_file.replace(".json", "")
-    dashboard_data = (dashboards_dir / dashboard_file).read_text(encoding="utf-8")
-    k8s.core.v1.ConfigMap(
-        f"slurm-dashboard-{dashboard_name}",
-        metadata=k8s.meta.v1.ObjectMetaArgs(
-            name=f"slurm-dashboard-{dashboard_name}",
-            namespace=slurm_namespace.metadata.name,
-            labels={
-                "grafana_dashboard": "1",
-                "app": "slurm",
-            },
-        ),
-        data={
-            dashboard_file: dashboard_data,
-        },
-        opts=pulumi.ResourceOptions(depends_on=[slurm_cluster]),
-    )
+dashboard_config_maps(
+    name_prefix="slurm-dashboard",
+    namespace=slurm_namespace.metadata.name,
+    dashboards_dir=dashboards_dir,
+    dashboard_files=dashboard_files,
+    labels={"app": "slurm"},
+    opts=pulumi.ResourceOptions(depends_on=[slurm_cluster]),
+)
 
 pulumi.export("operatorNamespace", slinky_namespace.metadata.name)
 pulumi.export("namespace", slurm_namespace.metadata.name)

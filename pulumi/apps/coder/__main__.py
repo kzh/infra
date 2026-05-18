@@ -2,6 +2,7 @@ from urllib.parse import quote
 
 import pulumi_kubernetes as k8s
 import pulumi_postgresql as pg
+from infra_helpers.postgres import PostgresStack
 
 import pulumi
 
@@ -18,11 +19,6 @@ def get_string_map_config(name: str) -> dict[str, str]:
     if not isinstance(raw_value, dict):
         return {}
     return {str(key): str(value) for key, value in raw_value.items()}
-
-
-def first_present(values: list[object]) -> object:
-    primary, fallback = values
-    return primary or fallback
 
 
 namespace_name = config.get("namespace") or "coder"
@@ -68,25 +64,20 @@ coder_namespace = k8s.core.v1.Namespace(
     ),
 )
 
-pgref = pulumi.StackReference(postgres_stack)
-pg_host = pgref.require_output("rw_service_fqdn")
-pg_port = pgref.require_output("port").apply(lambda p: int(p) if p else 5432)
-pg_username = pgref.require_output("username")
-pg_password = pgref.require_output("password")
-pg_provider_host = pulumi.Output.all(
-    pgref.require_output("ts_hostname"), pgref.require_output("host")
-).apply(first_present)
+postgres = PostgresStack(postgres_stack)
+pg_host = postgres.rw_service_fqdn
+pg_port = postgres.port.apply(lambda p: int(p) if p else 5432)
+pg_username = postgres.username
+pg_password = postgres.password
 
 coder_database = None
 if create_database:
-    admin_provider = pg.Provider(
+    admin_provider = postgres.admin_provider(
         "coder-pg-admin",
-        host=pg_provider_host,
-        port=pg_port,
-        username=pg_username,
-        password=pg_password,
         database=postgres_admin_db,
         sslmode=postgres_sslmode,
+        host=postgres.admin_host,
+        port=pg_port,
     )
     coder_database = pg.Database(
         "coder-database",

@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pulumi_kubernetes as k8s
+from infra_helpers.grafana import dashboard_config_maps
 from pulumi_kuberay_crds.ray.v1 import RayCluster
 from pulumi_monitoring_crds.monitoring.v1 import PodMonitor
 
@@ -41,23 +42,8 @@ RAY_DASHBOARD_FILES = [
 RAY_DASHBOARDS_DIR = Path(__file__).resolve().parent / "dashboards"
 
 
-def ray_dashboard_configmap(dashboard_file: str) -> k8s.core.v1.ConfigMap:
-    dashboard_name = dashboard_file.replace("_", "-").replace(".json", "")
-    dashboard_data = (RAY_DASHBOARDS_DIR / dashboard_file).read_text(encoding="utf-8")
-    return k8s.core.v1.ConfigMap(
-        f"ray-grafana-dashboard-{dashboard_name}",
-        metadata=k8s.meta.v1.ObjectMetaArgs(
-            name=f"ray-grafana-dashboard-{dashboard_name}",
-            namespace=monitoring_namespace_name,
-            labels={
-                "grafana_dashboard": "1",
-            },
-        ),
-        data={
-            dashboard_file: dashboard_data,
-        },
-        opts=pulumi.ResourceOptions(delete_before_replace=True),
-    )
+def ray_dashboard_name(dashboard_file: str) -> str:
+    return dashboard_file.replace("_", "-").removesuffix(".json")
 
 
 kuberay_namespace = k8s.core.v1.Namespace(
@@ -92,9 +78,14 @@ ray_dev_namespace = k8s.core.v1.Namespace(
     metadata=k8s.meta.v1.ObjectMetaArgs(name=ray_dev_namespace_name),
 )
 
-ray_grafana_dashboards = [
-    ray_dashboard_configmap(dashboard_file) for dashboard_file in RAY_DASHBOARD_FILES
-]
+ray_grafana_dashboards = dashboard_config_maps(
+    name_prefix="ray-grafana-dashboard",
+    namespace=monitoring_namespace_name,
+    dashboards_dir=RAY_DASHBOARDS_DIR,
+    dashboard_files=RAY_DASHBOARD_FILES,
+    opts=pulumi.ResourceOptions(delete_before_replace=True),
+    dashboard_name=ray_dashboard_name,
+)
 
 ray_dev_cluster = RayCluster(
     "ray-dev-cluster",

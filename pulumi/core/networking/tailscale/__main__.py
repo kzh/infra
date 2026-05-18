@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pulumi_kubernetes as k8s
+from infra_helpers.grafana import dashboard_config_maps
 from pulumi_monitoring_crds.monitoring.v1 import ServiceMonitor
 from pulumi_tailscale_crds.tailscale.v1alpha1 import ProxyClass
 
@@ -119,24 +120,14 @@ tailscale_default_metrics_proxyclass = ProxyClass(
     opts=pulumi.ResourceOptions(depends_on=[tailscale_operator_servicemonitor]),
 )
 
-for dashboard_file in dashboard_files:
-    dashboard_name = dashboard_file.replace(".json", "")
-    dashboard_data = (dashboards_dir / dashboard_file).read_text(encoding="utf-8")
-    k8s.core.v1.ConfigMap(
-        f"tailscale-dashboard-{dashboard_name}",
-        metadata=k8s.meta.v1.ObjectMetaArgs(
-            name=f"tailscale-dashboard-{dashboard_name}",
-            namespace=monitoring_namespace_name,
-            labels={
-                "grafana_dashboard": "1",
-                "app": "tailscale-operator",
-            },
-        ),
-        data={
-            dashboard_file: dashboard_data,
-        },
-        opts=pulumi.ResourceOptions(
-            depends_on=[tailscale_default_metrics_proxyclass],
-            delete_before_replace=True,
-        ),
-    )
+dashboard_config_maps(
+    name_prefix="tailscale-dashboard",
+    namespace=monitoring_namespace_name,
+    dashboards_dir=dashboards_dir,
+    dashboard_files=dashboard_files,
+    labels={"app": "tailscale-operator"},
+    opts=pulumi.ResourceOptions(
+        depends_on=[tailscale_default_metrics_proxyclass],
+        delete_before_replace=True,
+    ),
+)

@@ -212,10 +212,28 @@ wheels = [
 ]
 
 [[package]]
+name = "infra-helpers"
+version = "0.1.0"
+source = { editable = "../../../infra_helpers" }
+dependencies = [
+    { name = "pulumi" },
+    { name = "pulumi-kubernetes" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pulumi", specifier = ">=3.239.0,<4.0.0" },
+    { name = "pulumi-kubernetes", specifier = ">=4.31.0,<5.0.0" },
+    { name = "pulumi-postgresql", marker = "extra == 'postgres'", specifier = ">=3.16.3,<4.0.0" },
+]
+provides-extras = ["postgres"]
+
+[[package]]
 name = "kuberay"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "infra-helpers" },
     { name = "pulumi" },
     { name = "pulumi-kuberay-crds" },
     { name = "pulumi-kubernetes" },
@@ -224,6 +242,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "infra-helpers", editable = "../../../infra_helpers" },
     { name = "pulumi", specifier = ">=3.239.0,<4.0.0" },
     { name = "pulumi-kuberay-crds", directory = "../../../lib/kuberay_crds" },
     { name = "pulumi-kubernetes", specifier = ">=4.31.0,<5.0.0" },

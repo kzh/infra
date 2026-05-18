@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pulumi_kubernetes as k8s
+from infra_helpers.grafana import dashboard_config_maps
 from pulumi_monitoring_crds.monitoring.v1 import ServiceMonitor
 
 import pulumi
@@ -9,6 +10,10 @@ config = pulumi.Config()
 cf_tunnel_namespace_name = config.get("namespace", "cloudflare-tunnel")
 monitoring_release_label = config.get("monitoringReleaseLabel", "kube-prometheus-stack")
 dashboards_dir = Path(__file__).resolve().parent / "dashboards"
+dashboard_files = [
+    "cloudflare-tunnel-overview.json",
+    "cloudflare-tunnel-transport.json",
+]
 
 cf_tunnel_namespace = k8s.core.v1.Namespace(
     "cloudflare-tunnel",
@@ -66,26 +71,13 @@ cloudflare_tunnel_servicemonitor = ServiceMonitor(
     opts=pulumi.ResourceOptions(depends_on=[cloudflare_tunnel_chart]),
 )
 
-for dashboard_file in [
-    "cloudflare-tunnel-overview.json",
-    "cloudflare-tunnel-transport.json",
-]:
-    dashboard_name = dashboard_file.replace(".json", "")
-    dashboard_data = (dashboards_dir / dashboard_file).read_text(encoding="utf-8")
-    k8s.core.v1.ConfigMap(
-        f"cloudflare-tunnel-dashboard-{dashboard_name}",
-        metadata=k8s.meta.v1.ObjectMetaArgs(
-            name=f"cloudflare-tunnel-dashboard-{dashboard_name}",
-            namespace=cf_tunnel_namespace_name,
-            labels={
-                "grafana_dashboard": "1",
-            },
-        ),
-        data={
-            dashboard_file: dashboard_data,
-        },
-        opts=pulumi.ResourceOptions(
-            depends_on=[cf_tunnel_namespace],
-            delete_before_replace=True,
-        ),
-    )
+dashboard_config_maps(
+    name_prefix="cloudflare-tunnel-dashboard",
+    namespace=cf_tunnel_namespace_name,
+    dashboards_dir=dashboards_dir,
+    dashboard_files=dashboard_files,
+    opts=pulumi.ResourceOptions(
+        depends_on=[cf_tunnel_namespace],
+        delete_before_replace=True,
+    ),
+)

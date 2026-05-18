@@ -1,8 +1,9 @@
 from pathlib import Path
 
 import pulumi_kubernetes as k8s
-import pulumi_postgresql as pg
 import pulumi_random as random
+from infra_helpers.grafana import dashboard_config_maps
+from infra_helpers.postgres import PostgresStack, create_database_owner
 from pulumi_monitoring_crds.monitoring.v1 import ServiceMonitor
 
 import pulumi
@@ -29,8 +30,8 @@ labels = {
     "app.kubernetes.io/part-of": "airflow",
 }
 
-postgres_stack = pulumi.StackReference(postgres_stack_ref)
-postgres_service_host = postgres_stack.require_output("rw_service_fqdn")
+postgres = PostgresStack(postgres_stack_ref)
+postgres_service_host = postgres.rw_service_fqdn
 
 database_password = random.RandomPassword(
     "airflow-database-password",
@@ -74,33 +75,16 @@ namespace = k8s.core.v1.Namespace(
     ),
 )
 
-admin_provider = pg.Provider(
-    "pg-admin",
-    host=postgres_stack.require_output("ts_hostname"),
-    port=5432,
-    username=postgres_stack.require_output("username"),
-    password=postgres_stack.require_output("password"),
-    database="postgres",
-    sslmode="disable",
-)
-
-airflow_role = pg.Role(
-    "airflow-role",
-    name=database_user,
-    login=True,
+airflow_database_owner = create_database_owner(
+    role_resource_name="airflow-role",
+    database_resource_name="airflow-database",
+    provider=postgres.admin_provider("pg-admin"),
+    role_name=database_user,
+    database_name=database_name,
     password=database_password.result,
-    opts=pulumi.ResourceOptions(provider=admin_provider),
 )
-
-airflow_database = pg.Database(
-    "airflow-database",
-    name=database_name,
-    owner=airflow_role.name,
-    opts=pulumi.ResourceOptions(
-        provider=admin_provider,
-        depends_on=[airflow_role],
-    ),
-)
+airflow_role = airflow_database_owner.role
+airflow_database = airflow_database_owner.database
 
 smoke_dag = k8s.core.v1.ConfigMap(
     "airflow-smoke-dag",
@@ -293,24 +277,14 @@ airflow_statsd_servicemonitor = ServiceMonitor(
     opts=pulumi.ResourceOptions(depends_on=[airflow_chart]),
 )
 
-for dashboard_file in dashboard_files:
-    dashboard_name = dashboard_file.replace(".json", "")
-    dashboard_data = (dashboards_dir / dashboard_file).read_text(encoding="utf-8")
-    k8s.core.v1.ConfigMap(
-        f"airflow-dashboard-{dashboard_name}",
-        metadata=k8s.meta.v1.ObjectMetaArgs(
-            name=f"airflow-dashboard-{dashboard_name}",
-            namespace=namespace.metadata.name,
-            labels={
-                "grafana_dashboard": "1",
-                "app": "airflow",
-            },
-        ),
-        data={
-            dashboard_file: dashboard_data,
-        },
-        opts=pulumi.ResourceOptions(depends_on=[airflow_statsd_servicemonitor]),
-    )
+dashboard_config_maps(
+    name_prefix="airflow-dashboard",
+    namespace=namespace.metadata.name,
+    dashboards_dir=dashboards_dir,
+    dashboard_files=dashboard_files,
+    labels={"app": "airflow"},
+    opts=pulumi.ResourceOptions(depends_on=[airflow_statsd_servicemonitor]),
+)
 
 pulumi.export("namespace", namespace.metadata.name)
 pulumi.export("chartVersion", chart_version)

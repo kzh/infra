@@ -1,24 +1,15 @@
 from urllib.parse import quote
 
 import pulumi_kubernetes as k8s
-import pulumi_postgresql as pg
 import pulumi_random as random
+from infra_helpers.postgres import PostgresStack, create_database_owner
 
 import pulumi
-
-
-def bool_string(value: bool) -> str:
-    return "true" if value else "false"
 
 
 def get_bool_config(name: str, default: bool) -> bool:
     value = config.get_bool(name)
     return default if value is None else value
-
-
-def first_present(values: list[object]) -> object:
-    primary, fallback = values
-    return primary or fallback
 
 
 def build_postgres_url(values: list[object]) -> str:
@@ -100,27 +91,9 @@ namespace = k8s.core.v1.Namespace(
     ),
 )
 
-postgres_stack = pulumi.StackReference(postgres_stack_ref)
-postgres_service_host = (
-    configured_postgres_service_host or postgres_stack.require_output("rw_service_fqdn")
-)
-postgres_provider_host = pulumi.Output.all(
-    postgres_stack.require_output("ts_hostname"),
-    postgres_stack.require_output("host"),
-).apply(first_present)
-postgres_port = postgres_stack.require_output("port").apply(
-    lambda value: int(value) if value else 5432
-)
-
-postgres_admin_provider = pg.Provider(
-    "convexdb-postgres-admin",
-    host=postgres_provider_host,
-    port=postgres_port,
-    username=postgres_stack.require_output("username"),
-    password=postgres_stack.require_output("password"),
-    database="postgres",
-    sslmode=postgres_sslmode,
-)
+postgres = PostgresStack(postgres_stack_ref)
+postgres_service_host = configured_postgres_service_host or postgres.rw_service_fqdn
+postgres_port = postgres.port.apply(lambda value: int(value) if value else 5432)
 
 postgres_db_password = random.RandomPassword(
     "convexdb-postgres-password",
@@ -128,22 +101,22 @@ postgres_db_password = random.RandomPassword(
     special=False,
 )
 
-postgres_role = pg.Role(
-    "convexdb-postgres-role",
-    name=postgres_db_user,
-    login=True,
-    password=postgres_db_password.result,
-    opts=pulumi.ResourceOptions(provider=postgres_admin_provider),
-)
-
-postgres_database = pg.Database(
-    "convexdb-postgres-database",
-    name=postgres_db_name,
-    owner=postgres_role.name,
-    opts=pulumi.ResourceOptions(
-        provider=postgres_admin_provider, depends_on=[postgres_role]
+database_owner = create_database_owner(
+    role_resource_name="convexdb-postgres-role",
+    database_resource_name="convexdb-postgres-database",
+    provider=postgres.admin_provider(
+        "convexdb-postgres-admin",
+        database="postgres",
+        sslmode=postgres_sslmode,
+        host=postgres.admin_host,
+        port=postgres_port,
     ),
+    role_name=postgres_db_user,
+    database_name=postgres_db_name,
+    password=postgres_db_password.result,
 )
+postgres_role = database_owner.role
+postgres_database = database_owner.database
 
 postgres_ca_secret = k8s.core.v1.Secret(
     "convexdb-postgres-ca-secret",
@@ -212,7 +185,7 @@ backend_env = [
     ),
     k8s.core.v1.EnvVarArgs(
         name="DISABLE_METRICS_ENDPOINT",
-        value=bool_string(disable_metrics_endpoint),
+        value="true" if disable_metrics_endpoint else "false",
     ),
     k8s.core.v1.EnvVarArgs(
         name="PG_CA_FILE",

@@ -2,6 +2,7 @@ import base64
 from pathlib import Path
 
 import pulumi_kubernetes as k8s
+from infra_helpers.grafana import dashboard_config_maps
 from pulumi_spark_operator_crds.sparkoperator.v1alpha1 import SparkConnect
 
 import pulumi
@@ -494,24 +495,14 @@ spark_connect_ui_ingress = k8s.networking.v1.Ingress(
     opts=pulumi.ResourceOptions(depends_on=[spark_connect]),
 )
 
-for dashboard_file in dashboard_files:
-    dashboard_name = dashboard_file.replace(".json", "")
-    dashboard_data = (dashboards_dir / dashboard_file).read_text(encoding="utf-8")
-    k8s.core.v1.ConfigMap(
-        f"spark-dashboard-{dashboard_name}",
-        metadata=k8s.meta.v1.ObjectMetaArgs(
-            name=f"spark-dashboard-{dashboard_name}",
-            namespace=spark_namespace.metadata.name,
-            labels={
-                "grafana_dashboard": "1",
-                "app": "spark-operator",
-            },
-        ),
-        data={
-            dashboard_file: dashboard_data,
-        },
-        opts=pulumi.ResourceOptions(depends_on=[spark_operator]),
-    )
+dashboard_config_maps(
+    name_prefix="spark-dashboard",
+    namespace=spark_namespace.metadata.name,
+    dashboards_dir=dashboards_dir,
+    dashboard_files=dashboard_files,
+    labels={"app": "spark-operator"},
+    opts=pulumi.ResourceOptions(depends_on=[spark_operator]),
+)
 
 pulumi.export("namespace", spark_namespace.metadata.name)
 pulumi.export("chart_version", CHART_VERSION)

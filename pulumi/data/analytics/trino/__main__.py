@@ -1,6 +1,7 @@
 import pulumi_kubernetes as k8s
 import pulumi_postgresql as pg
 import pulumi_random as random
+from infra_helpers.postgres import PostgresStack, create_database_owner
 
 import pulumi
 
@@ -53,11 +54,11 @@ labels = {
 }
 
 
-postgres_stack = pulumi.StackReference(postgres_stack_ref)
+postgres_stack = PostgresStack(postgres_stack_ref)
 clickhouse_stack = pulumi.StackReference(clickhouse_stack_ref)
 rustfs_stack = pulumi.StackReference(rustfs_stack_ref)
 
-postgres_service_host = postgres_stack.require_output("rw_service_fqdn")
+postgres_service_host = postgres_stack.rw_service_fqdn
 rustfs_s3_endpoint_url = pulumi.Output.format(
     "http://{0}.{1}.svc.cluster.local:9000",
     rustfs_stack.require_output("s3_hostname"),
@@ -72,12 +73,8 @@ namespace = k8s.core.v1.Namespace(
     ),
 )
 
-admin_provider = pg.Provider(
+admin_provider = postgres_stack.admin_provider(
     "pg-admin",
-    host=postgres_stack.require_output("ts_hostname"),
-    port=5432,
-    username=postgres_stack.require_output("username"),
-    password=postgres_stack.require_output("password"),
     database="postgres",
     sslmode="disable",
 )
@@ -102,23 +99,16 @@ postgres_reader_role = pg.Role(
     opts=pulumi.ResourceOptions(provider=admin_provider),
 )
 
-iceberg_role = pg.Role(
-    "iceberg-role",
-    name=iceberg_database_user,
-    login=True,
+iceberg_database_owner = create_database_owner(
+    role_resource_name="iceberg-role",
+    database_resource_name="iceberg-database",
+    provider=admin_provider,
+    role_name=iceberg_database_user,
+    database_name=iceberg_database_name,
     password=iceberg_database_password.result,
-    opts=pulumi.ResourceOptions(provider=admin_provider),
 )
-
-iceberg_database = pg.Database(
-    "iceberg-database",
-    name=iceberg_database_name,
-    owner=iceberg_role.name,
-    opts=pulumi.ResourceOptions(
-        provider=admin_provider,
-        depends_on=[iceberg_role],
-    ),
-)
+iceberg_role = iceberg_database_owner.role
+iceberg_database = iceberg_database_owner.database
 
 postgres_reader_grants: list[pulumi.Resource] = []
 for database_name in postgres_databases:

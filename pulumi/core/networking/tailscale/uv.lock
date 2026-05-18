@@ -212,6 +212,23 @@ wheels = [
 ]
 
 [[package]]
+name = "infra-helpers"
+version = "0.1.0"
+source = { editable = "../../../infra_helpers" }
+dependencies = [
+    { name = "pulumi" },
+    { name = "pulumi-kubernetes" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pulumi", specifier = ">=3.239.0,<4.0.0" },
+    { name = "pulumi-kubernetes", specifier = ">=4.31.0,<5.0.0" },
+    { name = "pulumi-postgresql", marker = "extra == 'postgres'", specifier = ">=3.16.3,<4.0.0" },
+]
+provides-extras = ["postgres"]
+
+[[package]]
 name = "opentelemetry-api"
 version = "1.41.1"
 source = { registry = "https://pypi.org/simple" }
@@ -515,6 +532,7 @@ name = "tailscale"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "infra-helpers" },
     { name = "pulumi" },
     { name = "pulumi-kubernetes" },
     { name = "pulumi-monitoring-crds" },
@@ -523,6 +541,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "infra-helpers", editable = "../../../infra_helpers" },
     { name = "pulumi", specifier = ">=3.239.0,<4.0.0" },
     { name = "pulumi-kubernetes", specifier = ">=4.31.0,<5.0.0" },
     { name = "pulumi-monitoring-crds", directory = "../../../lib/monitoring_crds" },

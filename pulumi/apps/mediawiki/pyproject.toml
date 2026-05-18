@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Pulumi infrastructure deployment"
 requires-python = ">=3.12"
 dependencies = [
+    "infra-helpers",
     "pulumi>=3.239.0,<4.0.0",
     "pulumi-kubernetes>=4.31.0,<5.0.0",
     "pulumi_mysql_operator_crds",
@@ -11,4 +12,5 @@ dependencies = [
 ]
 
 [tool.uv.sources]
+infra-helpers = { path = "../../infra_helpers", editable = true }
 pulumi_mysql_operator_crds = { path = "../../lib/mysql_operator_crds" }

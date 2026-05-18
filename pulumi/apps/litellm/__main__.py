@@ -1,6 +1,6 @@
 import pulumi_kubernetes as k8s
-import pulumi_postgresql as pg
 import pulumi_random as random
+from infra_helpers.postgres import PostgresStack, create_database_owner
 
 import pulumi
 
@@ -31,15 +31,6 @@ labels = {
     "app.kubernetes.io/name": APP_NAME,
     "app.kubernetes.io/part-of": APP_NAME,
 }
-
-
-def prefixed_secret(prefix: str, suffix: pulumi.Output[str]) -> pulumi.Output[str]:
-    return pulumi.Output.concat(prefix, suffix)
-
-
-def first_present(values: list[object]) -> object:
-    primary, fallback = values
-    return primary or fallback
 
 
 def usd_per_token(usd_per_million_tokens: float) -> float:
@@ -83,42 +74,29 @@ db_password = random.RandomPassword(
     special=False,
 )
 
-master_key = prefixed_secret("sk-", master_key_suffix.result)
-salt_key = prefixed_secret("sk-", salt_key_suffix.result)
+master_key = pulumi.Output.concat("sk-", master_key_suffix.result)
+salt_key = pulumi.Output.concat("sk-", salt_key_suffix.result)
 
-pgref = pulumi.StackReference(postgres_stack)
-pg_host = pgref.require_output("rw_service_fqdn")
-pg_port = pgref.require_output("port").apply(lambda p: int(p) if p else 5432)
-pg_username = pgref.require_output("username")
-pg_password = pgref.require_output("password")
-pg_provider_host = pulumi.Output.all(
-    pgref.require_output("ts_hostname"), pgref.require_output("host")
-).apply(first_present)
+postgres = PostgresStack(postgres_stack)
+pg_host = postgres.rw_service_fqdn
+pg_port = postgres.port.apply(lambda p: int(p) if p else 5432)
 
-admin_provider = pg.Provider(
-    "litellm-pg-admin",
-    host=pg_provider_host,
-    port=pg_port,
-    username=pg_username,
-    password=pg_password,
-    database=postgres_admin_db,
-    sslmode=postgres_sslmode,
-)
-
-db_role = pg.Role(
-    "litellm-db-role",
-    name=APP_NAME,
+database_owner = create_database_owner(
+    role_resource_name="litellm-db-role",
+    database_resource_name="litellm-database",
+    provider=postgres.admin_provider(
+        "litellm-pg-admin",
+        database=postgres_admin_db,
+        sslmode=postgres_sslmode,
+        host=postgres.admin_host,
+        port=pg_port,
+    ),
+    role_name=APP_NAME,
+    database_name=db_name,
     password=db_password.result,
-    login=True,
-    opts=pulumi.ResourceOptions(provider=admin_provider),
 )
-
-database = pg.Database(
-    "litellm-database",
-    name=db_name,
-    owner=db_role.name,
-    opts=pulumi.ResourceOptions(provider=admin_provider, depends_on=[db_role]),
-)
+db_role = database_owner.role
+database = database_owner.database
 
 namespace = k8s.core.v1.Namespace(
     "litellm-namespace",

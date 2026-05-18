@@ -1,0 +1,21 @@
+[project]
+name = "infra-helpers"
+version = "0.1.0"
+description = "Small shared helpers for the kzh/infra Pulumi projects"
+requires-python = ">=3.12"
+dependencies = [
+    "pulumi>=3.239.0,<4.0.0",
+    "pulumi-kubernetes>=4.31.0,<5.0.0",
+]
+
+[project.optional-dependencies]
+postgres = [
+    "pulumi-postgresql>=3.16.3,<4.0.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["infra_helpers"]

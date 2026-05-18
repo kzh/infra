@@ -1,6 +1,6 @@
 import pulumi_kubernetes as k8s
-import pulumi_postgresql as pg
 import pulumi_random as random
+from infra_helpers.postgres import PostgresStack, create_database_owner
 
 import pulumi
 
@@ -22,14 +22,10 @@ labels = {
     "app": "mlflow",
 }
 
-postgres_stack = pulumi.StackReference(postgres_stack_ref)
+postgres = PostgresStack(postgres_stack_ref)
 rustfs_stack = pulumi.StackReference(rustfs_stack_ref)
 
-postgres_service_host = pulumi.Output.format(
-    "{0}-rw.{1}.svc.cluster.local",
-    postgres_stack.require_output("cnpg_cluster_name"),
-    postgres_stack.require_output("k8s_namespace"),
-)
+postgres_service_host = postgres.rw_service_fqdn
 rustfs_s3_endpoint_url = pulumi.Output.format(
     "http://{0}.{1}.svc.cluster.local:9000",
     rustfs_stack.require_output("s3_hostname"),
@@ -74,30 +70,16 @@ def force_mlflow_deployment_apply(
     return pulumi.ResourceTransformationResult(props=props, opts=args.opts)
 
 
-admin_provider = pg.Provider(
-    "pg-admin",
-    host=postgres_stack.require_output("ts_hostname"),
-    port=5432,
-    username=postgres_stack.require_output("username"),
-    password=postgres_stack.require_output("password"),
-    database="postgres",
-    sslmode="disable",
-)
-
-mlflow_role = pg.Role(
-    "mlflow-role",
-    name=db_user,
-    login=True,
+mlflow_database_owner = create_database_owner(
+    role_resource_name="mlflow-role",
+    database_resource_name="mlflow-database",
+    provider=postgres.admin_provider("pg-admin"),
+    role_name=db_user,
+    database_name=db_name,
     password=db_password.result,
-    opts=pulumi.ResourceOptions(provider=admin_provider),
 )
-
-mlflow_database = pg.Database(
-    "mlflow-database",
-    name=db_name,
-    owner=mlflow_role.name,
-    opts=pulumi.ResourceOptions(provider=admin_provider, depends_on=[mlflow_role]),
-)
+mlflow_role = mlflow_database_owner.role
+mlflow_database = mlflow_database_owner.database
 
 database_secret = k8s.core.v1.Secret(
     "mlflow-database-secret",

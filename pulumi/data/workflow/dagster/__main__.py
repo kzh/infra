@@ -1,6 +1,6 @@
 import pulumi_kubernetes as k8s
-import pulumi_postgresql as pg
 import pulumi_random as random
+from infra_helpers.postgres import PostgresStack, create_database_owner
 
 import pulumi
 
@@ -24,8 +24,8 @@ labels = {
     "app.kubernetes.io/part-of": "dagster",
 }
 
-postgres_stack = pulumi.StackReference(postgres_stack_ref)
-postgres_service_host = postgres_stack.require_output("rw_service_fqdn")
+postgres = PostgresStack(postgres_stack_ref)
+postgres_service_host = postgres.rw_service_fqdn
 
 database_password = random.RandomPassword(
     "dagster-database-password",
@@ -41,33 +41,16 @@ namespace = k8s.core.v1.Namespace(
     ),
 )
 
-admin_provider = pg.Provider(
-    "pg-admin",
-    host=postgres_stack.require_output("ts_hostname"),
-    port=5432,
-    username=postgres_stack.require_output("username"),
-    password=postgres_stack.require_output("password"),
-    database="postgres",
-    sslmode="disable",
-)
-
-dagster_role = pg.Role(
-    "dagster-role",
-    name=database_user,
-    login=True,
+dagster_database_owner = create_database_owner(
+    role_resource_name="dagster-role",
+    database_resource_name="dagster-database",
+    provider=postgres.admin_provider("pg-admin"),
+    role_name=database_user,
+    database_name=database_name,
     password=database_password.result,
-    opts=pulumi.ResourceOptions(provider=admin_provider),
 )
-
-dagster_database = pg.Database(
-    "dagster-database",
-    name=database_name,
-    owner=dagster_role.name,
-    opts=pulumi.ResourceOptions(
-        provider=admin_provider,
-        depends_on=[dagster_role],
-    ),
-)
+dagster_role = dagster_database_owner.role
+dagster_database = dagster_database_owner.database
 
 postgres_secret = k8s.core.v1.Secret(
     "dagster-postgres-secret",

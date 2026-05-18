@@ -1,8 +1,9 @@
-import hashlib
 from pathlib import Path
 
 import pulumi_kubernetes as k8s
 import pulumi_random as random
+from infra_helpers.grafana import dashboard_config_maps
+from infra_helpers.k8s import secret_env_var, stable_task_id
 from pulumi_mysql_operator_crds.mysql.v2 import (
     InnoDBCluster,
     InnoDBClusterSpecArgs,
@@ -12,27 +13,6 @@ from pulumi_mysql_operator_crds.mysql.v2 import (
 import pulumi
 
 config = pulumi.Config()
-
-
-def secret_env_var(
-    name: str,
-    secret_name: pulumi.Input[str],
-    key: str,
-) -> k8s.core.v1.EnvVarArgs:
-    return k8s.core.v1.EnvVarArgs(
-        name=name,
-        value_from=k8s.core.v1.EnvVarSourceArgs(
-            secret_key_ref=k8s.core.v1.SecretKeySelectorArgs(
-                name=secret_name,
-                key=key,
-            )
-        ),
-    )
-
-
-def stable_task_id(values: list[object]) -> str:
-    payload = "|".join(str(value) for value in values).encode("utf-8")
-    return hashlib.sha256(payload).hexdigest()[:16]
 
 
 def php_string(value: object) -> str:
@@ -1028,24 +1008,14 @@ mediawiki_ingress = k8s.networking.v1.Ingress(
     opts=pulumi.ResourceOptions(depends_on=[mediawiki_service]),
 )
 
-for dashboard_file in dashboard_files:
-    dashboard_name = dashboard_file.replace(".json", "")
-    dashboard_data = (dashboards_dir / dashboard_file).read_text(encoding="utf-8")
-    k8s.core.v1.ConfigMap(
-        f"mediawiki-dashboard-{dashboard_name}",
-        metadata=k8s.meta.v1.ObjectMetaArgs(
-            name=f"mediawiki-dashboard-{dashboard_name}",
-            namespace=namespace_name,
-            labels={
-                "grafana_dashboard": "1",
-                "app": "mediawiki",
-            },
-        ),
-        data={
-            dashboard_file: dashboard_data,
-        },
-        opts=pulumi.ResourceOptions(depends_on=[mediawiki_ingress]),
-    )
+dashboard_config_maps(
+    name_prefix="mediawiki-dashboard",
+    namespace=namespace_name,
+    dashboards_dir=dashboards_dir,
+    dashboard_files=dashboard_files,
+    labels={"app": "mediawiki"},
+    opts=pulumi.ResourceOptions(depends_on=[mediawiki_ingress]),
+)
 
 pulumi.export("namespace", namespace_name)
 pulumi.export("hostname", hostname)
