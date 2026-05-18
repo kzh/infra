@@ -6,7 +6,8 @@ spark_version := "4.1.1"
 spark_java_version := "21"
 iceberg_version := "1.10.1"
 iceberg_spark_runtime := "4.0_2.13"
-image := repo + "/spark:" + spark_version + "-iceberg" + iceberg_version + "-java" + spark_java_version
+postgresql_jdbc_version := "42.7.11"
+image := repo + "/spark:" + spark_version + "-iceberg" + iceberg_version + "-lakehouse-java" + spark_java_version
 
 # Build locally for amd64.
 build-image:
@@ -16,6 +17,7 @@ build-image:
 		--build-arg SPARK_JAVA_VERSION={{spark_java_version}} \
 		--build-arg ICEBERG_VERSION={{iceberg_version}} \
 		--build-arg ICEBERG_SPARK_RUNTIME={{iceberg_spark_runtime}} \
+		--build-arg POSTGRESQL_JDBC_VERSION={{postgresql_jdbc_version}} \
 		-t {{image}} \
 		--output=type=docker .
 
@@ -27,6 +29,7 @@ push-image:
 		--build-arg SPARK_JAVA_VERSION={{spark_java_version}} \
 		--build-arg ICEBERG_VERSION={{iceberg_version}} \
 		--build-arg ICEBERG_SPARK_RUNTIME={{iceberg_spark_runtime}} \
+		--build-arg POSTGRESQL_JDBC_VERSION={{postgresql_jdbc_version}} \
 		-t {{image}} \
 		--push .
 

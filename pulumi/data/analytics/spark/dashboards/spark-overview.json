@@ -1,0 +1,364 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 2
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "targets": [
+        {
+          "expr": "sum(up{namespace=\"spark\",job=\"spark/spark-operator-podmonitor\"})",
+          "refId": "A"
+        }
+      ],
+      "title": "Operator Targets Up",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 2,
+      "targets": [
+        {
+          "expr": "sum(spark_executor_running_count{namespace=\"spark\"})",
+          "refId": "A"
+        }
+      ],
+      "title": "Running Executors",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 3,
+      "targets": [
+        {
+          "expr": "sum(increase(spark_executor_failure_count{namespace=\"spark\"}[1h]))",
+          "refId": "A"
+        }
+      ],
+      "title": "Executor Failures Last Hour",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 4,
+      "targets": [
+        {
+          "expr": "sum(increase(controller_runtime_reconcile_errors_total{namespace=\"spark\"}[1h]))",
+          "refId": "A"
+        }
+      ],
+      "title": "Reconcile Errors Last Hour",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "id": 5,
+      "targets": [
+        {
+          "expr": "sum(spark_executor_running_count{namespace=\"spark\"})",
+          "legendFormat": "running",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(increase(spark_executor_success_count{namespace=\"spark\"}[1h]))",
+          "legendFormat": "succeeded / hour",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(increase(spark_executor_failure_count{namespace=\"spark\"}[1h]))",
+          "legendFormat": "failed / hour",
+          "refId": "C"
+        }
+      ],
+      "title": "Executor Lifecycle",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "id": 6,
+      "targets": [
+        {
+          "expr": "sum by (controller, result) (rate(controller_runtime_reconcile_total{namespace=\"spark\"}[5m]))",
+          "legendFormat": "{{controller}} / {{result}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Reconcile Rate",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 12
+      },
+      "id": 7,
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum by (controller, le) (rate(controller_runtime_reconcile_time_seconds_bucket{namespace=\"spark\"}[5m])))",
+          "legendFormat": "{{controller}} p95",
+          "refId": "A"
+        },
+        {
+          "expr": "sum by (controller) (rate(controller_runtime_reconcile_time_seconds_sum{namespace=\"spark\"}[5m])) / sum by (controller) (rate(controller_runtime_reconcile_time_seconds_count{namespace=\"spark\"}[5m]))",
+          "legendFormat": "{{controller}} mean",
+          "refId": "B"
+        }
+      ],
+      "title": "Reconcile Latency",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
+      "id": 8,
+      "targets": [
+        {
+          "expr": "sum by (name) (workqueue_depth{namespace=\"spark\"})",
+          "legendFormat": "{{name}} depth",
+          "refId": "A"
+        },
+        {
+          "expr": "sum by (name) (rate(workqueue_retries_total{namespace=\"spark\"}[5m]))",
+          "legendFormat": "{{name}} retries / sec",
+          "refId": "B"
+        },
+        {
+          "expr": "sum by (name) (workqueue_unfinished_work_seconds{namespace=\"spark\"})",
+          "legendFormat": "{{name}} unfinished seconds",
+          "refId": "C"
+        }
+      ],
+      "title": "Workqueue Pressure",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "cores"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 20
+      },
+      "id": 9,
+      "targets": [
+        {
+          "expr": "sum by (pod) (rate(process_cpu_seconds_total{namespace=\"spark\"}[5m]))",
+          "legendFormat": "{{pod}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Operator Process CPU",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 20
+      },
+      "id": 10,
+      "targets": [
+        {
+          "expr": "sum by (pod) (process_resident_memory_bytes{namespace=\"spark\"})",
+          "legendFormat": "{{pod}}",
+          "refId": "A"
+        },
+        {
+          "expr": "sum by (pod) (go_memstats_heap_alloc_bytes{namespace=\"spark\"})",
+          "legendFormat": "{{pod}} heap",
+          "refId": "B"
+        }
+      ],
+      "title": "Operator Memory",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 20
+      },
+      "id": 11,
+      "targets": [
+        {
+          "expr": "sum by (pod) (go_goroutines{namespace=\"spark\"})",
+          "legendFormat": "{{pod}} goroutines",
+          "refId": "A"
+        },
+        {
+          "expr": "sum by (pod) (go_threads{namespace=\"spark\"})",
+          "legendFormat": "{{pod}} threads",
+          "refId": "B"
+        }
+      ],
+      "title": "Operator Runtime",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": [
+    "spark",
+    "operator",
+    "homelab"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timezone": "browser",
+  "title": "Spark Overview",
+  "uid": "spark-overview",
+  "version": 2,
+  "weekStart": ""
+}
