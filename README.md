@@ -7,7 +7,7 @@ Pulumi + Python infrastructure monorepo for a Kubernetes cluster.
 | Area | Services |
 | --- | --- |
 | Core | Cloudflare Tunnel, Tailscale, CloudNativePG, KubeRay, MySQL Operator, cert-manager, Vault |
-| Data | Airflow, ClickHouse, CockroachDB, Convex, JupyterHub, MLflow, n8n, Postgres, Redpanda, RustFS, Slurm, Spark, Superset, Temporal |
+| Data | Airflow, ClickHouse, CockroachDB, Convex, Dagster, Flink, JupyterHub, Kafka, MLflow, n8n, Postgres, Redpanda, RustFS, Slurm, Spark, Superset, Temporal |
 | Ops | Monitoring |
 | Apps | Coder, golink, Hermes, Immich, LiteLLM, MediaWiki, Stitch, WordPress |
 
@@ -23,7 +23,7 @@ pulumi/
 
 Project-local assets live with the project that consumes them. Grafana dashboards are under each owning project's `dashboards/` directory, and Docker build assets are under service-local `images/` directories.
 
-See [docs/PROJECTS.md](docs/PROJECTS.md) for the full project inventory.
+See [docs/index.md](docs/index.md) for the VitePress handbook and stack inventory.
 
 ## Root Commands
 
@@ -37,6 +37,14 @@ The root `Justfile` provides light wrappers around the per-project workflows:
 - `just check-python`: syntax-check all Pulumi Python entrypoints.
 - `just lint`: run Ruff checks and formatting verification.
 - `just format`: format Pulumi Python entrypoints with Ruff.
+
+## Docs
+
+The documentation site is built with VitePress:
+
+- `npm run docs:dev`: start the local docs server.
+- `npm run docs:build`: build the static docs site.
+- `npm run docs:preview`: preview the built docs site.
 
 ## Notes
 

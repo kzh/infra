@@ -1,0 +1,50 @@
+:root {
+  --vp-c-brand-1: #1f6f5b;
+  --vp-c-brand-2: #2e8a72;
+  --vp-c-brand-3: #67b49d;
+  --vp-home-hero-name-color: #1f6f5b;
+  --vp-c-bg-soft: #f4f7f5;
+}
+
+.dark {
+  --vp-c-brand-1: #72d1b6;
+  --vp-c-brand-2: #49b99a;
+  --vp-c-brand-3: #2e8a72;
+  --vp-c-bg-soft: #17201d;
+}
+
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3 {
+  letter-spacing: 0;
+}
+
+.vp-doc table {
+  font-size: 14px;
+}
+
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.stack-card {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  padding: 14px 16px;
+  background: var(--vp-c-bg-soft);
+}
+
+.stack-card h3 {
+  margin-top: 0;
+  margin-bottom: 6px;
+  font-size: 16px;
+}
+
+.stack-card p {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+}

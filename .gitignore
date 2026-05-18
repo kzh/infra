@@ -6,6 +6,9 @@ __pycache__/
 .mypy_cache/
 .pytest_cache/
 .pulumi/
+node_modules/
+docs/.vitepress/cache/
+docs/.vitepress/dist/
 pulumi/core/operators/mysql/.chart-cache/
 .idea/
 .claude/
