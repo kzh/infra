@@ -1,0 +1,416 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "targets": [
+        {
+          "expr": "sum(up{namespace=\"airflow\",service=\"airflow-statsd\"})",
+          "refId": "A"
+        }
+      ],
+      "title": "StatsD Target Up",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 2,
+      "targets": [
+        {
+          "expr": "sum(rate(airflow_scheduler_heartbeat{namespace=\"airflow\"}[5m])) * 60",
+          "refId": "A"
+        }
+      ],
+      "title": "Scheduler Heartbeats / min",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 3,
+      "targets": [
+        {
+          "expr": "max(airflow_dagbag_size{namespace=\"airflow\"})",
+          "refId": "A"
+        }
+      ],
+      "title": "DAGs Loaded",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 4,
+      "targets": [
+        {
+          "expr": "sum(airflow_dag_processing_import_errors{namespace=\"airflow\"})",
+          "refId": "A"
+        }
+      ],
+      "title": "Import Errors",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "id": 5,
+      "targets": [
+        {
+          "expr": "sum(airflow_executor_running_tasks{namespace=\"airflow\"})",
+          "legendFormat": "running tasks",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(airflow_executor_queued_tasks{namespace=\"airflow\"})",
+          "legendFormat": "queued tasks",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(airflow_executor_open_slots{namespace=\"airflow\"})",
+          "legendFormat": "open slots",
+          "refId": "C"
+        }
+      ],
+      "title": "Executor Capacity",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "id": 6,
+      "targets": [
+        {
+          "expr": "sum(airflow_scheduler_dagruns_running{namespace=\"airflow\"})",
+          "legendFormat": "running dag runs",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(airflow_scheduler_tasks_executable{namespace=\"airflow\"})",
+          "legendFormat": "executable tasks",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(airflow_scheduler_tasks_starving{namespace=\"airflow\"})",
+          "legendFormat": "starving tasks",
+          "refId": "C"
+        }
+      ],
+      "title": "Scheduler Workload",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 12
+      },
+      "id": 7,
+      "targets": [
+        {
+          "expr": "sum(airflow_pool_running_slots{namespace=\"airflow\"})",
+          "legendFormat": "running",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(airflow_pool_queued_slots{namespace=\"airflow\"})",
+          "legendFormat": "queued",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(airflow_pool_open_slots{namespace=\"airflow\"})",
+          "legendFormat": "open",
+          "refId": "C"
+        }
+      ],
+      "title": "Pool Slots",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 12
+      },
+      "id": 8,
+      "targets": [
+        {
+          "expr": "max(airflow_dag_processing_last_run_seconds_ago{namespace=\"airflow\"})",
+          "legendFormat": "seconds since last parse loop",
+          "refId": "A"
+        },
+        {
+          "expr": "max(airflow_dag_processing_last_duration{namespace=\"airflow\"})",
+          "legendFormat": "last parse duration",
+          "refId": "B"
+        },
+        {
+          "expr": "max(airflow_dag_processing_total_parse_time{namespace=\"airflow\"})",
+          "legendFormat": "total parse time",
+          "refId": "C"
+        }
+      ],
+      "title": "DAG Processing",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 12
+      },
+      "id": 9,
+      "targets": [
+        {
+          "expr": "sum(airflow_triggerer_capacity_left{namespace=\"airflow\"})",
+          "legendFormat": "capacity left",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(airflow_triggers_running{namespace=\"airflow\"})",
+          "legendFormat": "running triggers",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(rate(airflow_triggerer_heartbeat{namespace=\"airflow\"}[5m])) * 60",
+          "legendFormat": "heartbeats / min",
+          "refId": "C"
+        }
+      ],
+      "title": "Triggerer",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "cores"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 20
+      },
+      "id": 10,
+      "targets": [
+        {
+          "expr": "sum by (pod, container) (rate(container_cpu_usage_seconds_total{namespace=\"airflow\",container!=\"\",image!=\"\"}[5m]))",
+          "legendFormat": "{{pod}} / {{container}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Pod CPU",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 20
+      },
+      "id": 11,
+      "targets": [
+        {
+          "expr": "sum by (pod, container) (container_memory_working_set_bytes{namespace=\"airflow\",container!=\"\",image!=\"\"})",
+          "legendFormat": "{{pod}} / {{container}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Pod Memory",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 20
+      },
+      "id": 12,
+      "targets": [
+        {
+          "expr": "sum by (pod, container) (increase(kube_pod_container_status_restarts_total{namespace=\"airflow\"}[6h]))",
+          "legendFormat": "{{pod}} / {{container}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Container Restarts Last 6h",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": [
+    "airflow",
+    "homelab"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timezone": "browser",
+  "title": "Airflow Overview",
+  "uid": "airflow-overview",
+  "version": 2,
+  "weekStart": ""
+}

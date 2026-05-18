@@ -1,0 +1,506 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "targets": [
+        {
+          "expr": "sum(up{namespace=\"slurm\",job=\"slurm-controller\"})",
+          "refId": "A"
+        }
+      ],
+      "title": "Controller Target Up",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 2,
+      "targets": [
+        {
+          "expr": "sum(slurm_jobs_running{namespace=\"slurm\"})",
+          "refId": "A"
+        }
+      ],
+      "title": "Running Jobs",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 3,
+      "targets": [
+        {
+          "expr": "sum(slurm_jobs_pending{namespace=\"slurm\"})",
+          "refId": "A"
+        }
+      ],
+      "title": "Pending Jobs",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "max": 1,
+          "min": 0,
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 4,
+      "targets": [
+        {
+          "expr": "sum(slurm_node_cpus_idle{namespace=\"slurm\"}) / sum(slurm_node_cpus_effective{namespace=\"slurm\"})",
+          "refId": "A"
+        }
+      ],
+      "title": "Idle CPU Share",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "id": 5,
+      "targets": [
+        {
+          "expr": "sum(slurm_jobs_running{namespace=\"slurm\"})",
+          "legendFormat": "running",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(slurm_jobs_pending{namespace=\"slurm\"})",
+          "legendFormat": "pending",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(slurm_jobs_completing{namespace=\"slurm\"})",
+          "legendFormat": "completing",
+          "refId": "C"
+        },
+        {
+          "expr": "sum(slurm_jobs_suspended{namespace=\"slurm\"})",
+          "legendFormat": "suspended",
+          "refId": "D"
+        }
+      ],
+      "title": "Live Job State",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "id": 6,
+      "targets": [
+        {
+          "expr": "increase(slurm_sdiag_jobs_submitted{namespace=\"slurm\"}[1h])",
+          "legendFormat": "submitted",
+          "refId": "A"
+        },
+        {
+          "expr": "increase(slurm_sdiag_jobs_started{namespace=\"slurm\"}[1h])",
+          "legendFormat": "started",
+          "refId": "B"
+        },
+        {
+          "expr": "increase(slurm_sdiag_jobs_completed{namespace=\"slurm\"}[1h])",
+          "legendFormat": "completed",
+          "refId": "C"
+        },
+        {
+          "expr": "increase(slurm_sdiag_jobs_failed{namespace=\"slurm\"}[1h])",
+          "legendFormat": "failed",
+          "refId": "D"
+        },
+        {
+          "expr": "increase(slurm_sdiag_jobs_canceled{namespace=\"slurm\"}[1h])",
+          "legendFormat": "canceled",
+          "refId": "E"
+        }
+      ],
+      "title": "Job Throughput Last Hour",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 12
+      },
+      "id": 7,
+      "targets": [
+        {
+          "expr": "sum(slurm_nodes_idle{namespace=\"slurm\"})",
+          "legendFormat": "idle",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(slurm_nodes_alloc{namespace=\"slurm\"})",
+          "legendFormat": "allocated",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(slurm_nodes_mixed{namespace=\"slurm\"})",
+          "legendFormat": "mixed",
+          "refId": "C"
+        },
+        {
+          "expr": "sum(slurm_nodes_down{namespace=\"slurm\"})",
+          "legendFormat": "down",
+          "refId": "D"
+        },
+        {
+          "expr": "sum(slurm_nodes_drain{namespace=\"slurm\"} + slurm_nodes_draining{namespace=\"slurm\"} + slurm_nodes_drained{namespace=\"slurm\"})",
+          "legendFormat": "drain",
+          "refId": "E"
+        }
+      ],
+      "title": "Node State",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 12
+      },
+      "id": 8,
+      "targets": [
+        {
+          "expr": "sum(slurm_node_cpus_alloc{namespace=\"slurm\"})",
+          "legendFormat": "allocated",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(slurm_node_cpus_idle{namespace=\"slurm\"})",
+          "legendFormat": "idle",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(slurm_node_cpus_effective{namespace=\"slurm\"})",
+          "legendFormat": "effective",
+          "refId": "C"
+        }
+      ],
+      "title": "CPU Capacity",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 12
+      },
+      "id": 9,
+      "targets": [
+        {
+          "expr": "sum(slurm_node_memory_alloc_bytes{namespace=\"slurm\"}) * 1024 * 1024",
+          "legendFormat": "allocated",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(slurm_node_memory_free_bytes{namespace=\"slurm\"}) * 1024 * 1024",
+          "legendFormat": "free",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(slurm_node_memory_effective_bytes{namespace=\"slurm\"}) * 1024 * 1024",
+          "legendFormat": "effective",
+          "refId": "C"
+        }
+      ],
+      "title": "Memory Capacity",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 20
+      },
+      "id": 10,
+      "targets": [
+        {
+          "expr": "slurm_schedule_queue_len{namespace=\"slurm\"}",
+          "legendFormat": "main scheduler queue",
+          "refId": "A"
+        },
+        {
+          "expr": "slurm_bf_queue_len{namespace=\"slurm\"}",
+          "legendFormat": "backfill queue",
+          "refId": "B"
+        },
+        {
+          "expr": "slurm_agent_queue_size{namespace=\"slurm\"}",
+          "legendFormat": "agent queue",
+          "refId": "C"
+        },
+        {
+          "expr": "slurm_slurmdbd_queue_size{namespace=\"slurm\"}",
+          "legendFormat": "slurmdbd queue",
+          "refId": "D"
+        }
+      ],
+      "title": "Scheduler and Agent Queues",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 20
+      },
+      "id": 11,
+      "targets": [
+        {
+          "expr": "slurm_server_thread_cnt{namespace=\"slurm\"}",
+          "legendFormat": "server threads",
+          "refId": "A"
+        },
+        {
+          "expr": "slurm_agent_thread_cnt{namespace=\"slurm\"}",
+          "legendFormat": "agent threads",
+          "refId": "B"
+        },
+        {
+          "expr": "slurm_bf_active{namespace=\"slurm\"}",
+          "legendFormat": "backfill active",
+          "refId": "C"
+        }
+      ],
+      "title": "Controller Work",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "cores"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 28
+      },
+      "id": 12,
+      "targets": [
+        {
+          "expr": "sum by (pod, container) (rate(container_cpu_usage_seconds_total{namespace=\"slurm\",container!=\"\",image!=\"\"}[5m]))",
+          "legendFormat": "{{pod}} / {{container}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Pod CPU",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 28
+      },
+      "id": 13,
+      "targets": [
+        {
+          "expr": "sum by (pod, container) (container_memory_working_set_bytes{namespace=\"slurm\",container!=\"\",image!=\"\"})",
+          "legendFormat": "{{pod}} / {{container}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Pod Memory",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 28
+      },
+      "id": 14,
+      "targets": [
+        {
+          "expr": "sum by (pod, container) (increase(kube_pod_container_status_restarts_total{namespace=\"slurm\"}[6h]))",
+          "legendFormat": "{{pod}} / {{container}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Container Restarts Last 6h",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": [
+    "slurm",
+    "homelab",
+    "slinky"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timezone": "browser",
+  "title": "Slurm Overview",
+  "uid": "slurm-overview",
+  "version": 2,
+  "weekStart": ""
+}

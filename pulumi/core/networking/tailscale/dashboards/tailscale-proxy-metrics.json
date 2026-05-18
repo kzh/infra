@@ -601,6 +601,93 @@
           "sort": "desc"
         }
       }
+    },
+    {
+      "id": 15,
+      "type": "stat",
+      "title": "Proxy Targets by Type",
+      "datasource": "Prometheus",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 37
+      },
+      "targets": [
+        {
+          "expr": "sum by (ts_proxy_type) (up{ts_proxy_type=~\".+\"})",
+          "legendFormat": "{{ts_proxy_type}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 16,
+      "type": "timeseries",
+      "title": "Health Warnings by Proxy",
+      "datasource": "Prometheus",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 37
+      },
+      "targets": [
+        {
+          "expr": "sum by (ts_proxy_parent_namespace, ts_proxy_parent_name) (tailscaled_health_messages{ts_proxy_type=~\".+\",type=\"warning\"})",
+          "legendFormat": "{{ts_proxy_parent_namespace}}/{{ts_proxy_parent_name}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      }
     }
   ],
   "refresh": "30s",
@@ -622,6 +709,6 @@
   "timezone": "",
   "title": "Tailscale Proxies / Traffic & Health",
   "uid": "tailscale-proxy-metrics",
-  "version": 3,
+  "version": 4,
   "weekStart": ""
 }

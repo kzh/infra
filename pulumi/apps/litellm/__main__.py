@@ -20,6 +20,9 @@ postgres_stack = config.get("postgres_stack") or "kzh/postgresql/mx"
 db_name = config.get("db_name") or APP_NAME
 postgres_admin_db = config.get("postgres_admin_db") or "postgres"
 postgres_sslmode = config.get("postgres_sslmode") or "disable"
+monitoring_release_label = (
+    config.get("monitoringReleaseLabel") or "kube-prometheus-stack"
+)
 
 TOKENS_PER_MILLION = 1_000_000
 
@@ -223,6 +226,19 @@ chart_values = {
             "master_key": "os.environ/PROXY_MASTER_KEY",
             "store_model_in_db": True,
             "store_prompts_in_spend_logs": True,
+        },
+        "litellm_settings": {
+            "callbacks": ["prometheus"],
+            "require_auth_for_metrics_endpoint": False,
+        },
+    },
+    "serviceMonitor": {
+        "enabled": True,
+        "labels": {
+            "release": monitoring_release_label,
+        },
+        "namespaceSelector": {
+            "matchNames": [namespace_name],
         },
     },
     "volumes": [

@@ -14,7 +14,7 @@
     },
     "editable": true,
     "gnetId": null,
-    "graphTooltip": 0,
+    "graphTooltip": 1,
     "iteration": 1667344411089,
     "links": [],
     "panels": [
@@ -26,7 +26,9 @@
             "datasource": "${datasource}",
             "description": "Aggregated utilization of all physical resources (CPU, GPU, memory, disk, or etc.) across the cluster. Ignores application variable.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "%"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -192,7 +194,9 @@
             "datasource": "${datasource}",
             "description": "QPS for each selected application.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "qps"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -326,7 +330,9 @@
             "datasource": "${datasource}",
             "description": "Error QPS for each selected application.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "qps"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -460,7 +466,9 @@
             "datasource": "${datasource}",
             "description": "Error QPS for each selected application.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "qps"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -594,7 +602,9 @@
             "datasource": "${datasource}",
             "description": "P50 latency for selected applications.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "ms"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -736,7 +746,9 @@
             "datasource": "${datasource}",
             "description": "P90 latency for selected applications.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "ms"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -878,7 +890,9 @@
             "datasource": "${datasource}",
             "description": "P99 latency for selected applications.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "ms"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -1020,7 +1034,9 @@
             "datasource": "${datasource}",
             "description": "Number of replicas per deployment. Ignores \"Application\" variable.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "replicas"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -1146,7 +1162,9 @@
             "datasource": "${datasource}",
             "description": "QPS for each deployment.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "qps"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -1272,7 +1290,9 @@
             "datasource": "${datasource}",
             "description": "Error QPS for each deplyoment.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "qps"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -1398,7 +1418,9 @@
             "datasource": "${datasource}",
             "description": "P50 latency per deployment.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "ms"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -1532,7 +1554,9 @@
             "datasource": "${datasource}",
             "description": "P90 latency per deployment.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "ms"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -1666,7 +1690,9 @@
             "datasource": "${datasource}",
             "description": "P99 latency per deployment.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "ms"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -1800,7 +1826,9 @@
             "datasource": "${datasource}",
             "description": "Number of requests queued per deployment. Ignores \"Application\" variable.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "requests"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -1926,7 +1954,9 @@
             "datasource": "${datasource}",
             "description": "Number of nodes in this cluster. Ignores \"Application\" variable.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "nodes"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -2068,7 +2098,9 @@
             "datasource": "${datasource}",
             "description": "Network speed per node. Ignores \"Application\" variable.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "Bps"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -2202,7 +2234,9 @@
             "datasource": "${datasource}",
             "description": "The number of ongoing requests in the HTTP Proxy.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "requests"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -2328,7 +2362,9 @@
             "datasource": "${datasource}",
             "description": "The number of ongoing requests in the gRPC Proxy.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "requests"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -2454,7 +2490,9 @@
             "datasource": "${datasource}",
             "description": "The number of request scheduling tasks in the router.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "tasks"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -2580,7 +2618,9 @@
             "datasource": "${datasource}",
             "description": "The number of request scheduling tasks in the router that are undergoing backoff.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "tasks"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -2706,7 +2746,9 @@
             "datasource": "${datasource}",
             "description": "The duration of the last control loop.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "seconds"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -2832,7 +2874,9 @@
             "datasource": "${datasource}",
             "description": "The number of control loops performed by the controller. Increases monotonically over the controller's lifetime.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "loops"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -2955,7 +2999,7 @@
     "schemaVersion": 27,
     "style": "dark",
     "tags": [
-        "rayVersion:2.52.0"
+        "rayVersion:2.55.1"
     ],
     "templating": {
         "list": [

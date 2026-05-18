@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pulumi_kubernetes as k8s
 
 import pulumi
@@ -19,6 +21,11 @@ controller_persistence_storage_class = config.get(
 controller_persistence_storage_size = config.get(
     "controllerPersistenceStorageSize", "4Gi"
 )
+monitoring_release_label = config.get("monitoringReleaseLabel", "kube-prometheus-stack")
+dashboards_dir = Path(__file__).resolve().parent / "dashboards"
+dashboard_files = [
+    "slurm-overview.json",
+]
 
 controller_persistence_values = {
     "enabled": controller_persistence_enabled,
@@ -75,6 +82,15 @@ slurm_cluster = k8s.helm.v3.Release(
         "fullnameOverride": "slurm",
         "controller": {
             "persistence": controller_persistence_values,
+            "metrics": {
+                "enabled": True,
+                "serviceMonitor": {
+                    "enabled": True,
+                    "labels": {
+                        "release": monitoring_release_label,
+                    },
+                },
+            },
         },
         "restapi": {
             "replicas": restapi_replicas,
@@ -98,6 +114,25 @@ slurm_cluster = k8s.helm.v3.Release(
     },
     opts=pulumi.ResourceOptions(depends_on=[slurm_operator, slurm_namespace]),
 )
+
+for dashboard_file in dashboard_files:
+    dashboard_name = dashboard_file.replace(".json", "")
+    dashboard_data = (dashboards_dir / dashboard_file).read_text(encoding="utf-8")
+    k8s.core.v1.ConfigMap(
+        f"slurm-dashboard-{dashboard_name}",
+        metadata=k8s.meta.v1.ObjectMetaArgs(
+            name=f"slurm-dashboard-{dashboard_name}",
+            namespace=slurm_namespace.metadata.name,
+            labels={
+                "grafana_dashboard": "1",
+                "app": "slurm",
+            },
+        ),
+        data={
+            dashboard_file: dashboard_data,
+        },
+        opts=pulumi.ResourceOptions(depends_on=[slurm_cluster]),
+    )
 
 pulumi.export("operatorNamespace", slinky_namespace.metadata.name)
 pulumi.export("namespace", slurm_namespace.metadata.name)

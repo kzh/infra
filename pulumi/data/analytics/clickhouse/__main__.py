@@ -1,5 +1,4 @@
 import hashlib
-from pathlib import Path
 
 import pulumi_kubernetes as k8s
 import pulumi_random as random
@@ -30,11 +29,6 @@ clickhouse_hostname = config.get("hostname", "clickhouse")
 tailscale_domain = config.get("tailscaleDomain", "tail1c114.ts.net")
 clickhouse_host = f"{clickhouse_hostname}.{tailscale_domain}"
 clickhouse_port = 9000
-dashboards_dir = Path(__file__).resolve().parent / "dashboards"
-dashboard_files = [
-    "altinity-clickhouse-operator.json",
-    "clickhouse-queries.json",
-]
 
 clickhouse_namespace = k8s.core.v1.Namespace(
     "clickhouse-namespace",
@@ -94,7 +88,10 @@ clickhouse_operator = k8s.helm.v3.Release(
             },
         },
         "dashboards": {
-            "enabled": False,
+            "enabled": True,
+            "additionalLabels": {
+                "grafana_dashboard": grafana_dashboard_label,
+            },
         },
         "operator": {
             "resources": {},
@@ -102,28 +99,6 @@ clickhouse_operator = k8s.helm.v3.Release(
     },
     opts=pulumi.ResourceOptions(depends_on=[clickhouse_namespace]),
 )
-
-for dashboard_file in dashboard_files:
-    dashboard_name = dashboard_file.replace(".json", "")
-    dashboard_data = (dashboards_dir / dashboard_file).read_text(encoding="utf-8")
-    k8s.core.v1.ConfigMap(
-        f"clickhouse-dashboard-{dashboard_name}",
-        metadata=k8s.meta.v1.ObjectMetaArgs(
-            name=f"clickhouse-dashboard-{dashboard_name}",
-            namespace=namespace_name,
-            labels={
-                "grafana_dashboard": grafana_dashboard_label,
-                "app": "clickhouse",
-            },
-            annotations={
-                "grafana_folder": "clickhouse",
-            },
-        ),
-        data={
-            dashboard_file: dashboard_data,
-        },
-        opts=pulumi.ResourceOptions(depends_on=[clickhouse_operator]),
-    )
 
 clickhouse_installation = ClickHouseInstallation(
     "clickhouse-installation",

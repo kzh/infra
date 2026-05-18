@@ -305,6 +305,192 @@
           "sort": "desc"
         }
       }
+    },
+    {
+      "id": 9,
+      "type": "stat",
+      "title": "Config Push Errors",
+      "datasource": "Prometheus",
+      "gridPos": { "h": 5, "w": 6, "x": 0, "y": 22 },
+      "targets": [
+        {
+          "expr": "sum(increase(cloudflared_config_local_config_pushes_errors[1h]))",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 1 },
+              { "color": "red", "value": 3 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 10,
+      "type": "stat",
+      "title": "Tunnel Register Successes",
+      "datasource": "Prometheus",
+      "gridPos": { "h": 5, "w": 6, "x": 6, "y": 22 },
+      "targets": [
+        {
+          "expr": "sum(cloudflared_tunnel_tunnel_register_success)",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 1 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 11,
+      "type": "stat",
+      "title": "Concurrent Requests",
+      "datasource": "Prometheus",
+      "gridPos": { "h": 5, "w": 6, "x": 12, "y": 22 },
+      "targets": [
+        {
+          "expr": "sum(cloudflared_tunnel_concurrent_requests_per_tunnel)",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 12,
+      "type": "stat",
+      "title": "TCP/UDP Sessions",
+      "datasource": "Prometheus",
+      "gridPos": { "h": 5, "w": 6, "x": 18, "y": 22 },
+      "targets": [
+        {
+          "expr": "sum(increase(cloudflared_tcp_total_sessions[1h]))",
+          "legendFormat": "tcp",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(increase(cloudflared_udp_total_sessions[1h]))",
+          "legendFormat": "udp",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "value_and_name",
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 13,
+      "type": "timeseries",
+      "title": "Config Pushes and Register Failures",
+      "datasource": "Prometheus",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 27 },
+      "targets": [
+        {
+          "expr": "sum(rate(cloudflared_config_local_config_pushes[5m]))",
+          "legendFormat": "config pushes",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(rate(cloudflared_config_local_config_pushes_errors[5m]))",
+          "legendFormat": "config push errors",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(rate(cloudflared_tunnel_tunnel_register_fail[5m]))",
+          "legendFormat": "register failures",
+          "refId": "C"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["lastNotNull", "max"]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      }
     }
   ],
   "refresh": "30s",

@@ -29,7 +29,9 @@
             "datasource": "${datasource}",
             "description": "Current state of the train controller.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": ""
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -155,7 +157,9 @@
             "datasource": "${datasource}",
             "description": "Time taken by the controller for worker group operations.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "seconds"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -287,9 +291,11 @@
             "dashLength": 10,
             "dashes": false,
             "datasource": "${datasource}",
-            "description": "Time taken to report a checkpoint to storage.",
+            "description": "Cumulative time taken to report checkpoints to storage.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "seconds"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -368,7 +374,7 @@
             "timeFrom": null,
             "timeRegions": [],
             "timeShift": null,
-            "title": "Checkpoint Report Time",
+            "title": "Cumulative Checkpoint Report Time",
             "tooltip": {
                 "shared": true,
                 "sort": 0,
@@ -427,7 +433,9 @@
                     "datasource": "${datasource}",
                     "description": "CPU core utilization across all workers.",
                     "fieldConfig": {
-                        "defaults": {},
+                        "defaults": {
+                            "unit": "cores"
+                        },
                         "overrides": []
                     },
                     "gridPos": {
@@ -561,7 +569,9 @@
                     "datasource": "${datasource}",
                     "description": "Total physical memory used vs total available memory.",
                     "fieldConfig": {
-                        "defaults": {},
+                        "defaults": {
+                            "unit": "bytes"
+                        },
                         "overrides": []
                     },
                     "gridPos": {
@@ -695,7 +705,9 @@
                     "datasource": "${datasource}",
                     "description": "Memory allocation details including available and shared memory.",
                     "fieldConfig": {
-                        "defaults": {},
+                        "defaults": {
+                            "unit": "bytes"
+                        },
                         "overrides": []
                     },
                     "gridPos": {
@@ -829,7 +841,9 @@
                     "datasource": "${datasource}",
                     "description": "GPU utilization across all workers.",
                     "fieldConfig": {
-                        "defaults": {},
+                        "defaults": {
+                            "unit": "GPUs"
+                        },
                         "overrides": []
                     },
                     "gridPos": {
@@ -963,7 +977,9 @@
                     "datasource": "${datasource}",
                     "description": "GPU memory usage across all workers.",
                     "fieldConfig": {
-                        "defaults": {},
+                        "defaults": {
+                            "unit": "bytes"
+                        },
                         "overrides": []
                     },
                     "gridPos": {
@@ -1097,7 +1113,9 @@
                     "datasource": "${datasource}",
                     "description": "Disk space usage across all workers.",
                     "fieldConfig": {
-                        "defaults": {},
+                        "defaults": {
+                            "unit": "bytes"
+                        },
                         "overrides": []
                     },
                     "gridPos": {
@@ -1231,7 +1249,9 @@
                     "datasource": "${datasource}",
                     "description": "Current disk read/write throughput.",
                     "fieldConfig": {
-                        "defaults": {},
+                        "defaults": {
+                            "unit": "Bps"
+                        },
                         "overrides": []
                     },
                     "gridPos": {
@@ -1365,7 +1385,9 @@
                     "datasource": "${datasource}",
                     "description": "Current disk read/write operations per second.",
                     "fieldConfig": {
-                        "defaults": {},
+                        "defaults": {
+                            "unit": "ops/s"
+                        },
                         "overrides": []
                     },
                     "gridPos": {
@@ -1499,7 +1521,9 @@
                     "datasource": "${datasource}",
                     "description": "Current network send/receive throughput.",
                     "fieldConfig": {
-                        "defaults": {},
+                        "defaults": {
+                            "unit": "Bps"
+                        },
                         "overrides": []
                     },
                     "gridPos": {
@@ -1633,7 +1657,9 @@
                     "datasource": "${datasource}",
                     "description": "Total network traffic sent/received.",
                     "fieldConfig": {
-                        "defaults": {},
+                        "defaults": {
+                            "unit": "bytes"
+                        },
                         "overrides": []
                     },
                     "gridPos": {
@@ -2039,7 +2065,7 @@
         ]
     },
     "tags": [
-        "rayVersion:2.52.0"
+        "rayVersion:2.55.1"
     ],
     "rayMeta": [
         "supportsGlobalFilterOverride"

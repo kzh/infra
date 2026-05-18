@@ -39,7 +39,9 @@
             "datasource": "${datasource}",
             "description": "Note: not impacted by \"Instance\" variable.\n\nA total number of active failed, and pending nodes from the cluster. \n\nACTIVE: A node is alive and available.\n\nFAILED: A node is dead and not available. The node is considered dead when the raylet process on the node is terminated. The node will get into the failed state if it cannot be provided (e.g., there's no available node from the cloud provider) or failed to setup (e.g., setup_commands have errors). \n\nPending: A node is being started by the Ray cluster launcher. The node is unavailable now because it is being provisioned and initialized.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "nodes"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -181,7 +183,9 @@
             "datasource": "${datasource}",
             "description": "Aggregated utilization of all physical resources (CPU, GPU, memory, disk, or etc.) across the cluster.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "%"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -347,7 +351,9 @@
             "datasource": "${datasource}",
             "description": "The number of tasks and actors killed by the Ray Out of Memory killer due to high memory pressure. Metrics are broken down by IP and the name. https://docs.ray.io/en/master/ray-core/scheduling/ray-oom-prevention.html. Note: The RayNodeType filter does not work on this graph.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "failures"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -486,7 +492,9 @@
             "datasource": "${datasource}",
             "description": "The physical (hardware) CPU usage for each node.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "cores"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -620,7 +628,9 @@
             "datasource": "${datasource}",
             "description": "The percentage of physical (hardware) CPU usage for each node.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "%"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -746,7 +756,9 @@
             "datasource": "${datasource}",
             "description": "The physical (hardware) memory usage for each node. The dotted line means the total amount of memory from the cluster. Node memory is a sum of object store memory (shared memory) and heap memory.\n\nNote: If Ray is deployed within a container, the total memory could be lower than the host machine because Ray may reserve some additional memory space outside the container.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "bytes"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -880,7 +892,9 @@
             "datasource": "${datasource}",
             "description": "The percentage of physical (hardware) memory usage for each node.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "%"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -1006,7 +1020,9 @@
             "datasource": "${datasource}",
             "description": "Node's physical (hardware) disk usage. The dotted line means the total amount of disk space from the cluster.\n\nNOTE: When Ray is deployed within a container, this shows the disk usage from the host machine. ",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "bytes"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -1140,7 +1156,9 @@
             "datasource": "${datasource}",
             "description": "Node's physical (hardware) disk usage. \n\nNOTE: When Ray is deployed within a container, this shows the disk usage from the host machine. ",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "%"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -1266,7 +1284,9 @@
             "datasource": "${datasource}",
             "description": "Node's physical (hardware) GPU usage. The dotted line means the total number of hardware GPUs from the cluster. ",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "GPUs"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -1400,7 +1420,9 @@
             "datasource": "${datasource}",
             "description": "Node's physical (hardware) GPU usage.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "%"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -1526,7 +1548,9 @@
             "datasource": "${datasource}",
             "description": "The physical (hardware) GPU memory usage for each node. The dotted line means the total amount of GPU memory from the cluster.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "bytes"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -1660,7 +1684,9 @@
             "datasource": "${datasource}",
             "description": "The percentage of physical (hardware) GPU memory usage for each node.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "%"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -1784,9 +1810,11 @@
             "dashLength": 10,
             "dashes": false,
             "datasource": "${datasource}",
-            "description": "Disk IO per node.",
+            "description": "Current GPU power draw per node. Reported in milliwatts; displayed in watts. Supported on NVIDIA and AMD GPUs.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "mwatt"
+                },
                 "overrides": []
             },
             "gridPos": {
@@ -1794,6 +1822,262 @@
                 "w": 12,
                 "x": 0,
                 "y": 58
+            },
+            "fill": 0,
+            "fillGradient": 0,
+            "hiddenSeries": false,
+            "id": 62,
+            "legend": {
+                "alignAsTable": true,
+                "avg": true,
+                "current": true,
+                "hideEmpty": false,
+                "hideZero": true,
+                "max": true,
+                "min": false,
+                "rightSide": false,
+                "show": true,
+                "sort": "current",
+                "sortDesc": true,
+                "total": false,
+                "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": null,
+            "options": {
+                "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "7.5.17",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+                {
+                    "$$hashKey": "object:2987",
+                    "alias": "MAX",
+                    "dashes": true,
+                    "color": "#1F60C4",
+                    "fill": 0,
+                    "stack": false
+                },
+                {
+                    "$$hashKey": "object:78",
+                    "alias": "/FINISHED|FAILED|DEAD|REMOVED|Failed Nodes:/",
+                    "hiddenSeries": true
+                },
+                {
+                    "$$hashKey": "object:2987",
+                    "alias": "MAX + PENDING",
+                    "dashes": true,
+                    "color": "#777777",
+                    "fill": 0,
+                    "stack": false
+                }
+            ],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "exemplar": true,
+                    "expr": "sum(ray_node_gpu_power_milliwatts{instance=~\"$Instance\", RayNodeType=~\"$RayNodeType\", SessionName=~\"$SessionName\",ray_io_cluster=~\"$Cluster\"}) by (instance, RayNodeType, GpuIndex, GpuDeviceName)",
+                    "interval": "",
+                    "legendFormat": "Power: {{instance}} ({{RayNodeType}}), gpu.{{GpuIndex}}, {{GpuDeviceName}}",
+                    "queryType": "randomWalk",
+                    "refId": "A"
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Node GPU Power",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "$$hashKey": "object:628",
+                    "format": "mwatt",
+                    "label": "",
+                    "logBase": 1,
+                    "max": null,
+                    "min": "0",
+                    "show": true
+                },
+                {
+                    "$$hashKey": "object:629",
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "${datasource}",
+            "description": "Current GPU temperature per node in Celsius. Supported on NVIDIA GPUs.",
+            "fieldConfig": {
+                "defaults": {
+                    "unit": "celsius"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 58
+            },
+            "fill": 0,
+            "fillGradient": 0,
+            "hiddenSeries": false,
+            "id": 63,
+            "legend": {
+                "alignAsTable": true,
+                "avg": true,
+                "current": true,
+                "hideEmpty": false,
+                "hideZero": true,
+                "max": true,
+                "min": false,
+                "rightSide": false,
+                "show": true,
+                "sort": "current",
+                "sortDesc": true,
+                "total": false,
+                "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": null,
+            "options": {
+                "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "7.5.17",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+                {
+                    "$$hashKey": "object:2987",
+                    "alias": "MAX",
+                    "dashes": true,
+                    "color": "#1F60C4",
+                    "fill": 0,
+                    "stack": false
+                },
+                {
+                    "$$hashKey": "object:78",
+                    "alias": "/FINISHED|FAILED|DEAD|REMOVED|Failed Nodes:/",
+                    "hiddenSeries": true
+                },
+                {
+                    "$$hashKey": "object:2987",
+                    "alias": "MAX + PENDING",
+                    "dashes": true,
+                    "color": "#777777",
+                    "fill": 0,
+                    "stack": false
+                }
+            ],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "exemplar": true,
+                    "expr": "sum(ray_node_gpu_temperature_celsius{instance=~\"$Instance\", RayNodeType=~\"$RayNodeType\", SessionName=~\"$SessionName\",ray_io_cluster=~\"$Cluster\"}) by (instance, RayNodeType, GpuIndex, GpuDeviceName)",
+                    "interval": "",
+                    "legendFormat": "Temperature: {{instance}} ({{RayNodeType}}), gpu.{{GpuIndex}}, {{GpuDeviceName}}",
+                    "queryType": "randomWalk",
+                    "refId": "A"
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Node GPU Temperature",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "$$hashKey": "object:628",
+                    "format": "celsius",
+                    "label": "",
+                    "logBase": 1,
+                    "max": null,
+                    "min": "0",
+                    "show": true
+                },
+                {
+                    "$$hashKey": "object:629",
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "${datasource}",
+            "description": "Disk IO per node.",
+            "fieldConfig": {
+                "defaults": {
+                    "unit": "Bps"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 66
             },
             "fill": 10,
             "fillGradient": 0,
@@ -1920,14 +2204,16 @@
             "datasource": "${datasource}",
             "description": "Network speed per node",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "Bps"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
                 "x": 12,
-                "y": 58
+                "y": 66
             },
             "fill": 10,
             "fillGradient": 0,
@@ -2052,7 +2338,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 66
+                "y": 74
             },
             "id": 1004,
             "title": "Hardware Utilization by Ray Component",
@@ -2067,14 +2353,16 @@
             "datasource": "${datasource}",
             "description": "The physical (hardware) CPU usage across the cluster, broken down by component. This reports the summed CPU usage per Ray component. Ray components consist of system components (e.g., raylet, gcs, dashboard, or agent) and the process (that contains method names) names of running tasks/actors.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "cores"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 67
+                "y": 75
             },
             "fill": 10,
             "fillGradient": 0,
@@ -2201,14 +2489,16 @@
             "datasource": "${datasource}",
             "description": "The physical (hardware) memory usage across the cluster, broken down by component. This reports the summed RSS-SHM per Ray component, which corresponds to an approximate memory usage per proc. Ray components consist of system components (e.g., raylet, gcs, dashboard, or agent) and the process (that contains method names) names of running tasks/actors.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "bytes"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
                 "x": 12,
-                "y": 67
+                "y": 75
             },
             "fill": 10,
             "fillGradient": 0,
@@ -2343,14 +2633,16 @@
             "datasource": "${datasource}",
             "description": "The physical (hardware) GPU usage across the cluster, broken down by component. This reports the summed GPU usage per Ray component.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "GPUs"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 75
+                "y": 83
             },
             "fill": 10,
             "fillGradient": 0,
@@ -2469,14 +2761,16 @@
             "datasource": "${datasource}",
             "description": "The physical (hardware) GPU memory usage across the cluster, broken down by component. This reports the summed GPU memory usage per Ray component.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "bytes"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
                 "x": 12,
-                "y": 75
+                "y": 83
             },
             "fill": 10,
             "fillGradient": 0,
@@ -2601,7 +2895,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 83
+                "y": 91
             },
             "id": 1003,
             "title": "Ray Resources by Node",
@@ -2616,14 +2910,16 @@
             "datasource": "${datasource}",
             "description": "Logical CPU usage of Ray. The dotted line indicates the total number of CPUs. The logical CPU is allocated by `num_cpus` arguments from tasks and actors. PENDING means the number of CPUs that will be available when new nodes are up after the autoscaler scales up.\n\nNOTE: Ray's logical CPU is different from physical CPU usage. Ray's logical CPU is allocated by `num_cpus` arguments.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "cores"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 84
+                "y": 92
             },
             "fill": 10,
             "fillGradient": 0,
@@ -2758,14 +3054,16 @@
             "datasource": "${datasource}",
             "description": "Logical GPU usage of Ray. The dotted line indicates the total number of GPUs. The logical GPU is allocated by `num_gpus` arguments from tasks and actors. PENDING means the number of GPUs that will be available when new nodes are up after the autoscaler scales up.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "GPUs"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
                 "x": 12,
-                "y": 84
+                "y": 92
             },
             "fill": 10,
             "fillGradient": 0,
@@ -2898,16 +3196,162 @@
             "dashLength": 10,
             "dashes": false,
             "datasource": "${datasource}",
-            "description": "Object store memory usage by instance, including memory that has been spilled to disk. The dotted line indicates the object store memory capacity. This metric can go over the max capacity in case of spillage to disk.",
+            "description": "Logical memory usage of Ray by node. The dotted line indicates the total amount of memory available. Logical memory refers to Ray's view of memory resources allocated to tasks and actors. PENDING means the amount of memory that will be available when new nodes are up after the autoscaler scales up.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "bytes"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 92
+                "y": 100
+            },
+            "fill": 10,
+            "fillGradient": 0,
+            "hiddenSeries": false,
+            "id": 61,
+            "legend": {
+                "alignAsTable": true,
+                "avg": true,
+                "current": true,
+                "hideEmpty": false,
+                "hideZero": true,
+                "max": true,
+                "min": false,
+                "rightSide": false,
+                "show": true,
+                "sort": "current",
+                "sortDesc": true,
+                "total": false,
+                "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "connected",
+            "options": {
+                "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "7.5.17",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+                {
+                    "$$hashKey": "object:2987",
+                    "alias": "MAX",
+                    "dashes": true,
+                    "color": "#1F60C4",
+                    "fill": 0,
+                    "stack": false
+                },
+                {
+                    "$$hashKey": "object:78",
+                    "alias": "/FINISHED|FAILED|DEAD|REMOVED|Failed Nodes:/",
+                    "hiddenSeries": true
+                },
+                {
+                    "$$hashKey": "object:2987",
+                    "alias": "MAX + PENDING",
+                    "dashes": true,
+                    "color": "#777777",
+                    "fill": 0,
+                    "stack": false
+                }
+            ],
+            "spaceLength": 10,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "exemplar": true,
+                    "expr": "sum(ray_resources{Name=\"memory\",State=\"USED\",instance=~\"$Instance\",SessionName=~\"$SessionName\",ray_io_cluster=~\"$Cluster\"}) by (instance)",
+                    "interval": "",
+                    "legendFormat": "Memory Usage: {{instance}}",
+                    "queryType": "randomWalk",
+                    "refId": "A"
+                },
+                {
+                    "exemplar": true,
+                    "expr": "sum(ray_resources{Name=\"memory\",instance=~\"$Instance\",SessionName=~\"$SessionName\",ray_io_cluster=~\"$Cluster\"})",
+                    "interval": "",
+                    "legendFormat": "MAX",
+                    "queryType": "randomWalk",
+                    "refId": "B"
+                },
+                {
+                    "exemplar": true,
+                    "expr": "((sum(autoscaler_cluster_resources{resource=\"memory\",SessionName=~\"$SessionName\",ray_io_cluster=~\"$Cluster\"}) or vector(0)) + (sum(autoscaler_pending_resources{resource=\"memory\",SessionName=~\"$SessionName\",ray_io_cluster=~\"$Cluster\"}) or vector(0)) and (sum(autoscaler_cluster_resources{resource=\"memory\",SessionName=~\"$SessionName\",ray_io_cluster=~\"$Cluster\"}) or vector(0)) + (sum(autoscaler_pending_resources{resource=\"memory\",SessionName=~\"$SessionName\",ray_io_cluster=~\"$Cluster\"}) or vector(0)) > (sum(autoscaler_cluster_resources{resource=\"memory\",SessionName=~\"$SessionName\",ray_io_cluster=~\"$Cluster\"}) or vector(0)))",
+                    "interval": "",
+                    "legendFormat": "MAX + PENDING",
+                    "queryType": "randomWalk",
+                    "refId": "C"
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Logical Memory Usage",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "$$hashKey": "object:628",
+                    "format": "bytes",
+                    "label": "",
+                    "logBase": 1,
+                    "max": null,
+                    "min": "0",
+                    "show": true
+                },
+                {
+                    "$$hashKey": "object:629",
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "${datasource}",
+            "description": "Object store memory usage by instance, including memory that has been spilled to disk. The dotted line indicates the object store memory capacity. This metric can go over the max capacity in case of spillage to disk.",
+            "fieldConfig": {
+                "defaults": {
+                    "unit": "bytes"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 100
             },
             "fill": 10,
             "fillGradient": 0,
@@ -3034,14 +3478,16 @@
             "datasource": "${datasource}",
             "description": "Object store memory usage % by instance, including memory that has been spilled to disk. This metric can go over 100% in case of spillage to disk.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "%"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
-                "x": 12,
-                "y": 92
+                "x": 0,
+                "y": 108
             },
             "fill": 0,
             "fillGradient": 0,
@@ -3168,14 +3614,16 @@
             "datasource": "${datasource}",
             "description": "Object store memory that has been spilled to disk, by instance.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "bytes"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
-                "x": 0,
-                "y": 100
+                "x": 12,
+                "y": 108
             },
             "fill": 0,
             "fillGradient": 0,
@@ -3292,7 +3740,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 108
+                "y": 116
             },
             "id": 1002,
             "title": "Ray Tasks, Actors and Placement Groups",
@@ -3307,14 +3755,16 @@
             "datasource": "${datasource}",
             "description": "Current count of tasks, grouped by scheduler state (e.g., pending, running, finished).\n\nState: the task state, as described by rpc::TaskStatus proto in common.proto. Task resubmissions due to failures or object reconstruction are shown with (retry) in the label.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "tasks"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 109
+                "y": 117
             },
             "fill": 0,
             "fillGradient": 0,
@@ -3441,14 +3891,16 @@
             "datasource": "${datasource}",
             "description": "Current count of active tasks (i.e. pending or running; not finished), grouped by task name. Task resubmissions due to failures or object reconstruction are shown with (retry) in the label.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "tasks"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
                 "x": 12,
-                "y": 109
+                "y": 117
             },
             "fill": 0,
             "fillGradient": 0,
@@ -3575,14 +4027,16 @@
             "datasource": "${datasource}",
             "description": "Current count of tasks that are currently executing, grouped by task name. Task resubmissions due to failures or object reconstruction are shown with (retry) in the label.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "tasks"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 117
+                "y": 125
             },
             "fill": 0,
             "fillGradient": 0,
@@ -3707,16 +4161,146 @@
             "dashLength": 10,
             "dashes": false,
             "datasource": "${datasource}",
-            "description": "Note: not impacted by \"Instance\" variable.\n\nCurrent count of actors, grouped by lifecycle state (e.g., alive, restarting, dead/terminated).\n\nState: the actor state, as described by rpc::ActorTableData proto in gcs.proto.",
+            "description": "Current count of tasks that are currently executing, grouped by node.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "tasks"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
                 "x": 12,
-                "y": 117
+                "y": 125
+            },
+            "fill": 0,
+            "fillGradient": 0,
+            "hiddenSeries": false,
+            "id": 64,
+            "legend": {
+                "alignAsTable": true,
+                "avg": true,
+                "current": true,
+                "hideEmpty": false,
+                "hideZero": true,
+                "max": true,
+                "min": false,
+                "rightSide": false,
+                "show": true,
+                "sort": "current",
+                "sortDesc": true,
+                "total": false,
+                "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": null,
+            "options": {
+                "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "7.5.17",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+                {
+                    "$$hashKey": "object:2987",
+                    "alias": "MAX",
+                    "dashes": true,
+                    "color": "#1F60C4",
+                    "fill": 0,
+                    "stack": false
+                },
+                {
+                    "$$hashKey": "object:78",
+                    "alias": "/FINISHED|FAILED|DEAD|REMOVED|Failed Nodes:/",
+                    "hiddenSeries": true
+                },
+                {
+                    "$$hashKey": "object:2987",
+                    "alias": "MAX + PENDING",
+                    "dashes": true,
+                    "color": "#777777",
+                    "fill": 0,
+                    "stack": false
+                }
+            ],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "exemplar": true,
+                    "expr": "clamp_min(sum(ray_tasks{State=~\"RUNNING*\",Source=\"executor\",instance=~\"$Instance\",SessionName=~\"$SessionName\",ray_io_cluster=~\"$Cluster\"}) by (instance), 0)",
+                    "interval": "",
+                    "legendFormat": "{{instance}}",
+                    "queryType": "randomWalk",
+                    "refId": "A"
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Running Tasks by Node",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "$$hashKey": "object:628",
+                    "format": "tasks",
+                    "label": "",
+                    "logBase": 1,
+                    "max": null,
+                    "min": "0",
+                    "show": true
+                },
+                {
+                    "$$hashKey": "object:629",
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "${datasource}",
+            "description": "Note: not impacted by \"Instance\" variable.\n\nCurrent count of actors, grouped by lifecycle state (e.g., alive, restarting, dead/terminated).\n\nState: the actor state, as described by rpc::ActorTableData proto in gcs.proto.",
+            "fieldConfig": {
+                "defaults": {
+                    "unit": "actors"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 133
             },
             "fill": 10,
             "fillGradient": 0,
@@ -3835,14 +4419,16 @@
             "datasource": "${datasource}",
             "description": "Current count of alive actors (i.e. not dead/terminated), grouped by state.\n\nState: the actor state, as described by rpc::ActorTableData proto in gcs.proto.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "actors"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
-                "x": 0,
-                "y": 125
+                "x": 12,
+                "y": 133
             },
             "fill": 10,
             "fillGradient": 0,
@@ -3961,14 +4547,16 @@
             "datasource": "${datasource}",
             "description": "Current count of alive actors, grouped by actor name.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "actors"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
-                "x": 12,
-                "y": 125
+                "x": 0,
+                "y": 141
             },
             "fill": 10,
             "fillGradient": 0,
@@ -4087,14 +4675,16 @@
             "datasource": "${datasource}",
             "description": "Note: not impacted by \"Instance\" variable.\n\nCurrent count of placement groups, grouped by state.\n\nState: the placement group state, as described by the rpc::PlacementGroupTableData proto in gcs.proto.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "placement groups"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
-                "x": 0,
-                "y": 133
+                "x": 12,
+                "y": 141
             },
             "fill": 10,
             "fillGradient": 0,
@@ -4211,16 +4801,18 @@
             "dashLength": 10,
             "dashes": false,
             "datasource": "${datasource}",
-            "description": "Object store memory usage by location. The dotted line indicates the object store memory capacity. This metric can go over the max capacity in case of spillage to disk.\n\nLocation: where the memory was allocated, which is MMAP_SHM or MMAP_DISK to indicate memory-mapped page, SPILLED to indicate spillage to disk, and WORKER_HEAP for objects small enough to be inlined in worker memory. Refer to metric_defs.cc for more information.",
+            "description": "Object store memory usage by location. The dotted line indicates the object store memory capacity. This metric can go over the max capacity in case of spillage to disk.\n\nLocation: where the memory was allocated, which is MMAP_SHM or MMAP_DISK to indicate memory-mapped page, SPILLED to indicate spillage to disk, and WORKER_HEAP for objects small enough to be inlined in worker memory.",
             "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                    "unit": "bytes"
+                },
                 "overrides": []
             },
             "gridPos": {
                 "h": 8,
                 "w": 12,
-                "x": 12,
-                "y": 133
+                "x": 0,
+                "y": 149
             },
             "fill": 10,
             "fillGradient": 0,
@@ -4345,7 +4937,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 141
+                "y": 157
             },
             "id": 1006,
             "title": "TPU Utilization by Node",
@@ -4359,14 +4951,16 @@
                     "datasource": "${datasource}",
                     "description": "Percentage of tensorcore utilization for the TPUs on this node. Computed by dividing the number of tensorcore operations by the maximum supported number of operations during the sample period.",
                     "fieldConfig": {
-                        "defaults": {},
+                        "defaults": {
+                            "unit": "%"
+                        },
                         "overrides": []
                     },
                     "gridPos": {
                         "h": 8,
                         "w": 12,
                         "x": 0,
-                        "y": 142
+                        "y": 158
                     },
                     "fill": 10,
                     "fillGradient": 0,
@@ -4485,14 +5079,16 @@
                     "datasource": "${datasource}",
                     "description": "Percentage of bandwidth memory utilization for the TPUs on this node. Computed by dividing the memory bandwidth used by the maximum supported memory bandwidth limit during the sample period.",
                     "fieldConfig": {
-                        "defaults": {},
+                        "defaults": {
+                            "unit": "%"
+                        },
                         "overrides": []
                     },
                     "gridPos": {
                         "h": 8,
                         "w": 12,
                         "x": 12,
-                        "y": 142
+                        "y": 158
                     },
                     "fill": 10,
                     "fillGradient": 0,
@@ -4611,14 +5207,16 @@
                     "datasource": "${datasource}",
                     "description": "Percentage of time over the sample period during which the TPU is actively processing.",
                     "fieldConfig": {
-                        "defaults": {},
+                        "defaults": {
+                            "unit": "%"
+                        },
                         "overrides": []
                     },
                     "gridPos": {
                         "h": 8,
                         "w": 12,
                         "x": 0,
-                        "y": 150
+                        "y": 166
                     },
                     "fill": 10,
                     "fillGradient": 0,
@@ -4737,14 +5335,16 @@
                     "datasource": "${datasource}",
                     "description": "Total memory used/allocated for the TPUs on this node.",
                     "fieldConfig": {
-                        "defaults": {},
+                        "defaults": {
+                            "unit": "bytes"
+                        },
                         "overrides": []
                     },
                     "gridPos": {
                         "h": 8,
                         "w": 12,
                         "x": 12,
-                        "y": 150
+                        "y": 166
                     },
                     "fill": 10,
                     "fillGradient": 0,
@@ -4870,7 +5470,7 @@
     "schemaVersion": 27,
     "style": "dark",
     "tags": [
-        "rayVersion:2.52.0"
+        "rayVersion:2.55.1"
     ],
     "templating": {
         "list": [

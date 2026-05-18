@@ -135,5 +135,8 @@ for dashboard_file in dashboard_files:
         data={
             dashboard_file: dashboard_data,
         },
-        opts=pulumi.ResourceOptions(depends_on=[tailscale_default_metrics_proxyclass]),
+        opts=pulumi.ResourceOptions(
+            depends_on=[tailscale_default_metrics_proxyclass],
+            delete_before_replace=True,
+        ),
     )

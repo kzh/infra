@@ -35,6 +35,7 @@ RAY_DASHBOARD_FILES = [
     "serve_deployment_grafana_dashboard.json",
     "serve_llm_grafana_dashboard.json",
     "data_grafana_dashboard.json",
+    "data_llm_grafana_dashboard.json",
     "train_grafana_dashboard.json",
 ]
 RAY_DASHBOARDS_DIR = Path(__file__).resolve().parent / "dashboards"
@@ -55,6 +56,7 @@ def ray_dashboard_configmap(dashboard_file: str) -> k8s.core.v1.ConfigMap:
         data={
             dashboard_file: dashboard_data,
         },
+        opts=pulumi.ResourceOptions(delete_before_replace=True),
     )
 
 

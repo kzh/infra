@@ -1,6 +1,9 @@
+from pathlib import Path
+
 import pulumi_kubernetes as k8s
 import pulumi_postgresql as pg
 import pulumi_random as random
+from pulumi_monitoring_crds.monitoring.v1 import ServiceMonitor
 
 import pulumi
 
@@ -15,6 +18,11 @@ database_name = config.get("databaseName", "airflow")
 database_user = config.get("databaseUser", "airflow")
 storage_class_name = config.get("storageClassName", "local-path")
 triggerer_storage_size = config.get("triggererStorageSize", "5Gi")
+monitoring_release_label = config.get("monitoringReleaseLabel", "kube-prometheus-stack")
+dashboards_dir = Path(__file__).resolve().parent / "dashboards"
+dashboard_files = [
+    "airflow-overview.json",
+]
 
 labels = {
     "app.kubernetes.io/name": "airflow",
@@ -173,7 +181,7 @@ airflow_chart = k8s.helm.v3.Release(
             },
         },
         "statsd": {
-            "enabled": False,
+            "enabled": True,
         },
         "redis": {
             "enabled": False,
@@ -252,6 +260,57 @@ airflow_chart = k8s.helm.v3.Release(
         delete_before_replace=True,
     ),
 )
+
+airflow_statsd_servicemonitor = ServiceMonitor(
+    "airflow-statsd-servicemonitor",
+    metadata={
+        "name": "airflow-statsd",
+        "namespace": namespace_name,
+        "labels": {
+            "release": monitoring_release_label,
+        },
+    },
+    spec={
+        "selector": {
+            "matchLabels": {
+                "tier": "airflow",
+                "component": "statsd",
+                "release": "airflow",
+            },
+        },
+        "namespaceSelector": {
+            "matchNames": [namespace_name],
+        },
+        "endpoints": [
+            {
+                "port": "statsd-scrape",
+                "path": "/metrics",
+                "interval": "30s",
+                "scheme": "http",
+            },
+        ],
+    },
+    opts=pulumi.ResourceOptions(depends_on=[airflow_chart]),
+)
+
+for dashboard_file in dashboard_files:
+    dashboard_name = dashboard_file.replace(".json", "")
+    dashboard_data = (dashboards_dir / dashboard_file).read_text(encoding="utf-8")
+    k8s.core.v1.ConfigMap(
+        f"airflow-dashboard-{dashboard_name}",
+        metadata=k8s.meta.v1.ObjectMetaArgs(
+            name=f"airflow-dashboard-{dashboard_name}",
+            namespace=namespace.metadata.name,
+            labels={
+                "grafana_dashboard": "1",
+                "app": "airflow",
+            },
+        ),
+        data={
+            dashboard_file: dashboard_data,
+        },
+        opts=pulumi.ResourceOptions(depends_on=[airflow_statsd_servicemonitor]),
+    )
 
 pulumi.export("namespace", namespace.metadata.name)
 pulumi.export("chartVersion", chart_version)

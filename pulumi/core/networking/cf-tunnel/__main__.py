@@ -84,5 +84,8 @@ for dashboard_file in [
         data={
             dashboard_file: dashboard_data,
         },
-        opts=pulumi.ResourceOptions(depends_on=[cf_tunnel_namespace]),
+        opts=pulumi.ResourceOptions(
+            depends_on=[cf_tunnel_namespace],
+            delete_before_replace=True,
+        ),
     )

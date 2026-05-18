@@ -5,7 +5,11 @@ description = "Pulumi infrastructure deployment"
 requires-python = ">=3.12"
 dependencies = [
     "pulumi-kubernetes>=4.31.0,<5.0.0",
+    "pulumi_monitoring_crds",
     "pulumi-postgresql>=3.16.3,<4.0.0",
     "pulumi-random>=4.20.0,<5.0.0",
     "pulumi>=3.239.0,<4.0.0",
 ]
+
+[tool.uv.sources]
+pulumi_monitoring_crds = { path = "../../../lib/monitoring_crds" }
