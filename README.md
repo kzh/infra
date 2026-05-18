@@ -9,7 +9,7 @@ Pulumi + Python infrastructure monorepo for a Kubernetes cluster.
 | Core | Cloudflare Tunnel, Tailscale, CloudNativePG, KubeRay, MySQL Operator, cert-manager, Vault |
 | Data | Airflow, ClickHouse, CockroachDB, Convex, JupyterHub, MLflow, n8n, Postgres, Redpanda, RustFS, Slurm, Spark, Superset, Temporal |
 | Ops | Monitoring |
-| Apps | Coder, golink, Hermes, Immich, LiteLLM, MediaWiki, Penpot, Stitch, WordPress |
+| Apps | Coder, golink, Hermes, Immich, LiteLLM, MediaWiki, Stitch, WordPress |
 
 ## Layout
 

@@ -49,7 +49,6 @@ Project-local support assets should live beside the project that consumes them:
 | `pulumi/apps/immich` | Immich |
 | `pulumi/apps/litellm` | LiteLLM Proxy with ChatGPT subscription models, persistent token storage, and Tailscale ingress |
 | `pulumi/apps/mediawiki` | MediaWiki with MySQL Operator storage and Tailscale ingress |
-| `pulumi/apps/penpot` | Penpot plus MCP server/plugin image builds |
 | `pulumi/apps/stitch` | Stitch |
 | `pulumi/apps/wordpress` | WordPress |
 
@@ -59,9 +58,9 @@ The root `Justfile` is intentionally thin; it wraps project-local commands witho
 
 ```bash
 just projects
-just sync pulumi/apps/penpot
-just preview pulumi/apps/penpot stack=mx
-just up pulumi/apps/penpot stack=mx
+just sync pulumi/apps/hermes
+just preview pulumi/apps/hermes stack=mx
+just up pulumi/apps/hermes stack=mx
 just preview-all
 just check-python
 just lint
