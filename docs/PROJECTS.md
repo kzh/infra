@@ -28,6 +28,7 @@ Project-local support assets should live beside the project that consumes them:
 | `pulumi/core/operators/mysql` | MySQL operator |
 | `pulumi/core/security/cert-manager` | cert-manager |
 | `pulumi/core/security/vault` | Vault |
+| `pulumi/data/workflow/airflow` | Apache Airflow workflow orchestration with Tailscale ingress |
 | `pulumi/data/analytics/clickhouse` | ClickHouse operator, ClickHouseInstallation, Tailscale access, and Grafana dashboards |
 | `pulumi/data/analytics/jupyterhub` | JupyterHub and its singleuser image build |
 | `pulumi/data/analytics/mlflow` | MLflow with external PostgreSQL integration |

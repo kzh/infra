@@ -1,0 +1,10 @@
+name: airflow
+description: Apache Airflow
+runtime:
+  name: python
+  options:
+    toolchain: uv
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: python
