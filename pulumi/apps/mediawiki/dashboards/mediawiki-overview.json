@@ -1,0 +1,315 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "targets": [
+        {
+          "expr": "sum(kube_deployment_status_replicas_available{namespace=\"mediawiki\",deployment=\"mediawiki\"})",
+          "refId": "A"
+        }
+      ],
+      "title": "MediaWiki Replicas",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 2,
+      "targets": [
+        {
+          "expr": "sum(kube_statefulset_status_replicas_ready{namespace=\"mediawiki\",statefulset=\"mediawiki-mysql\"})",
+          "refId": "A"
+        }
+      ],
+      "title": "MySQL Ready Replicas",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 3,
+      "targets": [
+        {
+          "expr": "sum(kube_deployment_status_replicas_available{namespace=\"mediawiki\",deployment=\"mediawiki-mysql-router\"})",
+          "refId": "A"
+        }
+      ],
+      "title": "Router Replicas",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 4,
+      "targets": [
+        {
+          "expr": "sum(increase(kube_pod_container_status_restarts_total{namespace=\"mediawiki\"}[1h]))",
+          "refId": "A"
+        }
+      ],
+      "title": "Restarts Last Hour",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "cores"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "id": 5,
+      "targets": [
+        {
+          "expr": "sum by (pod, container) (rate(container_cpu_usage_seconds_total{namespace=\"mediawiki\",container!=\"\",image!=\"\"}[5m]))",
+          "legendFormat": "{{pod}} / {{container}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Pod CPU",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "id": 6,
+      "targets": [
+        {
+          "expr": "sum by (pod, container) (container_memory_working_set_bytes{namespace=\"mediawiki\",container!=\"\",image!=\"\"})",
+          "legendFormat": "{{pod}} / {{container}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Pod Memory",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 12
+      },
+      "id": 7,
+      "targets": [
+        {
+          "expr": "sum by (path) (rate(tailscaled_inbound_bytes_total{ts_proxy_parent_namespace=\"mediawiki\"}[5m]))",
+          "legendFormat": "in / {{path}}",
+          "refId": "A"
+        },
+        {
+          "expr": "sum by (path) (rate(tailscaled_outbound_bytes_total{ts_proxy_parent_namespace=\"mediawiki\"}[5m]))",
+          "legendFormat": "out / {{path}}",
+          "refId": "B"
+        }
+      ],
+      "title": "Tailscale Traffic by Path",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "pps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
+      "id": 8,
+      "targets": [
+        {
+          "expr": "sum by (path) (rate(tailscaled_inbound_packets_total{ts_proxy_parent_namespace=\"mediawiki\"}[5m]))",
+          "legendFormat": "in / {{path}}",
+          "refId": "A"
+        },
+        {
+          "expr": "sum by (path) (rate(tailscaled_outbound_packets_total{ts_proxy_parent_namespace=\"mediawiki\"}[5m]))",
+          "legendFormat": "out / {{path}}",
+          "refId": "B"
+        },
+        {
+          "expr": "sum by (path) (rate(tailscaled_outbound_dropped_packets_total{ts_proxy_parent_namespace=\"mediawiki\"}[5m]))",
+          "legendFormat": "dropped / {{path}}",
+          "refId": "C"
+        }
+      ],
+      "title": "Tailscale Packets",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 20
+      },
+      "id": 9,
+      "targets": [
+        {
+          "expr": "sum by (persistentvolumeclaim) (kubelet_volume_stats_used_bytes{namespace=\"mediawiki\"})",
+          "legendFormat": "{{persistentvolumeclaim}} used",
+          "refId": "A"
+        },
+        {
+          "expr": "sum by (persistentvolumeclaim) (kubelet_volume_stats_capacity_bytes{namespace=\"mediawiki\"})",
+          "legendFormat": "{{persistentvolumeclaim}} capacity",
+          "refId": "B"
+        }
+      ],
+      "title": "Persistent Storage",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 20
+      },
+      "id": 10,
+      "targets": [
+        {
+          "expr": "sum by (pod, container) (increase(kube_pod_container_status_restarts_total{namespace=\"mediawiki\"}[6h]))",
+          "legendFormat": "{{pod}} / {{container}} restarts",
+          "refId": "A"
+        },
+        {
+          "expr": "sum by (pod, container) (kube_pod_container_status_running{namespace=\"mediawiki\"})",
+          "legendFormat": "{{pod}} / {{container}} running",
+          "refId": "B"
+        }
+      ],
+      "title": "Restarts and Running",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": [
+    "mediawiki",
+    "mysql",
+    "homelab"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timezone": "browser",
+  "title": "MediaWiki Overview",
+  "uid": "mediawiki-overview",
+  "version": 2,
+  "weekStart": ""
+}

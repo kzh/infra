@@ -1,4 +1,5 @@
 import hashlib
+from pathlib import Path
 
 import pulumi_kubernetes as k8s
 import pulumi_random as random
@@ -123,9 +124,18 @@ local_settings_revision = "20260504-1"
 db_init_revision = "20260504-1"
 install_revision = "20260504-1"
 update_revision = "20260504-1"
+db_compat_revision = "20260518-1"
+dashboards_dir = Path(__file__).resolve().parent / "dashboards"
+dashboard_files = [
+    "mediawiki-overview.json",
+]
 
 labels = {
     "app": "mediawiki",
+}
+web_labels = {
+    **labels,
+    "component": "web",
 }
 
 mediawiki_namespace = k8s.core.v1.Namespace(
@@ -274,6 +284,11 @@ mediawiki_mysql_cluster = InnoDBCluster(
 )
 
 mysql_service_host = f"{mysql_cluster_name}.{namespace_name}.svc.cluster.local"
+mysql_instance_host = (
+    f"{mysql_cluster_name}-0."
+    f"{mysql_cluster_name}-instances."
+    f"{namespace_name}.svc.cluster.local"
+)
 mediawiki_url = config.get("publicUrl") or (
     f"https://{hostname}.{tailscale_domain}"
     if tailscale_domain
@@ -664,6 +679,186 @@ mediawiki_update_job = k8s.batch.v1.Job(
     ),
 )
 
+db_compat_task_id = pulumi.Output.all(
+    db_compat_revision,
+    mysql_instance_host,
+    db_name,
+    mysql_version,
+).apply(stable_task_id)
+
+mediawiki_db_compat_job = k8s.batch.v1.Job(
+    "mediawiki-db-compat",
+    metadata=k8s.meta.v1.ObjectMetaArgs(
+        name="mediawiki-db-compat",
+        namespace=namespace_name,
+        labels={
+            **labels,
+            "component": "db-compat",
+        },
+    ),
+    spec=k8s.batch.v1.JobSpecArgs(
+        backoff_limit=3,
+        ttl_seconds_after_finished=3600,
+        template=k8s.core.v1.PodTemplateSpecArgs(
+            metadata=k8s.meta.v1.ObjectMetaArgs(
+                labels={
+                    **labels,
+                    "component": "db-compat",
+                },
+                annotations={
+                    "mediawiki.k8s.kevin/task-id": db_compat_task_id,
+                },
+            ),
+            spec=k8s.core.v1.PodSpecArgs(
+                restart_policy="OnFailure",
+                containers=[
+                    k8s.core.v1.ContainerArgs(
+                        name="db-compat",
+                        image=mysql_client_image,
+                        image_pull_policy="IfNotPresent",
+                        env=[
+                            k8s.core.v1.EnvVarArgs(
+                                name="MYSQL_HOST", value=mysql_instance_host
+                            ),
+                            k8s.core.v1.EnvVarArgs(name="MYSQL_PORT", value="3306"),
+                            secret_env_var(
+                                name="MYSQL_ROOT_USER",
+                                secret_name=mysql_root_credentials.metadata.name,
+                                key="rootUser",
+                            ),
+                            secret_env_var(
+                                name="MYSQL_PWD",
+                                secret_name=mysql_root_credentials.metadata.name,
+                                key="rootPassword",
+                            ),
+                            secret_env_var(
+                                name="MEDIAWIKI_DB_NAME",
+                                secret_name=mediawiki_db_credentials.metadata.name,
+                                key="MEDIAWIKI_DB_NAME",
+                            ),
+                        ],
+                        command=["sh", "-c"],
+                        args=[
+                            """
+set -eu
+
+until mysqladmin ping -h "${MYSQL_HOST}" -P "${MYSQL_PORT}" -u"${MYSQL_ROOT_USER}" --silent; do
+    echo "waiting for MySQL instance at ${MYSQL_HOST}:${MYSQL_PORT}"
+    sleep 10
+done
+
+mysql -h "${MYSQL_HOST}" -P "${MYSQL_PORT}" -u"${MYSQL_ROOT_USER}" "${MEDIAWIKI_DB_NAME}" <<'SQL'
+SET GLOBAL super_read_only = OFF;
+SET GLOBAL read_only = OFF;
+
+DROP PROCEDURE IF EXISTS ensure_group_replication_compat;
+DELIMITER //
+CREATE PROCEDURE ensure_group_replication_compat()
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM information_schema.tables
+        WHERE table_schema = DATABASE()
+            AND table_name = 'searchindex'
+            AND engine <> 'InnoDB'
+    ) THEN
+        ALTER TABLE `searchindex` ENGINE = InnoDB;
+    END IF;
+
+    IF EXISTS (
+        SELECT 1
+        FROM information_schema.tables
+        WHERE table_schema = DATABASE()
+            AND table_name = 'oldimage'
+    )
+        AND NOT EXISTS (
+            SELECT 1
+            FROM information_schema.statistics
+            WHERE table_schema = DATABASE()
+                AND table_name = 'oldimage'
+                AND index_name = 'PRIMARY'
+        )
+    THEN
+        ALTER TABLE `oldimage`
+            ADD COLUMN `_gr_pk` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT INVISIBLE PRIMARY KEY;
+    END IF;
+
+    IF EXISTS (
+        SELECT 1
+        FROM information_schema.tables
+        WHERE table_schema = DATABASE()
+            AND table_name = 'querycache'
+    )
+        AND NOT EXISTS (
+            SELECT 1
+            FROM information_schema.statistics
+            WHERE table_schema = DATABASE()
+                AND table_name = 'querycache'
+                AND index_name = 'PRIMARY'
+        )
+    THEN
+        ALTER TABLE `querycache`
+            ADD COLUMN `_gr_pk` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT INVISIBLE PRIMARY KEY;
+    END IF;
+
+    IF EXISTS (
+        SELECT 1
+        FROM information_schema.tables
+        WHERE table_schema = DATABASE()
+            AND table_name = 'querycachetwo'
+    )
+        AND NOT EXISTS (
+            SELECT 1
+            FROM information_schema.statistics
+            WHERE table_schema = DATABASE()
+                AND table_name = 'querycachetwo'
+                AND index_name = 'PRIMARY'
+        )
+    THEN
+        ALTER TABLE `querycachetwo`
+            ADD COLUMN `_gr_pk` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT INVISIBLE PRIMARY KEY;
+    END IF;
+
+    IF EXISTS (
+        SELECT 1
+        FROM information_schema.tables
+        WHERE table_schema = DATABASE()
+            AND table_name = 'user_newtalk'
+    )
+        AND NOT EXISTS (
+            SELECT 1
+            FROM information_schema.statistics
+            WHERE table_schema = DATABASE()
+                AND table_name = 'user_newtalk'
+                AND index_name = 'PRIMARY'
+        )
+    THEN
+        ALTER TABLE `user_newtalk`
+            ADD COLUMN `_gr_pk` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT INVISIBLE PRIMARY KEY;
+    END IF;
+END//
+DELIMITER ;
+CALL ensure_group_replication_compat();
+DROP PROCEDURE ensure_group_replication_compat;
+SQL
+""".strip()
+                        ],
+                    ),
+                ],
+            ),
+        ),
+    ),
+    opts=pulumi.ResourceOptions(
+        depends_on=[
+            mediawiki_update_job,
+            mysql_root_credentials,
+            mediawiki_db_credentials,
+        ],
+        delete_before_replace=True,
+        replace_on_changes=["spec"],
+    ),
+)
+
 mediawiki_images_pvc_spec_kwargs = {
     "access_modes": ["ReadWriteOnce"],
     "resources": k8s.core.v1.VolumeResourceRequirementsArgs(
@@ -698,7 +893,7 @@ mediawiki_deployment = k8s.apps.v1.Deployment(
         ),
         template=k8s.core.v1.PodTemplateSpecArgs(
             metadata=k8s.meta.v1.ObjectMetaArgs(
-                labels=labels,
+                labels=web_labels,
                 annotations={
                     "mediawiki.k8s.kevin/local-settings-task-id": local_settings_task_id,
                 },
@@ -769,7 +964,7 @@ mediawiki_deployment = k8s.apps.v1.Deployment(
         ),
     ),
     opts=pulumi.ResourceOptions(
-        depends_on=[mediawiki_update_job, mediawiki_images_pvc]
+        depends_on=[mediawiki_db_compat_job, mediawiki_images_pvc]
     ),
 )
 
@@ -782,7 +977,7 @@ mediawiki_service = k8s.core.v1.Service(
     ),
     spec=k8s.core.v1.ServiceSpecArgs(
         type="ClusterIP",
-        selector=labels,
+        selector=web_labels,
         ports=[
             k8s.core.v1.ServicePortArgs(
                 name="http",
@@ -832,6 +1027,25 @@ mediawiki_ingress = k8s.networking.v1.Ingress(
     ),
     opts=pulumi.ResourceOptions(depends_on=[mediawiki_service]),
 )
+
+for dashboard_file in dashboard_files:
+    dashboard_name = dashboard_file.replace(".json", "")
+    dashboard_data = (dashboards_dir / dashboard_file).read_text(encoding="utf-8")
+    k8s.core.v1.ConfigMap(
+        f"mediawiki-dashboard-{dashboard_name}",
+        metadata=k8s.meta.v1.ObjectMetaArgs(
+            name=f"mediawiki-dashboard-{dashboard_name}",
+            namespace=namespace_name,
+            labels={
+                "grafana_dashboard": "1",
+                "app": "mediawiki",
+            },
+        ),
+        data={
+            dashboard_file: dashboard_data,
+        },
+        opts=pulumi.ResourceOptions(depends_on=[mediawiki_ingress]),
+    )
 
 pulumi.export("namespace", namespace_name)
 pulumi.export("hostname", hostname)
