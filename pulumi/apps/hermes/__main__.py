@@ -1,17 +1,18 @@
-import base64
-import json
-
 import pulumi_kubernetes as k8s
 
 import pulumi
 
 config = pulumi.Config()
 
-HERMES_SOURCE_COMMIT = "d5775fe98870f4d7ba7cf322bd05283533079aa3"
+HERMES_SOURCE_COMMIT = "a91a57fa5a13d516c38b07a141a9ce8a3daabeb0"
 CODEX_CLI_VERSION = "0.130.0"
 DEFAULT_IMAGE = (
     "ghcr.io/kzh/hermes-agent"
-    "@sha256:ef20eeb6d938f3e1e384d021c87f16dfa9d2c2e1fcb7d930b6d07bbdff01505b"
+    "@sha256:929f19340c67176437c4ce8ea38f749eb73d2b73ae5c1b1c653a77356f410d00"
+)
+DEFAULT_CAMOFOX_IMAGE = (
+    "ghcr.io/jo-inc/camofox-browser"
+    "@sha256:c8cba21cdc4f443fc70b134cad34791507daebddd33743a0f95c6a2afa8b8d74"
 )
 
 
@@ -34,11 +35,9 @@ dashboard_port = config.get_int("dashboard_port") or 9119
 gateway_port = config.get_int("gateway_port") or 8642
 hermes_uid = config.get_int("uid") or 10000
 hermes_gid = config.get_int("gid") or 10000
-ghcr_username = None
-ghcr_token = None
-if image.startswith("ghcr.io/kzh/"):
-    ghcr_username = config.require("ghcr_username")
-    ghcr_token = config.require_secret("ghcr_token")
+camofox_enabled = bool_config("camofox_enabled", True)
+camofox_image = config.get("camofox_image") or DEFAULT_CAMOFOX_IMAGE
+camofox_port = config.get_int("camofox_port") or 9377
 
 selector_labels = {
     "app": "hermes",
@@ -76,42 +75,6 @@ pvc = k8s.core.v1.PersistentVolumeClaim(
     spec=k8s.core.v1.PersistentVolumeClaimSpecArgs(**pvc_spec_args),
 )
 
-ghcr_pull_secret = None
-image_pull_secrets = None
-if ghcr_username is not None and ghcr_token is not None:
-    docker_config_json = ghcr_token.apply(
-        lambda token: json.dumps(
-            {
-                "auths": {
-                    "ghcr.io": {
-                        "username": ghcr_username,
-                        "password": token,
-                        "auth": base64.b64encode(
-                            f"{ghcr_username}:{token}".encode()
-                        ).decode(),
-                    }
-                }
-            },
-            separators=(",", ":"),
-        )
-    )
-
-    ghcr_pull_secret = k8s.core.v1.Secret(
-        "hermes-ghcr-pull-secret",
-        metadata=k8s.meta.v1.ObjectMetaArgs(
-            name="hermes-ghcr-pull",
-            namespace=hermes_namespace.metadata.name,
-            labels=labels,
-        ),
-        string_data={
-            ".dockerconfigjson": docker_config_json,
-        },
-        type="kubernetes.io/dockerconfigjson",
-    )
-    image_pull_secrets = [
-        k8s.core.v1.LocalObjectReferenceArgs(name=ghcr_pull_secret.metadata.name)
-    ]
-
 common_env = [
     k8s.core.v1.EnvVarArgs(name="HOME", value="/opt/data"),
     k8s.core.v1.EnvVarArgs(name="HERMES_HOME", value="/opt/data"),
@@ -120,6 +83,39 @@ common_env = [
     k8s.core.v1.EnvVarArgs(name="HERMES_UID", value=str(hermes_uid)),
     k8s.core.v1.EnvVarArgs(name="HERMES_GID", value=str(hermes_gid)),
 ]
+
+if camofox_enabled:
+    common_env.append(
+        k8s.core.v1.EnvVarArgs(
+            name="CAMOFOX_URL",
+            value=f"http://127.0.0.1:{camofox_port}",
+        )
+    )
+
+init_containers = []
+if camofox_enabled:
+    init_containers.append(
+        k8s.core.v1.ContainerArgs(
+            name="configure-camofox",
+            image=image,
+            image_pull_policy="IfNotPresent",
+            args=[
+                "bash",
+                "-lc",
+                (
+                    "exec /opt/hermes/.venv/bin/hermes config set "
+                    "browser.camofox.managed_persistence true"
+                ),
+            ],
+            env=common_env,
+            volume_mounts=[
+                k8s.core.v1.VolumeMountArgs(
+                    name="data",
+                    mount_path="/opt/data",
+                ),
+            ],
+        )
+    )
 
 containers = [
     k8s.core.v1.ContainerArgs(
@@ -156,6 +152,88 @@ containers = [
         ],
     ),
 ]
+
+if camofox_enabled:
+    containers.append(
+        k8s.core.v1.ContainerArgs(
+            name="camofox",
+            image=camofox_image,
+            image_pull_policy="IfNotPresent",
+            env=[
+                k8s.core.v1.EnvVarArgs(
+                    name="CAMOFOX_PORT",
+                    value=str(camofox_port),
+                ),
+                k8s.core.v1.EnvVarArgs(
+                    name="CAMOFOX_PROFILE_DIR",
+                    value="/data/profiles",
+                ),
+                k8s.core.v1.EnvVarArgs(
+                    name="CAMOFOX_COOKIES_DIR",
+                    value="/data/cookies",
+                ),
+                k8s.core.v1.EnvVarArgs(
+                    name="CAMOFOX_TRACES_DIR",
+                    value="/data/traces",
+                ),
+                k8s.core.v1.EnvVarArgs(
+                    name="CAMOFOX_CRASH_REPORT_ENABLED",
+                    value="false",
+                ),
+                k8s.core.v1.EnvVarArgs(
+                    name="MAX_OLD_SPACE_SIZE",
+                    value="256",
+                ),
+            ],
+            ports=[
+                k8s.core.v1.ContainerPortArgs(
+                    name="camofox",
+                    container_port=camofox_port,
+                ),
+            ],
+            readiness_probe=k8s.core.v1.ProbeArgs(
+                http_get=k8s.core.v1.HTTPGetActionArgs(
+                    path="/health",
+                    port=camofox_port,
+                ),
+                initial_delay_seconds=5,
+                period_seconds=10,
+                timeout_seconds=5,
+                failure_threshold=12,
+            ),
+            liveness_probe=k8s.core.v1.ProbeArgs(
+                http_get=k8s.core.v1.HTTPGetActionArgs(
+                    path="/health",
+                    port=camofox_port,
+                ),
+                initial_delay_seconds=30,
+                period_seconds=30,
+                timeout_seconds=5,
+                failure_threshold=3,
+            ),
+            resources=k8s.core.v1.ResourceRequirementsArgs(
+                requests={
+                    "cpu": "500m",
+                    "memory": "1Gi",
+                },
+                limits={
+                    "cpu": "2",
+                    "memory": "3Gi",
+                },
+            ),
+            volume_mounts=[
+                k8s.core.v1.VolumeMountArgs(
+                    name="data",
+                    mount_path="/data",
+                    sub_path="camofox",
+                ),
+                k8s.core.v1.VolumeMountArgs(
+                    name="camofox-shm",
+                    mount_path="/dev/shm",
+                ),
+            ],
+        )
+    )
 
 if dashboard_enabled:
     dashboard_args = [
@@ -201,6 +279,27 @@ if dashboard_enabled:
         )
     )
 
+volumes = [
+    k8s.core.v1.VolumeArgs(
+        name="data",
+        persistent_volume_claim=(
+            k8s.core.v1.PersistentVolumeClaimVolumeSourceArgs(
+                claim_name=pvc.metadata.name,
+            )
+        ),
+    ),
+]
+if camofox_enabled:
+    volumes.append(
+        k8s.core.v1.VolumeArgs(
+            name="camofox-shm",
+            empty_dir=k8s.core.v1.EmptyDirVolumeSourceArgs(
+                medium="Memory",
+                size_limit="1Gi",
+            ),
+        )
+    )
+
 deployment = k8s.apps.v1.Deployment(
     "hermes-deployment",
     metadata=k8s.meta.v1.ObjectMetaArgs(
@@ -230,18 +329,9 @@ deployment = k8s.apps.v1.Deployment(
                     fs_group=hermes_gid,
                     fs_group_change_policy="OnRootMismatch",
                 ),
-                image_pull_secrets=image_pull_secrets,
+                init_containers=init_containers,
                 containers=containers,
-                volumes=[
-                    k8s.core.v1.VolumeArgs(
-                        name="data",
-                        persistent_volume_claim=(
-                            k8s.core.v1.PersistentVolumeClaimVolumeSourceArgs(
-                                claim_name=pvc.metadata.name,
-                            )
-                        ),
-                    ),
-                ],
+                volumes=volumes,
             ),
         ),
     ),
@@ -252,7 +342,6 @@ deployment = k8s.apps.v1.Deployment(
             for resource in [
                 hermes_namespace,
                 pvc,
-                ghcr_pull_secret,
             ]
             if resource is not None
         ],
@@ -330,10 +419,18 @@ pulumi.export("namespace", hermes_namespace.metadata.name)
 pulumi.export("deployment", deployment.metadata.name)
 pulumi.export("pvc", pvc.metadata.name)
 pulumi.export("image", image)
-if ghcr_pull_secret is not None:
-    pulumi.export("image_pull_secret", ghcr_pull_secret.metadata.name)
 pulumi.export("hermes_home", "/opt/data")
 pulumi.export("codex_home", "/opt/data/.codex")
+if camofox_enabled:
+    pulumi.export("camofox_image", camofox_image)
+    pulumi.export("camofox_url", f"http://127.0.0.1:{camofox_port}")
+    pulumi.export(
+        "camofox_healthcheck_command",
+        (
+            f"kubectl -n {namespace_name} exec deploy/hermes -c gateway -- "
+            f"curl -fsS http://127.0.0.1:{camofox_port}/health"
+        ),
+    )
 pulumi.export(
     "model_setup_command",
     f"kubectl -n {namespace_name} exec -it deploy/hermes -c dashboard -- hermes model",

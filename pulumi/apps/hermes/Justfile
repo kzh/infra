@@ -2,18 +2,21 @@ set shell := ["bash", "-lc"]
 
 arch := "linux/amd64"
 repo := "ghcr.io/kzh"
-hermes_source_commit := "d5775fe98870f4d7ba7cf322bd05283533079aa3"
-hermes_ref := "codex-runtime-d5775fe-codex0.130.0"
+hermes_source_commit := "a91a57fa5a13d516c38b07a141a9ce8a3daabeb0"
+hermes_ref := "codex-runtime-a91a57f-codex0.130.0"
 codex_version := "0.130.0"
 image := repo + "/hermes-agent:" + hermes_ref
+buildx := env_var_or_default("BUILDX", "docker-buildx")
 
 push-image:
-	docker buildx build --builder mx0 --platform {{arch}} \
+	{{buildx}} build --builder mx0 --platform {{arch}} \
 		-f - \
 		--build-arg CODEX_CLI_VERSION={{codex_version}} \
+		--provenance=false \
+		--sbom=false \
 		-t {{image}} \
 		--push https://github.com/NousResearch/hermes-agent.git#{{hermes_source_commit}} \
 		< images/codex-runtime/Dockerfile
 
 inspect-image:
-	docker buildx imagetools inspect {{image}}
+	{{buildx}} imagetools inspect {{image}}
