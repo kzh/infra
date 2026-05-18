@@ -1,0 +1,10 @@
+name: slurm
+description: SchedMD Slinky Slurm cluster
+runtime:
+  name: python
+  options:
+    toolchain: uv
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: helm-kubernetes-python

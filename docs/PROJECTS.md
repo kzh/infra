@@ -31,6 +31,7 @@ Project-local support assets should live beside the project that consumes them:
 | `pulumi/data/analytics/clickhouse` | ClickHouse operator, ClickHouseInstallation, Tailscale access, and Grafana dashboards |
 | `pulumi/data/analytics/jupyterhub` | JupyterHub and its singleuser image build |
 | `pulumi/data/analytics/mlflow` | MLflow with external PostgreSQL integration |
+| `pulumi/data/analytics/slurm` | SchedMD Slinky Slurm operator and minimal Slurm cluster |
 | `pulumi/data/analytics/spark` | Spark operator and Spark UI ingress |
 | `pulumi/data/analytics/superset` | Superset |
 | `pulumi/data/databases/cockroach` | CockroachDB |
