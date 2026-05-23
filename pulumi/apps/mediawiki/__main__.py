@@ -76,6 +76,8 @@ wfLoadSkin( 'Vector' );
 
 
 namespace_name = config.get("namespace") or "mediawiki"
+mysql_stack_ref = config.get("mysqlStack")
+shared_mysql_stack = pulumi.StackReference(mysql_stack_ref) if mysql_stack_ref else None
 hostname = config.get("hostname") or "wiki"
 wiki_name = config.get("wikiName") or "MediaWiki"
 admin_user = config.get("adminUser") or "Admin"
@@ -101,10 +103,15 @@ db_password_length = config.get_int("dbPasswordLength") or 32
 admin_password_length = config.get_int("adminPasswordLength") or 32
 secret_key_length = config.get_int("secretKeyLength") or 64
 local_settings_revision = "20260504-1"
-db_init_revision = "20260504-1"
+db_init_revision = "20260522-1"
 install_revision = "20260504-1"
 update_revision = "20260504-1"
 db_compat_revision = "20260518-1"
+mysql_mycnf = """
+[mysqld]
+innodb_buffer_pool_size=128M
+max_connections=50
+""".lstrip()
 dashboards_dir = Path(__file__).resolve().parent / "dashboards"
 dashboard_files = [
     "mediawiki-overview.json",
@@ -126,17 +133,39 @@ mediawiki_namespace = k8s.core.v1.Namespace(
     ),
 )
 
-mysql_root_password = random.RandomPassword(
-    "mediawiki-mysql-root-password",
-    length=mysql_root_password_length,
-    lower=True,
-    upper=True,
-    numeric=True,
-    special=False,
-    min_lower=1,
-    min_upper=1,
-    min_numeric=1,
-)
+if shared_mysql_stack:
+    mysql_root_credentials_resource_name = "mediawiki-shared-mysql-root-credentials"
+    mysql_root_credentials_secret_name = "mediawiki-shared-mysql-root-credentials"
+    mysql_root_user_input = shared_mysql_stack.require_output("rootUser")
+    mysql_root_host_input = shared_mysql_stack.require_output("rootHost")
+    mysql_root_password_input = shared_mysql_stack.require_output("rootPassword")
+    active_mysql_cluster_name = shared_mysql_stack.require_output("mysqlClusterName")
+    mysql_service_host = shared_mysql_stack.require_output("mysqlHost")
+    mysql_instance_host = shared_mysql_stack.require_output("mysqlInstanceHost")
+else:
+    mysql_root_credentials_resource_name = "mediawiki-mysql-root-credentials"
+    mysql_root_credentials_secret_name = f"{mysql_cluster_name}-root-credentials"
+    mysql_root_password = random.RandomPassword(
+        "mediawiki-mysql-root-password",
+        length=mysql_root_password_length,
+        lower=True,
+        upper=True,
+        numeric=True,
+        special=False,
+        min_lower=1,
+        min_upper=1,
+        min_numeric=1,
+    )
+    mysql_root_user_input = mysql_root_user
+    mysql_root_host_input = mysql_root_host
+    mysql_root_password_input = mysql_root_password.result
+    active_mysql_cluster_name = mysql_cluster_name
+    mysql_service_host = f"{mysql_cluster_name}.{namespace_name}.svc.cluster.local"
+    mysql_instance_host = (
+        f"{mysql_cluster_name}-0."
+        f"{mysql_cluster_name}-instances."
+        f"{namespace_name}.svc.cluster.local"
+    )
 
 mediawiki_db_password = random.RandomPassword(
     "mediawiki-db-password",
@@ -187,18 +216,21 @@ mediawiki_upgrade_key = random.RandomPassword(
 )
 
 mysql_root_credentials = k8s.core.v1.Secret(
-    "mediawiki-mysql-root-credentials",
+    mysql_root_credentials_resource_name,
     metadata=k8s.meta.v1.ObjectMetaArgs(
-        name=f"{mysql_cluster_name}-root-credentials",
+        name=mysql_root_credentials_secret_name,
         namespace=namespace_name,
     ),
     type="Opaque",
     string_data={
-        "rootUser": mysql_root_user,
-        "rootHost": mysql_root_host,
-        "rootPassword": mysql_root_password.result,
+        "rootUser": mysql_root_user_input,
+        "rootHost": mysql_root_host_input,
+        "rootPassword": mysql_root_password_input,
     },
-    opts=pulumi.ResourceOptions(depends_on=[mediawiki_namespace]),
+    opts=pulumi.ResourceOptions(
+        depends_on=[mediawiki_namespace],
+        delete_before_replace=True,
+    ),
 )
 
 mediawiki_db_credentials = k8s.core.v1.Secret(
@@ -213,7 +245,10 @@ mediawiki_db_credentials = k8s.core.v1.Secret(
         "MEDIAWIKI_DB_USER": db_user,
         "MEDIAWIKI_DB_PASSWORD": mediawiki_db_password.result,
     },
-    opts=pulumi.ResourceOptions(depends_on=[mediawiki_namespace]),
+    opts=pulumi.ResourceOptions(
+        depends_on=[mediawiki_namespace],
+        delete_before_replace=True,
+    ),
 )
 
 mediawiki_admin_credentials = k8s.core.v1.Secret(
@@ -227,7 +262,10 @@ mediawiki_admin_credentials = k8s.core.v1.Secret(
         "MEDIAWIKI_ADMIN_USER": admin_user,
         "MEDIAWIKI_ADMIN_PASSWORD": mediawiki_admin_password.result,
     },
-    opts=pulumi.ResourceOptions(depends_on=[mediawiki_namespace]),
+    opts=pulumi.ResourceOptions(
+        depends_on=[mediawiki_namespace],
+        delete_before_replace=True,
+    ),
 )
 
 mysql_data_volume_claim_template = {
@@ -241,34 +279,30 @@ mysql_data_volume_claim_template = {
 if storage_class_name:
     mysql_data_volume_claim_template["storageClassName"] = storage_class_name
 
-mediawiki_mysql_cluster = InnoDBCluster(
-    "mediawiki-mysql-cluster",
-    metadata={
-        "name": mysql_cluster_name,
-        "namespace": namespace_name,
-        "annotations": {
-            "pulumi.com/skipAwait": "true",
+mediawiki_mysql_cluster = None
+if not shared_mysql_stack:
+    mediawiki_mysql_cluster = InnoDBCluster(
+        "mediawiki-mysql-cluster",
+        metadata={
+            "name": mysql_cluster_name,
+            "namespace": namespace_name,
+            "annotations": {
+                "pulumi.com/skipAwait": "true",
+            },
         },
-    },
-    spec=InnoDBClusterSpecArgs(
-        secret_name=mysql_root_credentials.metadata.name,
-        version=mysql_version,
-        instances=mysql_instances,
-        router=InnoDBClusterSpecRouterArgs(instances=mysql_router_instances),
-        tls_use_self_signed=True,
-        datadir_volume_claim_template=mysql_data_volume_claim_template,
-    ),
-    opts=pulumi.ResourceOptions(
-        depends_on=[mediawiki_namespace, mysql_root_credentials]
-    ),
-)
-
-mysql_service_host = f"{mysql_cluster_name}.{namespace_name}.svc.cluster.local"
-mysql_instance_host = (
-    f"{mysql_cluster_name}-0."
-    f"{mysql_cluster_name}-instances."
-    f"{namespace_name}.svc.cluster.local"
-)
+        spec=InnoDBClusterSpecArgs(
+            secret_name=mysql_root_credentials.metadata.name,
+            version=mysql_version,
+            instances=mysql_instances,
+            router=InnoDBClusterSpecRouterArgs(instances=mysql_router_instances),
+            tls_use_self_signed=True,
+            mycnf=mysql_mycnf,
+            datadir_volume_claim_template=mysql_data_volume_claim_template,
+        ),
+        opts=pulumi.ResourceOptions(
+            depends_on=[mediawiki_namespace, mysql_root_credentials]
+        ),
+    )
 mediawiki_url = config.get("publicUrl") or (
     f"https://{hostname}.{tailscale_domain}"
     if tailscale_domain
@@ -283,6 +317,13 @@ db_init_task_id = pulumi.Output.all(
     mysql_service_host,
     mysql_version,
 ).apply(stable_task_id)
+
+db_init_dependencies: list[pulumi.Resource] = [
+    mysql_root_credentials,
+    mediawiki_db_credentials,
+]
+if mediawiki_mysql_cluster:
+    db_init_dependencies.append(mediawiki_mysql_cluster)
 
 db_init_job = k8s.batch.v1.Job(
     "mediawiki-db-init",
@@ -356,6 +397,8 @@ until mysqladmin ping -h "${MYSQL_HOST}" -P "${MYSQL_PORT}" -u"${MYSQL_ROOT_USER
 done
 
 mysql -h "${MYSQL_HOST}" -P "${MYSQL_PORT}" -u"${MYSQL_ROOT_USER}" <<SQL
+SET PERSIST innodb_buffer_pool_size = 134217728;
+SET PERSIST max_connections = 50;
 CREATE DATABASE IF NOT EXISTS ${MEDIAWIKI_DB_NAME} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE USER IF NOT EXISTS '${MEDIAWIKI_DB_USER}'@'%' IDENTIFIED BY '${MEDIAWIKI_DB_PASSWORD}';
 ALTER USER '${MEDIAWIKI_DB_USER}'@'%' IDENTIFIED BY '${MEDIAWIKI_DB_PASSWORD}';
@@ -370,11 +413,7 @@ SQL
         ),
     ),
     opts=pulumi.ResourceOptions(
-        depends_on=[
-            mediawiki_mysql_cluster,
-            mysql_root_credentials,
-            mediawiki_db_credentials,
-        ],
+        depends_on=db_init_dependencies,
         delete_before_replace=True,
         replace_on_changes=["spec"],
     ),
@@ -412,7 +451,10 @@ mediawiki_local_settings = k8s.core.v1.Secret(
     string_data={
         "LocalSettings.php": local_settings_php,
     },
-    opts=pulumi.ResourceOptions(depends_on=[mediawiki_namespace]),
+    opts=pulumi.ResourceOptions(
+        depends_on=[mediawiki_namespace],
+        delete_before_replace=True,
+    ),
 )
 
 install_task_id = pulumi.Output.all(
@@ -912,6 +954,16 @@ mediawiki_deployment = k8s.apps.v1.Deployment(
                             period_seconds=20,
                             timeout_seconds=5,
                         ),
+                        resources=k8s.core.v1.ResourceRequirementsArgs(
+                            requests={
+                                "cpu": "100m",
+                                "memory": "256Mi",
+                            },
+                            limits={
+                                "cpu": "500m",
+                                "memory": "768Mi",
+                            },
+                        ),
                         volume_mounts=[
                             k8s.core.v1.VolumeMountArgs(
                                 name="local-settings",
@@ -944,7 +996,8 @@ mediawiki_deployment = k8s.apps.v1.Deployment(
         ),
     ),
     opts=pulumi.ResourceOptions(
-        depends_on=[mediawiki_db_compat_job, mediawiki_images_pvc]
+        depends_on=[mediawiki_db_compat_job, mediawiki_images_pvc],
+        delete_before_replace=True,
     ),
 )
 
@@ -1021,7 +1074,8 @@ pulumi.export("namespace", namespace_name)
 pulumi.export("hostname", hostname)
 pulumi.export("url", mediawiki_url)
 pulumi.export("mediawikiImage", mediawiki_image)
-pulumi.export("mysqlClusterName", mysql_cluster_name)
+pulumi.export("mysqlStack", mysql_stack_ref or "")
+pulumi.export("mysqlClusterName", active_mysql_cluster_name)
 pulumi.export("mysqlHost", mysql_service_host)
 pulumi.export("mysqlPort", 3306)
 pulumi.export("localSettingsSecretName", mediawiki_local_settings.metadata.name)

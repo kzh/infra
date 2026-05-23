@@ -13,6 +13,8 @@ config = pulumi.Config()
 
 
 namespace_name = config.get("namespace") or "wordpress"
+mysql_stack_ref = config.get("mysqlStack")
+shared_mysql_stack = pulumi.StackReference(mysql_stack_ref) if mysql_stack_ref else None
 hostname = config.get("hostname") or "wordpress"
 wordpress_image = config.get("wordpressImage") or "wordpress:6.9.4-php8.3-apache"
 mysql_version = config.get("mysqlVersion") or "9.7.0"
@@ -31,7 +33,12 @@ mysql_root_host = config.get("mysqlRootHost") or "%"
 table_prefix = config.get("tablePrefix") or "wp_"
 mysql_root_password_length = config.get_int("mysqlRootPasswordLength") or 32
 wordpress_db_password_length = config.get_int("wordpressDbPasswordLength") or 32
-db_init_revision = "20260316-2"
+db_init_revision = "20260316-3"
+mysql_mycnf = """
+[mysqld]
+innodb_buffer_pool_size=128M
+max_connections=50
+""".lstrip()
 
 labels = {
     "app": "wordpress",
@@ -45,17 +52,33 @@ wordpress_namespace = k8s.core.v1.Namespace(
     ),
 )
 
-mysql_root_password = random.RandomPassword(
-    "wordpress-mysql-root-password",
-    length=mysql_root_password_length,
-    lower=True,
-    upper=True,
-    numeric=True,
-    special=False,
-    min_lower=1,
-    min_upper=1,
-    min_numeric=1,
-)
+if shared_mysql_stack:
+    mysql_root_credentials_resource_name = "wordpress-shared-mysql-root-credentials"
+    mysql_root_credentials_secret_name = "wordpress-shared-mysql-root-credentials"
+    mysql_root_user_input = shared_mysql_stack.require_output("rootUser")
+    mysql_root_host_input = shared_mysql_stack.require_output("rootHost")
+    mysql_root_password_input = shared_mysql_stack.require_output("rootPassword")
+    active_mysql_cluster_name = shared_mysql_stack.require_output("mysqlClusterName")
+    mysql_service_host = shared_mysql_stack.require_output("mysqlHost")
+else:
+    mysql_root_credentials_resource_name = "wordpress-mysql-root-credentials"
+    mysql_root_credentials_secret_name = f"{mysql_cluster_name}-root-credentials"
+    mysql_root_password = random.RandomPassword(
+        "wordpress-mysql-root-password",
+        length=mysql_root_password_length,
+        lower=True,
+        upper=True,
+        numeric=True,
+        special=False,
+        min_lower=1,
+        min_upper=1,
+        min_numeric=1,
+    )
+    mysql_root_user_input = mysql_root_user
+    mysql_root_host_input = mysql_root_host
+    mysql_root_password_input = mysql_root_password.result
+    active_mysql_cluster_name = mysql_cluster_name
+    mysql_service_host = f"{mysql_cluster_name}.{namespace_name}.svc.cluster.local"
 
 wordpress_db_password = random.RandomPassword(
     "wordpress-db-password",
@@ -70,18 +93,21 @@ wordpress_db_password = random.RandomPassword(
 )
 
 mysql_root_credentials = k8s.core.v1.Secret(
-    "wordpress-mysql-root-credentials",
+    mysql_root_credentials_resource_name,
     metadata=k8s.meta.v1.ObjectMetaArgs(
-        name=f"{mysql_cluster_name}-root-credentials",
+        name=mysql_root_credentials_secret_name,
         namespace=namespace_name,
     ),
     type="Opaque",
     string_data={
-        "rootUser": mysql_root_user,
-        "rootHost": mysql_root_host,
-        "rootPassword": mysql_root_password.result,
+        "rootUser": mysql_root_user_input,
+        "rootHost": mysql_root_host_input,
+        "rootPassword": mysql_root_password_input,
     },
-    opts=pulumi.ResourceOptions(depends_on=[wordpress_namespace]),
+    opts=pulumi.ResourceOptions(
+        depends_on=[wordpress_namespace],
+        delete_before_replace=True,
+    ),
 )
 
 wordpress_db_credentials = k8s.core.v1.Secret(
@@ -110,29 +136,30 @@ mysql_data_volume_claim_template = {
 if storage_class_name:
     mysql_data_volume_claim_template["storageClassName"] = storage_class_name
 
-wordpress_mysql_cluster = InnoDBCluster(
-    "wordpress-mysql-cluster",
-    metadata={
-        "name": mysql_cluster_name,
-        "namespace": namespace_name,
-        "annotations": {
-            "pulumi.com/skipAwait": "true",
+wordpress_mysql_cluster = None
+if not shared_mysql_stack:
+    wordpress_mysql_cluster = InnoDBCluster(
+        "wordpress-mysql-cluster",
+        metadata={
+            "name": mysql_cluster_name,
+            "namespace": namespace_name,
+            "annotations": {
+                "pulumi.com/skipAwait": "true",
+            },
         },
-    },
-    spec=InnoDBClusterSpecArgs(
-        secret_name=mysql_root_credentials.metadata.name,
-        version=mysql_version,
-        instances=mysql_instances,
-        router=InnoDBClusterSpecRouterArgs(instances=mysql_router_instances),
-        tls_use_self_signed=True,
-        datadir_volume_claim_template=mysql_data_volume_claim_template,
-    ),
-    opts=pulumi.ResourceOptions(
-        depends_on=[wordpress_namespace, mysql_root_credentials]
-    ),
-)
-
-mysql_service_host = f"{mysql_cluster_name}.{namespace_name}.svc.cluster.local"
+        spec=InnoDBClusterSpecArgs(
+            secret_name=mysql_root_credentials.metadata.name,
+            version=mysql_version,
+            instances=mysql_instances,
+            router=InnoDBClusterSpecRouterArgs(instances=mysql_router_instances),
+            tls_use_self_signed=True,
+            mycnf=mysql_mycnf,
+            datadir_volume_claim_template=mysql_data_volume_claim_template,
+        ),
+        opts=pulumi.ResourceOptions(
+            depends_on=[wordpress_namespace, mysql_root_credentials]
+        ),
+    )
 wordpress_url = config.get("publicUrl") or (
     f"https://{hostname}.{tailscale_domain}"
     if tailscale_domain
@@ -147,6 +174,13 @@ db_init_task_id = pulumi.Output.all(
     mysql_service_host,
     mysql_version,
 ).apply(stable_task_id)
+
+db_init_dependencies: list[pulumi.Resource] = [
+    mysql_root_credentials,
+    wordpress_db_credentials,
+]
+if wordpress_mysql_cluster:
+    db_init_dependencies.append(wordpress_mysql_cluster)
 
 db_init_job = k8s.batch.v1.Job(
     "wordpress-db-init",
@@ -220,6 +254,8 @@ until mysqladmin ping -h "${MYSQL_HOST}" -P "${MYSQL_PORT}" -u"${MYSQL_ROOT_USER
 done
 
 mysql -h "${MYSQL_HOST}" -P "${MYSQL_PORT}" -u"${MYSQL_ROOT_USER}" <<SQL
+SET PERSIST innodb_buffer_pool_size = 134217728;
+SET PERSIST max_connections = 50;
 CREATE DATABASE IF NOT EXISTS ${WORDPRESS_DB_NAME} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE USER IF NOT EXISTS '${WORDPRESS_DB_USER}'@'%' IDENTIFIED BY '${WORDPRESS_DB_PASSWORD}';
 ALTER USER '${WORDPRESS_DB_USER}'@'%' IDENTIFIED BY '${WORDPRESS_DB_PASSWORD}';
@@ -234,11 +270,7 @@ SQL
         ),
     ),
     opts=pulumi.ResourceOptions(
-        depends_on=[
-            wordpress_mysql_cluster,
-            mysql_root_credentials,
-            wordpress_db_credentials,
-        ],
+        depends_on=db_init_dependencies,
         delete_before_replace=True,
         replace_on_changes=["spec"],
     ),
@@ -344,6 +376,16 @@ wordpress_deployment = k8s.apps.v1.Deployment(
                             period_seconds=20,
                             timeout_seconds=5,
                         ),
+                        resources=k8s.core.v1.ResourceRequirementsArgs(
+                            requests={
+                                "cpu": "100m",
+                                "memory": "256Mi",
+                            },
+                            limits={
+                                "cpu": "500m",
+                                "memory": "768Mi",
+                            },
+                        ),
                         volume_mounts=[
                             k8s.core.v1.VolumeMountArgs(
                                 name="wordpress-data",
@@ -430,6 +472,7 @@ pulumi.export("namespace", namespace_name)
 pulumi.export("hostname", hostname)
 pulumi.export("url", wordpress_url)
 pulumi.export("wordpressImage", wordpress_image)
-pulumi.export("mysqlClusterName", mysql_cluster_name)
+pulumi.export("mysqlStack", mysql_stack_ref or "")
+pulumi.export("mysqlClusterName", active_mysql_cluster_name)
 pulumi.export("mysqlHost", mysql_service_host)
 pulumi.export("mysqlPort", 3306)
