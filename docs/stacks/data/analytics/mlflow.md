@@ -165,9 +165,9 @@ mlflow.set_tracking_uri("https://mlflow")
 ```
 
 The exact hostname depends on where the client runs. A laptop normally uses the
-Tailscale hostname. A notebook pod may also use that private hostname, as in the
-JupyterHub examples in this docs tree. If you want to use in-cluster service DNS
-instead, inspect the live Service and use the port the chart exposes:
+Tailscale hostname. A notebook pod may also use that private hostname. If you
+want to use in-cluster service DNS instead, inspect the live Service and use the
+port the chart exposes:
 
 ```bash
 cd pulumi/data/analytics/mlflow
@@ -400,11 +400,11 @@ Use registry names carefully. A registered model is a shared namespace. Names
 such as `test` or `final` become confusing quickly. Prefer names that say what
 the model is for, not how you felt about one run when you registered it.
 
-## Using MLflow From JupyterHub
+## Using MLflow From Marimo
 
-JupyterHub is the natural place to begin because notebook pods run near the
-cluster services. The notebook should still log to the shared tracking server,
-not to a local `mlruns` directory inside the user home.
+Marimo is the natural place to begin because the notebook workspace runs near
+the cluster services. The notebook should still log to the shared tracking
+server, not to a local `mlruns` directory inside the workspace PVC.
 
 Start a notebook with a small connection check:
 
@@ -414,8 +414,8 @@ import mlflow
 mlflow.set_tracking_uri("https://mlflow")
 mlflow.set_experiment("notebook-checks")
 
-with mlflow.start_run(run_name="jupyterhub-check"):
-    mlflow.set_tag("runtime", "jupyterhub")
+with mlflow.start_run(run_name="marimo-check"):
+    mlflow.set_tag("runtime", "marimo")
     mlflow.log_metric("ok", 1)
 ```
 

@@ -10,7 +10,7 @@ There are four kinds of truth in this area.
 
 Infrastructure truth lives in the Pulumi project that owns the resource: `pulumi/data/<area>/<service>/__main__.py`, its `Pulumi.yaml`, stack config, ESC imports, local `images/` assets, and service-owned dashboards. If a role, database, bucket, topic, service, or ingress matters, prefer declaring it in the owning project over creating it manually.
 
-Runtime truth lives inside the stateful systems. PostgreSQL rows, RustFS objects, Kafka offsets, ClickHouse tables, Temporal history, Airflow run state, Dagster materializations, n8n workflows, Superset dashboards, Jupyter user PVCs, and Spark warehouse files are the things users actually care about. Kubernetes readiness only says the control plane sees healthy objects; it does not prove the right data still exists.
+Runtime truth lives inside the stateful systems. PostgreSQL rows, RustFS objects, Kafka offsets, ClickHouse tables, Temporal history, Airflow run state, Dagster materializations, n8n workflows, Superset dashboards, Marimo workspace files, and Spark warehouse files are the things users actually care about. Kubernetes readiness only says the control plane sees healthy objects; it does not prove the right data still exists.
 
 Contract truth lives in Pulumi outputs, Kubernetes Secrets, service DNS names, Tailscale hostnames, bucket/topic/table names, and catalog names. A harmless-looking output rename can break a consumer stack. A bucket rename can make MLflow or Trino boot successfully while losing the path to its data. A Kafka advertised-listener change can let bootstrap succeed and still break produce/consume.
 
@@ -32,11 +32,11 @@ The shared relational foundation is [PostgreSQL](/stacks/data/databases/postgres
 
 [Airflow](/stacks/data/workflow/airflow), [Dagster](/stacks/data/workflow/dagster), [Temporal](/stacks/data/workflow/temporal), and [n8n](/stacks/data/workflow/n8n) are workflow systems, not interchangeable schedulers. Airflow stores DAG/run metadata in PostgreSQL and proves the stack with a ConfigMap smoke DAG. Dagster stores asset/run metadata in PostgreSQL and proves user-code loading with a smoke deployment. Temporal stores workflow history in PostgreSQL and archives to a PVC; application workers live outside the server chart. n8n stores workflow state through PostgreSQL plus a local PVC and can accumulate important UI-authored automation.
 
-The human-facing tools sit on top. [JupyterHub](/stacks/data/analytics/jupyterhub) gives notebook pods with cluster-network access and per-user PVCs. [MLflow](/stacks/data/analytics/mlflow) records experiments in PostgreSQL and artifacts in RustFS. [Superset](/stacks/data/analytics/superset) stores chart/dashboard metadata in its chart-managed PostgreSQL and queries external data through configured datasources, often Trino. [Slurm](/stacks/data/analytics/slurm) exposes an HPC-style batch interface through Slinky; by default this repo keeps controller persistence disabled and exposes the login service privately.
+The human-facing tools sit on top. [Marimo](/stacks/data/analytics/marimo) gives a reactive notebook workspace wired to the cluster data services. [MLflow](/stacks/data/analytics/mlflow) records experiments in PostgreSQL and artifacts in RustFS. [Superset](/stacks/data/analytics/superset) stores chart/dashboard metadata in its chart-managed PostgreSQL and queries external data through configured datasources, often Trino. [Slurm](/stacks/data/analytics/slurm) exposes an HPC-style batch interface through Slinky; by default this repo keeps controller persistence disabled and exposes the login service privately.
 
 ## Service Map
 
-The durable storage layer is [PostgreSQL](/stacks/data/databases/postgres), [RustFS](/stacks/data/storage/rustfs), [ClickHouse](/stacks/data/analytics/clickhouse), [Kafka](/stacks/data/streaming/kafka), and the service-specific PVCs behind systems like JupyterHub, Temporal, n8n, ConvexDB, CockroachDB, Superset, and Spark's preserved legacy warehouse. These are the stacks where storage class, PVC identity, database name, bucket name, topic name, extension set, and credential rotation need the most caution. For shared Spark/Trino Iceberg tables, the durable state spans PostgreSQL metadata and RustFS objects.
+The durable storage layer is [PostgreSQL](/stacks/data/databases/postgres), [RustFS](/stacks/data/storage/rustfs), [ClickHouse](/stacks/data/analytics/clickhouse), [Kafka](/stacks/data/streaming/kafka), and the service-specific PVCs behind systems like Marimo, Temporal, n8n, ConvexDB, CockroachDB, Superset, and Spark's preserved legacy warehouse. These are the stacks where storage class, PVC identity, database name, bucket name, topic name, extension set, and credential rotation need the most caution. For shared Spark/Trino Iceberg tables, the durable state spans PostgreSQL metadata and RustFS objects.
 
 The compute layer is [Spark](/stacks/data/analytics/spark), [Trino](/stacks/data/analytics/trino), [Flink](/stacks/data/streaming/flink), [Slurm](/stacks/data/analytics/slurm), and [ClickHouse](/stacks/data/analytics/clickhouse). Spark transforms data with executors. Trino coordinates SQL across systems. Flink runs continuous dataflows. Slurm schedules batch work. ClickHouse both stores and computes analytical queries. When debugging compute, separate the engine from its inputs and outputs: a query engine can be healthy while a catalog, bucket, table, topic, checkpoint, or client path is broken.
 
@@ -44,7 +44,7 @@ The streaming layer is [Kafka](/stacks/data/streaming/kafka), [Flink](/stacks/da
 
 The workflow layer is [Airflow](/stacks/data/workflow/airflow), [Dagster](/stacks/data/workflow/dagster), [Temporal](/stacks/data/workflow/temporal), and [n8n](/stacks/data/workflow/n8n). Airflow is for scheduled DAGs and task history. Dagster is for assets and materializations. Temporal is for durable application workflows and task queues. n8n is for visual glue, webhooks, and lightweight integration flows. For all four, a reachable UI is only the first check; trigger or inspect actual work before calling the stack good.
 
-The exploration and presentation layer is [JupyterHub](/stacks/data/analytics/jupyterhub), [MLflow](/stacks/data/analytics/mlflow), and [Superset](/stacks/data/analytics/superset). Notebooks are a discovery surface, not a hidden production scheduler. MLflow is experiment memory, not the model artifact store by itself; artifacts live in RustFS. Superset is BI metadata plus datasource connections; the source facts remain in Trino, PostgreSQL, ClickHouse, or another backend.
+The exploration and presentation layer is [Marimo](/stacks/data/analytics/marimo), [MLflow](/stacks/data/analytics/mlflow), and [Superset](/stacks/data/analytics/superset). Notebooks are a discovery surface, not a hidden production scheduler. MLflow is experiment memory, not the model artifact store by itself; artifacts live in RustFS. Superset is BI metadata plus datasource connections; the source facts remain in Trino, PostgreSQL, ClickHouse, or another backend.
 
 [CockroachDB](/stacks/data/databases/cockroach) and [ConvexDB](/stacks/data/databases/convexdb) are special cases. CockroachDB is a single-node Cockroach environment with persistent storage and private access; use it when you specifically need Cockroach behavior. ConvexDB is application-shaped, with backend and dashboard surfaces, but it depends on PostgreSQL, a CA Secret, and a PVC, so treat it as a stateful data platform component.
 
@@ -66,7 +66,7 @@ Useful read-only checks:
 just projects
 rg -n "StackReference|require_output|pulumi.export" pulumi/data
 rg -n "kzh/postgresql/mx|kzh/rustfs/mx|kzh/clickhouse/mx" pulumi
-kubectl get pods,svc,pvc,ingress -A | rg 'postgres|rustfs|clickhouse|trino|spark|kafka|flink|airflow|dagster|temporal|n8n|mlflow|superset|jhub'
+kubectl get pods,svc,pvc,ingress -A | rg 'postgres|rustfs|clickhouse|trino|spark|kafka|flink|airflow|dagster|temporal|n8n|marimo|mlflow|superset'
 ```
 
 For a code change, use the repo gates and a targeted preview:

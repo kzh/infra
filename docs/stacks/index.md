@@ -266,11 +266,10 @@ Trino access, ingestion paths, ClickHouse-specific debugging queries, operator
 behavior, backups, and the distinction between analytical storage and
 transactional PostgreSQL.
 
-[JupyterHub](/stacks/data/analytics/jupyterhub) is the interactive notebook
-surface inside the cluster. Read it when the task is exploration near internal
-services, notebook server spawning, user PVCs, package images, internal DNS, or
-the transition from notebook discovery into durable Spark, Airflow, Dagster, or
-repo-backed work.
+[Marimo](/stacks/data/analytics/marimo) is the reactive notebook workspace.
+Read it for token access, the persistent workspace PVC, cluster service
+environment variables, and quick checks against Trino, Spark Connect, MLflow,
+Kafka, RustFS, ClickHouse, and PostgreSQL.
 
 [MLflow](/stacks/data/analytics/mlflow) records experiment runs, metrics,
 parameters, artifacts, and model lineage. Read it when tracking API calls,

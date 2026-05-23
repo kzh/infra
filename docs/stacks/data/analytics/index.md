@@ -7,7 +7,7 @@ The useful split is this:
 - [Spark](/stacks/data/analytics/spark) runs distributed dataframe, SQL, and table-format workloads.
 - [Trino](/stacks/data/analytics/trino) provides federated SQL across multiple storage systems.
 - [ClickHouse](/stacks/data/analytics/clickhouse) stores and queries analytical tables in a columnar database.
-- [JupyterHub](/stacks/data/analytics/jupyterhub) gives notebooks inside the cluster network.
+- [Marimo](/stacks/data/analytics/marimo) gives a reactive notebook workspace wired to the cluster data services.
 - [MLflow](/stacks/data/analytics/mlflow) records experiment runs, metrics, parameters, and artifacts.
 - [Slurm](/stacks/data/analytics/slurm) schedules batch jobs through a traditional queue interface.
 - [Superset](/stacks/data/analytics/superset) turns SQL datasets into charts and dashboards.
@@ -16,7 +16,7 @@ Keeping those boundaries clear makes the system easier to use and much easier to
 
 ## How The Pieces Fit
 
-A common analytics path starts in [JupyterHub](/stacks/data/analytics/jupyterhub). A notebook pod runs inside Kubernetes, so it can reach internal service DNS, private databases, Spark Connect, Trino, MLflow, and object storage without turning the laptop into the runtime environment. That makes notebooks a good place to explore a dataset, test a SQL query, run a tiny Spark session, or log a first MLflow run.
+A common analytics path starts in [Marimo](/stacks/data/analytics/marimo). The notebook pod runs inside Kubernetes, so it can reach internal service DNS, private databases, Spark Connect, Trino, MLflow, and object storage without turning the laptop into the runtime environment. That makes notebooks a good place to explore a dataset, test a SQL query, run a tiny Spark session, or log a first MLflow run.
 
 When exploration becomes distributed transformation, move to [Spark](/stacks/data/analytics/spark). This repo exposes Spark through Spark Connect, so a notebook or local Python client can create a Spark session while the driver and executors run in the cluster. Spark is the right tool when the work is more than a single SQL statement: parse files, clean records, join and reshape data, create derived tables, run feature engineering, or use Spark libraries. The active Spark Iceberg catalog is now the shared `trino_iceberg` catalog backed by PostgreSQL metadata and RustFS object storage, so Spark-created lakehouse tables can be read from Trino's `iceberg` catalog.
 
@@ -32,7 +32,7 @@ When the output is meant to be read repeatedly by people, use [Superset](/stacks
 
 ## Choosing The Right Tool
 
-If you are asking "what is in this data?", start with Trino, ClickHouse, or a notebook. Trino is best when the data spans systems. ClickHouse is best when the data is already in ClickHouse and the question is analytical. JupyterHub is best when you need an interactive Python workspace around the question.
+If you are asking "what is in this data?", start with Trino, ClickHouse, or a notebook. Trino is best when the data spans systems. ClickHouse is best when the data is already in ClickHouse and the question is analytical. Marimo is best when you need an interactive Python workspace around the question.
 
 If you are asking "how do I turn this dataset into another dataset?", start with Spark unless the transformation is simple SQL. Spark gives you a real distributed execution engine and a dataframe API. Trino can create tables and views too, but it is primarily a query engine. If the transformation becomes a repeated workflow, put the runnable code in Git and let a workflow tool or job submission path own the schedule.
 
@@ -46,11 +46,11 @@ If you are asking "how do I publish this result?", use Superset once the underly
 
 ## Good End-To-End Paths
 
-For exploration to dashboard, use JupyterHub to inspect the data, Trino to query across systems, ClickHouse or a stable SQL view to hold a dashboard-friendly shape, and Superset to publish the result. This keeps exploratory code out of the dashboard and gives the chart a durable dataset.
+For exploration to dashboard, use Marimo to inspect the data, Trino to query across systems, ClickHouse or a stable SQL view to hold a dashboard-friendly shape, and Superset to publish the result. This keeps exploratory code out of the dashboard and gives the chart a durable dataset.
 
-For data transformation, use JupyterHub for the first few cells, Spark for the distributed job, object storage or ClickHouse for outputs, and MLflow if the work has experiment metadata worth preserving. Once the transformation matters, move the job out of the notebook and into a repo-owned execution path.
+For data transformation, use Marimo for the first few cells, Spark for the distributed job, object storage or ClickHouse for outputs, and MLflow if the work has experiment metadata worth preserving. Once the transformation matters, move the job out of the notebook and into a repo-owned execution path.
 
-For model or evaluation work, use JupyterHub or Slurm for development, Spark when the data processing is distributed, MLflow for run history, and RustFS/S3 or MLflow artifacts for output files. The important split is that compute can be temporary, but run history and artifacts should survive the process that produced them.
+For model or evaluation work, use Marimo or Slurm for development, Spark when the data processing is distributed, MLflow for run history, and RustFS/S3 or MLflow artifacts for output files. The important split is that compute can be temporary, but run history and artifacts should survive the process that produced them.
 
 For scheduled analytics, keep the schedule outside this directory unless the scheduler is the subject of the stack. Airflow, Dagster, Temporal, or another workflow layer should decide when the work happens. The analytics services here should provide the execution engine, query layer, storage, experiment tracking, or presentation layer.
 
@@ -64,8 +64,6 @@ A Trino query failure is usually connector-specific. `show catalogs` proves the 
 
 A ClickHouse failure splits between Kubernetes reachability and database behavior. If clients cannot connect, inspect the service, endpoints, Tailscale exposure, and pod readiness. If clients connect but queries fail or run poorly, use ClickHouse system tables, table engines, ordering keys, parts, merges, query logs, and credentials. Database-level failures should usually be understood with ClickHouse tools first.
 
-A JupyterHub failure splits between the Hub, the spawned notebook pod, and the service the notebook is trying to reach. If the page does not load, inspect ingress, proxy service, Hub pod, and PVCs. If spawning fails, inspect Hub logs, the single-user pod, image pulls, scheduling, and user PVCs. If a notebook starts but cannot reach Spark, Trino, or MLflow, test from inside the notebook pod so the DNS and network path match the real runtime.
-
 An MLflow failure splits between browser access, metadata storage, and artifact storage. If the UI loads but runs do not appear, confirm the client is using the intended tracking URI and inspect PostgreSQL connectivity. If runs appear but artifacts fail, inspect the bucket bootstrap job, RustFS endpoint, S3 credential secret references, and MLflow server environment. Avoid printing secret values while debugging; existence and key names are usually enough.
 
 A Slurm failure should start with Slurm's own state after SSH works. `sinfo`, `squeue`, and `scontrol show job <jobid>` often explain pending jobs, missing nodes, partitions, resource requests, and controller state. Drop into Kubernetes when the login service has no endpoints, pods are unhealthy, the controller logs show infrastructure errors, or Slurm state and pod state disagree.
@@ -77,7 +75,7 @@ A Superset failure usually belongs to one of four layers: web/login, metadata da
 For a broad, read-only first look:
 
 ```bash
-kubectl get pods,svc,endpoints,ingress,pvc,jobs -A | rg 'spark|trino|clickhouse|jupyter|jhub|mlflow|slurm|slinky|superset'
+kubectl get pods,svc,endpoints,ingress,pvc,jobs -A | rg 'spark|trino|clickhouse|marimo|mlflow|slurm|slinky|superset'
 ```
 
 For service-specific stack outputs, read the owning project:
@@ -100,7 +98,7 @@ git diff --check
 just preview pulumi/data/analytics/<service> stack=mx
 ```
 
-Replace `<service>` with `spark`, `trino`, `clickhouse`, `jupyterhub`, `mlflow`, `slurm`, or `superset`. Do not apply from a docs pass. If a preview matters to a code change, run the targeted preview and report whether any blocker is a code regression, missing config, live drift, or an external dependency.
+Replace `<service>` with `spark`, `trino`, `clickhouse`, `marimo`, `mlflow`, `slurm`, or `superset`. Do not apply from a docs pass. If a preview matters to a code change, run the targeted preview and report whether any blocker is a code regression, missing config, live drift, or an external dependency.
 
 Useful service smoke tests:
 
@@ -108,7 +106,7 @@ Useful service smoke tests:
 Spark:       run a Spark Connect `select 1`, write a tiny `trino_iceberg` table, and open the Spark UI
 Trino:       run `show catalogs`, query `tpch.tiny.nation`, and read the Spark-created Iceberg table when testing lakehouse wiring
 ClickHouse:  run `select 1`, create a tiny MergeTree table, and aggregate it
-JupyterHub:  open the UI, spawn a server, write a file, and import expected packages
+Marimo:      open the UI, unlock with the token, check the welcome notebook, and run a tiny Trino query
 MLflow:      log one run with a metric, parameter, and artifact
 Slurm:       SSH to the login host, run `sinfo`, `srun hostname`, and a tiny `sbatch`
 Superset:    open SQL Lab, query a real datasource, and load a dashboard
@@ -118,8 +116,8 @@ Superset:    open SQL Lab, query a real datasource, and load a dashboard
 
 Analytics stacks touch data, credentials, private hostnames, dashboards, and user workflows. A green pod is not a finished validation. Prove the thing the service exists to do.
 
-Before changing a service, identify what state it owns. ClickHouse owns database files on persistent storage. MLflow owns PostgreSQL metadata and RustFS artifacts. Superset owns dashboard metadata in its chart-managed database. JupyterHub owns user PVCs. Spark owns the Spark Connect runtime and a preserved legacy warehouse PVC, while shared Spark/Trino Iceberg table state lives in PostgreSQL metadata plus RustFS objects. Trino owns catalog configuration and cross-stack access assumptions. Slurm owns scheduler behavior, login access, and job output expectations.
+Before changing a service, identify what state it owns. ClickHouse owns database files on persistent storage. MLflow owns PostgreSQL metadata and RustFS artifacts. Superset owns dashboard metadata in shared PostgreSQL and cache/result-backend state in chart-managed Redis. Marimo owns its workspace PVC. Spark owns the Spark Connect runtime and a preserved legacy warehouse PVC, while shared Spark/Trino Iceberg table state lives in PostgreSQL metadata plus RustFS objects. Trino owns catalog configuration and cross-stack access assumptions. Slurm owns scheduler behavior, login access, and job output expectations.
 
-Before renaming resources or outputs, find consumers. Trino reads PostgreSQL, ClickHouse, and RustFS contracts. Superset often reads Trino. Jupyter notebooks may connect to Spark, Trino, and MLflow. MLflow depends on PostgreSQL and RustFS. A change that looks local in one stack may break a client path in another.
+Before renaming resources or outputs, find consumers. Trino reads PostgreSQL, ClickHouse, and RustFS contracts. Superset often reads Trino. Notebook clients may connect to Spark, Trino, and MLflow. MLflow depends on PostgreSQL and RustFS. A change that looks local in one stack may break a client path in another.
 
-After changing code, test at the level people use: a Spark query, a Trino query, a ClickHouse query, a notebook spawn, an MLflow run with artifact, a Slurm job, or a Superset datasource and dashboard. The service pages linked above contain the deeper service-specific runbooks; this page is the map for choosing the right one and debugging the right layer first.
+After changing code, test at the level people use: a Spark query, a Trino query, a ClickHouse query, a Marimo notebook run, an MLflow run with artifact, a Slurm job, or a Superset datasource and dashboard. The service pages linked above contain the deeper service-specific runbooks; this page is the map for choosing the right one and debugging the right layer first.

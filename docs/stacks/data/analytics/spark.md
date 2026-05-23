@@ -10,13 +10,13 @@ and a group of JVM processes runs the work across partitions.
 
 This repo does not expose Spark as a public, general-purpose cluster. It creates
 a small, private, Kubernetes-backed Spark Connect service with an Iceberg-capable
-runtime. That service is good for interactive PySpark from a laptop, JupyterHub,
+runtime. That service is good for interactive PySpark from a laptop, Marimo,
 or a repo-owned workflow runner. It is also a good foundation for growing into
 durable jobs, but the default sizing is intentionally modest.
 
 The most important thing to keep in your head is where code runs:
 
-- Your Python client can run on a laptop, in JupyterHub, in Airflow, in Dagster,
+- Your Python client can run on a laptop, in Marimo, in Airflow, in Dagster,
   or in a Kubernetes Job.
 - The Spark Connect server runs in Kubernetes and behaves like the driver-side
   Spark session for client requests.
@@ -361,7 +361,7 @@ finally:
 Stopping the session matters during iterative work. It releases session state
 and makes debugging less confusing.
 
-## Connecting From JupyterHub Or Another Pod
+## Connecting From Marimo Or Another Pod
 
 When the client runs inside Kubernetes, the best endpoint is usually Kubernetes
 service DNS. Read the namespace and connect name from outputs:
@@ -374,7 +374,7 @@ CONNECT="$(pulumi stack output --stack mx spark_connect_name)"
 printf 'sc://%s.%s.svc.cluster.local:15002\n' "$CONNECT" "$NS"
 ```
 
-In a Jupyter notebook, that becomes:
+In a notebook, that becomes:
 
 ```python
 from pyspark.sql import SparkSession

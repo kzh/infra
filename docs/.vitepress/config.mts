@@ -84,7 +84,7 @@ export default defineConfig({
           { text: 'n8n', link: '/stacks/data/workflow/n8n' },
           { text: 'Temporal', link: '/stacks/data/workflow/temporal' },
           { text: 'ClickHouse', link: '/stacks/data/analytics/clickhouse' },
-          { text: 'JupyterHub', link: '/stacks/data/analytics/jupyterhub' },
+          { text: 'Marimo', link: '/stacks/data/analytics/marimo' },
           { text: 'MLflow', link: '/stacks/data/analytics/mlflow' },
           { text: 'Slurm', link: '/stacks/data/analytics/slurm' },
           { text: 'Spark', link: '/stacks/data/analytics/spark' },

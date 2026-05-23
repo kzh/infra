@@ -266,7 +266,7 @@ If that cross-engine view breaks, check both halves of the Iceberg contract:
 RustFS objects under `s3://trino-iceberg/warehouse` and PostgreSQL JDBC catalog
 metadata named `trino_iceberg`.
 
-JupyterHub, workflow jobs, and batch jobs may be clients of RustFS, MLflow, or
+Marimo, workflow jobs, and batch jobs may be clients of RustFS, MLflow, or
 Trino depending on the job. Prefer the highest-level API that preserves the
 right semantics. Use MLflow for experiment artifacts, Trino for Iceberg tables,
 and direct S3 access for raw objects that truly belong as objects.
