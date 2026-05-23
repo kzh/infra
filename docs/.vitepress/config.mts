@@ -5,6 +5,30 @@ export default defineConfig({
   description: 'Pulumi Kubernetes infrastructure handbook',
   cleanUrls: true,
   lastUpdated: true,
+  markdown: {
+    languageAlias: {
+      promql: 'text'
+    },
+    languageLabel: {
+      promql: 'PromQL'
+    }
+  },
+  vite: {
+    build: {
+      chunkSizeWarningLimit: 1024,
+      rollupOptions: {
+        onwarn(warning, warn) {
+          if (
+            warning.code === 'INVALID_ANNOTATION' &&
+            warning.id?.includes('/node_modules/@vueuse/core/')
+          ) {
+            return
+          }
+          warn(warning)
+        }
+      }
+    }
+  },
   themeConfig: {
     logo: '/topology.svg',
     search: {
