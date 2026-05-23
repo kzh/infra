@@ -1,53 +1,5 @@
-# Infrastructure
+# infra
 
-Pulumi + Python infrastructure monorepo for a Kubernetes cluster.
+Here lies the IaC/GitOps files (almost entirely Pulumi) I use to spin up stuff in my homelab environments. Historically, every LoC was typed out with blood, sweat, and tears, but in recent years with advancements in LLMs and coding agents, everything is now managed by Codex. YAY :DDD
 
-## Included Services
-
-| Area | Services |
-| --- | --- |
-| Core | Cloudflare Tunnel, Tailscale, CloudNativePG, KubeRay, MySQL Operator, cert-manager, Vault |
-| Data | Airflow, ClickHouse, CockroachDB, Convex, Dagster, Flink, Kafka, Marimo, MLflow, n8n, Postgres, RustFS, Slurm, Spark, Superset, Temporal |
-| Ops | Monitoring |
-| Apps | Coder, golink, Hermes, Immich, Langfuse, MediaWiki, Stitch, WordPress |
-
-## Layout
-
-```text
-pulumi/
-  core/        # cluster plumbing
-  data/        # databases + analytics + workflow
-  ops/         # monitoring
-  apps/        # end-user apps
-```
-
-Project-local assets live with the project that consumes them. Grafana dashboards are under each owning project's `dashboards/` directory, and Docker build assets are under service-local `images/` directories.
-
-See [docs/index.md](docs/index.md) for the VitePress handbook and stack inventory.
-
-## Root Commands
-
-The root `Justfile` provides light wrappers around the per-project workflows:
-
-- `just projects`: list Pulumi project directories.
-- `just sync <project>`: run `uv sync` inside a project.
-- `just preview <project> stack=<stack>`: run `pulumi preview`.
-- `just up <project> stack=<stack>`: run `pulumi up`.
-- `just preview-all`: preview every `mx` stack.
-- `just check-python`: syntax-check all Pulumi Python entrypoints.
-- `just lint`: run Ruff checks and formatting verification.
-- `just format`: format Pulumi Python entrypoints with Ruff.
-
-## Docs
-
-The documentation site is built with VitePress:
-
-- `npm run docs:dev`: start the local docs server.
-- `npm run docs:build`: build the static docs site.
-- `npm run docs:preview`: preview the built docs site.
-
-## Notes
-
-- Projects are independent and stack-scoped.
-- `uv` is used for Python env/dependency management.
-- Secrets live in Pulumi config secrets, not in git.
+Currently I am cramming all of the following into a single node Kubernetes "cluster": Airflow, cert-manager, CLIProxyAPI, ClickHouse, Cloudflare Tunnel, CloudNativePG, CockroachDB, Coder, ConvexDB, Dagster, Flink, golink, Hermes, Immich, Kafka, KubeRay, Langfuse, Marimo, MediaWiki, MLflow, Monitoring, MySQL, MySQL Operator, n8n, Postgres, RustFS, Slurm, Spark, Stitch, Superset, Tailscale, Temporal, Trino, Vault, WordPress.
