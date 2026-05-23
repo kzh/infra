@@ -1,0 +1,24 @@
+set shell := ["bash", "-lc"]
+
+arch := "linux/amd64"
+repo := "ghcr.io/kzh"
+ray_version := "2.55.1"
+python_version := "3.13.13"
+uv_version := "0.11.14"
+image := repo + "/ray:" + ray_version + "-py3.13.13-uv-amd64"
+buildx := env_var_or_default("BUILDX", "docker-buildx")
+
+# Build and push the Ray image on the mx0 Kubernetes BuildKit builder.
+push-image:
+	{{buildx}} build --builder mx0 --platform {{arch}} --progress=plain \
+		-f images/ray-uv/Dockerfile \
+		--build-arg PYTHON_VERSION={{python_version}} \
+		--build-arg RAY_VERSION={{ray_version}} \
+		--build-arg UV_VERSION={{uv_version}} \
+		--provenance=false \
+		--sbom=false \
+		-t {{image}} \
+		--push .
+
+inspect-image:
+	{{buildx}} imagetools inspect {{image}}

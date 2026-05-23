@@ -49,11 +49,12 @@ KubeRay chart version:    1.6.1
 Ray namespace:            ray-dev
 RayCluster name:          ray-dev
 Ray version:              2.55.1
-Ray image:                rayproject/ray:2.55.1
+Ray image:                ghcr.io/kzh/ray:2.55.1-py3.13.13-uv-amd64@sha256:beeac3a95f854b75dbc2c2dc579b98cd1fbf67054ec6a58135a572fa176564fe
 Worker group:             dev-workers
 Worker replicas:          1 fixed replica by default
-Head resources:           1000m CPU / 2Gi memory
-Worker resources:         500m CPU / 1Gi memory
+Head resources:           500m CPU / 768Mi request, 1000m CPU / 2Gi limit
+Worker resources:         250m CPU / 512Mi request, 500m CPU / 768Mi limit
+Ray task memory:          1073741824 bytes on head, 402653184 bytes on workers
 Object store memory:      100000000 bytes on head and workers
 Dashboard port:           8265
 Ray Client port:          10001
@@ -63,8 +64,10 @@ GCS port:                 6379
 Stack config can override the namespace, chart version, Ray namespace, cluster
 name, Ray image, Ray version, worker replica count, dashboard host, client API
 hostname, and the Prometheus/Grafana values that the Ray dashboard uses for
-monitoring links. Do not copy private hostnames or full stack output values into
-docs. Read them from Pulumi when operating the stack.
+monitoring links. The default Ray image is built from this stack's
+`images/ray-uv/Dockerfile` with the `mx0` BuildKit builder and installs Ray into
+Python 3.13.13 with `uv`. Do not copy private hostnames or full stack output
+values into docs. Read them from Pulumi when operating the stack.
 
 The KubeRay Helm chart is installed from the upstream KubeRay Helm repository.
 The chart values enable the operator's Prometheus `ServiceMonitor` and select
@@ -215,8 +218,8 @@ kubectl get pod -n "$NS" \
 ## A Small Ray Smoke Test
 
 For a local client, the Python environment needs a Ray version compatible with
-the cluster. The current default cluster image is `rayproject/ray:2.55.1`, so a
-matching local Ray install is the least surprising starting point.
+the cluster. The current default cluster image uses Python 3.13.13 and Ray
+2.55.1, so a matching local Ray install is the least surprising starting point.
 
 This is the shape of a Ray Client smoke test:
 
@@ -243,7 +246,7 @@ A temporary shell is often enough:
 
 ```bash
 kubectl run -n "$NS" ray-smoke --rm -it --restart=Never \
-  --image=rayproject/ray:2.55.1 -- bash
+  --image=ghcr.io/kzh/ray:2.55.1-py3.13.13-uv-amd64 -- bash
 ```
 
 Inside that shell:

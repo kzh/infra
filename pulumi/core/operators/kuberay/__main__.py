@@ -8,6 +8,10 @@ from pulumi_monitoring_crds.monitoring.v1 import PodMonitor
 import pulumi
 
 config = pulumi.Config()
+default_ray_dev_image = (
+    "ghcr.io/kzh/ray:2.55.1-py3.13.13-uv-amd64"
+    "@sha256:beeac3a95f854b75dbc2c2dc579b98cd1fbf67054ec6a58135a572fa176564fe"
+)
 namespace_name = config.get("namespace", "kuberay-operator")
 chart_version = config.get("chartVersion", "1.6.1")
 ray_dev_namespace_name = config.get("rayDevNamespace", "ray-dev")
@@ -26,7 +30,7 @@ ray_dev_grafana_host = config.get(
 )
 ray_dev_grafana_iframe_host = config.get("rayDevGrafanaIframeHost", "https://grafana")
 ray_dev_grafana_org_id = config.get("rayDevGrafanaOrgId", "1")
-ray_dev_image = config.get("rayDevImage", "rayproject/ray:2.55.1")
+ray_dev_image = config.get("rayDevImage", default_ray_dev_image)
 ray_dev_version = config.get("rayDevVersion", "2.55.1")
 ray_dev_worker_replicas = int(config.get("rayDevWorkerReplicas", "1"))
 
@@ -97,6 +101,7 @@ ray_dev_cluster = RayCluster(
         "rayVersion": ray_dev_version,
         "headGroupSpec": {
             "rayStartParams": {
+                "memory": "1073741824",
                 "object-store-memory": "100000000",
             },
             "template": {
@@ -133,7 +138,7 @@ ray_dev_cluster = RayCluster(
                                 {"containerPort": 10001, "name": "client"},
                             ],
                             "resources": {
-                                "requests": {"cpu": "1000m", "memory": "2Gi"},
+                                "requests": {"cpu": "500m", "memory": "768Mi"},
                                 "limits": {"cpu": "1000m", "memory": "2Gi"},
                             },
                         }
@@ -148,6 +153,7 @@ ray_dev_cluster = RayCluster(
                 "minReplicas": ray_dev_worker_replicas,
                 "maxReplicas": ray_dev_worker_replicas,
                 "rayStartParams": {
+                    "memory": "402653184",
                     "object-store-memory": "100000000",
                 },
                 "template": {
@@ -157,8 +163,8 @@ ray_dev_cluster = RayCluster(
                                 "name": "ray-worker",
                                 "image": ray_dev_image,
                                 "resources": {
-                                    "requests": {"cpu": "500m", "memory": "1Gi"},
-                                    "limits": {"cpu": "500m", "memory": "1Gi"},
+                                    "requests": {"cpu": "250m", "memory": "512Mi"},
+                                    "limits": {"cpu": "500m", "memory": "768Mi"},
                                 },
                             }
                         ]
