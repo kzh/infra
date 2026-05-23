@@ -33,7 +33,6 @@ postgres_databases = config.get_object(
         "coder",
         "convexdb",
         "immich",
-        "litellm",
         "mlflow",
         "n8n",
         "postgres",

@@ -173,8 +173,8 @@ The second pattern is app-owned database provisioning in the consumer stack.
 That stack reads the PostgreSQL admin connection outputs, creates its own role,
 generates its own password, creates a database owned by that role, writes a
 Kubernetes Secret in the app namespace, and passes only the app-specific
-credentials to the runtime. Airflow, Dagster, LiteLLM, MLflow, ConvexDB, and
-parts of Trino follow this pattern.
+credentials to the runtime. Airflow, Dagster, MLflow, ConvexDB, and parts of
+Trino follow this pattern.
 
 Prefer the second pattern for new services. It has better ownership:
 
@@ -308,11 +308,6 @@ At the time this page was written, the main PostgreSQL consumers are:
 pulumi/apps/coder
   Reads the PostgreSQL stack, optionally creates the coder database, builds
   CODER_PG_CONNECTION_URL, and stores it in the coder-db-url Secret.
-
-pulumi/apps/litellm
-  Creates a litellm role and database, stores app credentials in
-  litellm-db-credentials, and points the LiteLLM chart at the in-cluster
-  read-write service.
 
 pulumi/apps/immich
   Reads PostgreSQL outputs for runtime connection settings. The shared
@@ -712,8 +707,8 @@ just preview pulumi/data/databases/postgres stack=mx
 If the change affects an exported output, service name, credential, CA
 material, extension, app database, or default connection path, also preview the
 known consumers that rely on that contract. Do not use a green PostgreSQL
-preview as proof that Coder, LiteLLM, Immich, MLflow, Trino, Airflow, Dagster,
-n8n, Temporal, ConvexDB, or Stitch still works.
+preview as proof that Coder, Immich, MLflow, Trino, Airflow, Dagster, n8n,
+Temporal, ConvexDB, or Stitch still works.
 
 Do not run `pulumi up`, `pulumi destroy`, or `just up` unless the user has
 explicitly asked for an apply or destructive operation.

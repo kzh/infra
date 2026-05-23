@@ -289,7 +289,7 @@ The important producer contracts in this repo are:
 
 | Producer project | Common consumers | Contract |
 | --- | --- | --- |
-| `pulumi/data/databases/postgres` | Coder, LiteLLM, Immich, ConvexDB, MLflow, Trino, Spark, Airflow, Dagster, n8n, Temporal | Kubernetes service coordinates, Tailscale host, namespace, database credentials, CA material, and optional app database/extension setup. |
+| `pulumi/data/databases/postgres` | Coder, Immich, ConvexDB, MLflow, Trino, Spark, Airflow, Dagster, n8n, Temporal | Kubernetes service coordinates, Tailscale host, namespace, database credentials, CA material, and optional app database/extension setup. |
 | `pulumi/data/storage/rustfs` | MLflow, Trino, Spark | S3 endpoint coordinates, namespace, access key, secret key, bucket conventions, and shared Iceberg warehouse access. |
 | `pulumi/data/analytics/clickhouse` | Trino | ClickHouse host, port, admin username, and admin password. |
 

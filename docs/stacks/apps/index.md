@@ -1,6 +1,6 @@
 # Application Services
 
-Application stacks are where cluster infrastructure becomes a product surface. A person does not experience a Deployment, a Service, or a Helm release; they experience a workspace that starts, a wiki page that loads, a photo library that still has its albums, a model proxy that routes the request they sent, or a short link that resolves when they need it.
+Application stacks are where cluster infrastructure becomes a product surface. A person does not experience a Deployment, a Service, or a Helm release; they experience a workspace that starts, a wiki page that loads, a photo library that still has its albums, an observability trace that appears where they expect it, or a short link that resolves when they need it.
 
 That is the right starting point for this part of the repo. The first question is not "is Kubernetes green?" It is: can the service do the job it exists to do, using the state and dependencies it is supposed to use?
 
@@ -10,7 +10,7 @@ The app guides are written from that outside-in view. Start with the human workf
 
 Core stacks usually provide shared machinery. Data stacks usually preserve durable systems or run computation. App stacks sit at the boundary where those lower layers become a concrete experience.
 
-That boundary makes them easy to misread. An app can be "up" while the thing people need is broken. Coder can serve its UI while workspace pods fail. LiteLLM can answer a readiness probe while a configured model route fails. MediaWiki can run PHP while a migration Job or MySQL router is the real blocker. Stitch can have a healthy pod while Twitch, Discord, or webhook configuration is wrong outside the cluster.
+That boundary makes them easy to misread. An app can be "up" while the thing people need is broken. Coder can serve its UI while workspace pods fail. Langfuse can load its UI while trace ingestion or storage is broken. MediaWiki can run PHP while a migration Job or MySQL router is the real blocker. Stitch can have a healthy pod while Twitch, Discord, or webhook configuration is wrong outside the cluster.
 
 For app work, think in terms of contracts:
 
@@ -32,7 +32,7 @@ State is the part the application exists to protect or accumulate. For these app
 
 - Coder's PostgreSQL metadata and any workspace storage created by templates.
 - Hermes' `hermes-data` PVC, including Codex home, provider setup, browser state, and runtime files.
-- LiteLLM's database, master key material, model routing config, and ChatGPT token PVC.
+- Langfuse's PostgreSQL, ClickHouse, Valkey, RustFS objects, and generated application secrets.
 - Immich's media library PVC and PostgreSQL metadata.
 - MediaWiki's MySQL cluster, page revisions, generated config, and uploaded images PVC.
 - WordPress' MySQL cluster, `wordpress-data` PVC, uploads, themes, plugins, and site settings.
@@ -64,7 +64,7 @@ kubectl describe ingress -n <namespace> <name>
 kubectl get endpoints -n <namespace> <service>
 ```
 
-After that, inspect the application process. Logs should be read with the service model in mind. For a content app, database and filesystem errors matter. For LiteLLM, provider routing and auth errors matter. For Stitch, a webhook that never arrives is different from one that arrives and fails validation. For Hermes, gateway, dashboard, and browser sidecar failures are separate paths.
+After that, inspect the application process. Logs should be read with the service model in mind. For a content app, database and filesystem errors matter. For Langfuse, ingestion, ClickHouse, object storage, and worker errors matter. For Stitch, a webhook that never arrives is different from one that arrives and fails validation. For Hermes, gateway, dashboard, and browser sidecar failures are separate paths.
 
 Then inspect durable state and dependencies. Check PVC mounts, database readiness, install/update Jobs, operator-owned custom resources, token storage, and external provider configuration. Do not print secret values into notes or chat just to prove they exist; presence, names, references, and error messages are usually enough.
 
@@ -79,13 +79,12 @@ Use each app page as an operating guide, not as a static inventory. The page sho
 3. Where does its state live?
 4. What proves it works after a change?
 
-Read the guide before editing the stack. The individual pages call out details that are easy to lose in the generic Kubernetes view: Coder's split between control plane and workspace plane, Hermes' persistent runtime directory, LiteLLM's model names as client-facing API, Immich's paired media and database state, MediaWiki's install/update Jobs, WordPress' UI-managed plugin and upload drift, golink's tsnet identity, and Stitch's external integration boundary.
+Read the guide before editing the stack. The individual pages call out details that are easy to lose in the generic Kubernetes view: Coder's split between control plane and workspace plane, Hermes' persistent runtime directory, Langfuse's trace and object-store state, Immich's paired media and database state, MediaWiki's install/update Jobs, WordPress' UI-managed plugin and upload drift, golink's tsnet identity, and Stitch's external integration boundary.
 
 When a page says to test a real workflow, take that literally. For app stacks, a preview plus pod readiness is only the infrastructure half of verification. The product half is the behavior:
 
 - Create and reconnect to a Coder workspace.
 - Run a Hermes provider test and check optional browser support if enabled.
-- Send a real LiteLLM model request through the exported base URL.
 - Open Immich and verify existing media plus a small upload.
 - Read, edit, and upload or view media in MediaWiki.
 - Load WordPress, log in, view content, and confirm uploads still work.
@@ -100,7 +99,7 @@ If a guide and live state disagree, trust the live state for diagnosis and then 
 
 [Hermes](/stacks/apps/hermes) is a persistent agent runtime. Treat it like a small remote workstation in Kubernetes: preserve the PVC, use the exported setup and validation commands, and separate gateway, dashboard, Codex, provider, and browser-sidecar failures.
 
-[LiteLLM](/stacks/apps/litellm) is an OpenAI-compatible proxy. Its real contract is model routing for clients. Validate it with a model request, not just a web response, and treat model names, keys, pricing metadata, and token storage as user-facing behavior.
+[Langfuse](/stacks/apps/langfuse) is the LLM observability surface. Treat traces, prompt data, ClickHouse analytics storage, and object uploads as durable state, not as disposable chart internals.
 
 [Immich](/stacks/apps/immich) is a personal media library. The app is only healthy if the UI, media PVC, PostgreSQL metadata, background processing, and uploads agree. Database-only or PVC-only backups are incomplete.
 
@@ -146,6 +145,6 @@ For operator-backed apps, include the custom resources and Jobs the guide names.
 
 Most app fixes should end in the Pulumi project that owns the service. One-off cluster changes can help prove a theory, but they are easy to lose on the next reconcile or restart. Once you know the durable fix, put it in the repo and preview the stack.
 
-At the same time, do not edit Pulumi before you know which layer failed. A 502 with zero Service endpoints is not an ingress problem. A healthy LiteLLM pod with provider errors is not a Kubernetes scheduling problem. A MediaWiki deployment waiting on MySQL is not fixed by changing PHP first. A missing golink tailnet identity may be storage or auth state, not a Service issue.
+At the same time, do not edit Pulumi before you know which layer failed. A 502 with zero Service endpoints is not an ingress problem. A MediaWiki deployment waiting on MySQL is not fixed by changing PHP first. A missing golink tailnet identity may be storage or auth state, not a Service issue.
 
 Protect state first. Preserve names and selectors unless you intend a migration. Treat hostnames, model aliases, database identities, PVC names, generated Secrets, callback URLs, and tailnet identities as contracts. When those contracts must change, make the migration explicit and verify the real user workflow after the infrastructure looks healthy.

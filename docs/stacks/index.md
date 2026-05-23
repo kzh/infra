@@ -204,8 +204,8 @@ service names, credentials, schemas, storage, backups, and consumers.
 for the repo and one of the most important StackReference producers. Read it
 before changing exported outputs, database roles, extensions, service names,
 credential material, storage settings, or any shared database contract consumed
-by Coder, LiteLLM, MLflow, Trino, Airflow, Dagster, n8n, Temporal, ConvexDB, or
-other services.
+by Coder, MLflow, Trino, Airflow, Dagster, n8n, Temporal, ConvexDB, or other
+services.
 
 [CockroachDB](/stacks/data/databases/cockroach) is a Cockroach-specific SQL
 environment. Read it when you want CockroachDB behavior, compatibility testing,
@@ -328,10 +328,10 @@ gateway, dashboard, optional browser sidecar, exported runtime commands,
 persistent home directory, Codex home, image pinning, PVC ownership, or runtime
 state needs to be understood before changing the deployment.
 
-[LiteLLM](/stacks/apps/litellm) is the OpenAI-compatible model proxy. Read it
-for model routing, provider keys, generated proxy keys, PostgreSQL metadata,
-ChatGPT token storage, Prometheus metrics, client base URLs, and the difference
-between a ready proxy process and a real model request succeeding.
+[Langfuse](/stacks/apps/langfuse) is the LLM observability surface. Read it for
+trace storage, generated application secrets, private Tailscale access, and the
+shared PostgreSQL, shared ClickHouse, RustFS object storage, and
+Langfuse-owned Valkey state.
 
 [Immich](/stacks/apps/immich) is the photo and video library. Read it for media
 PVC preservation, PostgreSQL metadata, Valkey persistence, disabled
@@ -400,8 +400,8 @@ git diff --check
 The guide pages often include more specific checks: open a URL, run a first SQL
 query, produce and consume a Kafka message, trigger a smoke DAG, materialize a
 Dagster asset, log an MLflow run, submit a Slurm job, start a notebook server,
-send a LiteLLM request, upload a small Immich asset, or load a Grafana
-dashboard. Those checks matter because they prove the service's actual purpose,
+upload a small Immich asset, or load a Grafana dashboard. Those checks matter
+because they prove the service's actual purpose,
 not just the Kubernetes resource shape.
 
 Treat an apply as a separate live-infrastructure action. A preview explains what

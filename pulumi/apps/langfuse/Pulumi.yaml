@@ -1,0 +1,10 @@
+name: langfuse
+description: Langfuse observability platform
+runtime:
+  name: python
+  options:
+    toolchain: uv
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: helm-kubernetes-python

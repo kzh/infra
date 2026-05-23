@@ -1,5 +1,5 @@
-name: litellm
-description: LiteLLM Proxy
+name: cliproxyapi
+description: CLIProxyAPI OpenAI-compatible Codex proxy
 runtime:
   name: python
   options:

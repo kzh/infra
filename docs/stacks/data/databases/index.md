@@ -51,7 +51,7 @@ pulumi stack output --stack mx ca_secret_name
 
 Do not change these output names casually. Consumer projects call `require_output(...)`, so an output rename is a breaking change even when the underlying Kubernetes object still exists. If an output really must change, update and preview the consumers in the same change window.
 
-The current codebase has PostgreSQL consumers in multiple areas, including Coder, Immich, LiteLLM, MLflow, Trino, Airflow, Dagster, n8n, Temporal, and ConvexDB. Some of those consumers create app-specific databases and roles through the PostgreSQL provider. Others pass PostgreSQL connection values into Helm chart values or Kubernetes Secrets. Before changing the shared PostgreSQL stack, search for the exact output or stack reference being changed:
+The current codebase has PostgreSQL consumers in multiple areas, including Coder, Immich, MLflow, Trino, Airflow, Dagster, n8n, Temporal, and ConvexDB. Some of those consumers create app-specific databases and roles through the PostgreSQL provider. Others pass PostgreSQL connection values into Helm chart values or Kubernetes Secrets. Before changing the shared PostgreSQL stack, search for the exact output or stack reference being changed:
 
 ```bash
 rg -n 'kzh/postgresql/mx|rw_service_fqdn|require_output\("(username|password|host|port|ts_hostname|ca_)' pulumi -g '!pulumi/lib/**'

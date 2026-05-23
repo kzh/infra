@@ -37,7 +37,7 @@ processing data. The subdirectories keep related lifecycles together:
 but each has a different operational shape.
 
 `apps/` is for applications people or internal workflows use directly. Coder,
-Hermes, LiteLLM, MediaWiki, Stitch, WordPress, Immich, and golink live here
+Hermes, MediaWiki, Stitch, WordPress, Immich, Langfuse, and golink live here
 because the app is the unit of ownership. They may depend on `core/` or `data/`
 outputs, but those dependencies do not move the app into those areas.
 

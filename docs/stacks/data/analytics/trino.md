@@ -97,7 +97,6 @@ pg_app
 pg_coder
 pg_convexdb
 pg_immich
-pg_litellm
 pg_mlflow
 pg_n8n
 pg_postgres
@@ -279,10 +278,6 @@ select table_name
 from pg_mlflow.information_schema.tables
 where table_schema = 'public'
 order by table_name;
-
-select *
-from pg_litellm.public.<table_name>
-limit 20;
 ```
 
 Use Trino for reads and exploration. Do not use it as the normal administration path for PostgreSQL. If you need to create databases, install extensions, repair grants, inspect replication, or perform PostgreSQL maintenance, use the PostgreSQL stack and native PostgreSQL tools.

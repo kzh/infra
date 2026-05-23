@@ -52,9 +52,9 @@ Pulumi's dependency graph is built from resource inputs and outputs, provider re
 
 ```python
 db_secret = k8s.core.v1.Secret(
-    "litellm-db-credentials",
+    "app-db-credentials",
     metadata=k8s.meta.v1.ObjectMetaArgs(
-        name="litellm-db-credentials",
+        name="app-db-credentials",
         namespace=namespace.metadata.name,
     ),
     string_data={
@@ -103,7 +103,7 @@ That selector is part of the service contract. If `SPARK_VERSION` changes, the s
 
 Stack outputs are APIs between Pulumi projects and between Pulumi and humans. They are not just display fields.
 
-PostgreSQL exports connection coordinates, service names, CA material, usernames, and passwords. Airflow, Dagster, Coder, LiteLLM, Temporal, Convex, and other consumers read those outputs instead of duplicating the database stack's internals. Applications export URLs, hostnames, chart versions, PVC names, service names, generated admin users, and sometimes generated secrets.
+PostgreSQL exports connection coordinates, service names, CA material, usernames, and passwords. Airflow, Dagster, Coder, Temporal, Convex, and other consumers read those outputs instead of duplicating the database stack's internals. Applications export URLs, hostnames, chart versions, PVC names, service names, generated admin users, and sometimes generated secrets.
 
 Changing an output name, type, secrecy, or meaning is a breaking API change. Prefer additive changes:
 

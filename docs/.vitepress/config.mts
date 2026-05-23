@@ -100,7 +100,7 @@ export default defineConfig({
           { text: 'golink', link: '/stacks/apps/golink' },
           { text: 'Hermes', link: '/stacks/apps/hermes' },
           { text: 'Immich', link: '/stacks/apps/immich' },
-          { text: 'LiteLLM', link: '/stacks/apps/litellm' },
+          { text: 'Langfuse', link: '/stacks/apps/langfuse' },
           { text: 'MediaWiki', link: '/stacks/apps/mediawiki' },
           { text: 'Stitch', link: '/stacks/apps/stitch' },
           { text: 'WordPress', link: '/stacks/apps/wordpress' }
