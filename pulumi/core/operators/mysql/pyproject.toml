@@ -1,5 +1,5 @@
 [project]
-name = "mysql-operator"
+name = "kzh-infra-mysql-operator"
 version = "0.1.0"
 description = "Pulumi infrastructure deployment"
 requires-python = ">=3.12"

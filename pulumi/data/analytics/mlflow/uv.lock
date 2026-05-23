@@ -234,7 +234,7 @@ requires-dist = [
 provides-extras = ["postgres"]
 
 [[package]]
-name = "mlflow"
+name = "kzh-infra-mlflow"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

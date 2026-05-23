@@ -8,27 +8,6 @@ resolution-markers = [
 ]
 
 [[package]]
-name = "airflow"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "infra-helpers", extra = ["postgres"] },
-    { name = "pulumi" },
-    { name = "pulumi-kubernetes" },
-    { name = "pulumi-monitoring-crds" },
-    { name = "pulumi-random" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "infra-helpers", extras = ["postgres"], editable = "../../../infra_helpers" },
-    { name = "pulumi", specifier = ">=3.239.0,<4.0.0" },
-    { name = "pulumi-kubernetes", specifier = ">=4.31.0,<5.0.0" },
-    { name = "pulumi-monitoring-crds", directory = "../../../lib/monitoring_crds" },
-    { name = "pulumi-random", specifier = ">=4.20.0,<5.0.0" },
-]
-
-[[package]]
 name = "arpeggio"
 version = "2.0.3"
 source = { registry = "https://pypi.org/simple" }
@@ -253,6 +232,27 @@ requires-dist = [
     { name = "pulumi-postgresql", marker = "extra == 'postgres'", specifier = ">=3.16.3,<4.0.0" },
 ]
 provides-extras = ["postgres"]
+
+[[package]]
+name = "kzh-infra-airflow"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "infra-helpers", extra = ["postgres"] },
+    { name = "pulumi" },
+    { name = "pulumi-kubernetes" },
+    { name = "pulumi-monitoring-crds" },
+    { name = "pulumi-random" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "infra-helpers", extras = ["postgres"], editable = "../../../infra_helpers" },
+    { name = "pulumi", specifier = ">=3.239.0,<4.0.0" },
+    { name = "pulumi-kubernetes", specifier = ">=4.31.0,<5.0.0" },
+    { name = "pulumi-monitoring-crds", directory = "../../../lib/monitoring_crds" },
+    { name = "pulumi-random", specifier = ">=4.20.0,<5.0.0" },
+]
 
 [[package]]
 name = "opentelemetry-api"

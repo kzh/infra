@@ -1,5 +1,5 @@
 [project]
-name = "cliproxyapi"
+name = "kzh-infra-cliproxyapi"
 version = "0.1.0"
 description = "Pulumi infrastructure deployment"
 requires-python = ">=3.12"

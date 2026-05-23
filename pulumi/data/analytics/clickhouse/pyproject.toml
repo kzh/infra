@@ -1,5 +1,5 @@
 [project]
-name = "clickhouse"
+name = "kzh-infra-clickhouse"
 version = "0.1.0"
 description = "ClickHouse analytics database deployment"
 requires-python = ">=3.12"

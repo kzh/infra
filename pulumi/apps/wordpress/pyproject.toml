@@ -1,5 +1,5 @@
 [project]
-name = "wordpress"
+name = "kzh-infra-wordpress"
 version = "0.1.0"
 description = "Pulumi infrastructure deployment"
 requires-python = ">=3.12"

@@ -229,7 +229,7 @@ requires-dist = [
 provides-extras = ["postgres"]
 
 [[package]]
-name = "mediawiki"
+name = "kzh-infra-mediawiki"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

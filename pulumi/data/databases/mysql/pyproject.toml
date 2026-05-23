@@ -1,5 +1,5 @@
 [project]
-name = "mysql"
+name = "kzh-infra-mysql"
 version = "0.1.0"
 description = "Shared MySQL database cluster"
 requires-python = ">=3.12"

@@ -212,6 +212,25 @@ wheels = [
 ]
 
 [[package]]
+name = "kzh-infra-postgresql"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "pulumi" },
+    { name = "pulumi-kubernetes" },
+    { name = "pulumi-monitoring-crds" },
+    { name = "pulumi-postgresql" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pulumi", specifier = ">=3.239.0,<4.0.0" },
+    { name = "pulumi-kubernetes", specifier = ">=4.31.0,<5.0.0" },
+    { name = "pulumi-monitoring-crds", directory = "../../../lib/monitoring_crds" },
+    { name = "pulumi-postgresql", specifier = ">=3.16.3,<4.0.0" },
+]
+
+[[package]]
 name = "opentelemetry-api"
 version = "1.41.1"
 source = { registry = "https://pypi.org/simple" }
@@ -343,25 +362,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/cc/e5/1c774688a90f0b76e872e30f6f1ba3f5e14056cd0d96a684047d4a986226/parver-0.5.tar.gz", hash = "sha256:b9fde1e6bb9ce9f07e08e9c4bea8d8825c5e78e18a0052d02e02bf9517eb4777", size = 26908, upload-time = "2023-10-03T21:06:54.506Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/0f/4c/f98024021bef4d44dce3613feebd702c7ad8883f777ff8488384c59e9774/parver-0.5-py3-none-any.whl", hash = "sha256:2281b187276c8e8e3c15634f62287b2fb6fe0efe3010f739a6bd1e45fa2bf2b2", size = 15172, upload-time = "2023-10-03T21:06:52.796Z" },
-]
-
-[[package]]
-name = "postgresql"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "pulumi" },
-    { name = "pulumi-kubernetes" },
-    { name = "pulumi-monitoring-crds" },
-    { name = "pulumi-postgresql" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "pulumi", specifier = ">=3.239.0,<4.0.0" },
-    { name = "pulumi-kubernetes", specifier = ">=4.31.0,<5.0.0" },
-    { name = "pulumi-monitoring-crds", directory = "../../../lib/monitoring_crds" },
-    { name = "pulumi-postgresql", specifier = ">=3.16.3,<4.0.0" },
 ]
 
 [[package]]

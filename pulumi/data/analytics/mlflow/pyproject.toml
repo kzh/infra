@@ -1,5 +1,5 @@
 [project]
-name = "mlflow"
+name = "kzh-infra-mlflow"
 version = "0.1.0"
 description = "Pulumi infrastructure deployment"
 requires-python = ">=3.12"

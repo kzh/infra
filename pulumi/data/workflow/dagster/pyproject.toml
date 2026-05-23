@@ -1,5 +1,5 @@
 [project]
-name = "dagster"
+name = "kzh-infra-dagster"
 version = "0.1.0"
 description = "Pulumi infrastructure deployment"
 requires-python = ">=3.12"

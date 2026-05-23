@@ -234,7 +234,7 @@ requires-dist = [
 provides-extras = ["postgres"]
 
 [[package]]
-name = "langfuse"
+name = "kzh-infra-langfuse"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

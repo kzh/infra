@@ -204,7 +204,7 @@ requires-dist = [
 provides-extras = ["postgres"]
 
 [[package]]
-name = "marimo"
+name = "kzh-infra-marimo"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

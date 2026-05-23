@@ -1,5 +1,5 @@
 [project]
-name = "tailscale"
+name = "kzh-infra-tailscale"
 version = "0.1.0"
 description = "tailscale operator"
 requires-python = ">=3.12"

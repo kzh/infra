@@ -229,7 +229,7 @@ requires-dist = [
 provides-extras = ["postgres"]
 
 [[package]]
-name = "kafka"
+name = "kzh-infra-kafka"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

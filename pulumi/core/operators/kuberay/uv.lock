@@ -229,7 +229,7 @@ requires-dist = [
 provides-extras = ["postgres"]
 
 [[package]]
-name = "kuberay"
+name = "kzh-infra-kuberay"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
