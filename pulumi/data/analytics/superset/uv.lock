@@ -212,6 +212,28 @@ wheels = [
 ]
 
 [[package]]
+name = "infra-helpers"
+version = "0.1.0"
+source = { editable = "../../../infra_helpers" }
+dependencies = [
+    { name = "pulumi" },
+    { name = "pulumi-kubernetes" },
+]
+
+[package.optional-dependencies]
+postgres = [
+    { name = "pulumi-postgresql" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pulumi", specifier = ">=3.239.0,<4.0.0" },
+    { name = "pulumi-kubernetes", specifier = ">=4.31.0,<5.0.0" },
+    { name = "pulumi-postgresql", marker = "extra == 'postgres'", specifier = ">=3.16.3,<4.0.0" },
+]
+provides-extras = ["postgres"]
+
+[[package]]
 name = "opentelemetry-api"
 version = "1.41.1"
 source = { registry = "https://pypi.org/simple" }
@@ -397,6 +419,20 @@ wheels = [
 ]
 
 [[package]]
+name = "pulumi-postgresql"
+version = "3.16.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "parver" },
+    { name = "pulumi" },
+    { name = "semver" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b4/20/f2da88b25279054328a6207f9cb1316189c54ec3f063400373dc25258b91/pulumi_postgresql-3.16.3.tar.gz", hash = "sha256:f06b6af501e2d79f662fc34a36fd901770f1a0ecf05597db1ee687e284058ff0", size = 50985, upload-time = "2026-04-10T16:41:54.971Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b4/ba/9833b06f5578681ed3ea28ef59f00b75e729b17506a4433bd85993c75475/pulumi_postgresql-3.16.3-py3-none-any.whl", hash = "sha256:a37cdc9c112c5c58d92057999aea8dd1359f629beb7c766ebb5e1eabeb957a57", size = 76793, upload-time = "2026-04-10T16:41:53.462Z" },
+]
+
+[[package]]
 name = "pulumi-random"
 version = "4.20.0"
 source = { registry = "https://pypi.org/simple" }
@@ -485,6 +521,7 @@ name = "superset"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "infra-helpers", extra = ["postgres"] },
     { name = "pulumi" },
     { name = "pulumi-kubernetes" },
     { name = "pulumi-random" },
@@ -492,6 +529,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "infra-helpers", extras = ["postgres"], editable = "../../../infra_helpers" },
     { name = "pulumi", specifier = ">=3.239.0,<4.0.0" },
     { name = "pulumi-kubernetes", specifier = ">=4.31.0,<5.0.0" },
     { name = "pulumi-random", specifier = ">=4.20.0,<5.0.0" },

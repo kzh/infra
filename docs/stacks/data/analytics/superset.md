@@ -17,9 +17,10 @@ up.
 
 ## What This Stack Deploys
 
-The Pulumi project is intentionally small. It creates one Kubernetes namespace,
-installs the Apache Superset Helm chart, enables a private Tailscale ingress,
-generates the Superset secret key through Pulumi, and adds a bootstrap script
+The Pulumi project creates one Kubernetes namespace, provisions a Superset-owned
+database and role in the shared CloudNativePG PostgreSQL stack, installs the
+Apache Superset Helm chart, enables a private Tailscale ingress, generates the
+Superset secret key through Pulumi, persists Redis, and adds a bootstrap script
 for a few Python database packages.
 
 Current source-backed shape:
@@ -32,21 +33,23 @@ Helm release name:    chart
 Namespace:            required Pulumi config value
 Ingress class:        tailscale
 Ingress host:         superset
-Metadata database:    chart-managed PostgreSQL
-Cache/broker:         chart-managed Redis
-Extra DB packages:    ijson, psycopg2-binary, sqlalchemy-drill
+Metadata database:    shared CloudNativePG PostgreSQL, database `superset`
+Cache/broker:         chart-managed Redis with a persistent PVC
+Extra DB packages:    trino, sqlalchemy-trino, psycopg2-binary, sqlalchemy-drill, clickhouse-connect
 ```
 
-The chart-managed PostgreSQL database is Superset's metadata database. It stores
-things like users, roles, saved queries, database connection definitions,
-datasets, charts, dashboards, annotations, and some encrypted connection
-material. It is not where analytical data should live. Analytical data should
-stay in the systems Superset connects to, such as Trino, PostgreSQL,
-ClickHouse, Drill, or other SQL backends.
+The shared PostgreSQL database is Superset's metadata database. It stores things
+like users, roles, saved queries, database connection definitions, datasets,
+charts, dashboards, annotations, and some encrypted connection material. It is
+not where analytical data should live. Analytical data should stay in the
+systems Superset connects to, such as Trino, PostgreSQL, ClickHouse, Drill, or
+other SQL backends.
 
 The chart-managed Redis instance is used by Superset for cache and background
-work plumbing. Treat it as part of the Superset application, not as a general
-repo cache.
+work plumbing. The stack enables Redis persistence so cache and result-backend
+state survives Redis pod restarts, but Redis is still not the source of truth
+for dashboards, datasets, users, or datasource definitions. Treat it as part of
+the Superset application, not as a general repo cache.
 
 The generated secret key is also part of the application state. Pulumi creates
 it with a `random.RandomBytes` resource and passes it into the chart as a
@@ -148,10 +151,11 @@ owner credentials, migration credentials, or application write credentials. If
 someone can create a chart or run SQL Lab through a powerful connection, they
 effectively inherit that connection's read surface.
 
-For this repo, Trino is often the cleanest first connection because it is the
-federated SQL layer. One Superset database can reach multiple catalogs through
-Trino, and the Trino catalog grants become a natural boundary for what BI can
-see.
+For this repo, Trino is the default repo-provisioned connection because it is
+the federated SQL layer. One Superset database can reach multiple catalogs
+through Trino: PostgreSQL application catalogs, ClickHouse, Iceberg tables on
+RustFS, and generated sample catalogs. The Trino catalog grants become the
+natural boundary for what BI can see.
 
 The secret-free shape of a Trino connection is:
 
@@ -170,6 +174,39 @@ trino://bi_reader@trino.trino.svc.cluster.local:8080/postgres/public
 Use a harmless catalog such as `tpch.tiny` for first connection tests when it is
 available. That lets you prove Superset, the driver, DNS, and Trino routing
 without involving private application data.
+
+The Pulumi stack provisions a default `Trino` datasource with this in-cluster
+shape:
+
+```text
+trino://superset@trino.trino.svc.cluster.local:8080/tpch/tiny
+```
+
+It also provisions one named Superset database per repo-managed Trino catalog,
+using the Trino stack's `catalogs` output. The generated names follow this
+shape:
+
+```text
+Trino ClickHouse
+Trino Iceberg
+Trino PostgreSQL Airflow
+Trino PostgreSQL Immich
+Trino TPCH
+Trino TPCDS
+```
+
+The default schemas are `tiny` for generated sample catalogs, `public` for
+`pg_*` PostgreSQL catalogs, `default` for ClickHouse and memory, and
+catalog-only for Iceberg until a user schema exists.
+
+Use SQL Lab to switch catalogs explicitly or start from the catalog-specific
+database entry:
+
+```sql
+show catalogs;
+select * from iceberg.information_schema.schemata limit 20;
+select * from clickhouse.system.one limit 1;
+```
 
 Direct PostgreSQL connections are also possible because the Superset bootstrap
 script installs `psycopg2-binary`. The secret-free shape is:
@@ -449,9 +486,10 @@ reason about and test. For example, a Trino catalog or schema exposed through a
 BI-specific role can be audited independently from the dashboard that uses it.
 
 Connection passwords and secrets stored in Superset are part of the metadata
-database. That is another reason the chart-managed PostgreSQL volume matters.
-Losing or replacing the metadata database can mean losing not only dashboards
-but also the connection definitions needed to rebuild them.
+database. That is why the shared PostgreSQL database and the Superset secret key
+need cautious handling. Losing or replacing the metadata database can mean
+losing not only dashboards but also the connection definitions needed to rebuild
+them.
 
 ## Debugging From The Bottom Up
 
@@ -491,8 +529,8 @@ kubectl logs -n "$NS" job/<job-name> --tail=200
 ```
 
 If the page loads but login fails, check the Superset web logs, initialization
-jobs, chart-managed secrets, and metadata database readiness. Do not solve a
-login problem by changing unrelated ingress settings.
+jobs, Superset env/config secrets, and metadata database readiness. Do not solve
+a login problem by changing unrelated ingress settings.
 
 If SQL Lab reports a missing driver, the fix belongs in the Pulumi-managed
 bootstrap script or image. The current bootstrap script installs:
@@ -501,6 +539,12 @@ bootstrap script or image. The current bootstrap script installs:
 ijson
 psycopg2-binary
 sqlalchemy-drill
+trino
+sqlalchemy-trino
+clickhouse-connect
+tzlocal
+lz4
+orjson
 ```
 
 Any other driver needs to be added deliberately. After changing driver
@@ -554,7 +598,7 @@ just sync pulumi/data/analytics/superset
 just check-python
 just lint
 git diff --check
-just preview pulumi/data/analytics/superset stack=mx
+just preview pulumi/data/analytics/superset mx
 ```
 
 Do not run `pulumi up`, `pulumi destroy`, or `just up` unless the user has
@@ -566,11 +610,10 @@ metadata migrations, worker behavior, and bundled dependencies. Read the chart
 and application release notes, preview the diff, and make sure the metadata
 database can be recovered before applying.
 
-Treat metadata database changes as data changes. The chart currently manages
-PostgreSQL itself. Moving Superset metadata to a shared PostgreSQL service would
-be a real migration involving backup, restore, connection-secret handling,
-cutover, and rollback planning. It should not be bundled into a cosmetic chart
-cleanup.
+Treat metadata database changes as data changes. Superset metadata now lives in
+the shared PostgreSQL stack, so database name, owner role, password, secret-key
+handling, and rollback planning deserve the same caution as other stateful app
+changes.
 
 Preserve stable Pulumi names unless replacement is intended. In this project,
 renaming the namespace resource, Helm release, generated secret-key resource, or
