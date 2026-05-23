@@ -1,4 +1,8 @@
+from pathlib import Path
+
 import pulumi_kubernetes as k8s
+from infra_helpers.grafana import dashboard_config_maps
+from pulumi_monitoring_crds.monitoring.v1 import PodMonitor
 
 import pulumi
 
@@ -23,6 +27,11 @@ if task_slots is None:
 parallelism = config.get_int("parallelism")
 if parallelism is None:
     parallelism = 1
+monitoring_release_label = config.get("monitoringReleaseLabel", "kube-prometheus-stack")
+dashboards_dir = Path(__file__).resolve().parent / "dashboards"
+dashboard_files = [
+    "flink-overview.json",
+]
 
 labels = {
     "app.kubernetes.io/name": "flink",
@@ -61,6 +70,17 @@ flink_operator = k8s.helm.v3.Release(
                     "memory": "512Mi",
                 },
             },
+        },
+        "defaultConfiguration": {
+            "flink-conf.yaml": """
+kubernetes.operator.metrics.reporter.prom.factory.class: org.apache.flink.metrics.prometheus.PrometheusReporterFactory
+kubernetes.operator.metrics.reporter.prom.port: 9999
+kubernetes.operator.reconcile.interval: 15 s
+kubernetes.operator.observer.progress-check.interval: 5 s
+""".lstrip(),
+        },
+        "metrics": {
+            "port": 9999,
         },
     },
     opts=pulumi.ResourceOptions(depends_on=[flink_namespace]),
@@ -102,6 +122,32 @@ flink_session_cluster = k8s.apiextensions.CustomResource(
     opts=pulumi.ResourceOptions(depends_on=[flink_operator]),
 )
 
+flink_operator_podmonitor = PodMonitor(
+    "flink-operator-podmonitor",
+    metadata={
+        "name": "flink-operator",
+        "namespace": namespace_name,
+        "labels": {
+            "release": monitoring_release_label,
+        },
+    },
+    spec={
+        "selector": {
+            "matchLabels": {
+                "app.kubernetes.io/name": "flink-kubernetes-operator",
+            },
+        },
+        "podMetricsEndpoints": [
+            {
+                "port": "metrics",
+                "path": "/metrics",
+                "interval": "30s",
+            },
+        ],
+    },
+    opts=pulumi.ResourceOptions(depends_on=[flink_operator]),
+)
+
 flink_ui_ingress = k8s.networking.v1.Ingress(
     "flink-ui-ingress",
     metadata=k8s.meta.v1.ObjectMetaArgs(
@@ -139,6 +185,17 @@ flink_ui_ingress = k8s.networking.v1.Ingress(
         ],
     ),
     opts=pulumi.ResourceOptions(depends_on=[flink_session_cluster]),
+)
+
+dashboard_config_maps(
+    name_prefix="flink-dashboard",
+    namespace=flink_namespace.metadata.name,
+    dashboards_dir=dashboards_dir,
+    dashboard_files=dashboard_files,
+    labels=labels,
+    opts=pulumi.ResourceOptions(
+        depends_on=[flink_operator_podmonitor, flink_session_cluster]
+    ),
 )
 
 pulumi.export("namespace", flink_namespace.metadata.name)

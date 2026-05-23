@@ -240,10 +240,6 @@ for session-cluster behavior, jobs, TaskManagers, JobManager UI, checkpoint and
 savepoint thinking, Kafka integration, and the difference between an operator
 being healthy and a Flink job actually running.
 
-[Redpanda](/stacks/data/streaming/redpanda) currently documents the Redpanda
-operator layer rather than a full broker cluster. Read it when working on the
-foundation for a future Redpanda cluster or when deciding whether a Kafka-style
-broker, operator layer, or client traffic path is actually present.
 
 [Analytics And Compute](/stacks/data/analytics/) maps the tools used to ask
 questions, transform data, run experiments, schedule batch work, and show

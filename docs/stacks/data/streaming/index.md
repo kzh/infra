@@ -6,14 +6,13 @@ not "fast"; it is "continuous." A streaming system lets producers publish facts
 as they happen, lets consumers read those facts independently, and gives stream
 processors a way to keep useful state while new records keep arriving.
 
-In this repo, the streaming area has three different kinds of machinery.
-[Kafka](/stacks/data/streaming/kafka) is the currently usable durable event log,
-managed by Strimzi. [Flink](/stacks/data/streaming/flink) is the stream
-processing engine, managed by the Apache Flink Kubernetes Operator.
-[Redpanda](/stacks/data/streaming/redpanda) currently installs the Redpanda
-operator layer, not a broker cluster. Those are related pieces, but they are not
-interchangeable: logs store streams, processors compute over streams, and
-operators reconcile Kubernetes custom resources into running systems.
+In this repo, the streaming area has two complementary pieces.
+[Kafka](/stacks/data/streaming/kafka) is the durable event log, managed by
+Strimzi. [Flink](/stacks/data/streaming/flink) is the stream processing engine,
+managed by the Apache Flink Kubernetes Operator. They are related pieces, but
+they are not interchangeable: logs store streams, processors compute over
+streams, and operators reconcile Kubernetes custom resources into running
+systems.
 
 That distinction is the fastest way to debug this layer. If producers cannot
 write or consumers cannot read, start with the log: listener addresses, topic
@@ -62,9 +61,7 @@ The Kubernetes operators in this area are controllers, not the data path
 themselves. Strimzi watches `Kafka`, `KafkaNodePool`, and `KafkaTopic` resources
 and reconciles brokers, listeners, and topics. The Flink operator watches
 `FlinkDeployment` and related resources and reconciles JobManagers,
-TaskManagers, services, and job state. The Redpanda operator is installed so a
-future Redpanda cluster can be declared, but this repo does not currently create
-that broker data plane.
+TaskManagers, services, and job state.
 
 This matters because operator health and application health are different
 questions. A healthy operator can be managing an unhealthy broker, and an
@@ -79,7 +76,6 @@ kubectl get kafka,kafkanodepool,kafkatopic -n kafka
 kubectl get flinkdeployments -n flink
 kubectl get pods,svc,pvc -n kafka
 kubectl get pods,svc,ingress -n flink
-kubectl get pods,svc,deploy -n redpanda
 kubectl get events -n kafka --sort-by=.lastTimestamp
 kubectl get events -n flink --sort-by=.lastTimestamp
 ```
@@ -89,7 +85,6 @@ For repo-backed changes, preview the owning stack before applying anything:
 ```bash
 just preview pulumi/data/streaming/kafka stack=mx
 just preview pulumi/data/streaming/flink stack=mx
-just preview pulumi/data/streaming/redpanda stack=mx
 ```
 
 Do not treat a manual `kubectl` edit as the final fix for a Pulumi-owned
@@ -318,20 +313,17 @@ The sibling pages are the service-specific runbooks:
   model, smoke topic, produce/consume commands, and topic-management notes.
 - [Flink](/stacks/data/streaming/flink) has the session cluster shape, UI access,
   job submission notes, and checkpoint warnings.
-- [Redpanda](/stacks/data/streaming/redpanda) explains the current operator-only
-  state and what would need to exist before Redpanda is a usable broker path.
 
 For a broad streaming read, start with the data path and then move to the
 control plane:
 
 ```bash
-kubectl get pods,svc,pvc -A | rg 'kafka|strimzi|flink|redpanda'
+kubectl get pods,svc,pvc -A | rg 'kafka|strimzi|flink'
 kubectl get kafka,kafkanodepool,kafkatopic -n kafka
 kubectl get flinkdeployments -n flink
-kubectl get crds | rg 'kafka|flink|redpanda'
+kubectl get crds | rg 'kafka|flink'
 kubectl logs -n kafka deploy/strimzi-cluster-operator --tail=200
 kubectl logs -n flink deploy/flink-kubernetes-operator --tail=200
-kubectl logs -n redpanda deploy/redpanda-controller-operator --tail=200
 ```
 
 Then test the actual client path that matters. An in-cluster Kafka client should

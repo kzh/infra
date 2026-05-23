@@ -212,9 +212,9 @@ wheels = [
 ]
 
 [[package]]
-name = "kafka"
+name = "infra-helpers"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "../../../infra_helpers" }
 dependencies = [
     { name = "pulumi" },
     { name = "pulumi-kubernetes" },
@@ -224,6 +224,27 @@ dependencies = [
 requires-dist = [
     { name = "pulumi", specifier = ">=3.239.0,<4.0.0" },
     { name = "pulumi-kubernetes", specifier = ">=4.31.0,<5.0.0" },
+    { name = "pulumi-postgresql", marker = "extra == 'postgres'", specifier = ">=3.16.3,<4.0.0" },
+]
+provides-extras = ["postgres"]
+
+[[package]]
+name = "kafka"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "infra-helpers" },
+    { name = "pulumi" },
+    { name = "pulumi-kubernetes" },
+    { name = "pulumi-monitoring-crds" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "infra-helpers", editable = "../../../infra_helpers" },
+    { name = "pulumi", specifier = ">=3.239.0,<4.0.0" },
+    { name = "pulumi-kubernetes", specifier = ">=4.31.0,<5.0.0" },
+    { name = "pulumi-monitoring-crds", directory = "../../../lib/monitoring_crds" },
 ]
 
 [[package]]
@@ -409,6 +430,28 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/0c/a9/05ebba180a4c59454c20b3bbd8ff82fea5b3d029ab60c9e477a6a37c3d85/pulumi_kubernetes-4.31.0.tar.gz", hash = "sha256:fb0e818b10211196e5c5d241ddd3312c4f1270ec2b21adf6e95f99479a7e69be", size = 1978544, upload-time = "2026-05-15T02:31:27.319Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8a/71/9aba69a2d2680a295f21ab7add5645cf6e100826eb1f098e88de812d5fac/pulumi_kubernetes-4.31.0-py3-none-any.whl", hash = "sha256:a1db7334049f090354c3b74821513964885e5ce9185ff0ee5c973cf8639e0d92", size = 3093253, upload-time = "2026-05-15T02:31:24.788Z" },
+]
+
+[[package]]
+name = "pulumi-monitoring-crds"
+version = "4.31.0"
+source = { directory = "../../../lib/monitoring_crds" }
+dependencies = [
+    { name = "parver" },
+    { name = "pulumi" },
+    { name = "pulumi-kubernetes" },
+    { name = "requests" },
+    { name = "semver" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "parver", specifier = ">=0.2.1" },
+    { name = "pulumi", specifier = ">=3.239.0,<4.0.0" },
+    { name = "pulumi-kubernetes", specifier = ">=4.31.0,<5.0.0" },
+    { name = "requests", specifier = ">=2.21,<3.0" },
+    { name = "semver", specifier = ">=2.8.1" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'", specifier = ">=4.11,<5" },
 ]
 
 [[package]]

@@ -78,7 +78,6 @@ export default defineConfig({
           { text: 'RustFS', link: '/stacks/data/storage/rustfs' },
           { text: 'Flink', link: '/stacks/data/streaming/flink' },
           { text: 'Kafka', link: '/stacks/data/streaming/kafka' },
-          { text: 'Redpanda', link: '/stacks/data/streaming/redpanda' },
           { text: 'Airflow', link: '/stacks/data/workflow/airflow' },
           { text: 'Dagster', link: '/stacks/data/workflow/dagster' },
           { text: 'n8n', link: '/stacks/data/workflow/n8n' },

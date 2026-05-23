@@ -1,4 +1,8 @@
+from pathlib import Path
+
 import pulumi_kubernetes as k8s
+from infra_helpers.grafana import dashboard_config_maps
+from pulumi_monitoring_crds.monitoring.v1 import PodMonitor
 
 import pulumi
 
@@ -33,6 +37,11 @@ tailnet_advertised_broker_host = config.get(
     "tailnetAdvertisedBrokerHost",
     tailnet_broker_hostname,
 )
+monitoring_release_label = config.get("monitoringReleaseLabel", "kube-prometheus-stack")
+dashboards_dir = Path(__file__).resolve().parent / "dashboards"
+dashboard_files = [
+    "kafka-overview.json",
+]
 
 labels = {
     "app.kubernetes.io/name": "kafka",
@@ -90,6 +99,31 @@ kafka_namespace = k8s.core.v1.Namespace(
     ),
 )
 
+kafka_metrics = k8s.core.v1.ConfigMap(
+    "kafka-metrics",
+    metadata=k8s.meta.v1.ObjectMetaArgs(
+        name="kafka-metrics",
+        namespace=kafka_namespace.metadata.name,
+        labels=labels,
+    ),
+    data={
+        "kafka-metrics-config.yml": """
+lowercaseOutputName: true
+rules:
+  - pattern: 'kafka.server<type=BrokerTopicMetrics, name=(MessagesInPerSec|BytesInPerSec|BytesOutPerSec)><>Count'
+    name: kafka_server_brokertopicmetrics_$1_total
+    type: COUNTER
+  - pattern: 'kafka.server<type=ReplicaManager, name=(UnderReplicatedPartitions|UnderMinIsrPartitionCount)><>Value'
+    name: kafka_server_replicamanager_$1
+    type: GAUGE
+  - pattern: 'kafka.controller<type=KafkaController, name=ActiveControllerCount><>Value'
+    name: kafka_controller_kafkacontroller_activecontrollercount
+    type: GAUGE
+""".lstrip(),
+    },
+    opts=pulumi.ResourceOptions(depends_on=[kafka_namespace]),
+)
+
 strimzi_operator = k8s.helm.v3.Release(
     "strimzi",
     chart="strimzi-kafka-operator",
@@ -108,7 +142,7 @@ strimzi_operator = k8s.helm.v3.Release(
             },
             "limits": {
                 "cpu": "500m",
-                "memory": "384Mi",
+                "memory": "512Mi",
             },
         },
     },
@@ -129,6 +163,20 @@ kafka_node_pool = k8s.apiextensions.CustomResource(
     spec={
         "replicas": 1,
         "roles": ["controller", "broker"],
+        "resources": {
+            "requests": {
+                "cpu": "250m",
+                "memory": "768Mi",
+            },
+            "limits": {
+                "cpu": "1",
+                "memory": "1536Mi",
+            },
+        },
+        "jvmOptions": {
+            "-Xms": "384m",
+            "-Xmx": "768m",
+        },
         "storage": {
             "type": "persistent-claim",
             "size": storage_size,
@@ -153,6 +201,15 @@ kafka_cluster = k8s.apiextensions.CustomResource(
         "kafka": {
             "version": kafka_version,
             "listeners": kafka_listeners,
+            "metricsConfig": {
+                "type": "jmxPrometheusExporter",
+                "valueFrom": {
+                    "configMapKeyRef": {
+                        "name": kafka_metrics.metadata.name,
+                        "key": "kafka-metrics-config.yml",
+                    },
+                },
+            },
             "config": {
                 "auto.create.topics.enable": "false",
                 "default.replication.factor": 1,
@@ -163,11 +220,33 @@ kafka_cluster = k8s.apiextensions.CustomResource(
             },
         },
         "entityOperator": {
-            "topicOperator": {},
-            "userOperator": {},
+            "topicOperator": {
+                "resources": {
+                    "requests": {
+                        "cpu": "50m",
+                        "memory": "128Mi",
+                    },
+                    "limits": {
+                        "cpu": "250m",
+                        "memory": "384Mi",
+                    },
+                },
+            },
+            "userOperator": {
+                "resources": {
+                    "requests": {
+                        "cpu": "50m",
+                        "memory": "128Mi",
+                    },
+                    "limits": {
+                        "cpu": "250m",
+                        "memory": "384Mi",
+                    },
+                },
+            },
         },
     },
-    opts=pulumi.ResourceOptions(depends_on=[kafka_node_pool]),
+    opts=pulumi.ResourceOptions(depends_on=[kafka_node_pool, kafka_metrics]),
 )
 
 smoke_topic = k8s.apiextensions.CustomResource(
@@ -186,6 +265,70 @@ smoke_topic = k8s.apiextensions.CustomResource(
         "replicas": topic_replicas,
     },
     opts=pulumi.ResourceOptions(depends_on=[kafka_cluster]),
+)
+
+strimzi_operator_podmonitor = PodMonitor(
+    "strimzi-operator-podmonitor",
+    metadata={
+        "name": "strimzi-operator",
+        "namespace": namespace_name,
+        "labels": {
+            "release": monitoring_release_label,
+        },
+    },
+    spec={
+        "selector": {
+            "matchLabels": {
+                "strimzi.io/kind": "cluster-operator",
+            },
+        },
+        "podMetricsEndpoints": [
+            {
+                "port": "http",
+                "path": "/metrics",
+                "interval": "30s",
+            },
+        ],
+    },
+    opts=pulumi.ResourceOptions(depends_on=[strimzi_operator]),
+)
+
+kafka_podmonitor = PodMonitor(
+    "kafka-podmonitor",
+    metadata={
+        "name": "kafka-brokers",
+        "namespace": namespace_name,
+        "labels": {
+            "release": monitoring_release_label,
+        },
+    },
+    spec={
+        "selector": {
+            "matchLabels": {
+                "strimzi.io/cluster": cluster_name,
+                "strimzi.io/name": f"{cluster_name}-kafka",
+            },
+        },
+        "podMetricsEndpoints": [
+            {
+                "port": "tcp-prometheus",
+                "path": "/metrics",
+                "interval": "30s",
+            },
+        ],
+    },
+    opts=pulumi.ResourceOptions(depends_on=[kafka_cluster]),
+)
+
+dashboard_config_maps(
+    name_prefix="kafka-dashboard",
+    namespace=kafka_namespace.metadata.name,
+    dashboards_dir=dashboards_dir,
+    dashboard_files=dashboard_files,
+    labels=labels,
+    opts=pulumi.ResourceOptions(
+        depends_on=[strimzi_operator_podmonitor, kafka_podmonitor]
+    ),
 )
 
 pulumi.export("namespace", kafka_namespace.metadata.name)
