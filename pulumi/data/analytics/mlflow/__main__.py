@@ -17,6 +17,19 @@ db_user = config.get("db_user") or "mlflow"
 bucket_name = config.get("bucket") or "mlflow"
 postgres_stack_ref = config.get("postgres_stack_ref") or "kzh/postgresql/mx"
 rustfs_stack_ref = config.get("rustfs_stack_ref") or "kzh/rustfs/mx"
+allowed_hosts = ",".join(
+    dict.fromkeys(
+        [
+            public_host,
+            ingress_host,
+            "mlflow",
+            f"mlflow.{namespace_name}",
+            f"mlflow.{namespace_name}.svc",
+            f"mlflow.{namespace_name}.svc.cluster.local",
+            "localhost:*",
+        ]
+    )
+)
 
 labels = {
     "app": "mlflow",
@@ -262,7 +275,7 @@ mlflow_chart = k8s.helm.v4.Chart(
             "AWS_DEFAULT_REGION": AWS_DEFAULT_REGION,
         },
         "extraArgs": {
-            "allowedHosts": f"{public_host},localhost:*",
+            "allowedHosts": allowed_hosts,
             "corsAllowedOrigins": f"https://{public_host}",
         },
         "log": {
@@ -288,7 +301,16 @@ mlflow_chart = k8s.helm.v4.Chart(
                 }
             ],
         },
-        "resources": {},
+        "resources": {
+            "requests": {
+                "cpu": "100m",
+                "memory": "256Mi",
+            },
+            "limits": {
+                "cpu": "500m",
+                "memory": "1Gi",
+            },
+        },
     },
     opts=pulumi.ResourceOptions(
         depends_on=[

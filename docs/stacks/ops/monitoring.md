@@ -205,8 +205,6 @@ chart already supports it. Examples:
 - Spark enables the Spark operator Prometheus metrics and asks the chart to
   create a PodMonitor with the monitoring release label.
 - Slurm enables controller metrics and the chart's ServiceMonitor.
-- LiteLLM enables the chart ServiceMonitor and configures the application to
-  expose Prometheus metrics.
 - CloudNativePG operator enables its PodMonitor and chart-created Grafana
   dashboard.
 - ClickHouse operator enables metrics, ServiceMonitor creation, and

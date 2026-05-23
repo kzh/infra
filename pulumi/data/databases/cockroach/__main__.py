@@ -10,6 +10,17 @@ cockroach_namespace = k8s.core.v1.Namespace(
     ),
 )
 
+cockroach_resources = {
+    "requests": {
+        "cpu": "100m",
+        "memory": "768Mi",
+    },
+    "limits": {
+        "cpu": "1",
+        "memory": "2Gi",
+    },
+}
+
 cockroach_chart = k8s.helm.v4.Chart(
     "cockroachdb",
     chart="cockroachdb",
@@ -20,9 +31,23 @@ cockroach_chart = k8s.helm.v4.Chart(
     version="20.0.5",
     values={
         "image": {"repository": "cockroachdb/cockroach", "tag": "v26.1.4"},
-        "conf": {"single-node": True, "max-sql-memory": "6G", "cache": "6G"},
-        "statefulset": {"replicas": 1},
-        "tls": {"enabled": False},
+        "conf": {
+            "single-node": True,
+            "max-sql-memory": "512MiB",
+            "cache": "512MiB",
+        },
+        "statefulset": {
+            "replicas": 1,
+            "resources": cockroach_resources,
+        },
+        "tls": {
+            "enabled": False,
+            "certs": {
+                "selfSigner": {
+                    "enabled": False,
+                },
+            },
+        },
         "service": {
             "public": {
                 "annotations": {

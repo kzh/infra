@@ -55,6 +55,17 @@ labels = {
     "app": "coder",
 }
 
+coder_resources = {
+    "requests": {
+        "cpu": "100m",
+        "memory": "256Mi",
+    },
+    "limits": {
+        "cpu": "500m",
+        "memory": "1Gi",
+    },
+}
+
 
 coder_namespace = k8s.core.v1.Namespace(
     "coder-namespace",
@@ -168,6 +179,7 @@ if (
 chart_values: dict[str, object] = {
     "coder": {
         "env": coder_env,
+        "resources": coder_resources,
         "service": service_values,
         "serviceAccount": {
             # Keep workspace permissions in the control-plane namespace and optionally

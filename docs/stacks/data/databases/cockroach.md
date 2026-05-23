@@ -86,8 +86,10 @@ The chart values set by this repo are intentionally narrow:
 
 ```text
 conf.single-node:                 true
-conf.max-sql-memory:              6G
-conf.cache:                       6G
+conf.max-sql-memory:              512MiB
+conf.cache:                       512MiB
+statefulset.resources.requests:   100m CPU, 768Mi memory
+statefulset.resources.limits:     1 CPU, 2Gi memory
 statefulset.replicas:             1
 tls.enabled:                      false
 storage.persistentVolume.size:    100Gi
@@ -118,9 +120,10 @@ There are a few important absences:
   restore job, or object storage destination.
 - The program does not configure CockroachDB TLS certificates. It sets
   `tls.enabled` to `false`.
-- The program sets CockroachDB cache and SQL memory settings, but it does not
-  define custom Kubernetes CPU or memory requests and limits in this file. Check
-  the rendered chart or live pod before making resource-capacity claims.
+- The program deliberately keeps CockroachDB small: this cluster mostly uses the
+  shared PostgreSQL stack for normal application metadata, so CockroachDB gets a
+  low single-node cache/SQL memory budget and explicit Kubernetes requests and
+  limits.
 
 That means the current contract is mostly Kubernetes identity and network path:
 the namespace, the Helm release, the StatefulSet and PVCs rendered by the chart,

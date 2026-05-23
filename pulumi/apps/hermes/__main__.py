@@ -136,12 +136,12 @@ containers = [
         ],
         resources=k8s.core.v1.ResourceRequirementsArgs(
             requests={
-                "cpu": "500m",
-                "memory": "1Gi",
+                "cpu": "100m",
+                "memory": "512Mi",
             },
             limits={
-                "cpu": "2",
-                "memory": "4Gi",
+                "cpu": "1",
+                "memory": "1536Mi",
             },
         ),
         volume_mounts=[
@@ -213,12 +213,12 @@ if camofox_enabled:
             ),
             resources=k8s.core.v1.ResourceRequirementsArgs(
                 requests={
-                    "cpu": "500m",
-                    "memory": "1Gi",
+                    "cpu": "100m",
+                    "memory": "512Mi",
                 },
                 limits={
-                    "cpu": "2",
-                    "memory": "3Gi",
+                    "cpu": "1",
+                    "memory": "1536Mi",
                 },
             ),
             volume_mounts=[
@@ -262,12 +262,12 @@ if dashboard_enabled:
             ],
             resources=k8s.core.v1.ResourceRequirementsArgs(
                 requests={
-                    "cpu": "100m",
-                    "memory": "256Mi",
+                    "cpu": "50m",
+                    "memory": "128Mi",
                 },
                 limits={
-                    "cpu": "500m",
-                    "memory": "1Gi",
+                    "cpu": "250m",
+                    "memory": "512Mi",
                 },
             ),
             volume_mounts=[
@@ -295,7 +295,7 @@ if camofox_enabled:
             name="camofox-shm",
             empty_dir=k8s.core.v1.EmptyDirVolumeSourceArgs(
                 medium="Memory",
-                size_limit="1Gi",
+                size_limit="512Mi",
             ),
         )
     )

@@ -240,7 +240,6 @@ for session-cluster behavior, jobs, TaskManagers, JobManager UI, checkpoint and
 savepoint thinking, Kafka integration, and the difference between an operator
 being healthy and a Flink job actually running.
 
-
 [Analytics And Compute](/stacks/data/analytics/) maps the tools used to ask
 questions, transform data, run experiments, schedule batch work, and show
 results.

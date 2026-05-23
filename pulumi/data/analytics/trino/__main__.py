@@ -1,6 +1,9 @@
+from pathlib import Path
+
 import pulumi_kubernetes as k8s
 import pulumi_postgresql as pg
 import pulumi_random as random
+from infra_helpers.grafana import dashboard_config_maps
 from infra_helpers.postgres import PostgresStack, create_database_owner
 
 import pulumi
@@ -25,6 +28,7 @@ hostname = config.get("hostname", "trino")
 postgres_stack_ref = config.get("postgresStack", "kzh/postgresql/mx")
 clickhouse_stack_ref = config.get("clickhouseStack", "kzh/clickhouse/mx")
 rustfs_stack_ref = config.get("rustfsStack", "kzh/rustfs/mx")
+monitoring_release_label = config.get("monitoringReleaseLabel", "kube-prometheus-stack")
 postgres_databases = config.get_object(
     "postgresDatabases",
     [
@@ -46,6 +50,10 @@ iceberg_database_user = config.get("icebergDatabaseUser", "trino_iceberg")
 iceberg_catalog_name = config.get("icebergCatalogName", "trino_iceberg")
 iceberg_bucket = config.get("icebergBucket", "trino-iceberg")
 iceberg_warehouse = f"s3://{iceberg_bucket}/{ICEBERG_WAREHOUSE_PREFIX}"
+dashboards_dir = Path(__file__).resolve().parent / "dashboards"
+dashboard_files = [
+    "trino-overview.json",
+]
 
 labels = {
     "app.kubernetes.io/name": "trino",
@@ -367,6 +375,23 @@ def postgres_catalog(database_name: str) -> pulumi.Output[str]:
     )
 
 
+def delete_before_replace_rendered_config(
+    args: pulumi.ResourceTransformArgs,
+) -> pulumi.ResourceTransformResult | None:
+    if args.type_ != "kubernetes:core/v1:ConfigMap" or not isinstance(args.props, dict):
+        return None
+    if (args.props.get("metadata") or {}).get("name") not in {
+        "trino-catalog",
+        "trino-coordinator",
+        "trino-worker",
+    }:
+        return None
+
+    opts = pulumi.ResourceOptions.merge(pulumi.ResourceOptions(), args.opts)
+    opts.delete_before_replace = True
+    return pulumi.ResourceTransformResult(props=args.props, opts=opts)
+
+
 catalogs: dict[str, pulumi.Input[str]] = {
     "tpch": "connector.name=tpch\ntpch.splits-per-node=4\n",
     "tpcds": "connector.name=tpcds\ntpcds.splits-per-node=4\n",
@@ -424,27 +449,47 @@ trino_chart = k8s.helm.v4.Chart(
             "workers": 1,
             "config": {
                 "query": {
-                    "maxMemory": "2GB",
+                    "maxMemory": "1GB",
                 },
             },
         },
         "coordinator": {
             "jvm": {
-                "maxHeapSize": "2G",
+                "maxHeapSize": "1G",
             },
             "config": {
                 "query": {
-                    "maxMemoryPerNode": "1GB",
+                    "maxMemoryPerNode": "512MB",
+                },
+            },
+            "resources": {
+                "requests": {
+                    "cpu": "250m",
+                    "memory": "1Gi",
+                },
+                "limits": {
+                    "cpu": "1",
+                    "memory": "1536Mi",
                 },
             },
         },
         "worker": {
             "jvm": {
-                "maxHeapSize": "2G",
+                "maxHeapSize": "1G",
             },
             "config": {
                 "query": {
-                    "maxMemoryPerNode": "1GB",
+                    "maxMemoryPerNode": "512MB",
+                },
+            },
+            "resources": {
+                "requests": {
+                    "cpu": "250m",
+                    "memory": "1Gi",
+                },
+                "limits": {
+                    "cpu": "1",
+                    "memory": "1536Mi",
                 },
             },
         },
@@ -464,7 +509,49 @@ trino_chart = k8s.helm.v4.Chart(
             "create": True,
             "name": "trino",
         },
-        "resources": {},
+        "jmx": {
+            "enabled": True,
+            "exporter": {
+                "enabled": True,
+                "resources": {
+                    "requests": {
+                        "cpu": "10m",
+                        "memory": "128Mi",
+                    },
+                    "limits": {
+                        "cpu": "100m",
+                        "memory": "256Mi",
+                    },
+                },
+                "configProperties": """
+hostPort: localhost:9080
+startDelaySeconds: 0
+ssl: false
+lowercaseOutputName: false
+lowercaseOutputLabelNames: false
+rules:
+  - pattern: '.*'
+""".lstrip(),
+            },
+        },
+        "serviceMonitor": {
+            "enabled": True,
+            "labels": {
+                "release": monitoring_release_label,
+            },
+            "coordinator": {
+                "enabled": True,
+                "labels": {
+                    "release": monitoring_release_label,
+                },
+            },
+            "worker": {
+                "enabled": True,
+                "labels": {
+                    "release": monitoring_release_label,
+                },
+            },
+        },
     },
     opts=pulumi.ResourceOptions(
         depends_on=[
@@ -474,6 +561,7 @@ trino_chart = k8s.helm.v4.Chart(
             iceberg_bucket_job,
             *postgres_reader_grants,
         ],
+        transforms=[delete_before_replace_rendered_config],
     ),
 )
 
@@ -500,6 +588,15 @@ trino_tailscale_service = k8s.core.v1.Service(
             )
         ],
     ),
+    opts=pulumi.ResourceOptions(depends_on=[trino_chart]),
+)
+
+dashboard_config_maps(
+    name_prefix="trino-dashboard",
+    namespace=namespace.metadata.name,
+    dashboards_dir=dashboards_dir,
+    dashboard_files=dashboard_files,
+    labels=labels,
     opts=pulumi.ResourceOptions(depends_on=[trino_chart]),
 )
 

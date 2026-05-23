@@ -40,6 +40,16 @@ def delete_before_replace_generated_chart_resources(obj, opts):
     metadata = obj.get("metadata", {})
     resource = (obj.get("kind"), metadata.get("name"))
     if resource not in {
+        ("ConfigMap", "kube-prometheus-stack-cluster-total"),
+        ("ConfigMap", "kube-prometheus-stack-k8s-resources-cluster"),
+        ("ConfigMap", "kube-prometheus-stack-k8s-resources-multicluster"),
+        ("ConfigMap", "kube-prometheus-stack-k8s-resources-namespace"),
+        ("ConfigMap", "kube-prometheus-stack-k8s-resources-node"),
+        ("ConfigMap", "kube-prometheus-stack-k8s-resources-workload"),
+        ("ConfigMap", "kube-prometheus-stack-k8s-resources-workloads-namespace"),
+        ("ConfigMap", "kube-prometheus-stack-kubelet"),
+        ("ConfigMap", "kube-prometheus-stack-namespace-by-pod"),
+        ("ConfigMap", "kube-prometheus-stack-namespace-by-workload"),
         ("ConfigMap", "kube-prometheus-stack-node-rsrc-use"),
         ("Job", "kube-prometheus-stack-admission-create"),
         ("Job", "kube-prometheus-stack-admission-patch"),
@@ -82,12 +92,34 @@ def deploy_prometheus_stack(crds_chart):
                         },
                     },
                 },
-                "retention": "90d",
+                "retention": "7d",
+                "retentionSize": "20GB",
+                "walCompression": True,
                 "enableAdminAPI": True,
+                "resources": {
+                    "requests": {
+                        "cpu": "250m",
+                        "memory": "512Mi",
+                    },
+                    "limits": {
+                        "cpu": "1",
+                        "memory": "1536Mi",
+                    },
+                },
             },
         },
         "grafana": {
             "adminPassword": grafana_admin_password,
+            "resources": {
+                "requests": {
+                    "cpu": "50m",
+                    "memory": "128Mi",
+                },
+                "limits": {
+                    "cpu": "500m",
+                    "memory": "512Mi",
+                },
+            },
             "grafana.ini": {
                 "auth.anonymous": {
                     "enabled": True,

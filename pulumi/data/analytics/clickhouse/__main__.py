@@ -79,7 +79,16 @@ clickhouse_operator = k8s.helm.v3.Release(
         # Keep the operator footprint minimal for this single-node deployment.
         "metrics": {
             "enabled": True,
-            "resources": {},
+            "resources": {
+                "requests": {
+                    "cpu": "10m",
+                    "memory": "64Mi",
+                },
+                "limits": {
+                    "cpu": "100m",
+                    "memory": "128Mi",
+                },
+            },
         },
         "serviceMonitor": {
             "enabled": True,
@@ -94,7 +103,16 @@ clickhouse_operator = k8s.helm.v3.Release(
             },
         },
         "operator": {
-            "resources": {},
+            "resources": {
+                "requests": {
+                    "cpu": "50m",
+                    "memory": "128Mi",
+                },
+                "limits": {
+                    "cpu": "500m",
+                    "memory": "512Mi",
+                },
+            },
         },
     },
     opts=pulumi.ResourceOptions(depends_on=[clickhouse_namespace]),
@@ -109,6 +127,10 @@ clickhouse_installation = ClickHouseInstallation(
     spec={
         "taskID": clickhouse_admin_password_task_id,
         "configuration": {
+            "profiles": {
+                "default/max_memory_usage": "1073741824",
+                "default/max_threads": "2",
+            },
             "users": {
                 f"{clickhouse_admin_username}/profile": "default",
                 f"{clickhouse_admin_username}/quota": "default",
@@ -141,7 +163,16 @@ clickhouse_installation = ClickHouseInstallation(
                             {
                                 "name": "clickhouse",
                                 "image": clickhouse_image,
-                                "resources": {},
+                                "resources": {
+                                    "requests": {
+                                        "cpu": "250m",
+                                        "memory": "512Mi",
+                                    },
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "1536Mi",
+                                    },
+                                },
                             },
                         ],
                     },

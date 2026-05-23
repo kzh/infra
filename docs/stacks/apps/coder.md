@@ -75,6 +75,7 @@ Ingress enabled:              true
 Ingress class:                tailscale
 Database name:                coder
 Database Secret:              coder-db-url
+Coder server resources:       100m/256Mi request, 500m/1Gi limit
 Workspace namespace create:   true
 Workspace permissions:        true
 Workspace deployments:        true
@@ -92,6 +93,12 @@ The Coder server runs in the application namespace, normally `coder`. The Helm
 chart creates the Deployment, ServiceAccount, Service, RBAC, and other chart
 resources inside that namespace. This Pulumi program passes chart values rather
 than rendering those resources by hand.
+
+The Coder server pod is given an explicit modest resource budget in this repo:
+`100m` CPU and `256Mi` memory requested, with limits of `500m` CPU and `1Gi`
+memory. That is intentionally separate from workspace resource settings.
+Workspace CPU, memory, images, volumes, and startup behavior come from Coder
+templates stored in Coder, not from this Pulumi stack.
 
 The chart's Service is configured as `ClusterIP`. That means the Service is not
 directly exposed outside the cluster. External access goes through the Ingress
@@ -253,6 +260,11 @@ The template is the important user-facing contract. It decides what image runs,
 what CPU and memory are requested, what persistent storage exists, what startup
 script runs, which ports or apps are exposed, and what editor path is offered.
 The Pulumi stack can make Coder available, but a template makes it useful.
+
+If a workspace is over-reserved or over-limited, fix that in the Coder template
+and then update or rebuild the affected workspace. Patching a live workspace
+Deployment can reduce immediate cluster overcommit, but the next Coder template
+update or workspace rebuild may recreate the original resource values.
 
 The Coder CLI is useful once the local machine is authenticated:
 

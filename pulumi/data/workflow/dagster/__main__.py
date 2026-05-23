@@ -1,5 +1,8 @@
+from pathlib import Path
+
 import pulumi_kubernetes as k8s
 import pulumi_random as random
+from infra_helpers.grafana import dashboard_config_maps
 from infra_helpers.postgres import PostgresStack, create_database_owner
 
 import pulumi
@@ -18,6 +21,10 @@ hostname = config.get("hostname", "dagster")
 postgres_stack_ref = config.get("postgresStack", "kzh/postgresql/mx")
 database_name = config.get("databaseName", "dagster")
 database_user = config.get("databaseUser", "dagster")
+dashboards_dir = Path(__file__).resolve().parent / "dashboards"
+dashboard_files = [
+    "dagster-overview.json",
+]
 
 labels = {
     "app.kubernetes.io/name": "dagster",
@@ -192,6 +199,15 @@ dagster_chart = k8s.helm.v4.Chart(
     opts=pulumi.ResourceOptions(
         depends_on=[namespace, dagster_database, postgres_secret, smoke_definitions],
     ),
+)
+
+dashboard_config_maps(
+    name_prefix="dagster-dashboard",
+    namespace=namespace.metadata.name,
+    dashboards_dir=dashboards_dir,
+    dashboard_files=dashboard_files,
+    labels=labels,
+    opts=pulumi.ResourceOptions(depends_on=[dagster_chart]),
 )
 
 pulumi.export("namespace", namespace.metadata.name)

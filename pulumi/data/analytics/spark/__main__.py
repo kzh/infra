@@ -300,10 +300,12 @@ spark_connect = SparkConnect(
         "image": spark_image,
         "sparkConf": {
             "spark.kubernetes.authenticate.driver.serviceAccountName": "spark-operator-spark",
+            "spark.driver.memoryOverhead": "256m",
+            "spark.executor.memoryOverhead": "256m",
         },
         "server": {
             "cores": 1,
-            "memory": "1g",
+            "memory": "512m",
             "service": {
                 "metadata": {
                     "name": connect_name,
@@ -360,7 +362,7 @@ spark_connect = SparkConnect(
         "executor": {
             "instances": 1,
             "cores": 1,
-            "memory": "1g",
+            "memory": "512m",
             "template": {
                 "metadata": {
                     "labels": {
